@@ -32,13 +32,31 @@ public class inventoryObject : MonoBehaviour
         }
     }
 
-    public void setItemPos(GameObject item)
+    public void setItemPos(GameObject item, Vector3 newOrigonPos)
     {
         itemObject itemObj = item.GetComponent<itemObject>();
-        item.transform.localPosition = item.GetComponent<itemObject>().originPos;
-        float left = ((item.transform.localPosition.x - item.GetComponent<RectTransform>().rect.width / 2f) / cell) + (xSize / 2f);
-        float up = ((item.transform.localPosition.y + item.GetComponent<RectTransform>().rect.height / 2f) / cell) - (ySize / 2f);
+        float left = ((newOrigonPos.x - item.GetComponent<RectTransform>().rect.width / 2f) / cell) + (xSize / 2f);
+        float up = ((newOrigonPos.y + item.GetComponent<RectTransform>().rect.height / 2f) / cell) - (ySize / 2f);
         up *= -1f;
+        foreach (var Item in items.items)
+        {
+            if (Item.itemID == itemObj.itemData.itemID)
+            { }
+            else
+            {
+                float tempL = Item.Left < left ? left : Item.Left;
+                float tempR = Item.Left + Item.xSize > left + itemObj.itemData.xSize ? left + itemObj.itemData.xSize : Item.Left + Item.xSize;
+                float tempU = Item.Up < up ? up : Item.Up;
+                float tempD = Item.Up + Item.ySize > up + itemObj.itemData.ySize ? up + itemObj.itemData.ySize : Item.Up + Item.ySize;
+                if (tempL < tempR && tempU < tempD)
+                {
+                    print("ºÎµúÈû");
+                    item.transform.localPosition = item.GetComponent<itemObject>().originPos;
+                    return;
+                }
+            }
+        }
+        item.transform.localPosition = item.GetComponent<itemObject>().originPos = newOrigonPos;
         foreach (var Item in items.items)
         {
             if (Item.itemID == itemObj.itemData.itemID)

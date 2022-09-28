@@ -89,11 +89,10 @@ public class itemObject : MonoBehaviour
                 print("나갔음");
                 this.transform.localPosition = this.originPos;
             }
-            else//충돌의 경우도 추가 필요
+            else
             {
-                this.originPos = new Vector3((left + right) / 2f, (up + down) / 2f, 0f);
-                //this.itemData.Left
-                inventoryObject.Inst.setItemPos(this.gameObject);
+                Vector3 temp = new Vector3((left + right) / 2f, (up + down) / 2f, 0f);
+                inventoryObject.Inst.setItemPos(this.gameObject, temp);
             }
         }
         else if (Input.GetMouseButtonUp(1))

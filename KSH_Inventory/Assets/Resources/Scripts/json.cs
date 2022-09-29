@@ -17,6 +17,7 @@ public class itemData
 public class itemJsonData
 {
     public List<itemData> itemList = new List<itemData>();
+    public int gold;
     public Dictionary<string, itemData> makeData()
     {
         Dictionary<string, itemData> temp = new Dictionary<string, itemData>();
@@ -30,6 +31,7 @@ public class itemJsonData
     {
         itemData nullItem = new itemData();
         itemList.Add(nullItem);
+        gold = 0;
     }
 }
 public class json

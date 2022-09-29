@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class itemObject : MonoBehaviour
 {
     [SerializeField] GameObject image;//setup에서 설정 필요
@@ -14,27 +14,46 @@ public class itemObject : MonoBehaviour
     bool isEquip;
     [SerializeField] GameObject equip;
     public itemData itemData;
+    float cell;
     public void Setup(float sizeX, float sizeY, float posX, float posY, bool isEquip, float cell, Vector3 zero, itemData itemData)
     {
         this.zeroPos = zero;
         maxPos = zeroPos + (Vector3.right * inventoryObject.Inst.xSize * cell) + (Vector3.down * inventoryObject.Inst.ySize * cell);
 
-        this.size = new Vector3(sizeX * 100f, sizeY * 100f, 1f);
+        this.size = new Vector3(sizeX * cell, sizeY * cell, 1f);
         this.GetComponent<RectTransform>().sizeDelta = this.size;
 
-        this.originPos = new Vector3(posX, posY, 0f);
         this.transform.localPosition = new Vector3(
-                    zeroPos.x + originPos.x * cell + size.x / 2f,
-                    zeroPos.y - originPos.y * cell - size.y / 2f);
+                    zeroPos.x + posX * cell + size.x / 2f,
+                    zeroPos.y - posY * cell - size.y / 2f);
+        this.originPos = this.transform.localPosition;
 
         this.isEquip = isEquip;
         equip.SetActive(isEquip);
 
         this.itemData = itemData;
-    }
-    public void Hover(bool hover)
-    {
-        isHover = hover;
+        this.cell = cell;
+        Color imageColor = new Color();
+        switch (this.itemData.itemID)
+        {
+            case 0:
+                 imageColor = Color.red;
+                break;
+            case 1:
+                imageColor = Color.green;
+                break;
+            case 2:
+                imageColor = Color.blue;
+                break;
+            case 3:
+                imageColor = Color.yellow;
+                break;
+            default:
+                imageColor = Color.black;
+                break;
+        }
+        imageColor.a = 0.5f;
+        this.gameObject.GetComponent<Image>().color = imageColor;
     }
     public void Drag()
     {
@@ -48,37 +67,37 @@ public class itemObject : MonoBehaviour
         right = this.transform.localPosition.x + this.size.x / 2f;
         up = this.transform.localPosition.y + this.size.y / 2f;
         down = this.transform.localPosition.y - this.size.y / 2f;
-        print(left + " " + right + " " + up + " " + down);
+        //print(left + " " + right + " " + up + " " + down);
         if (Input.GetMouseButtonUp(0))
         { //위치 조정
-            float tempL = (left + 50f) % 100f;
+            float tempL = (left + (cell/2f)) % cell;
             left -= tempL;
             right -= tempL;
-            if (tempL < -50)
+            if (tempL < -(cell / 2f))
             {
-                left -= 100;
-                right -= 100;
+                left -= cell;
+                right -= cell;
             }
-            else if (tempL > 50)
+            else if (tempL > (cell / 2f))
             {
-                left += 100;
-                right += 100;
+                left += cell;
+                right += cell;
             }
 
-            float tempU = (up + 50f) % 100f;
+            float tempU = (up + (cell / 2f)) % cell;
             up -= tempU;
             down -= tempU;
-            if (tempU < -50)
+            if (tempU < -(cell / 2f))
             {
-                up -= 100;
-                down -= 100;
+                up -= cell;
+                down -= cell;
             }
-            else if (tempU > 50)
+            else if (tempU > (cell / 2f))
             {
-                up += 100;
-                down += 100;
+                up += cell;
+                down += cell;
             }
-            print(left + " " + right + " " + up + " " + down);
+            //print(left + " " + right + " " + up + " " + down);
             if (
                 left < this.zeroPos.x
                 || up > this.zeroPos.y
@@ -119,6 +138,7 @@ public class itemObject : MonoBehaviour
             {//호버
                 if (temp == 0)
                 {
+                    inventoryObject.Inst.itemHover(this);
                     //print("마우스 호버");
                     temp = 1;
                 }

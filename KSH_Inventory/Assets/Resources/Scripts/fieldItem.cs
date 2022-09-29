@@ -10,13 +10,20 @@ public class fieldItem : MonoBehaviour
     GameObject keyInst;
     void Start()
     {
-        
+        this.transform.localScale = new Vector3(itemData.xSize, itemData.ySize, 1f);
+        Vector3 tempPos = this.transform.position;
+        tempPos.y = itemData.ySize / 2f;
+        this.transform.position = tempPos;
     }
     public void setup(itemData data)
     {
         itemData = data;
         angle = 0f;
         keyInst = null;
+        this.transform.localScale = new Vector3(itemData.xSize, itemData.ySize, 1f);
+        Vector3 tempPos = this.transform.position;
+        tempPos.y = itemData.ySize / 2f;
+        this.transform.position = tempPos;
     }
     // Update is called once per frame
     void Update()

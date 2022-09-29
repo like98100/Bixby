@@ -20,6 +20,7 @@ public class inventoryObject : MonoBehaviour
     List<GameObject> itemObjects;
     Vector3 zero;
     int gold;
+    [SerializeField] GameObject fieldItemPrefab;
     void Start()
     {
         inventoryObj.GetComponent<RectTransform>().sizeDelta = new Vector2(xSize * cell, ySize * cell);//인벤창 크기
@@ -172,5 +173,15 @@ public class inventoryObject : MonoBehaviour
     public void itemHover(itemObject itemObj)//인벤토리에서 아이템에 마우스를 올려뒀을 때 실행
     {
         print("상세 파라미터 표시");
+    }
+    public void throwItem(GameObject itemObj)
+    {
+        items.items.Remove(itemObj.GetComponent<itemObject>().itemData);
+        itemObjects.Remove(itemObj.gameObject);
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        GameObject temp = Instantiate(fieldItemPrefab, player.transform.position, Quaternion.identity);
+        temp.GetComponent<fieldItem>().setup(itemObj.GetComponent<itemObject>().itemData);
+        Destroy(itemObj);
+        jsonSave();
     }
 }

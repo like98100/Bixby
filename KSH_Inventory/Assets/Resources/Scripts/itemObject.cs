@@ -62,55 +62,43 @@ public class itemObject : MonoBehaviour
     }
     public void Up()
     {
-        float left, right, up, down;
-        left = this.transform.localPosition.x - this.size.x / 2f;
-        right = this.transform.localPosition.x + this.size.x / 2f;
-        up = this.transform.localPosition.y + this.size.y / 2f;
-        down = this.transform.localPosition.y - this.size.y / 2f;
+        float xPos = this.transform.localPosition.x;
+        float yPos = this.transform.localPosition.y;
+        float xSiz = this.size.x / 2f;
+        float ySiz = this.size.y / 2f;
         //print(left + " " + right + " " + up + " " + down);
         if (Input.GetMouseButtonUp(0))
         { //위치 조정
-            float tempL = (left + (cell/2f)) % cell;
-            left -= tempL;
-            right -= tempL;
-            if (tempL < -(cell / 2f))
-            {
-                left -= cell;
-                right -= cell;
-            }
-            else if (tempL > (cell / 2f))
-            {
-                left += cell;
-                right += cell;
-            }
+            float tempL = ((xPos - xSiz) + (cell / 2f)) % cell;
+            xPos -= tempL;
 
-            float tempU = (up + (cell / 2f)) % cell;
-            up -= tempU;
-            down -= tempU;
+            if (tempL < -(cell / 2f))
+                xPos -= cell;
+
+            else if (tempL > (cell / 2f))
+                xPos += cell;
+
+            float tempU = ((yPos + ySiz) + (cell / 2f)) % cell;
+            yPos -= tempU;
+            
             if (tempU < -(cell / 2f))
-            {
-                up -= cell;
-                down -= cell;
-            }
+                yPos -= cell;
+            
             else if (tempU > (cell / 2f))
-            {
-                up += cell;
-                down += cell;
-            }
-            //print(left + " " + right + " " + up + " " + down);
+                yPos += cell;
+            
             if (
-                left < this.zeroPos.x
-                || up > this.zeroPos.y
-                || right > this.maxPos.x
-                || down < this.maxPos.y
+                (xPos - xSiz) < this.zeroPos.x
+                || (yPos + ySiz) > this.zeroPos.y
+                || (xPos + xSiz) > this.maxPos.x
+                || (yPos - ySiz) < this.maxPos.y
                 )
             {
-                print("나갔음");
-                this.transform.localPosition = this.originPos;
+                inventoryObject.Inst.throwItem(this.gameObject);
             }
             else
             {
-                Vector3 temp = new Vector3((left + right) / 2f, (up + down) / 2f, 0f);
+                Vector3 temp = new Vector3(xPos, yPos, 0f);
                 inventoryObject.Inst.setItemPos(this.gameObject, temp);
             }
         }

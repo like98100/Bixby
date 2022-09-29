@@ -14,7 +14,8 @@ public class UI_Control : MonoBehaviour
 
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Escape))
+            optionWindow();
     }
     public void optionWindow()
     {

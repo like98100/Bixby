@@ -20,17 +20,17 @@ public class UI_Option : MonoBehaviour
     {
         float mouseSenseX = mouseSenseSliderX.value * 100;
         float mouseSenseY = mouseSenseSliderY.value * 100;
-        mouseSenseTextX.text = mouseSenseX.ToString();
-        mouseSenseTextY.text = mouseSenseY.ToString();
+        mouseSenseTextX.text = Mathf.FloorToInt(mouseSenseX).ToString();
+        mouseSenseTextY.text = Mathf.FloorToInt(mouseSenseY).ToString();
     }
     public void senseSetup()
     {
-        Camera.mouseSenseX = Mathf.Pow(10f, mouseSenseSliderX.value * 2f - 1);
-        Camera.mouseSenseY = Mathf.Pow(10f, mouseSenseSliderY.value * 2f - 1);
+        Camera.mouseSenseX = Mathf.FloorToInt(Mathf.Pow(10f, mouseSenseSliderX.value * 2f - 1));
+        Camera.mouseSenseY = Mathf.FloorToInt(Mathf.Pow(10f, mouseSenseSliderY.value * 2f - 1));
     }
     public void senseStop()
     {
-        Camera.mouseSenseX = 0f;
-        Camera.mouseSenseY = 0f;
+        Camera.mouseSenseX = 0;
+        Camera.mouseSenseY = 0;
     }
 }

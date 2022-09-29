@@ -10,23 +10,25 @@ public class UI_Option : MonoBehaviour
     [SerializeField] Slider mouseSenseSliderY;
     [SerializeField] Text mouseSenseTextX;
     [SerializeField] Text mouseSenseTextY;
+    float mouseSenseX;
+    float mouseSenseY;
     void Start()
     {
-        mouseSenseSliderX.value = 0.5f;
-        mouseSenseSliderY.value = 0.5f;
+        mouseSenseSliderX.value = 0.2f;
+        mouseSenseSliderY.value = 0.2f;
     }
 
     void Update()
     {
-        float mouseSenseX = mouseSenseSliderX.value * 100;
-        float mouseSenseY = mouseSenseSliderY.value * 100;
+        mouseSenseX = mouseSenseSliderX.value * 99 + 1f;
+        mouseSenseY = mouseSenseSliderY.value * 99 + 1f;
         mouseSenseTextX.text = Mathf.FloorToInt(mouseSenseX).ToString();
         mouseSenseTextY.text = Mathf.FloorToInt(mouseSenseY).ToString();
     }
     public void senseSetup()
     {
-        Camera.mouseSenseX = Mathf.FloorToInt(Mathf.Pow(10f, mouseSenseSliderX.value * 2f - 1));
-        Camera.mouseSenseY = Mathf.FloorToInt(Mathf.Pow(10f, mouseSenseSliderY.value * 2f - 1));
+        Camera.mouseSenseX = mouseSenseX * 0.05f;
+        Camera.mouseSenseY = mouseSenseY * 0.05f; ;
     }
     public void senseStop()
     {

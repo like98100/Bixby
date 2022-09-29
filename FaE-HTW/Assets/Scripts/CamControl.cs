@@ -19,8 +19,8 @@ public class CamControl : MonoBehaviour
     public STATE step = STATE.NONE; // 현재 상태.
     public STATE next_step = STATE.NONE; // 다음 상태.
     public float step_timer = 0.0f; // 타이머
-    public int mouseSenseX;
-    public int mouseSenseY;
+    public float mouseSenseX;
+    public float mouseSenseY;
     public enum STATE
     {
         NONE = -1,

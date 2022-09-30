@@ -34,7 +34,7 @@ public class NPC : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player" && keyInst == null)
         {
             keyInst = Instantiate(keyF, GameObject.Find("Canvas").transform);
             var wantedPos = Camera.main.WorldToScreenPoint(this.transform.position);

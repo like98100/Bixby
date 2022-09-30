@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class NPC : MonoBehaviour
 {
     [SerializeField] Speech speech;
@@ -10,17 +10,27 @@ public class NPC : MonoBehaviour
     [SerializeField] GameObject keyF;
     GameObject keyInst;
     [SerializeField] int talkIndex;
+    [SerializeField] GameObject nameObj;
+    Text nameUI;
     void Start()
     {
         playerClose = false;
         talkIndex = 0;
+        nameUI = nameObj.transform.GetChild(0).GetComponent<Text>();
+        nameUI.text = Name;
     }
 
     // Update is called once per frame
     void Update()
     {
+        var wantedPos = Camera.main.WorldToScreenPoint(this.transform.position);
+        nameObj.transform.position = wantedPos + Vector3.up * 200f;
         if (playerClose && Input.GetKeyDown(KeyCode.F))
+        {
             speech.setUp(Name, talkIndex);
+            Destroy(keyInst);
+            keyInst = null;
+        }
     }
     private void OnTriggerEnter(Collider other)
     {

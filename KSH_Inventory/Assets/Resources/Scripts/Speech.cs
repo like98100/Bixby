@@ -8,7 +8,7 @@ public class Speech : MonoBehaviour
     [SerializeField] Text speech;//대화내용
     List<string> speechList;//대화내용 리스트
     int speechIndex;//리스트중 현재 대화내용의 순서
-    [SerializeField] GameObject speechWindow;//대화창
+    public GameObject speechWindow;//대화창
     speechJsonData speechJsonData;
     [SerializeField] string Name;//대화자 이름
     void Start()

@@ -19,6 +19,8 @@ public class CamControl : MonoBehaviour
     public STATE step = STATE.NONE; // 현재 상태.
     public STATE next_step = STATE.NONE; // 다음 상태.
     public float step_timer = 0.0f; // 타이머
+    public float mouseSenseX;
+    public float mouseSenseY;
     public enum STATE
     {
         NONE = -1,
@@ -35,12 +37,14 @@ public class CamControl : MonoBehaviour
 
         this.step = STATE.MOVE;
         this.next_step = STATE.MOVE;
+        mouseSenseX = 1;
+        mouseSenseY = 1;
     }
 
     void Update()
     {
-        xmove += Input.GetAxis("Mouse X");
-        ymove -= Input.GetAxis("Mouse Y");
+        xmove += Input.GetAxis("Mouse X") * mouseSenseX;
+        ymove -= Input.GetAxis("Mouse Y") * mouseSenseY;
 
         ymove = Mathf.Clamp(ymove, -55.0f, 55.0f);
         transform.rotation = Quaternion.Euler(ymove, xmove, 0);

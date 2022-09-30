@@ -18,20 +18,25 @@ public class itemJsonData
 {
     public List<itemData> itemList = new List<itemData>();
     public int gold;
-    public Dictionary<string, itemData> makeData()
-    {
-        Dictionary<string, itemData> temp = new Dictionary<string, itemData>();
-        foreach (itemData item in itemList)
-        {
-            temp.Add(item.itemName, item);
-        }
-        return temp;
-    }
+
     public itemJsonData()
     {
         itemData nullItem = new itemData();
         itemList.Add(nullItem);
         gold = 0;
+    }
+}
+public class speechData
+{
+    public List<string> data;
+}
+public class speechJsonData
+{
+    //public List<speechData> speechDatas = new List<speechData>();
+    public List<string> speechDatas = new List<string>();
+    public speechJsonData()
+    {
+        speechDatas.Add("");
     }
 }
 public class json

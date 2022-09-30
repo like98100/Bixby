@@ -119,7 +119,7 @@ public class inventoryObject : MonoBehaviour
                 emptyCell.Add(new Vector2(i, j));
             }
         }
-        foreach (var item in emptyCell)
+        foreach (var item in emptyCell)//이렇게 찾는 방법을 백트래킹이라고 한다(고 들었다)
         {
             bool isOkay = true;
             for (int i = 0; i < newYSize; i++)

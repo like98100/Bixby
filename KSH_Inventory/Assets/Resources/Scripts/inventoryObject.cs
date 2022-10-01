@@ -59,9 +59,10 @@ public class inventoryObject : MonoBehaviour
         float left = ((newOrigonPos.x - item.GetComponent<RectTransform>().rect.width / 2f) / cell) + (xSize / 2f);
         float up = ((newOrigonPos.y + item.GetComponent<RectTransform>().rect.height / 2f) / cell) - (ySize / 2f);
         up *= -1f;
+        int itemIndex = items.items.IndexOf(itemObj.itemData);
         foreach (var Item in items.items)
         {
-            if (Item.itemID != itemObj.itemData.itemID)
+            if (items.items.IndexOf(Item) != itemIndex)
             {
                 if (isCrash(Item.Left, Item.xSize, left, itemObj.itemData.xSize, Item.Up, Item.ySize, up, itemObj.itemData.ySize))
                 {
@@ -73,7 +74,7 @@ public class inventoryObject : MonoBehaviour
         item.transform.localPosition = item.GetComponent<itemObject>().originPos = newOrigonPos;
         foreach (var Item in items.items)
         {
-            if (Item.itemID == itemObj.itemData.itemID)
+            if (items.items.IndexOf(Item) == itemIndex)
             {
                 Item.Left = left;
                 Item.Up = up;
@@ -146,7 +147,7 @@ public class inventoryObject : MonoBehaviour
             }
         }
     }
-    public List<Vector2> existCells()
+    public List<Vector2> existCells()//인벤토리 내 아이템 존재 칸 확인
     {
         List<Vector2> result = new List<Vector2>();
         foreach (var item in items.items)

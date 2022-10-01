@@ -28,7 +28,7 @@ public class Speech : MonoBehaviour
         }
         speechIndex = 0;//대화 인덱스로 쓸것임
         speechWindow.SetActive(true);//대화창 오픈
-        UI_Control.Inst.option.senseStop();
+        UI_Control.Inst.option.senseSet(true);
     }
     void Update()
     {
@@ -42,7 +42,7 @@ public class Speech : MonoBehaviour
         {
             speechIndex = 0;//초기화
             speechWindow.SetActive(false);//및 대화창 닫기
-            UI_Control.Inst.option.senseSetup();
+            UI_Control.Inst.option.senseSet(false);
         }
         else
             speechIndex++;//아니면 넘기기

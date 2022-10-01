@@ -26,8 +26,9 @@ public class NPC : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        var wantedPos = Camera.main.WorldToScreenPoint(this.transform.position + Vector3.up * 2f);
-        nameObj.transform.position = wantedPos;
+        nameObj.SetActive(!UI_Control.Inst.map.activeSelf);
+        if(nameObj.activeSelf)
+            nameObj.transform.position = Camera.main.WorldToScreenPoint(this.transform.position + Vector3.up * 2f);
         if (playerClose && Input.GetKeyDown(KeyCode.F))
         {
             speech.setUp(Name, talkIndex);

@@ -10,25 +10,59 @@ public class UI_Control : MonoBehaviour
     public UI_Option option;
     [SerializeField] GameObject inventory;
     public Speech speech;
+    public GameObject map;
+    [SerializeField] GameObject playerObj;
+    [SerializeField] List<GameObject> windows;
+    GameObject openedWindow;
     void Start()
     {
-        option = optionObj.GetComponent<UI_Option>();
         option.Set();
+        map.SetActive(false);
+        openedWindow = null;
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
             optionWindow();
-        if(Input.GetKeyDown(KeyCode.I))
-            inventory.SetActive(!inventory.activeSelf);
+        if (Input.anyKeyDown)
+        {
+            string temp = Input.inputString;
+            
+            switch (temp)
+            {
+                case "i":
+                    windowSet(inventory);
+                    break;
+                case "m":
+                    windowSet(map);
+                    break;
+            }
+        }
+
     }
     public void optionWindow()//옵션창 열고 닫기
     {
-        if (optionObj.activeSelf)
-            option.senseSetup();//닫을때 옵션에서 설정한 감도값 설정
+        foreach (var item in windows)//일단 창 닫기
+        {
+            if (item.activeSelf)
+            {
+                windowSet(item);
+                return;
+            }
+        }
+        windowSet(optionObj);
+    }
+
+    public void windowSet(GameObject window)//창 열고 닫기
+    {
+        if (!(openedWindow == null || openedWindow == window))
+            return;
+        window.SetActive(!window.activeSelf);
+        option.senseSet(window.activeSelf);
+        if (window.activeSelf)
+            openedWindow = window;
         else
-            option.senseStop();//열때 감도값 0으로 설정
-        optionObj.SetActive(!optionObj.activeSelf);
+            openedWindow = null;
     }
 }

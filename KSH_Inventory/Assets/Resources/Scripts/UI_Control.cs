@@ -11,7 +11,6 @@ public class UI_Control : MonoBehaviour
     [SerializeField] GameObject inventory;
     public Speech speech;
     public GameObject map;
-    [SerializeField] GameObject playerObj;
     [SerializeField] List<GameObject> windows;
     GameObject openedWindow;
     void Start()

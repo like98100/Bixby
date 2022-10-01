@@ -4,18 +4,21 @@ using UnityEngine;
 using UnityEngine.UI;
 public class NPC : MonoBehaviour
 {
-    [SerializeField] Speech speech;
+    Speech speech;
     [SerializeField] string Name;
     bool playerClose;
     [SerializeField] GameObject keyF;
     GameObject keyInst;
     [SerializeField] int talkIndex;
+    [SerializeField] GameObject canvasObj;
     [SerializeField] GameObject nameObj;
     Text nameUI;
     void Start()
     {
+        speech = UI_Control.Inst.speech;
         playerClose = false;
         talkIndex = 0;
+        canvasObj.SetActive(true);
         nameUI = nameObj.transform.GetChild(0).GetComponent<Text>();
         nameUI.text = Name;
     }
@@ -23,8 +26,8 @@ public class NPC : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        var wantedPos = Camera.main.WorldToScreenPoint(this.transform.position);
-        nameObj.transform.position = wantedPos + Vector3.up * 200f;
+        var wantedPos = Camera.main.WorldToScreenPoint(this.transform.position + Vector3.up * 2f);
+        nameObj.transform.position = wantedPos;
         if (playerClose && Input.GetKeyDown(KeyCode.F))
         {
             speech.setUp(Name, talkIndex);

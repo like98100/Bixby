@@ -385,4 +385,5 @@ MonoBehaviour:
   Name: villagerA
   keyF: {fileID: 6375923533990169802, guid: 4b1e6d66876efb547bd6cd8b969f566b, type: 3}
   talkIndex: 0
+  canvasObj: {fileID: 14200226350088535}
   nameObj: {fileID: 14200226367411239}

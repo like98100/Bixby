@@ -12,10 +12,13 @@ public class UI_Option : MonoBehaviour
     [SerializeField] Text mouseSenseTextY;
     float mouseSenseX;
     float mouseSenseY;
-    void Start()
+    public void Set()
     {
         mouseSenseSliderX.value = 0.2f;
         mouseSenseSliderY.value = 0.2f;
+        mouseSenseX = mouseSenseSliderX.value * 99 + 1f;
+        mouseSenseY = mouseSenseSliderY.value * 99 + 1f;
+        this.gameObject.SetActive(false);
     }
 
     void Update()

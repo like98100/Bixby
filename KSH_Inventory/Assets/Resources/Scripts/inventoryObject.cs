@@ -180,9 +180,15 @@ public class inventoryObject : MonoBehaviour
         items.items.Remove(itemObj.GetComponent<itemObject>().itemData);
         itemObjects.Remove(itemObj.gameObject);
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        GameObject temp = Instantiate(fieldItemPrefab, player.transform.position, Quaternion.identity);
-        temp.GetComponent<fieldItem>().setup(itemObj.GetComponent<itemObject>().itemData);
+        GameObject temp = MakeFieldItem(itemObj.GetComponent<itemObject>().itemData, player.transform.position);
         Destroy(itemObj);
         jsonSave();
+    }
+
+    public GameObject MakeFieldItem(itemData data, Vector3 position)
+    {
+        GameObject temp = Instantiate(fieldItemPrefab, position, Quaternion.identity);
+        temp.GetComponent<fieldItem>().setup(data);
+        return temp;
     }
 }

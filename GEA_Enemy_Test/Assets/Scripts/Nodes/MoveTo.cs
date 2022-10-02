@@ -5,7 +5,7 @@ using MBT;
 
 namespace MBTExample
 {
-    [MBTNode("Task/Move To")]
+    [MBTNode("Tasks/Move To")]
     [AddComponentMenu("")]
     public class MoveTo : Leaf
     {
@@ -64,7 +64,7 @@ namespace MBTExample
                 return NodeResult.running;
             }
             // Check if agent is very close to destination
-            if (agent.remainingDistance < stopDistance)
+            if (agent.remainingDistance <= stopDistance)
             {
                 return NodeResult.success;
             }

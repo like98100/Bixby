@@ -6,7 +6,7 @@ using MBT;
 namespace MBTExample
 {
     [AddComponentMenu("")]
-    [MBTNode("Task/LookTarget")]
+    [MBTNode("Tasks/Look Target")]
     public class LookTarget : Leaf
     {
         public TransformReference targetPosition;

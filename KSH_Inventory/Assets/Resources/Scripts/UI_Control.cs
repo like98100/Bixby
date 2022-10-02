@@ -13,6 +13,7 @@ public class UI_Control : MonoBehaviour
     public GameObject map;
     [SerializeField] List<GameObject> windows;
     GameObject openedWindow;
+    [SerializeField] GameObject AimPoint;
     void Start()
     {
         option.Set();
@@ -38,7 +39,16 @@ public class UI_Control : MonoBehaviour
                     break;
             }
         }
-
+        if (openedWindow == null)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            AimPoint.SetActive(true);
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+            AimPoint.SetActive(false);
+        }
     }
     public void optionWindow()//옵션창 열고 닫기
     {

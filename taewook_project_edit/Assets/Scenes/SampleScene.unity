@@ -3417,7 +3417,9 @@ MonoBehaviour:
   inventory: {fileID: 955689357}
   speech: {fileID: 1954030913}
   map: {fileID: 308839263}
-  windows: []
+  windows:
+  - {fileID: 955689357}
+  - {fileID: 308839263}
   AimPoint: {fileID: 1982079434}
 --- !u!114 &1954030913
 MonoBehaviour:

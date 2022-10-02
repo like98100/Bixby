@@ -12,7 +12,7 @@ public class UI_Control : MonoBehaviour
     public Speech speech;
     public GameObject map;
     [SerializeField] List<GameObject> windows;
-    GameObject openedWindow;
+    public GameObject openedWindow;
     [SerializeField] GameObject AimPoint;
     void Start()
     {

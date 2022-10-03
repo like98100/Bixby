@@ -7,7 +7,6 @@ public class fieldItem : MonoBehaviour
     public itemData itemData;
     float angle;
     [SerializeField] GameObject keyF;
-    GameObject keyInst;
     bool isPlayerClose;
     void Start()
     {
@@ -21,7 +20,7 @@ public class fieldItem : MonoBehaviour
     {
         itemData = data;
         angle = 0f;
-        keyInst = null;
+        //keyInst = null;
         this.transform.localScale = new Vector3(itemData.xSize, itemData.ySize, 1f);
         Vector3 tempPos = this.transform.position;
         tempPos.y = itemData.ySize / 2f;
@@ -35,21 +34,16 @@ public class fieldItem : MonoBehaviour
         if (isPlayerClose && Input.GetKeyDown(KeyCode.F))
             inventoryObject.Inst.getFieldItem(this.gameObject);
     }
-    private void OnDestroy()
-    {
-        Destroy(keyInst);
-        keyInst = null;
-    }
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.tag == "Player")
         {
-            isPlayerClose = true;
-            if (keyInst == null)
+            if (inventoryObject.Inst.FieldFKey == null)
             {
-                keyInst = Instantiate(keyF, GameObject.Find("Canvas").transform);
+                isPlayerClose = true;
+                inventoryObject.Inst.FieldFKey = Instantiate(keyF, GameObject.Find("Canvas").transform);
                 var wantedPos = Camera.main.WorldToScreenPoint(this.transform.position);
-                keyInst.transform.position = wantedPos + Vector3.right * 200f;
+                inventoryObject.Inst.FieldFKey.transform.position = wantedPos + Vector3.right * 200f;
             }
         }
     }
@@ -57,8 +51,8 @@ public class fieldItem : MonoBehaviour
     {
         if (other.tag=="Player")
         {
-            Destroy(keyInst);
-            keyInst = null;
+            Destroy(inventoryObject.Inst.FieldFKey);
+            inventoryObject.Inst.FieldFKey = null;
             isPlayerClose = false;
         }
     }

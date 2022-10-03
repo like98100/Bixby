@@ -1072,18 +1072,6 @@ LineRenderer:
     generateLightingData: 1
   m_UseWorldSpace: 1
   m_Loop: 0
---- !u!114 &629992764
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 629992761}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb922400a9e51c4b8e462cc85c64217, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &629992767 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2828116808624435224, guid: 1d405ba0b29b39441a3ecf4dc84ee5a2, type: 3}
@@ -3614,7 +3602,6 @@ MonoBehaviour:
   xSize: 5
   ySize: 7
   fieldItemPrefab: {fileID: 6224425477016243002, guid: acfb90cc8aa1dc242963edcec8d3984a, type: 3}
-  existFieldItems: []
 --- !u!1 &1982079434 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5004132388006924102, guid: 2e0157cbf68ea604bb4711b54fe4e71c, type: 3}

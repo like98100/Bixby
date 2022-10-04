@@ -32,9 +32,10 @@ public class NPC : MonoBehaviour
         isInCamera = 0 <= inCameraPosition.x
             && inCameraPosition.x <= canvasObj.GetComponent<RectTransform>().rect.width
             && 0 <= inCameraPosition.y
-            && inCameraPosition.y <= canvasObj.GetComponent<RectTransform>().rect.height;
+            && inCameraPosition.y <= canvasObj.GetComponent<RectTransform>().rect.height
+            && inCameraPosition.z >= 0;
         nameObj.SetActive(!UI_Control.Inst.map.activeSelf && isInCamera);
-        if(nameObj.activeSelf)
+        if (nameObj.activeSelf)
             nameObj.transform.position = Camera.main.WorldToScreenPoint(this.transform.position + Vector3.up * 2f);
         if (playerClose && Input.GetKeyDown(KeyCode.F))
         {

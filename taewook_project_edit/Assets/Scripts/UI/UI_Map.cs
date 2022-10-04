@@ -10,7 +10,6 @@ public class UI_Map : MonoBehaviour
     float mapX, mapY;
     [SerializeField] GameObject realPlayer;
     [SerializeField] GameObject mapPlayer;
-    public float temp;
     void Start()
     {
         realMaxX = max.x;

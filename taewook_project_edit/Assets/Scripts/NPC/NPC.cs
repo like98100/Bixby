@@ -16,7 +16,7 @@ public class NPC : MonoBehaviour
     bool isInCamera;
     void Start()
     {
-        speech = UI_Control.Inst.speech;
+        speech = UI_Control.Inst.Speech;
         playerClose = false;
         talkIndex = 0;
         canvasObj.SetActive(true);
@@ -34,12 +34,12 @@ public class NPC : MonoBehaviour
             && 0 <= inCameraPosition.y
             && inCameraPosition.y <= canvasObj.GetComponent<RectTransform>().rect.height
             && inCameraPosition.z >= 0;
-        nameObj.SetActive(!UI_Control.Inst.map.activeSelf && isInCamera);
-        if (nameObj.activeSelf)
+        nameObj.SetActive(!UI_Control.Inst.Map.activeSelf && isInCamera);
+        if(nameObj.activeSelf)
             nameObj.transform.position = Camera.main.WorldToScreenPoint(this.transform.position + Vector3.up * 2f);
         if (playerClose && Input.GetKeyDown(KeyCode.F))
         {
-            speech.setUp(Name, talkIndex);
+            speech.SetUp(Name, talkIndex);
             Destroy(keyInst);
             keyInst = null;
         }
@@ -64,3 +64,4 @@ public class NPC : MonoBehaviour
         }
     }
 }
+

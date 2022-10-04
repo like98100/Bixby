@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStatusControl : MonoBehaviour, IDamgeable
+public class PlayerStatusControl : ElementControl, IDamgeable
 {
     public const float GravityForce = 9.8f;
 
@@ -17,13 +17,14 @@ public class PlayerStatusControl : MonoBehaviour, IDamgeable
 
     public float DashStaminaAmount = 20.0f;
     public float RunStaminaAmount = 10.0f;
+    public float ChargeAttackStaminaAmount = 10.0f;
 
     protected bool isDashed;
     public float DashDistance = 5.0f;
 
     public float Speed = 5.0f;
     public float RunSpeed = 10.0f;
-    public float DashSpeed = 25.0f;
+    public float DashSpeed = 30.0f;
     public float MyCurrentSpeed;
     public float JumpPower = 5.0f;
 
@@ -34,8 +35,9 @@ public class PlayerStatusControl : MonoBehaviour, IDamgeable
     protected float rotationSpeed = 60.0f;
     protected float nextFire = 0.0f;
 
-    protected virtual void Start()
+    protected override void Start()
     {
+        base.Start();
         Health = MyStartingHealth;
         Stamina = MyStartingStamina;
         MyCurrentSpeed = Speed;

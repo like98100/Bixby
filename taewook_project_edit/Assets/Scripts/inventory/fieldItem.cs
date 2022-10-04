@@ -4,26 +4,26 @@ using UnityEngine;
 
 public class fieldItem : MonoBehaviour
 {
-    public itemData itemData;
+    public ItemData ItemData;
     float angle;
     [SerializeField] GameObject keyF;
     bool isPlayerClose;
     void Start()
     {
-        this.transform.localScale = new Vector3(itemData.xSize, itemData.ySize, 1f);
+        this.transform.localScale = new Vector3(ItemData.XSize, ItemData.YSize, 1f);
         Vector3 tempPos = this.transform.position;
-        tempPos.y = itemData.ySize / 2f;
+        tempPos.y = ItemData.YSize / 2f;
         this.transform.position = tempPos;
         isPlayerClose = false;
     }
-    public void setup(itemData data)
+    public void Setup(ItemData data)
     {
-        itemData = data;
+        ItemData = data;
         angle = 0f;
         //keyInst = null;
-        this.transform.localScale = new Vector3(itemData.xSize, itemData.ySize, 1f);
+        this.transform.localScale = new Vector3(ItemData.XSize, ItemData.YSize, 1f);
         Vector3 tempPos = this.transform.position;
-        tempPos.y = itemData.ySize / 2f;
+        tempPos.y = ItemData.YSize / 2f;
         this.transform.position = tempPos;
     }
     // Update is called once per frame
@@ -32,7 +32,7 @@ public class fieldItem : MonoBehaviour
         angle += 60 * Time.deltaTime;
         this.transform.localEulerAngles = new Vector3(0f, angle, 15f);
         if (isPlayerClose && Input.GetKeyDown(KeyCode.F))
-            inventoryObject.Inst.getFieldItem(this.gameObject);
+            inventoryObject.Inst.GetFieldItem(this.gameObject);
     }
     private void OnTriggerStay(Collider other)
     {

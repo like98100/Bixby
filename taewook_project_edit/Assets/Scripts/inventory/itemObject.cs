@@ -9,32 +9,33 @@ public class itemObject : MonoBehaviour
     
     Vector3 zeroPos;
     Vector3 maxPos;
-    public Vector3 size;
-    public Vector3 originPos;
+    public Vector3 Size;
+    public Vector3 OriginPos;
     bool isEquip;
     [SerializeField] GameObject equip;
-    public itemData itemData;
+    public ItemData ItemData;
     float cell;
-    public void Setup(float sizeX, float sizeY, float posX, float posY, bool isEquip, float cell, Vector3 zero, itemData itemData)
+    int temp = 0;
+    public void Setup(float sizeX, float sizeY, float posX, float posY, bool isEquip, float cell, Vector3 zero, ItemData itemData)
     {
         this.zeroPos = zero;
-        maxPos = zeroPos + (Vector3.right * inventoryObject.Inst.xSize * cell) + (Vector3.down * inventoryObject.Inst.ySize * cell);
+        maxPos = zeroPos + (Vector3.right * inventoryObject.Inst.XSize * cell) + (Vector3.down * inventoryObject.Inst.YSize * cell);
 
-        this.size = new Vector3(sizeX * cell, sizeY * cell, 1f);
-        this.GetComponent<RectTransform>().sizeDelta = this.size;
+        this.Size = new Vector3(sizeX * cell, sizeY * cell, 1f);
+        this.GetComponent<RectTransform>().sizeDelta = this.Size;
 
         this.transform.localPosition = new Vector3(
-                    zeroPos.x + posX * cell + size.x / 2f,
-                    zeroPos.y - posY * cell - size.y / 2f);
-        this.originPos = this.transform.localPosition;
+                    zeroPos.x + posX * cell + Size.x / 2f,
+                    zeroPos.y - posY * cell - Size.y / 2f);
+        this.OriginPos = this.transform.localPosition;
 
         this.isEquip = isEquip;
         equip.SetActive(isEquip);
 
-        this.itemData = itemData;
+        this.ItemData = itemData;
         this.cell = cell;
         Color imageColor = new Color();
-        switch (this.itemData.itemID)
+        switch (this.ItemData.ItemID)
         {
             case 0:
                  imageColor = Color.red;
@@ -64,8 +65,8 @@ public class itemObject : MonoBehaviour
     {
         float xPos = this.transform.localPosition.x;
         float yPos = this.transform.localPosition.y;
-        float xSiz = this.size.x / 2f;
-        float ySiz = this.size.y / 2f;
+        float xSiz = this.Size.x / 2f;
+        float ySiz = this.Size.y / 2f;
         //print(left + " " + right + " " + up + " " + down);
         if (Input.GetMouseButtonUp(0))
         { //위치 조정
@@ -94,12 +95,12 @@ public class itemObject : MonoBehaviour
                 || (yPos - ySiz) < this.maxPos.y
                 )
             {
-                inventoryObject.Inst.throwItem(this.gameObject);
+                inventoryObject.Inst.ThrowItem(this.gameObject);
             }
             else
             {
                 Vector3 temp = new Vector3(xPos, yPos, 0f);
-                inventoryObject.Inst.setItemPos(this.gameObject, temp);
+                inventoryObject.Inst.SetItemPos(this.gameObject, temp);
             }
         }
         else if (Input.GetMouseButtonUp(1))
@@ -108,7 +109,6 @@ public class itemObject : MonoBehaviour
             equip.SetActive(isEquip);
         }
     }
-    int temp = 0;
     void Update()
     {   
         if (isHover)
@@ -116,7 +116,7 @@ public class itemObject : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             { //좌클릭
                 //print("마우스 좌클릭");
-                originPos = this.transform.localPosition;
+                OriginPos = this.transform.localPosition;
             }
             else if (Input.GetMouseButtonDown(1))
             { //우클릭
@@ -126,7 +126,7 @@ public class itemObject : MonoBehaviour
             {//호버
                 if (temp == 0)
                 {
-                    inventoryObject.Inst.itemHover(this);
+                    inventoryObject.Inst.ItemHover(this);
                     //print("마우스 호버");
                     temp = 1;
                 }

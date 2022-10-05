@@ -866,7 +866,6 @@ MonoBehaviour:
   stamina: {fileID: 640245877}
   player: {fileID: 629992762}
   staminaBack: {fileID: 872232476}
-  timeTack: 0
   attackCharge: {fileID: 1599924780}
 --- !u!114 &547665343 stripped
 MonoBehaviour:
@@ -1524,7 +1523,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70d9c930f48201541b945e837078a82e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Camera: {fileID: 1687258583}
+  camera: {fileID: 1687258583}
   mouseSenseSliderX: {fileID: 963145853}
   mouseSenseSliderY: {fileID: 1172553709}
   mouseSenseTextX: {fileID: 1203221174}
@@ -3417,14 +3416,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   optionObj: {fileID: 797195638}
-  option: {fileID: 797195642}
+  Option: {fileID: 797195642}
   inventory: {fileID: 955689357}
-  speech: {fileID: 1954030913}
-  map: {fileID: 308839263}
+  Speech: {fileID: 1954030913}
+  Map: {fileID: 308839263}
   windows:
   - {fileID: 955689357}
   - {fileID: 308839263}
-  AimPoint: {fileID: 1982079434}
+  OpenedWindow: {fileID: 0}
+  aimPoint: {fileID: 1982079434}
 --- !u!114 &1954030913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3439,8 +3439,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   talker: {fileID: 547665343}
   speech: {fileID: 287456493}
-  speechWindow: {fileID: 356639283}
-  Name: 
+  SpeechWindow: {fileID: 356639283}
+  talkerName: 
 --- !u!114 &1954030914
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3459,10 +3459,11 @@ MonoBehaviour:
   inventoryObj: {fileID: 1819853276}
   cellObj: {fileID: 4289633989430038926, guid: 988788805fa3d6043befcecd62b48219, type: 3}
   goldObj: {fileID: 1948440415}
-  cell: 100
-  xSize: 5
-  ySize: 7
+  Cell: 100
+  XSize: 5
+  YSize: 7
   fieldItemPrefab: {fileID: 6224425477016243002, guid: acfb90cc8aa1dc242963edcec8d3984a, type: 3}
+  FieldFKey: {fileID: 0}
 --- !u!1 &1982079434 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5004132388006924102, guid: 2e0157cbf68ea604bb4711b54fe4e71c, type: 3}

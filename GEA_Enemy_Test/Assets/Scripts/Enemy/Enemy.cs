@@ -95,7 +95,7 @@ public class Enemy : MonoBehaviour
 
     public void ReCharge()
     {
-        if(Stat.hp == 100.0f)
+        if(Stat.hp == Stat.maxHp)
             State = STATE.IDLE;
     }
 

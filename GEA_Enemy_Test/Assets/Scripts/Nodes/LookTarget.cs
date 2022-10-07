@@ -3,30 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using MBT;
 
-namespace MBTExample
+namespace MBT
 {
     [AddComponentMenu("")]
     [MBTNode("Tasks/Look Target")]
     public class LookTarget : Leaf
     {
-        public TransformReference targetPosition;
-        public TransformReference selfPosition;
+        public TransformReference TargetPosition;
+        public TransformReference SelfPosition;
 
-        public float updateInterval = 3.0f;
-        public float time = 0.0f;
+        public float UpdateInterval = 3.0f;
+        public float Time_ = 0.0f;
 
         public override NodeResult Execute()
         {
-            Transform target = targetPosition.Value;
-            Transform self = selfPosition.Value;
+            Transform target = TargetPosition.Value;
+            Transform self = SelfPosition.Value;
             Vector3 dir = target.position - self.position;
-            
-            time += Time.deltaTime * 1.5f;
 
-            if(time > updateInterval)
+            Time_ += Time.deltaTime * 1.5f;
+
+            if(Time_ > UpdateInterval)
             {
                 // Reset time and update destination
-                time = 0;
+                Time_ = 0;
                 return NodeResult.success;
             }
             

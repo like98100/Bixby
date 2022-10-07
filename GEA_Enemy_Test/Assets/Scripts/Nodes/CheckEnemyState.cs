@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using MBT;
 
-namespace MBTExample
+namespace MBT
 {
     [AddComponentMenu("")]
     [MBTNode("Services/Check Enemy State Service")]
     public class CheckEnemyState : Service
     {
         public GameObjectReference ObjRef = new GameObjectReference(VarRefMode.DisableConstant);
-        public IntReference variable = new IntReference(VarRefMode.DisableConstant);
+        public IntReference Variable = new IntReference(VarRefMode.DisableConstant);
 
         public override void Task()
         {
@@ -19,7 +19,7 @@ namespace MBTExample
             if(obj == null)
                 return;
 
-            variable.Value = (int)obj.GetComponent<Enemy>().State;                
+            Variable.Value = (int)obj.GetComponent<Enemy>().State;                
         }
     }
 }

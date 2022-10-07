@@ -313,7 +313,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1453383950728693698, guid: 5827bdec84980c6459b606d5751ac23a, type: 3}
       propertyPath: m_Name
-      value: MeleeEnemyWater
+      value: MeleeEnemyWater - TestRanged
       objectReference: {fileID: 0}
     - target: {fileID: 1700219710187896675, guid: 5827bdec84980c6459b606d5751ac23a, type: 3}
       propertyPath: val
@@ -596,7 +596,7 @@ PrefabInstance:
       objectReference: {fileID: 327135162}
     - target: {fileID: 9178649091483474372, guid: b7a138d450c746c4dac18395ff45a232, type: 3}
       propertyPath: m_Name
-      value: MeleeEnemyElectricity
+      value: MeleeEnemyElectricity - TestRanged
       objectReference: {fileID: 0}
     - target: {fileID: 9190440854157790431, guid: b7a138d450c746c4dac18395ff45a232, type: 3}
       propertyPath: val

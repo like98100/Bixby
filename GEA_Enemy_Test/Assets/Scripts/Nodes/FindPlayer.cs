@@ -3,28 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using MBT;
 
-namespace MBTExample
+namespace MBT
 {
     [AddComponentMenu("")]
-    [MBTNode("Service/Find Player")]
+    [MBTNode("Services/Find Player")]
     public class FindPlayer : Service
     {
-        public LayerMask mask = -1;
+        public LayerMask Mask = -1;
         [Tooltip("Sphere radius")]
-        public float range = 5;
-        public TransformReference variableToSet = new TransformReference(VarRefMode.DisableConstant);
+        public float Range = 5;
+        public TransformReference VariableToSet = new TransformReference(VarRefMode.DisableConstant);
 
         public override void Task()
         {
-            // Find target in radius and feed blackboard variable with results
-            Collider[] colliders = Physics.OverlapSphere(transform.position, range, mask, QueryTriggerInteraction.Ignore);
+            Collider[] colliders = Physics.OverlapSphere(transform.position, Range, Mask, QueryTriggerInteraction.Ignore);
             if (colliders.Length > 0)
             {
-                variableToSet.Value = colliders[0].transform;
+                VariableToSet.Value = colliders[0].transform;
             }
             else
             {
-                variableToSet.Value = null;
+                VariableToSet.Value = null;
             }
         }
     }

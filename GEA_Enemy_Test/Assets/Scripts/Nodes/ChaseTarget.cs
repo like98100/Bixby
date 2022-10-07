@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using MBT;
 
-namespace MBTExample
+namespace MBT
 {
     [AddComponentMenu("")]
     [MBTNode("Tasks/Chase Target")]

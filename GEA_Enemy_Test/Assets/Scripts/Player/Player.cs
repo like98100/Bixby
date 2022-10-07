@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public float speed = 5f;
+    public float Speed = 5f;
     private Rigidbody characterRigidbody;
 
-    
     public GameObject Bullet;
 
     // Start is called before the first frame update
@@ -23,7 +22,7 @@ public class Player : MonoBehaviour
         float inputZ = Input.GetAxis("Vertical");
  
         Vector3 velocity = new Vector3(inputX, 0, inputZ);
-        velocity *= speed;
+        velocity *= Speed;
         characterRigidbody.velocity = velocity;
 
         if(Input.GetKeyDown(KeyCode.Space))

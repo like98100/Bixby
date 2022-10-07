@@ -27,9 +27,9 @@ public class EnemyStatus
     {
         EnemyStatus stat = null;
 
-        if(enemyType == EnemyType.Melee)
+        if (enemyType == EnemyType.Melee)
             stat = new EnemyStatus(enemyType, 100.0f, enemyElement);
-        else if(enemyType == EnemyType.Ranged)
+        else if (enemyType == EnemyType.Ranged)
             stat = new EnemyStatus(enemyType, 150.0f, enemyElement);
 
         return stat;

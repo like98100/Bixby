@@ -9,19 +9,19 @@ namespace MBT
     public class EnemyToPlayerDistance : Service
     {
         [Space]
-        public GameObjectReference transform1;
-        public TransformReference transform2;
-        public FloatReference variable = new FloatReference(VarRefMode.DisableConstant);
+        public GameObjectReference Transform1;
+        public TransformReference Transform2;
+        public FloatReference Variable = new FloatReference(VarRefMode.DisableConstant);
 
         public override void Task()
         {
-            GameObject t1 = transform1.Value;
-            Transform t2 = transform2.Value;
+            GameObject t1 = Transform1.Value;
+            Transform t2 = Transform2.Value;
             if (t1 == null || t2 == null)
             {
                 return;
             }
-            variable.Value = Vector3.Distance(t1.transform.position, t2.position);
+            Variable.Value = Vector3.Distance(t1.transform.position, t2.position);
         }
     }
 }

@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using MBT;
 
-namespace MBTExample
+namespace MBT
 {
     [AddComponentMenu("")]
-    [MBTNode("Task/Attack_1")]
+    [MBTNode("Tasks/Attack_1")]
     public class Attack_1 : Leaf
     {
-        public TransformReference selfPosition;
+        public TransformReference SelfPosition;
         public GameObject Bullet;
 
         public override NodeResult Execute()
         {
-            Transform self = selfPosition.Value;
+            Transform self = SelfPosition.Value;
 
             Instantiate(Bullet, self.position, self.rotation);
 

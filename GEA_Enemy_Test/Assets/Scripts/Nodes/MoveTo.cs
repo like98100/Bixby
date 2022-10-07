@@ -3,77 +3,51 @@ using System.Collections.Generic;
 using UnityEngine;
 using MBT;
 
-namespace MBTExample
+namespace MBT
 {
     [MBTNode("Tasks/Move To")]
     [AddComponentMenu("")]
     public class MoveTo : Leaf
     {
-        //public Vector3Reference targetPosition;
-        //public Vector3Reference movePosition;
-        //public TransformReference transformToMove;
-        //public float speed = 0.1f;
-        //public float minDistance = 0f;
-
-        //public TransformReference destination;
-        public Vector3Reference targetPosition;
-        public UnityEngine.AI.NavMeshAgent agent;
-        public float stopDistance = 2f;
+        
+        public Vector3Reference TargetPosition;
+        public UnityEngine.AI.NavMeshAgent Agent;
+        public float StopDistance = 2f;
         [Tooltip("How often target position should be updated")]
-        public float updateInterval = 1f;
-        private float time = 0;
+        public float UpdateInterval = 1f;
+        private float Time_ = 0;
 
         public override void OnEnter()
         {
-            time = 0;
-            agent.isStopped = false;
-            agent.SetDestination(targetPosition.Value);
+            Time_ = 0;
+            Agent.isStopped = false;
+            Agent.SetDestination(TargetPosition.Value);
         }
 
         public override NodeResult Execute()
         {
-            //Vector3 target = targetPosition.Value;
-            //Transform obj = transformToMove.Value;
-            //// Move as long as distance is greater than min. distance
-            //float dist = Vector3.Distance(target, obj.position);
-            //if (dist > minDistance)
-            //{
-            //// Move towards target
-            //obj.position = Vector3.MoveTowards(
-            //    obj.position, 
-            //   target, 
-            //    (speed >= dist)? dist : speed 
-            //    1
-            //);
-            //return NodeResult.running;
-            //}
-            // else
-            // {
-            //     return NodeResult.success;
-            // }
+            Vector3 target = TargetPosition.Value;
 
-            Vector3 target = targetPosition.Value;
-
-            time += Time.deltaTime;
+            Time_ += Time.deltaTime;
             // Update destination every given interval
-            if (time > updateInterval)
+            if (Time_ > UpdateInterval)
             {
                 // Reset time and update destination
-                time = 0;
-                agent.SetDestination(targetPosition.Value);
+                Time_ = 0;
+                Agent.SetDestination(TargetPosition.Value);
             }
             // Check if path is ready
-            if (agent.pathPending)
+            if (Agent.pathPending)
             {
                 return NodeResult.running;
             }
             // Check if agent is very close to destination
-            if (agent.remainingDistance <= stopDistance)
+            if (Agent.remainingDistance <= StopDistance)
             {
                 return NodeResult.success;
             }
             // Check if there is any path (if not pending, it should be set)
-            if (agent.hasPath)
+            if (Agent.hasPath)
             {
                 return NodeResult.running;
             }
@@ -83,13 +57,13 @@ namespace MBTExample
 
          public override void OnExit()
         {
-            agent.isStopped = true;
+            Agent.isStopped = true;
             // agent.ResetPath();
         }
 
         public override bool IsValid()
         {
-            return !(targetPosition.isInvalid || agent == null);
+            return !(TargetPosition.isInvalid || Agent == null);
         }
     }
 }

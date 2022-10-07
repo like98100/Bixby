@@ -3,27 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using MBT;
 
-namespace MBTExample
+namespace MBT
 {
     [AddComponentMenu("")]
     [MBTNode("Tasks/Sleep")]
     public class Sleep : Leaf
     {
-        public GameObjectReference obj1;
+        public GameObjectReference Obj1;
 
-        public float updateInterval = 3.0f;
-        public float time = 0.0f;
+        public float UpdateInterval = 3.0f;
+        public float Time_ = 0.0f;
 
         public override NodeResult Execute()
         {
-            GameObject obj = obj1.Value;
-            
-            time += Time.deltaTime * 1.5f;
+            GameObject obj = Obj1.Value;
 
-            if(time > updateInterval)
+            Time_ += Time.deltaTime * 1.5f;
+
+            if(Time_ > UpdateInterval)
             {
                 // Reset time and update destination
-                time = 0;
+                Time_ = 0;
                 return NodeResult.success;
             }
             

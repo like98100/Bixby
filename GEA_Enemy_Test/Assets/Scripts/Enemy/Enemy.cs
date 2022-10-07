@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour
 {
     public EnemyStatus Stat;
     public EnemyType Type;
+    public EnemyElement Element;
 
     public float EnemySight;
     public float Timer;
@@ -24,7 +25,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         Stat = new EnemyStatus();
-        Stat = Stat.SetEnemyStatus(Type);
+        Stat = Stat.SetEnemyStatus(Type, Element);
 
         Timer = 0.0f;
 
@@ -97,4 +98,5 @@ public class Enemy : MonoBehaviour
         if(Stat.hp == 100.0f)
             State = STATE.IDLE;
     }
+
 }

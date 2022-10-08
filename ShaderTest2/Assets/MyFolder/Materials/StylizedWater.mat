@@ -95,9 +95,9 @@ Material:
     m_Floats:
     - Vector1_10f5ceb64de44a6a9af3bfb1a82833be: 0.5
     - Vector1_31821f10b89c4bba8770cc75ead3784d: 3
-    - Vector1_3582abc8772b40a9a8d224388aa3e166: 2
+    - Vector1_3582abc8772b40a9a8d224388aa3e166: 9
     - Vector1_5f0e04586e2141529c3048a5c95a0124: 20
-    - Vector1_90c9435cb77d4bcfa30e33f1dd0c8838: 9
+    - Vector1_90c9435cb77d4bcfa30e33f1dd0c8838: 2
     - Vector1_94702609ab734a7e82b1bbb2e7975110: 2.5
     - Vector1_9943e49226324431961c394f8bfe80b5: 1
     - Vector1_9d100076973a413f8ad117a177b8b15e: 0.5
@@ -133,7 +133,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - Color_46d96940aea144bf820f8688797d4206: {r: 0.745, g: 0.19519, b: 0.19519, a: 0}
-    - Color_7a8b15fd099d4cdd8f22baa11f82bd76: {r: 0.8490566, g: 0.7168921, b: 0.7168921, a: 0.8}
+    - Color_7a8b15fd099d4cdd8f22baa11f82bd76: {r: 0.7176471, g: 0.72717345, b: 0.8509804, a: 0.8}
     - Color_acea9758d11b44fc9681c5719c21c64b: {r: 0, g: 0, b: 0, a: 0}
     - Color_f6aefdaf9b9e42e6ab8a2eb3b4518aea: {r: 0.8773585, g: 0.8773585, b: 0.8773585, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}

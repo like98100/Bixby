@@ -10,7 +10,7 @@ public class UI_Gauge : MonoBehaviour
     [SerializeField] PlayerContorl player;
     [SerializeField] Image staminaBack;
     float staminaBackAmount;
-    float timeTack;
+    public float timeTack;
     [SerializeField] Slider attackCharge;
     void Start()
     {

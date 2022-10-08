@@ -7,24 +7,24 @@ public class UI_Control : MonoBehaviour
     public static UI_Control Inst { get; private set; }
     private void Awake() => Inst = this;
     [SerializeField] GameObject optionObj;
-    public UI_Option Option;
+    public UI_Option option;
     [SerializeField] GameObject inventory;
-    public Speech Speech;
-    public GameObject Map;
+    public Speech speech;
+    public GameObject map;
     [SerializeField] List<GameObject> windows;
-    public GameObject OpenedWindow;
-    [SerializeField] GameObject aimPoint;
+    GameObject openedWindow;
+    [SerializeField] GameObject AimPoint;
     void Start()
     {
-        Option.Set();
-        Map.SetActive(false);
-        OpenedWindow = null;
+        option.Set();
+        map.SetActive(false);
+        openedWindow = null;
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
-            OptionWindow();
+            optionWindow();
         if (Input.anyKeyDown)
         {
             string temp = Input.inputString;
@@ -32,45 +32,45 @@ public class UI_Control : MonoBehaviour
             switch (temp)
             {
                 case "i":
-                    WindowSet(inventory);
+                    windowSet(inventory);
                     break;
                 case "m":
-                    WindowSet(Map);
+                    windowSet(map);
                     break;
             }
         }
-        if (OpenedWindow == null)
+        if (openedWindow == null)
         {
             Cursor.lockState = CursorLockMode.Locked;
-            aimPoint.SetActive(true);
+            AimPoint.SetActive(true);
         }
         else
         {
             Cursor.lockState = CursorLockMode.None;
-            aimPoint.SetActive(false);
+            AimPoint.SetActive(false);
         }
     }
-    public void OptionWindow()
+    public void optionWindow()
     {
         foreach (var item in windows)//¿œ¥‹ √¢ ¥›±‚
         {
             if (item.activeSelf)
             {
-                WindowSet(item);
+                windowSet(item);
                 return;
             }
         }
-        WindowSet(optionObj);
+        windowSet(optionObj);
     }
-    public void WindowSet(GameObject window)//√¢ ø≠∞Ì ¥›±‚
+    public void windowSet(GameObject window)//√¢ ø≠∞Ì ¥›±‚
     {
-        if (!(OpenedWindow == null || OpenedWindow == window))
+        if (!(openedWindow == null || openedWindow == window))
             return;
         window.SetActive(!window.activeSelf);
-        Option.senseSet(window.activeSelf);
+        option.senseSet(window.activeSelf);
         if (window.activeSelf)
-            OpenedWindow = window;
+            openedWindow = window;
         else
-            OpenedWindow = null;
+            openedWindow = null;
     }
 }

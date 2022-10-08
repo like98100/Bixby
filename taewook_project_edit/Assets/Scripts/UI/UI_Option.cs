@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class UI_Option : MonoBehaviour
 {
-    [SerializeField] CamControl camera;
+    [SerializeField] CamControl Camera;
     [SerializeField] Slider mouseSenseSliderX;
     [SerializeField] Slider mouseSenseSliderY;
     [SerializeField] Text mouseSenseTextX;
@@ -30,7 +30,7 @@ public class UI_Option : MonoBehaviour
     }
     public void senseSet(bool isStop)
     {
-        camera.mouseSenseX = isStop ? 0 : mouseSenseX * 0.05f;
-        camera.mouseSenseY = isStop ? 0 : mouseSenseY * 0.05f;
+        Camera.mouseSenseX = isStop ? 0 : mouseSenseX * 0.05f;
+        Camera.mouseSenseY = isStop ? 0 : mouseSenseY * 0.05f;
     }
 }

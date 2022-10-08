@@ -4,42 +4,42 @@ using UnityEngine;
 using System.IO;
 using System.Text;
 [System.Serializable]
-public class ItemData
+public class itemData
 {
-    public int ItemID;
-    public string ItemName;
+    public int itemID;
+    public string itemName;
     public float Left;
     public float Up;
-    public float XSize;
-    public float YSize;
-    public bool IsEquip;
+    public float xSize;
+    public float ySize;
+    public bool isEquip;
 }
-public class ItemJsonData
+public class itemJsonData
 {
-    public List<ItemData> ItemList = new List<ItemData>();
-    public int Gold;
+    public List<itemData> itemList = new List<itemData>();
+    public int gold;
 
-    public ItemJsonData()
+    public itemJsonData()
     {
-        ItemData nullItem = new ItemData();
-        ItemList.Add(nullItem);
-        Gold = 0;
+        itemData nullItem = new itemData();
+        itemList.Add(nullItem);
+        gold = 0;
     }
 }
-public class SpeechData
+public class speechData
 {
-    public List<string> Data;
+    public List<string> data;
 }
-public class SpeechJsonData
+public class speechJsonData
 {
     //public List<speechData> speechDatas = new List<speechData>();
-    public List<string> SpeechDatas = new List<string>();
-    public SpeechJsonData()
+    public List<string> speechDatas = new List<string>();
+    public speechJsonData()
     {
-        SpeechDatas.Add("");
+        speechDatas.Add("");
     }
 }
-public class Json
+public class json
 {
     public static string ObjectToJson(object obj) { return JsonUtility.ToJson(obj); }
     public static T JsonToObject<T>(string jsonData) { return JsonUtility.FromJson<T>(jsonData); }

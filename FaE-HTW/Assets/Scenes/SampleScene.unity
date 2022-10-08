@@ -764,7 +764,7 @@ PrefabInstance:
     - target: {fileID: 3631255647500903298, guid: f4365d79afb908f41807d30a47b4c3e7, type: 3}
       propertyPath: realPlayer
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 904274269}
     - target: {fileID: 3631255647500903310, guid: f4365d79afb908f41807d30a47b4c3e7, type: 3}
       propertyPath: m_Name
       value: Map
@@ -864,7 +864,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: {fileID: 185881999}
   stamina: {fileID: 640245877}
-  player: {fileID: 1632859568}
+  player: {fileID: 904274273}
   staminaBack: {fileID: 872232476}
   timeTack: 0
   attackCharge: {fileID: 1599924780}
@@ -1656,6 +1656,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4415452928403030131, guid: e22e1c3f1bc303a42b58284adca7ae0a, type: 3}
   m_PrefabInstance: {fileID: 4415452928573038894}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &904274273 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4415452928403030095, guid: e22e1c3f1bc303a42b58284adca7ae0a, type: 3}
+  m_PrefabInstance: {fileID: 4415452928573038894}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 904274269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 076f6b43f731150418236a59f5b4362c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &920072853
 GameObject:
   m_ObjectHideFlags: 0
@@ -2864,17 +2875,6 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1632859568 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7102394556938882382, guid: 1d405ba0b29b39441a3ecf4dc84ee5a2, type: 3}
-  m_PrefabInstance: {fileID: 7102394557464180990}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 076f6b43f731150418236a59f5b4362c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1687258581
 GameObject:
   m_ObjectHideFlags: 0

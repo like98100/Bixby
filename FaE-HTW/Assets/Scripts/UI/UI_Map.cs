@@ -23,9 +23,9 @@ public class UI_Map : MonoBehaviour
     void Update()
     {
         float xtemp =
-            (mapX * ((realPlayer.transform.position.x - realMinX) / (realMaxX - realMinX) + 0.5f));
+            (mapX * ((realPlayer.transform.position.x - realMinX) / (realMaxX - realMinX) - 0.5f));
         float ytemp =
-            (mapY * ((realPlayer.transform.position.z - realMinZ) / (realMaxZ - realMinZ) + 0.5f));
+            (mapY * ((realPlayer.transform.position.z - realMinZ) / (realMaxZ - realMinZ) - 0.5f));
         mapPlayer.transform.localPosition = new Vector3(xtemp, ytemp, 0f);
     }
 }

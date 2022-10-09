@@ -12,6 +12,7 @@ public class UI_Gauge : MonoBehaviour
     float staminaBackAmount;
     float timeTack;
     Slider attackCharge;
+    CamControl cameraControl;
     void Start()
     {
         hp = this.transform.GetChild(0).GetComponent<Slider>();
@@ -19,6 +20,7 @@ public class UI_Gauge : MonoBehaviour
         attackCharge = this.transform.GetChild(2).GetComponent<Slider>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerContorl>();
         staminaBack = this.transform.GetChild(1).GetChild(1).GetComponent<Image>();
+        cameraControl = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CamControl>();
         staminaBackAmount = player.MyStartingStamina;
         timeTack = 0f;
     }
@@ -26,7 +28,7 @@ public class UI_Gauge : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (player.State == PlayerContorl.STATE.CHARGE_ATTACK)
+        if (player.State == PlayerContorl.STATE.ATTACK && cameraControl.step == CamControl.STATE.AIM)
         {
             attackCharge.gameObject.SetActive(true);
             attackCharge.value = player.StateTimer / 2f;

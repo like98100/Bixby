@@ -5,23 +5,26 @@ using UnityEngine.UI;
 public class NPC : MonoBehaviour
 {
     Speech speech;
-    [SerializeField] string Name;
+    [SerializeField] string npcName;
     bool playerClose;
-    [SerializeField] GameObject keyF;
+    GameObject keyF;
     GameObject keyInst;
     [SerializeField] int talkIndex;
-    [SerializeField] GameObject canvasObj;
-    [SerializeField] GameObject nameObj;
+    GameObject canvasObj;
+    GameObject nameObj;
     Text nameUI;
     bool isInCamera;
     void Start()
     {
-        speech = UI_Control.Inst.speech;
+        canvasObj = this.transform.GetChild(0).gameObject;
+        nameObj = canvasObj.transform.GetChild(0).gameObject;
+        keyF = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Bixby/Prefab/UI/letter-f.prefab", typeof(GameObject)) as GameObject;
+        speech = UI_Control.Inst.Speech;
         playerClose = false;
         talkIndex = 0;
         canvasObj.SetActive(true);
         nameUI = nameObj.transform.GetChild(0).GetComponent<Text>();
-        nameUI.text = Name;
+        nameUI.text = npcName;
         isInCamera = false;
     }
 
@@ -34,12 +37,12 @@ public class NPC : MonoBehaviour
             && 0 <= inCameraPosition.y
             && inCameraPosition.y <= canvasObj.GetComponent<RectTransform>().rect.height
             && inCameraPosition.z >= 0;
-        nameObj.SetActive(!UI_Control.Inst.map.activeSelf && isInCamera);
+        nameObj.SetActive(!UI_Control.Inst.Map.activeSelf && isInCamera);
         if(nameObj.activeSelf)
             nameObj.transform.position = Camera.main.WorldToScreenPoint(this.transform.position + Vector3.up * 2f);
         if (playerClose && Input.GetKeyDown(KeyCode.F))
         {
-            speech.setUp(Name, talkIndex);
+            speech.setUp(npcName, talkIndex);
             Destroy(keyInst);
             keyInst = null;
         }

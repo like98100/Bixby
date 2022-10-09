@@ -5,15 +5,20 @@ using UnityEngine.UI;
 
 public class UI_Gauge : MonoBehaviour
 {
-    [SerializeField] Slider hp;
-    [SerializeField] Slider stamina;
-    [SerializeField] PlayerContorl player;
-    [SerializeField] Image staminaBack;
+    Slider hp;
+    Slider stamina;
+    PlayerContorl player;
+    Image staminaBack;
     float staminaBackAmount;
-    public float timeTack;
-    [SerializeField] Slider attackCharge;
+    float timeTack;
+    Slider attackCharge;
     void Start()
     {
+        hp = this.transform.GetChild(0).GetComponent<Slider>();
+        stamina = this.transform.GetChild(1).GetComponent<Slider>();
+        attackCharge = this.transform.GetChild(2).GetComponent<Slider>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerContorl>();
+        staminaBack = this.transform.GetChild(1).GetChild(1).GetComponent<Image>();
         staminaBackAmount = player.MyStartingStamina;
         timeTack = 0f;
     }

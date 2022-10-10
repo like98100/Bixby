@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerContorl : PlayerStatusControl
 {
-    public GameObject Camera;
+    private GameObject camera;
     private Vector3 cameraForward;
     private Vector3 cameraRight;
 
@@ -25,6 +25,10 @@ public class PlayerContorl : PlayerStatusControl
     private RaycastHit[] hitInfo_all;
     private bool isAimAttack;
 
+    private bool isOnAFK = false;
+    private float latestActionTime = 0f;
+    private float myAFKTime = 5.0f; //5초 후 Idle로 전환함.
+
     public STATE State = STATE.NONE; // 현재 상태.
     public STATE NextState = STATE.NONE; // 다음 상태.
     public float StateTimer = 0.0f; // 타이머
@@ -39,9 +43,11 @@ public class PlayerContorl : PlayerStatusControl
         ATTACK = 5, // 약공격
         CHARGE_ATTACK = 6, // 강공격
         ELEMENT_SKILL = 7, // 원소스킬
-        ELEMENT_ULT_SKILL = 8, //원소궁극기
+        ELEMENT_ULT_SKILL = 8, // 원소궁극기
+        STUNNED = 9, // 경직
+        DEAD = 10, // 사망
 
-        NUM = 9, // 상태 종류
+        NUM = 11, // 상태 종류
     };
 
     // Start is called before the first frame update
@@ -53,6 +59,7 @@ public class PlayerContorl : PlayerStatusControl
         this.State = STATE.NONE;
         this.NextState = STATE.IDLE;
 
+        camera = GameObject.FindGameObjectWithTag("MainCamera");
         player = this.GetComponent<CharacterController>();
         projectileLine = this.GetComponent<LineRenderer>();
         projectileLine.enabled = false;
@@ -70,7 +77,23 @@ public class PlayerContorl : PlayerStatusControl
             switch (this.State)
             {
                 case STATE.IDLE:
-                    this.NextState = STATE.MOVE; //여기는 나중에 매끄럽게 모든 스테이트와 연결이 되어야 한다.
+                    if ((Input.GetAxis("Vertical") != 0) || (Input.GetAxis("Horizontal") != 0))
+                    {
+                        this.NextState = STATE.MOVE; 
+                    }
+                    if (Input.GetMouseButton(1))
+                        this.NextState = STATE.AIM;
+                    if (Input.GetMouseButton(0) && Time.time > nextFire)
+                    {
+                        this.isAimAttack = false;
+                        this.NextState = STATE.ATTACK;
+                    }
+                    if (Input.GetKeyDown(KeyCode.LeftShift) && Stamina > DashStaminaAmount && player.isGrounded)
+                        this.NextState = STATE.DASH;
+                    if (Input.GetKeyDown(KeyCode.E) && player.isGrounded)
+                        this.NextState = STATE.ELEMENT_SKILL;
+                    if (Input.GetKeyDown(KeyCode.Q) && player.isGrounded)
+                        this.NextState = STATE.ELEMENT_ULT_SKILL;
                     break;
                 case STATE.MOVE:
                     if (Input.GetMouseButton(1))
@@ -86,6 +109,10 @@ public class PlayerContorl : PlayerStatusControl
                         this.NextState = STATE.ELEMENT_SKILL;
                     if (Input.GetKeyDown(KeyCode.Q) && player.isGrounded)
                         this.NextState = STATE.ELEMENT_ULT_SKILL;
+                    if (isAFK())
+                    {
+                        this.NextState = STATE.IDLE;
+                    }
                     break;
                 case STATE.AIM:
                     if (!Input.GetMouseButton(1))
@@ -160,7 +187,7 @@ public class PlayerContorl : PlayerStatusControl
         // 상태가 변화했을 때------------.
         while (this.NextState != STATE.NONE)
         { // 상태가 NONE이외 = 상태가 변화했다.
-            var offset = Camera.transform.forward;
+            var offset = camera.transform.forward;
 
             this.State = this.NextState;
             this.NextState = STATE.NONE;
@@ -171,27 +198,27 @@ public class PlayerContorl : PlayerStatusControl
                     break;
                 case STATE.MOVE:
                     MyCurrentSpeed = Speed;
-                    Camera.GetComponent<CamControl>().isOnAim = false;
+                    camera.GetComponent<CamControl>().isOnAim = false;
                     break;
                 case STATE.AIM:
                     offset.y = 0;
-                    Camera.GetComponent<CamControl>().isOnAim = true;
+                    camera.GetComponent<CamControl>().isOnAim = true;
                     break;
                 case STATE.DASH:
-                    Camera.GetComponent<CamControl>().isOnAim = false;
+                    camera.GetComponent<CamControl>().isOnAim = false;
                     StaminaUse(DashStaminaAmount);
                     isDashed = false;
                     break;
                 case STATE.RUN:
                     MyCurrentSpeed = RunSpeed;
-                    Camera.GetComponent<CamControl>().isOnAim = false;
+                    camera.GetComponent<CamControl>().isOnAim = false;
                     break;
                 case STATE.ATTACK:
                     MyCurrentSpeed = Speed;
                     switch (this.isAimAttack)
                     {
                         case true:
-                            Camera.GetComponent<CamControl>().isOnAim = true;
+                            camera.GetComponent<CamControl>().isOnAim = true;
                             break;
                         case false:
                             break;
@@ -199,7 +226,7 @@ public class PlayerContorl : PlayerStatusControl
                     break;
                 case STATE.CHARGE_ATTACK:
                     MyCurrentSpeed = Speed;
-                    Camera.GetComponent<CamControl>().isOnAim = true;
+                    camera.GetComponent<CamControl>().isOnAim = true;
                     break;
                 case STATE.ELEMENT_SKILL:
                     offset.y = 0;
@@ -208,7 +235,7 @@ public class PlayerContorl : PlayerStatusControl
                 case STATE.ELEMENT_ULT_SKILL:
                     offset.y = 0;
                     transform.LookAt(player.transform.position + offset);
-                    Camera.GetComponent<CamControl>().isOnAim = true;
+                    camera.GetComponent<CamControl>().isOnAim = true;
                     break;
             }
             this.StateTimer = 0.0f;
@@ -247,7 +274,7 @@ public class PlayerContorl : PlayerStatusControl
                         }
                         else
                         {
-                            Camera.GetComponent<CamControl>().isOnAim = true;
+                            camera.GetComponent<CamControl>().isOnAim = true;
                             aimModeMove();
                         }
                         break;
@@ -270,10 +297,33 @@ public class PlayerContorl : PlayerStatusControl
         }
     }
 
+    private bool isAFK()
+    {
+        latestActionTime += Time.deltaTime;
+        if(Input.anyKeyDown)
+        {
+            isOnAFK = false;
+            latestActionTime = 0;
+        }
+        else
+        {
+            isOnAFK = true;
+        }
+
+        if ((latestActionTime >= myAFKTime) && isOnAFK)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     private void vectorAlign()
     {
-        cameraForward = Camera.transform.forward;
-        cameraRight = Camera.transform.right;
+        cameraForward = camera.transform.forward;
+        cameraRight = camera.transform.right;
 
         playerForward = cameraForward;
         playerForward.y = 0;
@@ -374,7 +424,7 @@ public class PlayerContorl : PlayerStatusControl
     {
         Vector3 snapGround = Vector3.zero;
 
-        var offset = Camera.transform.forward;
+        var offset = camera.transform.forward;
         offset.y = 0;
         transform.LookAt(player.transform.position + offset);
 
@@ -419,10 +469,10 @@ public class PlayerContorl : PlayerStatusControl
         switch (this.isAimAttack)
         {
             case true:
-                rayOrigin = Camera.GetComponent<Camera>().ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0f));
+                rayOrigin = camera.GetComponent<Camera>().ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0f));
                 
                 projectileLine.SetPosition(0, ProjectileStart.position);
-                if(Physics.Raycast(rayOrigin, Camera.transform.forward, out hitInfo, ShootDistance))
+                if(Physics.Raycast(rayOrigin, camera.transform.forward, out hitInfo, ShootDistance))
                 {
                     projectileLine.SetPosition(1, hitInfo.point);
                     StartCoroutine(shootEffect());
@@ -430,7 +480,7 @@ public class PlayerContorl : PlayerStatusControl
                 }
                 else
                 {
-                    projectileLine.SetPosition(1, rayOrigin + (Camera.transform.forward * ShootDistance));
+                    projectileLine.SetPosition(1, rayOrigin + (camera.transform.forward * ShootDistance));
                     StartCoroutine(shootEffect());
                 }
                 break;
@@ -464,9 +514,9 @@ public class PlayerContorl : PlayerStatusControl
         projectileLine.startWidth = 0.5f;
         projectileLine.endWidth = 0.5f;
 
-        rayOrigin = Camera.GetComponent<Camera>().ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0f));
+        rayOrigin = camera.GetComponent<Camera>().ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0f));
         projectileLine.SetPosition(0, ProjectileStart.position);
-        if (Physics.Raycast(rayOrigin, Camera.transform.forward, out hitInfo, ShootDistance))
+        if (Physics.Raycast(rayOrigin, camera.transform.forward, out hitInfo, ShootDistance))
         {
             projectileLine.SetPosition(1, hitInfo.point);
             StartCoroutine(shootEffect());
@@ -474,7 +524,7 @@ public class PlayerContorl : PlayerStatusControl
         }
         else
         {
-            projectileLine.SetPosition(1, rayOrigin + (Camera.transform.forward * ShootDistance));
+            projectileLine.SetPosition(1, rayOrigin + (camera.transform.forward * ShootDistance));
             StartCoroutine(shootEffect());
         }
     }
@@ -489,7 +539,7 @@ public class PlayerContorl : PlayerStatusControl
     private void ultLockOn()
     {
         Vector3 snapGround = Vector3.zero;
-        var offset = Camera.transform.forward;
+        var offset = camera.transform.forward;
         offset.y = 0;
         transform.LookAt(player.transform.position + offset);
         player.Move( snapGround);
@@ -502,16 +552,16 @@ public class PlayerContorl : PlayerStatusControl
         projectileLine.startWidth = 0.7f;
         projectileLine.endWidth = 0.5f;
 
-        rayOrigin = Camera.GetComponent<Camera>().ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0f));
+        rayOrigin = camera.GetComponent<Camera>().ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0f));
         projectileLine.SetPosition(0, ProjectileStart.position);
 
-        hitInfo_all = Physics.RaycastAll(rayOrigin, Camera.transform.forward, ShootDistance);
+        hitInfo_all = Physics.RaycastAll(rayOrigin, camera.transform.forward, ShootDistance);
         for(int i = 0; i < hitInfo_all.Length; i++)
         {
             hitInfo = hitInfo_all[i];
             //hitInfo.collider.GetComponent<StatusControl>();  맞는 대상의 정보를 가져옴. 추후 다뤄질 예정.
         }
-        projectileLine.SetPosition(1, rayOrigin + (Camera.transform.forward * ShootDistance));
+        projectileLine.SetPosition(1, rayOrigin + (camera.transform.forward * ShootDistance));
         StartCoroutine(shootEffect());
     }
 

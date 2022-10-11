@@ -13,31 +13,28 @@ public class NPC : MonoBehaviour
     GameObject canvasObj;
     GameObject nameObj;
     Text nameUI;
-    bool isInCamera;
+    GameObject notify;
     void Start()
     {
         canvasObj = this.transform.GetChild(0).gameObject;
         nameObj = canvasObj.transform.GetChild(0).gameObject;
         keyF = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Bixby/Prefab/UI/letter-f.prefab", typeof(GameObject)) as GameObject;
         speech = UI_Control.Inst.Speech;
+        notify = this.transform.GetChild(1).gameObject;
         playerClose = false;
         talkIndex = 0;
         canvasObj.SetActive(true);
         nameUI = nameObj.transform.GetChild(0).GetComponent<Text>();
         nameUI.text = npcName;
-        isInCamera = false;
+        nameObj.SetActive(playerClose);
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 inCameraPosition = Camera.main.WorldToScreenPoint(this.transform.position);
-        isInCamera = 0 <= inCameraPosition.x
-            && inCameraPosition.x <= canvasObj.GetComponent<RectTransform>().rect.width
-            && 0 <= inCameraPosition.y
-            && inCameraPosition.y <= canvasObj.GetComponent<RectTransform>().rect.height
-            && inCameraPosition.z >= 0;
-        nameObj.SetActive(!UI_Control.Inst.Map.activeSelf && isInCamera);
+        Vector3 camRotate = GameObject.FindGameObjectWithTag("MainCamera").transform.eulerAngles;
+        camRotate -= Vector3.right * 90f;
+        notify.transform.rotation = Quaternion.Euler(camRotate);
         if(nameObj.activeSelf)
             nameObj.transform.position = Camera.main.WorldToScreenPoint(this.transform.position + Vector3.up * 2f);
         if (playerClose && Input.GetKeyDown(KeyCode.F))
@@ -55,6 +52,7 @@ public class NPC : MonoBehaviour
             var wantedPos = Camera.main.WorldToScreenPoint(this.transform.position);
             keyInst.transform.position = wantedPos + Vector3.right * 200f;
             playerClose = true;
+            nameObj.SetActive(playerClose);
         }
     }
     private void OnTriggerExit(Collider other)
@@ -64,6 +62,7 @@ public class NPC : MonoBehaviour
             Destroy(keyInst);
             keyInst = null;
             playerClose = false;
+            nameObj.SetActive(playerClose);
         }
     }
 }

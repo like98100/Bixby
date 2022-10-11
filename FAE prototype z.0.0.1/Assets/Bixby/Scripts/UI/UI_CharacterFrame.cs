@@ -44,10 +44,15 @@ public class UI_CharacterFrame : MonoBehaviour
         foreach (var item in avaters)
         {
             UnityEngine.UI.Image avatarImage = item.transform.GetChild(1).GetComponent<UnityEngine.UI.Image>();
+            UnityEngine.UI.Text avatarText = item.transform.GetChild(2).GetComponent<UnityEngine.UI.Text>();
             if (avaters.IndexOf(item) == ((int)playerContorl.MyElement))
-                avatarImage.color = Color.white;
+                item.GetComponent<UnityEngine.UI.Image>().color = avatarImage.color = avatarText.color = Color.white;
             else
+            {
                 avatarImage.color = Color.clear;
+                Color tempColor = Color.white; tempColor.a = 0.5f;
+                item.GetComponent<UnityEngine.UI.Image>().color = avatarText.color = tempColor;
+            }
                 
         }
     }

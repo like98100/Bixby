@@ -23,7 +23,7 @@ public class Speech : MonoBehaviour
     public void setUp(string name, int index)//말 걸었을 때
     {
         speechList = new List<string>();//대화 리스트 초기화
-        this.talker.text = name;//대화 상대 이름 가시화
+        this.talker.text = name;//가시화
         if (json.FileExist(Application.dataPath, name + index.ToString()))//해당 이름의 json파일 존재 확인
             speechJsonData = json.LoadJsonFile<speechJsonData>(Application.dataPath, name + index.ToString());//로드해옴
         foreach (var item in speechJsonData.speechDatas)//로드한 json데이터의 speechDatas의 내용을

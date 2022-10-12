@@ -9,7 +9,7 @@ public class inventoryObject : MonoBehaviour
     private void Awake()
     {
         Inst = this;
-        items= UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Bixby/Scripts/ScriptableObject/ItemSO.asset", typeof(itemSO)) as itemSO;
+        items = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Bixby/Scripts/ScriptableObject/ItemSO.asset", typeof(itemSO)) as itemSO;
         itemPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Bixby/Prefab/UI/item.prefab", typeof(GameObject)) as GameObject;
         inventoryCanvas = GameObject.Find("Inventory");
         inventoryObj = inventoryCanvas.transform.GetChild(0).gameObject;

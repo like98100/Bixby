@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CamControl : MonoBehaviour
 {
-    public GameObject player;
+    private GameObject player;
     public float xmove = 0; 
     public float ymove = 0;  
     public float distanceMoveMod = 8.0f;
@@ -12,6 +12,7 @@ public class CamControl : MonoBehaviour
 
     Vector3 revDistanceMove;
     Vector3 revDistanceAim;
+    Vector3 playerCenterCustom = new Vector3(0f, 1.0f, 0f);
     private float transitionSpeed = 30.0f;
 
     public bool isOnAim = false;
@@ -32,8 +33,9 @@ public class CamControl : MonoBehaviour
 
     private void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
         revDistanceMove = new Vector3(0.0f, -2.0f, distanceMoveMod);
-        revDistanceAim = new Vector3(-1.0f, -1.5f, distanceAimMod);
+        revDistanceAim = new Vector3(-1.2f, -0.5f, distanceAimMod);
 
         this.step = STATE.MOVE;
         this.next_step = STATE.MOVE;
@@ -94,16 +96,28 @@ public class CamControl : MonoBehaviour
     void moveCamMod()
     {
         //transform.position = player.transform.position - transform.rotation * revDistanceMove;
-        transform.position = Vector3.Lerp(transform.position,
-            player.transform.position - transform.rotation * revDistanceMove,
+        this.transform.position = Vector3.Lerp(transform.position,
+            (player.transform.position + playerCenterCustom) - this.transform.rotation * revDistanceMove,
             Time.deltaTime * transitionSpeed);
+
+        RaycastHit hitinfo;
+        if (Physics.Linecast((player.transform.position + playerCenterCustom), this.transform.position, out hitinfo, 1 << LayerMask.NameToLayer("Ground")))
+        {
+            this.transform.position = hitinfo.point;
+        }
     }
 
     void aimCamMod()
     {
         //transform.position = player.transform.position - transform.rotation * revDistanceAim;
-        transform.position = Vector3.Lerp(transform.position,
-            player.transform.position - transform.rotation * revDistanceAim,
+        this.transform.position = Vector3.Lerp(transform.position,
+            (player.transform.position + playerCenterCustom) - this.transform.rotation * revDistanceAim,
             Time.deltaTime * transitionSpeed);
+
+        RaycastHit hitinfo;
+        if (Physics.Linecast((player.transform.position + playerCenterCustom), this.transform.position, out hitinfo, 1 << LayerMask.NameToLayer("Ground")))
+        {
+            this.transform.position = hitinfo.point;
+        }
     }
 }

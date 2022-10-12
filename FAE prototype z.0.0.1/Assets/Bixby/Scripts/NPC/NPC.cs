@@ -35,7 +35,7 @@ public class NPC : MonoBehaviour
         Vector3 camRotate = GameObject.FindGameObjectWithTag("MainCamera").transform.eulerAngles;
         camRotate -= Vector3.right * 90f;
         notify.transform.rotation = Quaternion.Euler(camRotate);
-        if(nameObj.activeSelf)
+        if (nameObj.activeSelf)
             nameObj.transform.position = Camera.main.WorldToScreenPoint(this.transform.position + Vector3.up * 2f);
         if (playerClose && Input.GetKeyDown(KeyCode.F))
         {

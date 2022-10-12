@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class itemObject : MonoBehaviour
 {
-    [SerializeField] GameObject image;//setup에서 설정 필요, 아직 아이템 이미지가 없어서 비어있음
+    [SerializeField] GameObject image;//setup에서 설정 필요
     bool isHover;
     
     Vector3 zeroPos;

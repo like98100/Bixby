@@ -20,12 +20,11 @@ public class PlayerAnimation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // 우선 구현을 위해 switch가 아닌 if를 사용했으니 State 관련 정리가 완료되면 switch 형태로 구현 지향할 것
-
         //if(체력이 다 달았을 때)
         //    {
         //    animator.SetBool("isDead", true);
         //}
+
         Debug.Log("현재 떠 있는가? : " + modelContorl.GetIsGrounded());
         if (!modelContorl.GetIsGrounded())      // 공중에 뜬 상태일 때
         {

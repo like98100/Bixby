@@ -1,4 +1,4 @@
-ï»¿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,7 +10,6 @@ public class inventoryObject : MonoBehaviour
     {
         Inst = this;
         items = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Bixby/Scripts/ScriptableObject/ItemSO.asset", typeof(itemSO)) as itemSO;
-        ItemList = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Bixby/Scripts/ScriptableObject/ListSO.asset", typeof(itemSO)) as itemSO;
         itemPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Bixby/Prefab/UI/item.prefab", typeof(GameObject)) as GameObject;
         inventoryCanvas = GameObject.Find("Inventory");
         inventoryObj = inventoryCanvas.transform.GetChild(0).gameObject;
@@ -19,10 +18,8 @@ public class inventoryObject : MonoBehaviour
         fieldItemPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Bixby/Prefab/Item/fieldItem.prefab", typeof(GameObject)) as GameObject;
     }
     itemSO items;
-    itemSO itemList;
     GameObject itemPrefab;
     itemJsonData itemJsonData;
-    itemJsonData itemListJsonData;
     GameObject inventoryCanvas;
     GameObject inventoryObj;
     GameObject cellObj;
@@ -37,8 +34,8 @@ public class inventoryObject : MonoBehaviour
     public GameObject FieldFKey;
     void Start()
     {
-        inventoryObj.GetComponent<RectTransform>().sizeDelta = new Vector2(XSize * cell, YSize * cell);//ì¸ë²¤ì°½ í¬ê¸°
-        zero = new Vector3(XSize * cell / -2f, YSize * cell / 2f, 0f);//jsonì €ì¥ìš© ì¢Œí‘œ 0,0ì˜ ì‹¤ì œ ìœ„ì¹˜
+        inventoryObj.GetComponent<RectTransform>().sizeDelta = new Vector2(XSize * cell, YSize * cell);//ÀÎº¥Ã¢ Å©±â
+        zero = new Vector3(XSize * cell / -2f, YSize * cell / 2f, 0f);//jsonÀúÀå¿ë ÁÂÇ¥ 0,0ÀÇ ½ÇÁ¦ À§Ä¡
         for (int i = 0; i < YSize; i++)
         {
             for (int j = 0; j < XSize; j++)
@@ -47,19 +44,15 @@ public class inventoryObject : MonoBehaviour
                 temp.GetComponent<RectTransform>().sizeDelta = new Vector2(cell * 0.9f, cell * 0.9f);
                 temp.transform.localPosition = new Vector3(j * cell + (zero.x + cell / 2f), i * -cell + (zero.y - cell / 2f), 0f);
             }
-        }//ì¹¸ ìƒì„±
-        itemListJsonData = json.LoadJsonFile<itemJsonData>(Application.dataPath, "itemList");//jsonë¡œë“œ
-        ItemList.items = new List<itemData>();
-        foreach (var item in itemListJsonData.itemList)
-            ItemList.items.Add(item);//itemSO
-        itemJsonData = json.LoadJsonFile<itemJsonData>(Application.dataPath, "items");//jsonë¡œë“œ
-        Gold = itemJsonData.gold;//ê³¨ë“œ ê°’ ë¡œë“œ
-        goldObj.GetComponent<RectTransform>().sizeDelta = new Vector2(XSize * cell, 50f);//ê³¨ë“œì°½ í¬ê¸°
-        goldObj.transform.localPosition = new Vector3(0f, -1 * (inventoryObj.GetComponent<RectTransform>().rect.height / 2f + 25f), 0f);//ê³¨ë“œì°½ ìœ„ì¹˜
-        goldObj.transform.GetChild(0).GetComponent<Text>().text = "G " + Gold.ToString();//ê³¨ë“œ ê°’ ì ìš©
+        }//Ä­ »ı¼º
+        itemJsonData = json.LoadJsonFile<itemJsonData>(Application.dataPath, "items");//json·Îµå
+        Gold = itemJsonData.gold;//°ñµå °ª ·Îµå
+        goldObj.GetComponent<RectTransform>().sizeDelta = new Vector2(XSize * cell, 50f);//°ñµåÃ¢ Å©±â
+        goldObj.transform.localPosition = new Vector3(0f, -1 * (inventoryObj.GetComponent<RectTransform>().rect.height / 2f + 25f), 0f);//°ñµåÃ¢ À§Ä¡
+        goldObj.transform.GetChild(0).GetComponent<Text>().text = "G " + Gold.ToString();//°ñµå °ª Àû¿ë
         items.items = new List<itemData>();
         foreach (var item in itemJsonData.itemList)
-            items.items.Add(item);//itemSO ë°ì´í„° ì¶”ê°€
+            items.items.Add(item);//itemSO µ¥ÀÌÅÍ Ãß°¡
         itemObjects = new List<GameObject>();
         foreach (var item in items.items)
         {
@@ -67,12 +60,12 @@ public class inventoryObject : MonoBehaviour
             itemObject tempItem = temp.GetComponent<itemObject>();
             tempItem.Setup(item.xSize, item.ySize, item.Left, item.Up, item.isEquip, cell, zero, item);
             itemObjects.Add(temp);
-        }//ì•„ì´í…œ ê°€ì‹œí™”
-        inventoryCanvas.SetActive(false);//ì‹œì‘ì‹œ ì¸ë²¤ì°½ ë‹«í˜€ìˆìŒ
+        }//¾ÆÀÌÅÛ °¡½ÃÈ­
+        inventoryCanvas.SetActive(false);//½ÃÀÛ½Ã ÀÎº¥Ã¢ ´İÇôÀÖÀ½
         FieldFKey = null;
     }
 
-    public void setItemPos(GameObject item, Vector3 newOrigonPos)//ì¸ë²¤ ë‚´ ì•„ì´í…œ ìœ„ì¹˜ ì´ë™ì‹œ ì‹¤í–‰(ê²¹ì¹¨í™•ì¸)
+    public void setItemPos(GameObject item, Vector3 newOrigonPos)//ÀÎº¥ ³» ¾ÆÀÌÅÛ À§Ä¡ ÀÌµ¿½Ã ½ÇÇà(°ãÄ§È®ÀÎ)
     {
         itemObject itemObj = item.GetComponent<itemObject>();
         float left = ((newOrigonPos.x - item.GetComponent<RectTransform>().rect.width / 2f) / cell) + (XSize / 2f);
@@ -101,7 +94,7 @@ public class inventoryObject : MonoBehaviour
         }
         jsonSave();
     }
-    bool isCrash(float leftA, float xSizeA, float leftB, float xSizeB, float upA, float ySizeA, float upB, float ysizeB)//ì¶©ëŒí™•ì¸,ê¸°ì¡´ ì•„ì´í…œì´ A
+    bool isCrash(float leftA, float xSizeA, float leftB, float xSizeB, float upA, float ySizeA, float upB, float ysizeB)//Ãæµ¹È®ÀÎ,±âÁ¸ ¾ÆÀÌÅÛÀÌ A
     {
         float tempL = leftA < leftB ? leftB : leftA;
         float tempR = leftA + xSizeA > leftB + xSizeB ? leftB + xSizeB : leftA + xSizeA;
@@ -109,7 +102,7 @@ public class inventoryObject : MonoBehaviour
         float tempD = upA + ySizeA > upB + ysizeB ? upB + ysizeB : upA + ySizeA;
         return tempL < tempR && tempU < tempD;
     }
-    void jsonSave()//jsonì €ì¥
+    void jsonSave()//jsonÀúÀå
     {
         itemJsonData temp = new itemJsonData();
         temp.itemList = new List<itemData>();
@@ -122,7 +115,7 @@ public class inventoryObject : MonoBehaviour
         string tempStr = json.ObjectToJson(temp);
         json.CreateJsonFile(Application.dataPath, "items", tempStr);
     }
-    public void getFieldItem(GameObject newItem)//í•„ë“œì—ì„œ ì‹ ê·œ ì•„ì´í…œ íšë“
+    public void getFieldItem(GameObject newItem)//ÇÊµå¿¡¼­ ½Å±Ô ¾ÆÀÌÅÛ È¹µæ
     {
         itemData newData = newItem.GetComponent<fieldItem>().ItemData;
         float newXSize = newData.xSize;
@@ -130,7 +123,7 @@ public class inventoryObject : MonoBehaviour
         List<Vector2> existCell = new List<Vector2>();
         existCell = existCells();
         List<Vector2> emptyCell = new List<Vector2>();
-        for (int j = 0; j < YSize; j++) //ì¹¸ ê¸°ì¤€
+        for (int j = 0; j < YSize; j++) //Ä­ ±âÁØ
         {
             for (int i = 0; i < XSize; i++)
             {
@@ -139,7 +132,7 @@ public class inventoryObject : MonoBehaviour
                 emptyCell.Add(new Vector2(i, j));
             }
         }
-        foreach (var item in emptyCell)//ì´ë ‡ê²Œ ì°¾ëŠ” ë°©ë²•ì„ ë°±íŠ¸ë˜í‚¹ì´ë¼ê³  í•œë‹¤(ê³  ë“¤ì—ˆë‹¤)
+        foreach (var item in emptyCell)//ÀÌ·¸°Ô Ã£´Â ¹æ¹ıÀ» ¹éÆ®·¡Å·ÀÌ¶ó°í ÇÑ´Ù(°í µé¾ú´Ù)
         {
             bool isOkay = true;
             for (int i = 0; i < newYSize; i++)
@@ -168,7 +161,7 @@ public class inventoryObject : MonoBehaviour
             }
         }
     }
-    public List<Vector2> existCells()//ì¸ë²¤í† ë¦¬ ë‚´ ì•„ì´í…œ ì¡´ì¬ ì¹¸ í™•ì¸
+    public List<Vector2> existCells()//ÀÎº¥Åä¸® ³» ¾ÆÀÌÅÛ Á¸Àç Ä­ È®ÀÎ
     {
         List<Vector2> result = new List<Vector2>();
         foreach (var item in items.items)
@@ -192,11 +185,11 @@ public class inventoryObject : MonoBehaviour
         }
         return result;
     }
-    public void itemHover(itemObject itemObj)//ì¸ë²¤í† ë¦¬ì—ì„œ ì•„ì´í…œì— ë§ˆìš°ìŠ¤ë¥¼ ì˜¬ë ¤ë’€ì„ ë•Œ ì‹¤í–‰
+    public void itemHover(itemObject itemObj)//ÀÎº¥Åä¸®¿¡¼­ ¾ÆÀÌÅÛ¿¡ ¸¶¿ì½º¸¦ ¿Ã·Áµ×À» ¶§ ½ÇÇà
     {
-        print("ìƒì„¸ íŒŒë¼ë¯¸í„° í‘œì‹œ");
+        print("»ó¼¼ ÆÄ¶ó¹ÌÅÍ Ç¥½Ã");
     }
-    public void throwItem(GameObject itemObj)//ì¸ë²¤í† ë¦¬ì—ì„œ ì•„ì´í…œ ë²„ë¦´ ë•Œ
+    public void throwItem(GameObject itemObj)//ÀÎº¥Åä¸®¿¡¼­ ¾ÆÀÌÅÛ ¹ö¸± ¶§
     {
         items.items.Remove(itemObj.GetComponent<itemObject>().ItemData);
         itemObjects.Remove(itemObj.gameObject);
@@ -206,7 +199,7 @@ public class inventoryObject : MonoBehaviour
         jsonSave();
     }
 
-    public GameObject MakeFieldItem(itemData data, Vector3 position)//í•„ë“œì— ì•„ì´í…œ ìƒì„±
+    public GameObject MakeFieldItem(itemData data, Vector3 position)//ÇÊµå¿¡ ¾ÆÀÌÅÛ »ı¼º
     {
         GameObject temp = Instantiate(fieldItemPrefab, position, Quaternion.identity);
         temp.GetComponent<fieldItem>().setup(data);

@@ -16,7 +16,6 @@ public class inventoryObject : MonoBehaviour
         //cellObj = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Bixby/Prefab/UI/cell.prefab", typeof(GameObject)) as GameObject;
         goldObj = inventoryCanvas.transform.GetChild(1).gameObject;
         //fieldItemPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Bixby/Prefab/Item/fieldItem.prefab", typeof(GameObject)) as GameObject;
-        //KeyF = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Bixby/Prefab/UI/letter-f.prefab", typeof(GameObject)) as GameObject;
     }
     itemSO items;
     [SerializeField] GameObject itemPrefab;
@@ -191,7 +190,7 @@ public class inventoryObject : MonoBehaviour
     {
         print("상세 파라미터 표시");
     }
-    public void throwItem(GameObject itemObj,bool isLeft)//인벤토리에서 아이템 버릴 때, 필드에 아이템 생성여부
+    public void throwItem(GameObject itemObj, bool isLeft)//인벤토리에서 아이템 버릴 때, 필드에 남길지 여부
     {
         items.items.Remove(itemObj.GetComponent<itemObject>().ItemData);
         itemObjects.Remove(itemObj.gameObject);

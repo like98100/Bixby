@@ -46,14 +46,14 @@ public class json
     public static T JsonToObject<T>(string jsonData) { return JsonUtility.FromJson<T>(jsonData); }
     public static void CreateJsonFile(string createPath, string fileName, string jsonData)
     {
-        FileStream fileStream = new FileStream(string.Format("{0}/Bixby/Resources/json/{1}.json", createPath, fileName), FileMode.Create);
+        FileStream fileStream = new FileStream(string.Format("{0}/Resources/json/{1}.json", createPath, fileName), FileMode.Create);
         byte[] data = Encoding.UTF8.GetBytes(jsonData);
         fileStream.Write(data, 0, data.Length);
         fileStream.Close();
     }
     public static T LoadJsonFile<T>(string loadPath, string fileName)
     {
-        FileStream fileStream = new FileStream(string.Format("{0}/Bixby/Resources/json/{1}.json", loadPath, fileName), FileMode.Open);
+        FileStream fileStream = new FileStream(string.Format("{0}/Resources/json/{1}.json", loadPath, fileName), FileMode.Open);
         byte[] data = new byte[fileStream.Length];
         fileStream.Read(data, 0, data.Length);
         fileStream.Close();
@@ -62,7 +62,7 @@ public class json
     }
     public static bool FileExist(string loadPath, string fileName)
     {
-        FileInfo info = new FileInfo(string.Format("{0}/Bixby/Resources/json/{1}.json", loadPath, fileName));
+        FileInfo info = new FileInfo(string.Format("{0}/Resources/json/{1}.json", loadPath, fileName));
         return info.Exists;
     }
 }

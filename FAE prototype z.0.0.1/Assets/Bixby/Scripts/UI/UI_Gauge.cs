@@ -33,9 +33,9 @@ public class UI_Gauge : MonoBehaviour
     void Update()
     {
         staminaObj.SetActive(stamina.value != 1);
-        staminaObj.transform.position = cameraControl.step == CamControl.STATE.AIM ? staminaOriginPos : 
+        staminaObj.transform.position = cameraControl.step == CamControl.STATE.AIM ? staminaOriginPos :
             Vector3.Lerp(staminaObj.transform.position, Camera.main.WorldToScreenPoint(playerControl.gameObject.transform.position + Vector3.up * 1.3f) + Vector3.right * 200f, Time.deltaTime * 15.0f);
-        
+
         staminaObj.transform.localScale = cameraControl.step == CamControl.STATE.AIM ? Vector3.one : new Vector3(0.7f, 1, 1);
         attackCharge.gameObject.SetActive(playerControl.State == PlayerContorl.STATE.ATTACK && cameraControl.step == CamControl.STATE.AIM);
         if (attackCharge.gameObject.activeSelf)

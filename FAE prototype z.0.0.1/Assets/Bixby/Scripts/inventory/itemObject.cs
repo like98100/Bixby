@@ -107,15 +107,22 @@ public class itemObject : MonoBehaviour
         {
             foreach (var item in ItemData.tag)
             {
-                if(item=="equip")
+                if (item == "equip")
                 {
                     isEquip = !isEquip;
                     equip.SetActive(isEquip);
                     break;
                 }
-                if(item=="food")
+                if (item == "food")
                 {
-                    //대충 id에 따라 다른 효과
+                    switch (ItemData.itemID)
+                    {//id마다 음식 효과 부여 필요, 현재 임시로 3번은 스태미나 회복하도록 함
+                        case 3:
+                            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerContorl>().Stamina += 10f;
+                            break;
+                        default:
+                            break;
+                    }
                     inventoryObject.Inst.throwItem(this.gameObject, false);
                 }
             }

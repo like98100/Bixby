@@ -6,7 +6,6 @@ public class fieldItem : MonoBehaviour
 {
     public itemData ItemData;
     float angle;
-    GameObject keyF;
     bool isPlayerClose;
     void Start()
     {
@@ -15,7 +14,6 @@ public class fieldItem : MonoBehaviour
         //tempPos.y = itemData.ySize / 2f;
         this.transform.position = tempPos;
         isPlayerClose = false;
-        keyF = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Bixby/Prefab/UI/letter-f.prefab", typeof(GameObject)) as GameObject;
     }
     public void setup(itemData data)
     {
@@ -42,7 +40,7 @@ public class fieldItem : MonoBehaviour
             if (inventoryObject.Inst.FieldFKey == null)
             {
                 isPlayerClose = true;
-                inventoryObject.Inst.FieldFKey = Instantiate(keyF, GameObject.Find("Canvas").transform);
+                inventoryObject.Inst.FieldFKey = Instantiate(inventoryObject.Inst.KeyF, GameObject.Find("Canvas").transform);
                 var wantedPos = Camera.main.WorldToScreenPoint(this.transform.position);
                 inventoryObject.Inst.FieldFKey.transform.position = wantedPos + Vector3.right * 200f;
             }

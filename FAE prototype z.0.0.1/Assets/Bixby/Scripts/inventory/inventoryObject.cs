@@ -9,20 +9,21 @@ public class inventoryObject : MonoBehaviour
     private void Awake()
     {
         Inst = this;
-        items = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Bixby/Scripts/ScriptableObject/ItemSO.asset", typeof(itemSO)) as itemSO;
-        itemPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Bixby/Prefab/UI/item.prefab", typeof(GameObject)) as GameObject;
+        items = (itemSO)ScriptableObject.CreateInstance("itemSO");
+        //itemPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Bixby/Prefab/UI/item.prefab", typeof(GameObject)) as GameObject;
         inventoryCanvas = GameObject.Find("Inventory");
         inventoryObj = inventoryCanvas.transform.GetChild(0).gameObject;
-        cellObj = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Bixby/Prefab/UI/cell.prefab", typeof(GameObject)) as GameObject;
+        //cellObj = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Bixby/Prefab/UI/cell.prefab", typeof(GameObject)) as GameObject;
         goldObj = inventoryCanvas.transform.GetChild(1).gameObject;
-        fieldItemPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Bixby/Prefab/Item/fieldItem.prefab", typeof(GameObject)) as GameObject;
+        //fieldItemPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Bixby/Prefab/Item/fieldItem.prefab", typeof(GameObject)) as GameObject;
+        //KeyF = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Bixby/Prefab/UI/letter-f.prefab", typeof(GameObject)) as GameObject;
     }
     itemSO items;
-    GameObject itemPrefab;
+    [SerializeField] GameObject itemPrefab;
     itemJsonData itemJsonData;
     GameObject inventoryCanvas;
     GameObject inventoryObj;
-    GameObject cellObj;
+    [SerializeField] GameObject cellObj;
     GameObject goldObj;
     [SerializeField] float cell;
     public float XSize;
@@ -30,8 +31,9 @@ public class inventoryObject : MonoBehaviour
     List<GameObject> itemObjects;
     Vector3 zero;
     public int Gold;
-    GameObject fieldItemPrefab;
+    [SerializeField] GameObject fieldItemPrefab;
     public GameObject FieldFKey;
+    public GameObject KeyF;
     void Start()
     {
         inventoryObj.GetComponent<RectTransform>().sizeDelta = new Vector2(XSize * cell, YSize * cell);//인벤창 크기

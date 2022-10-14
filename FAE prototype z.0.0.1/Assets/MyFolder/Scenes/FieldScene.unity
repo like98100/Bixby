@@ -79605,11 +79605,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4cfb1514e264584785bc2ac0c7d8752, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemPrefab: {fileID: 3696017182944428959, guid: 547f0b17a2da7d94b8eaaa9b3358e401, type: 3}
+  cellObj: {fileID: 4289633989430038926, guid: 988788805fa3d6043befcecd62b48219, type: 3}
   cell: 100
   XSize: 5
   YSize: 7
   Gold: 0
-  FieldFKey: {fileID: 6375923533990169802, guid: 4b1e6d66876efb547bd6cd8b969f566b, type: 3}
+  fieldItemPrefab: {fileID: 6224425477016243002, guid: acfb90cc8aa1dc242963edcec8d3984a, type: 3}
+  FieldFKey: {fileID: 0}
+  KeyF: {fileID: 6375923533990169802, guid: 4b1e6d66876efb547bd6cd8b969f566b, type: 3}
 --- !u!114 &2118110830
 MonoBehaviour:
   m_ObjectHideFlags: 0

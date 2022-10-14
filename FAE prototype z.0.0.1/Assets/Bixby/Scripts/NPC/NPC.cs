@@ -7,7 +7,6 @@ public class NPC : MonoBehaviour
     Speech speech;
     [SerializeField] string npcName;
     bool playerClose;
-    GameObject keyF;
     GameObject keyInst;
     [SerializeField] int talkIndex;
     GameObject canvasObj;
@@ -18,7 +17,6 @@ public class NPC : MonoBehaviour
     {
         canvasObj = this.transform.GetChild(0).gameObject;
         nameObj = canvasObj.transform.GetChild(0).gameObject;
-        keyF = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Bixby/Prefab/UI/letter-f.prefab", typeof(GameObject)) as GameObject;
         speech = UI_Control.Inst.Speech;
         notify = this.transform.GetChild(1).gameObject;
         playerClose = false;
@@ -48,7 +46,7 @@ public class NPC : MonoBehaviour
     {
         if (other.tag == "Player" && keyInst == null)
         {
-            keyInst = Instantiate(keyF, GameObject.Find("Canvas").transform);
+            keyInst = Instantiate(inventoryObject.Inst.KeyF, GameObject.Find("Canvas").transform);
             var wantedPos = Camera.main.WorldToScreenPoint(this.transform.position);
             keyInst.transform.position = wantedPos + Vector3.right * 200f;
             playerClose = true;

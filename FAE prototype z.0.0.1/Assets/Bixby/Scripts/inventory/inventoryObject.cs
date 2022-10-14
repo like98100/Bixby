@@ -189,12 +189,12 @@ public class inventoryObject : MonoBehaviour
     {
         print("상세 파라미터 표시");
     }
-    public void throwItem(GameObject itemObj)//인벤토리에서 아이템 버릴 때
+    public void throwItem(GameObject itemObj,bool isLeft)//인벤토리에서 아이템 버릴 때, 필드에 아이템 생성여부
     {
         items.items.Remove(itemObj.GetComponent<itemObject>().ItemData);
         itemObjects.Remove(itemObj.gameObject);
         GameObject player = GameObject.FindGameObjectWithTag("Player");
-        GameObject temp = MakeFieldItem(itemObj.GetComponent<itemObject>().ItemData, player.transform.position);
+        GameObject temp = isLeft ? MakeFieldItem(itemObj.GetComponent<itemObject>().ItemData, player.transform.position) : null;
         Destroy(itemObj);
         jsonSave();
     }

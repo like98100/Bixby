@@ -95,7 +95,7 @@ public class itemObject : MonoBehaviour
                 || (yPos - ySiz) < this.maxPos.y
                 )
             {
-                inventoryObject.Inst.throwItem(this.gameObject);
+                inventoryObject.Inst.throwItem(this.gameObject, true);
             }
             else
             {
@@ -105,8 +105,20 @@ public class itemObject : MonoBehaviour
         }
         else if (Input.GetMouseButtonUp(1))
         {
-            isEquip = !isEquip;
-            equip.SetActive(isEquip);
+            foreach (var item in ItemData.tag)
+            {
+                if(item=="equip")
+                {
+                    isEquip = !isEquip;
+                    equip.SetActive(isEquip);
+                    break;
+                }
+                if(item=="food")
+                {
+                    //대충 id에 따라 다른 효과
+                    inventoryObject.Inst.throwItem(this.gameObject, false);
+                }
+            }
         }
     }
     int temp = 0;

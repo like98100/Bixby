@@ -7,6 +7,7 @@ using System.Text;
 public class itemData
 {
     public int itemID;
+    public string[] tag;
     public string itemName;
     public float Left;
     public float Up;

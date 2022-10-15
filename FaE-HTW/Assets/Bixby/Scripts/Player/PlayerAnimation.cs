@@ -46,11 +46,13 @@ public class PlayerAnimation : MonoBehaviour
         {
             case PlayerContorl.STATE.IDLE:                              // 비전투 상태
                 animator.SetBool("isCombat", false);                    // 비전투 상태 활성화
+                animator.SetBool("isAim", false);                       // 조준 애니메이션 정지
                 break;
 
             case PlayerContorl.STATE.MOVE:                              // 이동 상태
                 animator.SetBool("isCombat", true);                     // 비전투 상태 비활성화
                 animator.SetBool("isAtk", false);                       // 공격 애니메이션 정지
+                animator.SetBool("isAim", false);                       // 조준 애니메이션 정지
                 if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A)
                 || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))  // WASD 입력이 발생할 때
                 {
@@ -71,17 +73,43 @@ public class PlayerAnimation : MonoBehaviour
                     animator.SetBool("isCharge", true);                 // 차지 상태 활성화
                 }
 
-                    break;
+                if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A)
+                || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))  // WASD 입력이 발생할 때
+                {
+                    animator.SetBool("isRun", true);                    // 이동 애니메이션 실행
+                }
+                else animator.SetBool("isRun", false);                  // 이동 애니메이션 정지
+
+                break;
 
             case PlayerContorl.STATE.CHARGE_ATTACK:                     // 강 공격 상태
                 if(Input.GetMouseButtonUp(0))                           // 마우스 좌 클릭 입력이 해제됐다면
                     animator.SetBool("isCharge", false);                // 차지 상태 해제
                 else animator.SetBool("isCharge", true);                // 차지 상태 유지
+
+                if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A)
+                || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))  // WASD 입력이 발생할 때
+                {
+                    animator.SetBool("isRun", true);                    // 이동 애니메이션 실행
+                }
+                else animator.SetBool("isRun", false);                  // 이동 애니메이션 정지
+
                 break;
 
             case PlayerContorl.STATE.ELEMENT_ULT_SKILL:                 // 궁극기 사용 상태
                 animator.SetBool("isCombat", true);                     // 비전투 상태 비활성화
                 animator.SetBool("isAtk", true);                        // 공격 애니메이션 실행
+                break;
+
+            case PlayerContorl.STATE.AIM:                               // 조준 상태
+                animator.SetBool("isAim", true);                        // 조준 애니메이션 실행
+
+                if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A)
+                || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))  // WASD 입력이 발생할 때
+                {
+                    animator.SetBool("isRun", true);                    // 이동 애니메이션 실행
+                }
+                else animator.SetBool("isRun", false);                  // 이동 애니메이션 정지
                 break;
         }
     }
@@ -94,5 +122,6 @@ public class PlayerAnimation : MonoBehaviour
         animator.SetBool("isFall", false);
         animator.SetBool("isCombat", false);
         animator.SetBool("isCharge", false);
+        animator.SetBool("isAim", false);
     }
 }

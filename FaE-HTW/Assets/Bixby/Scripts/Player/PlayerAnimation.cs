@@ -131,5 +131,9 @@ public class PlayerAnimation : MonoBehaviour
             animator.SetBool("isRun", true);                    // 이동 애니메이션 실행
         }
         else animator.SetBool("isRun", false);                  // 이동 애니메이션 정지
+
+        if (animator.GetCurrentAnimatorStateInfo(1).IsName("Aim"))   // 현재 조준 상태일 때
+            animator.SetLayerWeight(1, 0.6f);                   // 가중치 감소
+        else animator.SetLayerWeight(1, 0.9f);                   // 가중치 증가
     }
 }

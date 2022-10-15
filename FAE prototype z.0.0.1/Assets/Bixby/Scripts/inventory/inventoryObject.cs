@@ -116,7 +116,7 @@ public class inventoryObject : MonoBehaviour
         string tempStr = json.ObjectToJson(temp);
         json.CreateJsonFile(Application.dataPath, "items", tempStr);
     }
-    public void getFieldItem(GameObject newItem)//필드에서 신규 아이템 획득
+    public void getFieldItem(GameObject newItem, bool isDestroy)//필드에서 신규 아이템 획득
     {
         itemData newData = newItem.GetComponent<fieldItem>().ItemData;
         float newXSize = newData.xSize;
@@ -154,7 +154,8 @@ public class inventoryObject : MonoBehaviour
                 tempItem.ItemData.Left = item.x;
                 tempItem.ItemData.Up = item.y;
                 items.items.Add(tempItem.ItemData);
-                Destroy(newItem);
+                if (isDestroy) Destroy(newItem);
+                else newItem.SetActive(false);
                 jsonSave();
                 Destroy(FieldFKey);
                 FieldFKey = null;

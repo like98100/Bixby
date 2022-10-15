@@ -31,7 +31,7 @@ public class fieldItem : MonoBehaviour
         angle += 60 * Time.deltaTime;
         this.transform.localEulerAngles = new Vector3(0f, angle, 15f);
         if (isPlayerClose && Input.GetKeyDown(KeyCode.F))
-            inventoryObject.Inst.getFieldItem(this.gameObject);
+            inventoryObject.Inst.getFieldItem(this.gameObject, true);
     }
     private void OnTriggerStay(Collider other)
     {

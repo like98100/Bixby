@@ -128,31 +128,26 @@ public class itemObject : MonoBehaviour
             }
         }
     }
-    int temp = 0;
+    public void Hover()
+    {
+        isHover = true;
+        inventoryObject.Inst.itemHover(this);
+    }
+    public void Exit()
+    {
+        isHover = false;
+        inventoryObject.Inst.itemExit();
+    }
+    public void Down()//클릭시
+    {
+        if (Input.GetMouseButtonDown(0))
+            inventoryObject.Inst.itemLeftDown(this);
+    }
     void Update()
     {   
-        if (isHover)
+       if(isHover)
         {
-            if (Input.GetMouseButtonDown(0))
-            { //좌클릭
-                //print("마우스 좌클릭");
-                OriginPos = this.transform.localPosition;
-            }
-            else if (Input.GetMouseButtonDown(1))
-            { //우클릭
-                //print("마우스 우클릭");
-            }
-            else
-            {//호버
-                if (temp == 0)
-                {
-                    inventoryObject.Inst.itemHover(this);
-                    //print("마우스 호버");
-                    temp = 1;
-                }
-            }
+            inventoryObject.Inst.itemSummaryMove();
         }
-        else
-            temp = 0;
     }
 }

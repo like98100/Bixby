@@ -45,6 +45,8 @@ public class UI_Control : MonoBehaviour
             {
                 case "i":
                     windowSet(inventory);
+                    if (!inventory.activeSelf)
+                        inventory.transform.GetChild(2).gameObject.SetActive(false);
                     break;
                 case "m":
                     windowSet(Map);

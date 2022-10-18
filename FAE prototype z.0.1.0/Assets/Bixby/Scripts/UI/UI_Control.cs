@@ -17,6 +17,7 @@ public class UI_Control : MonoBehaviour
         windows.Add(inventory);
         windows.Add(Map);
         aimPoint = GameObject.Find("AimPoint");
+        Shop = this.gameObject.GetComponent<Shop>();
     }
     GameObject optionObj;
     UI_Option option;
@@ -26,6 +27,7 @@ public class UI_Control : MonoBehaviour
     List<GameObject> windows;
     GameObject openedWindow;
     GameObject aimPoint;
+    public Shop Shop;
     void Start()
     {
         option.Set();

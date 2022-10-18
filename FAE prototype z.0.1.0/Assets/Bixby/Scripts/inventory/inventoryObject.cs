@@ -207,6 +207,7 @@ public class inventoryObject : MonoBehaviour
         temp.GetComponent<fieldItem>().setup(data);
         return temp;
     }
+    #region 아이템 마우스
     public void itemHover(itemObject itemObj)//인벤토리에서 아이템에 마우스를 올려뒀을 때 실행
     {
         itemSummary.SetActive(true);
@@ -250,4 +251,5 @@ public class inventoryObject : MonoBehaviour
             }
         itemDescription.transform.GetChild(1).GetComponent<Text>().text = description;
     }
+    #endregion
 }

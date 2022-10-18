@@ -63,31 +63,37 @@ public class itemObject : MonoBehaviour
     }
     public void Up()
     {
-        float xPos = this.transform.localPosition.x;
-        float yPos = this.transform.localPosition.y;
-        float xSiz = this.size.x / 2f;
-        float ySiz = this.size.y / 2f;
-        //print(left + " " + right + " " + up + " " + down);
+        if (ItemData.isSell)
+        {
+            //구매과정
+            
+            return;
+        }
         if (Input.GetMouseButtonUp(0))
-        { //위치 조정
+        {
+            float xPos = this.transform.localPosition.x;
+            float yPos = this.transform.localPosition.y;
+            float xSiz = this.size.x / 2f;
+            float ySiz = this.size.y / 2f;
+            //위치 조정
             float tempL = ((xPos - xSiz) + (cell / 2f)) % cell;
             xPos -= tempL;
-
             if (tempL < -(cell / 2f))
                 xPos -= cell;
 
             else if (tempL > (cell / 2f))
                 xPos += cell;
+            xPos = this.zeroPos.x % cell == 0 ? xPos - cell / 2f : xPos;
 
             float tempU = ((yPos + ySiz) + (cell / 2f)) % cell;
             yPos -= tempU;
-            
             if (tempU < -(cell / 2f))
                 yPos -= cell;
-            
+
             else if (tempU > (cell / 2f))
                 yPos += cell;
-            
+            yPos = this.zeroPos.y % cell == 0 ? yPos + cell / 2f : yPos;
+
             if (
                 (xPos - xSiz) < this.zeroPos.x
                 || (yPos + ySiz) > this.zeroPos.y

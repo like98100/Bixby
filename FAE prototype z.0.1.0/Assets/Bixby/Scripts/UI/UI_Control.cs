@@ -33,6 +33,7 @@ public class UI_Control : MonoBehaviour
         option.Set();
         Map.SetActive(false);
         openedWindow = null;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update()
@@ -54,16 +55,6 @@ public class UI_Control : MonoBehaviour
                     windowSet(Map);
                     break;
             }
-        }
-        if (openedWindow == null)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            aimPoint.SetActive(true);
-        }
-        else
-        {
-            Cursor.lockState = CursorLockMode.None;
-            aimPoint.SetActive(false);
         }
     }
     public void optionWindow()
@@ -88,5 +79,15 @@ public class UI_Control : MonoBehaviour
             openedWindow = window;
         else
             openedWindow = null;
+        if (openedWindow == null)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            aimPoint.SetActive(true);
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+            aimPoint.SetActive(false);
+        }
     }
 }

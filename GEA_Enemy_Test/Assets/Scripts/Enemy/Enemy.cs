@@ -21,6 +21,8 @@ public class Enemy : MonoBehaviour
         SLEEP
     }
 
+    private Rigidbody rigid;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,11 +32,15 @@ public class Enemy : MonoBehaviour
         Timer = 0.0f;
 
         State = STATE.IDLE;
+
+        rigid = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        rigid.velocity = Vector3.zero;
+
         findPlayer();
 
         if(State != STATE.CHASE && State != STATE.RUNAWAY)
@@ -50,7 +56,7 @@ public class Enemy : MonoBehaviour
     {
         Timer += Time.deltaTime;
 
-        if(Timer >= 10.0f)
+        if(Timer >= 5.0f)
         {
             if(State == STATE.IDLE)
                 State = STATE.PATROL;

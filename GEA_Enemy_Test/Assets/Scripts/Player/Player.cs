@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
 
     public GameObject Bullet;
 
+    public float Hp = 100.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,5 +31,10 @@ public class Player : MonoBehaviour
         {
             Instantiate(Bullet, this.transform.position, this.transform.rotation);
         }
+    }
+
+    public void TakeDamage(float value)
+    {
+        Hp -= value;
     }
 }

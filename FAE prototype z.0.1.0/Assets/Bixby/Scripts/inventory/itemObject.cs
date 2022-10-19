@@ -8,17 +8,15 @@ public class itemObject : MonoBehaviour
     bool isHover;
     
     Vector3 zeroPos;
-    Vector3 maxPos;
     Vector3 size;
     public Vector3 OriginPos;
     bool isEquip;
     GameObject equip;
     public itemData ItemData;
-    float cell;
-    public void Setup(float sizeX, float sizeY, float posX, float posY, bool isEquip, float cell, Vector3 zero, itemData itemData)
+    public void Setup(float sizeX, float sizeY, float posX, float posY, bool isEquip, Vector3 zero, itemData itemData)
     {
         this.zeroPos = zero;
-        maxPos = zeroPos + (Vector3.right * inventoryObject.Inst.XSize * cell) + (Vector3.down * inventoryObject.Inst.YSize * cell);
+        float cell = inventoryObject.Inst.Cell;
 
         this.size = new Vector3(sizeX * cell, sizeY * cell, 1f);
         this.GetComponent<RectTransform>().sizeDelta = this.size;
@@ -33,7 +31,6 @@ public class itemObject : MonoBehaviour
         equip.SetActive(isEquip);
 
         this.ItemData = itemData;
-        this.cell = cell;
         Color imageColor = new Color();
         switch (this.ItemData.itemID)
         {
@@ -64,48 +61,61 @@ public class itemObject : MonoBehaviour
     }
     public void Up()
     {
-        //print(left + " " + right + " " + up + " " + down);
-        if (Input.GetMouseButtonUp(0))
-        { //위치 조정
-            float xPos = this.transform.localPosition.x;
-            float yPos = this.transform.localPosition.y;
-            float xSiz = this.size.x / 2f;
-            float ySiz = this.size.y / 2f;
-            float tempL = ((xPos - xSiz) + (cell / 2f)) % cell;
-            xPos -= tempL;
-
-            if (tempL < -(cell / 2f))
-                xPos -= cell;
-
-            else if (tempL > (cell / 2f))
-                xPos += cell;
-            xPos = this.zeroPos.x % cell == 0 ? xPos - cell / 2f : xPos;
-
-            float tempU = ((yPos + ySiz) + (cell / 2f)) % cell;
-            yPos -= tempU;
-            
-            if (tempU < -(cell / 2f))
-                yPos -= cell;
-            
-            else if (tempU > (cell / 2f))
-                yPos += cell;
-            yPos = this.zeroPos.y % cell == 0 ? yPos + cell / 2f : yPos;
-
-            if (
-                (xPos - xSiz) < this.zeroPos.x
-                || (yPos + ySiz) > this.zeroPos.y
-                || (xPos + xSiz) > this.maxPos.x
-                || (yPos - ySiz) < this.maxPos.y
-                )
-            {
-                inventoryObject.Inst.throwItem(this.gameObject, true);
-            }
+        if (ItemData.isSell)
+        {
+            if (ItemData.price * 1.5 < inventoryObject.Inst.Gold)
+            { }
             else
             {
-                Vector3 temp = new Vector3(xPos, yPos, 0f);
-                inventoryObject.Inst.setItemPos(this.gameObject, temp);
+                inventoryObject.Inst.setItemPos(this.gameObject, OriginPos);
             }
+            //구매과정
+            return;
         }
+        #region 위치이동
+        float xPos = this.transform.localPosition.x;
+        float yPos = this.transform.localPosition.y;
+        float xSiz = this.size.x / 2f;
+        float ySiz = this.size.y / 2f;
+        float Cell = inventoryObject.Inst.Cell;
+        float XSize = inventoryObject.Inst.XSize;
+        float YSize = inventoryObject.Inst.YSize;
+        float tempL = ((xPos - xSiz) + (Cell / 2f)) % Cell;
+        Vector3 maxPos = zeroPos + (Vector3.right * XSize * Cell) + (Vector3.down * YSize * Cell);
+        xPos -= tempL;
+
+        if (tempL < -(Cell / 2f))
+            xPos -= Cell;
+
+        else if (tempL > (Cell / 2f))
+            xPos += Cell;
+        xPos = zeroPos.x % Cell == 0 ? xPos - Cell / 2f : xPos;
+
+        float tempU = ((yPos + ySiz) + (Cell / 2f)) % Cell;
+        yPos -= tempU;
+
+        if (tempU < -(Cell / 2f))
+            yPos -= Cell;
+
+        else if (tempU > (Cell / 2f))
+            yPos += Cell;
+        yPos = zeroPos.y % Cell == 0 ? yPos + Cell / 2f : yPos;
+        
+        if (
+            (xPos - xSiz) < zeroPos.x
+            || (yPos + ySiz) > zeroPos.y
+            || (xPos + xSiz) > maxPos.x
+            || (yPos - ySiz) < maxPos.y
+            )
+        {
+            if (!UI_Control.Inst.Shop.getWindow().activeSelf)
+                inventoryObject.Inst.throwItem(this.gameObject, true);
+        }
+        else
+        {
+            inventoryObject.Inst.setItemPos(this.gameObject, new Vector3(xPos, yPos, 0f));
+        }
+        #endregion
     }
     public void Hover()
     {

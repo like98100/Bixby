@@ -56,6 +56,7 @@ public class itemObject : MonoBehaviour
         imageColor.a = 0.5f;
         this.gameObject.GetComponent<Image>().color = imageColor;
     }
+    #region 이벤트트리거
     public void Drag()
     {
         //print("드래그");
@@ -63,13 +64,13 @@ public class itemObject : MonoBehaviour
     }
     public void Up()
     {
-        float xPos = this.transform.localPosition.x;
-        float yPos = this.transform.localPosition.y;
-        float xSiz = this.size.x / 2f;
-        float ySiz = this.size.y / 2f;
         //print(left + " " + right + " " + up + " " + down);
         if (Input.GetMouseButtonUp(0))
         { //위치 조정
+            float xPos = this.transform.localPosition.x;
+            float yPos = this.transform.localPosition.y;
+            float xSiz = this.size.x / 2f;
+            float ySiz = this.size.y / 2f;
             float tempL = ((xPos - xSiz) + (cell / 2f)) % cell;
             xPos -= tempL;
 
@@ -105,30 +106,6 @@ public class itemObject : MonoBehaviour
                 inventoryObject.Inst.setItemPos(this.gameObject, temp);
             }
         }
-        else if (Input.GetMouseButtonUp(1))
-        {
-            foreach (var item in ItemData.tag)
-            {
-                if (item == "equip")
-                {
-                    isEquip = !isEquip;
-                    equip.SetActive(isEquip);
-                    break;
-                }
-                if (item == "food")
-                {
-                    switch (ItemData.itemID)
-                    {//id에 따라 food 효과 조정
-                        case 3:
-                            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerContorl>().Stamina += 10f;
-                            break;
-                        default:
-                            break;
-                    }
-                    inventoryObject.Inst.throwItem(this.gameObject, false);
-                }
-            }
-        }
     }
     public void Hover()
     {
@@ -144,12 +121,20 @@ public class itemObject : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
             inventoryObject.Inst.itemLeftDown(this);
+        else if (Input.GetMouseButtonDown(1))
+            inventoryObject.Inst.itemRightDown(this);
     }
+    #endregion
     void Update()
     {   
         if (isHover)
         {
             inventoryObject.Inst.itemSummaryMove();
         }
+    }
+    public void equipItem()
+    {
+        isEquip = !isEquip;
+        equip.SetActive(isEquip);
     }
 }

@@ -252,5 +252,28 @@ public class inventoryObject : MonoBehaviour
             }
         itemDescription.transform.GetChild(1).GetComponent<Text>().text = description;
     }
+    public void itemRightDown(itemObject itemObj)//아이템을 우클릭 했을 때
+    {
+        foreach (var item in itemObj.ItemData.tag)
+        {
+            if (item == "equip")
+            {
+                itemObj.equipItem();
+                break;
+            }
+            if (item == "food")
+            {
+                switch (itemObj.ItemData.itemID)
+                {//id에 따라 food 효과 조정
+                    case 3:
+                        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerContorl>().Stamina += 10f;
+                        break;
+                    default:
+                        break;
+                }
+                throwItem(this.gameObject, false);
+            }
+        }
+    }
     #endregion
 }

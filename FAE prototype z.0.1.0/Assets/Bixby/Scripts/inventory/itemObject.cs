@@ -21,7 +21,7 @@ public class itemObject : MonoBehaviour
         this.size = new Vector3(sizeX * cell, sizeY * cell, 1f);
         this.GetComponent<RectTransform>().sizeDelta = this.size;
 
-        this.transform.localPosition = new Vector3(
+        this.gameObject.transform.localPosition = new Vector3(
                     zeroPos.x + posX * cell + size.x / 2f,
                     zeroPos.y - posY * cell - size.y / 2f);
         this.OriginPos = this.transform.localPosition;
@@ -61,21 +61,7 @@ public class itemObject : MonoBehaviour
     }
     public void Up()
     {
-        if (ItemData.isSell)
-        {
-            if (Mathf.FloorToInt(ItemData.price * 1.5f) < inventoryObject.Inst.Gold)
-            {
-                inventoryObject.Inst.Gold -= Mathf.FloorToInt(ItemData.price * 1.5f);
-                inventoryObject.Inst.setGold();
-            }
-            else
-            {
-                inventoryObject.Inst.setItemPos(this.gameObject, OriginPos);
-            }
-            //구매과정
-            return;
-        }
-        #region 위치이동
+        #region 위치계산
         float xPos = this.transform.localPosition.x;
         float yPos = this.transform.localPosition.y;
         float xSiz = this.size.x / 2f;
@@ -103,7 +89,26 @@ public class itemObject : MonoBehaviour
         else if (tempU > (Cell / 2f))
             yPos += Cell;
         yPos = zeroPos.y % Cell == 0 ? yPos + Cell / 2f : yPos;
-
+        #endregion
+        #region 구매
+        if (ItemData.isSell)
+        {
+            if (Mathf.FloorToInt(ItemData.price * 1.5f) < inventoryObject.Inst.Gold)
+            {
+                Vector2 tempPos = inventoryObject.Inst.emptyCell(ItemData.xSize, ItemData.ySize);
+                if (tempPos != Vector2.zero - Vector2.one)
+                {
+                    inventoryObject.Inst.itemGet(ItemData.xSize, ItemData.ySize, tempPos.x, tempPos.y, ItemData);
+                    inventoryObject.Inst.Gold -= Mathf.FloorToInt(ItemData.price * 1.5f);
+                    inventoryObject.Inst.setGold();
+                }
+                //알림창 만들면 else에서 칸 부족하다고 알릴 것
+            }
+            inventoryObject.Inst.setItemPos(this.gameObject, OriginPos);
+            return;
+        }
+        #endregion
+        #region 판매
         if (UI_Control.Inst.Shop.getWindow().activeSelf
             )
         {
@@ -118,15 +123,28 @@ public class itemObject : MonoBehaviour
             if (shopMinX < itemMinX && itemMaxX < shopMaxX
                 && shopMinY < itemMinY && itemMaxY < shopMaxY)
             {
-                //팔 건지 물어보는 알림 창이 있으면 좋긴 하겠는데 솔직히 창 추가하는건 좀 힘들긴 하다
+                //알림창 만들면 여기에서 팔건지 물어볼 것
                 inventoryObject.Inst.Gold += this.ItemData.price;
                 inventoryObject.Inst.throwItem(this.gameObject, false);
                 inventoryObject.Inst.setGold();
             }
             else
-                inventoryObject.Inst.setItemPos(this.gameObject, OriginPos);
+            {
+                if (
+            (xPos - xSiz) < zeroPos.x
+            || (yPos + ySiz) > zeroPos.y
+            || (xPos + xSiz) > maxPos.x
+            || (yPos - ySiz) < maxPos.y
+            )
+                    inventoryObject.Inst.setItemPos(this.gameObject, OriginPos);
+                else
+                {
+                    inventoryObject.Inst.setItemPos(this.gameObject, new Vector3(xPos, yPos, 0f));
+                }
+            }
 
         }
+        #endregion
         else
         {
             if (
@@ -141,8 +159,6 @@ public class itemObject : MonoBehaviour
                 inventoryObject.Inst.setItemPos(this.gameObject, new Vector3(xPos, yPos, 0f));
             }
         }
-        
-        #endregion
     }
     public void Hover()
     {

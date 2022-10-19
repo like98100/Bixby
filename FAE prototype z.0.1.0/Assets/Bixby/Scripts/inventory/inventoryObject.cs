@@ -125,6 +125,7 @@ public class inventoryObject : MonoBehaviour
         {
             temp.itemList.Add(Item);
         }
+        setGold();
         int gold = this.Gold;
         temp.gold = gold;
         string tempStr = json.ObjectToJson(temp);
@@ -135,46 +136,16 @@ public class inventoryObject : MonoBehaviour
         itemData newData = newItem.GetComponent<fieldItem>().ItemData;
         float newXSize = newData.xSize;
         float newYSize = newData.ySize;
-        List<Vector2> existCell = new List<Vector2>();
-        existCell = existCells(items.items);
-        List<Vector2> emptyCell = new List<Vector2>();
-        for (int j = 0; j < YSize; j++) //칸 기준
+        Vector2 tempPos = emptyCell(newXSize, newYSize);
+        if (tempPos != Vector2.zero - Vector2.one)
         {
-            for (int i = 0; i < XSize; i++)
-            {
-                if (existCell.Contains(new Vector2(i, j)))
-                    continue;
-                emptyCell.Add(new Vector2(i, j));
-            }
+            itemGet(newXSize, newYSize, tempPos.x, tempPos.y, newData);
+            Destroy(newItem);
+            jsonSave();
+            Destroy(FieldFKey);
+            FieldFKey = null;
         }
-        foreach (var item in emptyCell)
-        {
-            bool isOkay = true;
-            for (int i = 0; i < newYSize; i++)
-            {
-                Vector2 tempPoint = item + Vector2.up * i;
-                for (int j = 0; j < newXSize; j++)
-                {
-                    if (!emptyCell.Contains(tempPoint + Vector2.right * j))
-                        isOkay = false;
-                }
-            }
-            if (isOkay)
-            {
-                GameObject temp = Instantiate(itemPrefab, inventoryCanvas.transform);
-                itemObject tempItem = temp.GetComponent<itemObject>();
-                tempItem.Setup(newData.xSize, newData.ySize, item.x, item.y, newData.isEquip, zero, newData);
-                itemObjects.Add(temp);
-                tempItem.ItemData.Left = item.x;
-                tempItem.ItemData.Up = item.y;
-                items.items.Add(tempItem.ItemData);
-                Destroy(newItem);
-                jsonSave();
-                Destroy(FieldFKey);
-                FieldFKey = null;
-                return;
-            }
-        }
+        //알림창 만들면 else에서 아이템 획득 불가 알릴 것
     }
     public List<Vector2> existCells(List<itemData> itemList)//아이템 리스트 내 아이템 존재 칸 확인
     {
@@ -208,13 +179,60 @@ public class inventoryObject : MonoBehaviour
         GameObject temp = isLeft ? MakeFieldItem(itemObj.GetComponent<itemObject>().ItemData, player.transform.position) : null;
         Destroy(itemObj);
         jsonSave();
+        itemSummary.SetActive(false);
     }
-
     public GameObject MakeFieldItem(itemData data, Vector3 position)//필드에 아이템 생성
     {
         GameObject temp = Instantiate(fieldItemPrefab, position, Quaternion.identity);
         temp.GetComponent<fieldItem>().setup(data);
         return temp;
+    }
+    public void itemGet(float itemSizeX, float itemSizeY, float itemX, float itemY, itemData itemData)//아이템 획득
+    {
+        GameObject temp = Instantiate(itemPrefab, inventoryCanvas.transform);
+        itemObject tempItem = temp.GetComponent<itemObject>();
+        itemData newData = new itemData();
+        newData.itemID = itemData.itemID; newData.tag = itemData.tag; newData.itemName = itemData.itemName;
+        newData.Left = itemX;newData.Up = itemY;newData.xSize = itemSizeX;newData.ySize = itemSizeY;
+        newData.isEquip = false;newData.price = itemData.price;newData.isSell = false;
+        tempItem.Setup(itemSizeX, itemSizeY, itemX, itemY, false, zero, newData);
+        itemObjects.Add(temp);
+        tempItem.ItemData.Left = itemX;
+        tempItem.ItemData.Up = itemY;
+        items.items.Add(tempItem.ItemData);
+    }
+    public Vector2 emptyCell(float newXSize, float newYSize)//인벤토리에서 해당 크기의 아이템이 들어올 수 있는 위치
+    {
+        List<Vector2> existCell = new List<Vector2>();
+        existCell = existCells(items.items);
+        List<Vector2> emptyCell = new List<Vector2>();
+        for (int j = 0; j < YSize; j++) //칸 기준
+        {
+            for (int i = 0; i < XSize; i++)
+            {
+                if (existCell.Contains(new Vector2(i, j)))
+                    continue;
+                emptyCell.Add(new Vector2(i, j));
+            }
+        }
+        foreach (var item in emptyCell)
+        {
+            bool isOkay = true;
+            for (int i = 0; i < newYSize; i++)
+            {
+                Vector2 tempPoint = item + Vector2.up * i;
+                for (int j = 0; j < newXSize; j++)
+                {
+                    if (!emptyCell.Contains(tempPoint + Vector2.right * j))
+                        isOkay = false;
+                }
+            }
+            if (isOkay)
+            {
+                return new Vector2(item.x, item.y);
+            }
+        }
+        return Vector2.zero - Vector2.one;
     }
     #region 아이템 마우스 조작
     public void itemHover(itemObject itemObj)//아이템에 마우스 올렸을 때
@@ -259,6 +277,8 @@ public class inventoryObject : MonoBehaviour
                 default:
                     break;
             }
+        if (itemObj.ItemData.isSell)
+            description = description + "\n" + Mathf.FloorToInt(itemObj.ItemData.price * 1.5f);
         itemDescription.transform.GetChild(1).GetComponent<Text>().text = description;
         #endregion
     }

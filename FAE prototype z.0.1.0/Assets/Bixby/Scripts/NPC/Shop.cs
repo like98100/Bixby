@@ -9,6 +9,7 @@ public class Shop : MonoBehaviour
     GameObject shopWindow;
     [SerializeField] float shopXSize;
     [SerializeField] float shopYSize;
+    List<GameObject> shopItems;
     void Awake()
     {
         itemJsonData = json.LoadJsonFile<itemJsonData>(Application.dataPath, "shop");//json로드
@@ -35,7 +36,7 @@ public class Shop : MonoBehaviour
         {
             GameObject temp = Instantiate(inventoryObject.Inst.getObj("itemPrefab"), shopWindow.transform);//인스턴싱
             itemObject tempItem = temp.GetComponent<itemObject>();//오브젝트 변수
-
+            
             float newXSize = item.xSize;
             float newYSize = item.ySize;
             List<Vector2> existCell = inventoryObject.Inst.existCells(tempList);
@@ -67,7 +68,7 @@ public class Shop : MonoBehaviour
                     item.Up = item_.y;
                 }
             }
-            tempItem.Setup(item.xSize, item.ySize, item.Left, item.Up, item.isEquip, zero, item);
+            tempItem.Setup(item.xSize, item.ySize, item.Left, item.Up, false, zero, item);
             tempList.Add(tempItem.ItemData);
         }//아이템 가시화
     }
@@ -79,5 +80,17 @@ public class Shop : MonoBehaviour
     {
         UI_Control.Inst.windowClose();
         UI_Control.Inst.windowSet(shopWindow);
+        shopItems = new List<GameObject>();
+        foreach (Transform item in shopWindow.transform)
+        {
+            if (item.gameObject.name != "cells")
+                shopItems.Add(item.gameObject);
+        }
+        foreach (var item in shopItems)
+        {
+            item.SetActive(true);
+            if (item.transform.parent.name == "Shop")
+                item.GetComponent<itemObject>().ItemData.isSell = true;
+        }
     }
 }

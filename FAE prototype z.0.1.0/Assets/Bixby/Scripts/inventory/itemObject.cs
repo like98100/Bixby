@@ -78,6 +78,7 @@ public class itemObject : MonoBehaviour
 
             else if (tempL > (cell / 2f))
                 xPos += cell;
+            xPos = this.zeroPos.x % cell == 0 ? xPos - cell / 2f : xPos;
 
             float tempU = ((yPos + ySiz) + (cell / 2f)) % cell;
             yPos -= tempU;
@@ -87,7 +88,8 @@ public class itemObject : MonoBehaviour
             
             else if (tempU > (cell / 2f))
                 yPos += cell;
-            
+            yPos = this.zeroPos.y % cell == 0 ? yPos + cell / 2f : yPos;
+
             if (
                 (xPos - xSiz) < this.zeroPos.x
                 || (yPos + ySiz) > this.zeroPos.y

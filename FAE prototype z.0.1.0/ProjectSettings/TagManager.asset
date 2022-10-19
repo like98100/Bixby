@@ -4,17 +4,18 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - FxTemporaire
   - item
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
   - 
   - 
-  - Ground
+  - 
   - 
   - 
   - 

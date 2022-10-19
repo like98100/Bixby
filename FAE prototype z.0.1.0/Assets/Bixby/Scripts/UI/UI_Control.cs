@@ -17,7 +17,6 @@ public class UI_Control : MonoBehaviour
         windows.Add(inventory);
         windows.Add(Map);
         aimPoint = GameObject.Find("AimPoint");
-        Shop = this.gameObject.GetComponent<Shop>();
     }
     GameObject optionObj;
     UI_Option option;
@@ -27,13 +26,11 @@ public class UI_Control : MonoBehaviour
     List<GameObject> windows;
     GameObject openedWindow;
     GameObject aimPoint;
-    public Shop Shop;
     void Start()
     {
         option.Set();
         Map.SetActive(false);
         openedWindow = null;
-        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update()
@@ -48,13 +45,21 @@ public class UI_Control : MonoBehaviour
             {
                 case "i":
                     windowSet(inventory);
-                    if (!inventory.activeSelf)
-                        inventory.transform.GetChild(2).gameObject.SetActive(false);
                     break;
                 case "m":
                     windowSet(Map);
                     break;
             }
+        }
+        if (openedWindow == null)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            aimPoint.SetActive(true);
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+            aimPoint.SetActive(false);
         }
     }
     public void optionWindow()
@@ -79,15 +84,5 @@ public class UI_Control : MonoBehaviour
             openedWindow = window;
         else
             openedWindow = null;
-        if (openedWindow == null)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            aimPoint.SetActive(true);
-        }
-        else
-        {
-            Cursor.lockState = CursorLockMode.None;
-            aimPoint.SetActive(false);
-        }
     }
 }

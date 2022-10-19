@@ -63,37 +63,31 @@ public class itemObject : MonoBehaviour
     }
     public void Up()
     {
-        if (ItemData.isSell)
-        {
-            //구매과정
-            
-            return;
-        }
+        float xPos = this.transform.localPosition.x;
+        float yPos = this.transform.localPosition.y;
+        float xSiz = this.size.x / 2f;
+        float ySiz = this.size.y / 2f;
+        //print(left + " " + right + " " + up + " " + down);
         if (Input.GetMouseButtonUp(0))
-        {
-            float xPos = this.transform.localPosition.x;
-            float yPos = this.transform.localPosition.y;
-            float xSiz = this.size.x / 2f;
-            float ySiz = this.size.y / 2f;
-            //위치 조정
+        { //위치 조정
             float tempL = ((xPos - xSiz) + (cell / 2f)) % cell;
             xPos -= tempL;
+
             if (tempL < -(cell / 2f))
                 xPos -= cell;
 
             else if (tempL > (cell / 2f))
                 xPos += cell;
-            xPos = this.zeroPos.x % cell == 0 ? xPos - cell / 2f : xPos;
 
             float tempU = ((yPos + ySiz) + (cell / 2f)) % cell;
             yPos -= tempU;
+            
             if (tempU < -(cell / 2f))
                 yPos -= cell;
-
+            
             else if (tempU > (cell / 2f))
                 yPos += cell;
-            yPos = this.zeroPos.y % cell == 0 ? yPos + cell / 2f : yPos;
-
+            
             if (
                 (xPos - xSiz) < this.zeroPos.x
                 || (yPos + ySiz) > this.zeroPos.y
@@ -134,26 +128,31 @@ public class itemObject : MonoBehaviour
             }
         }
     }
-    public void Hover()
-    {
-        isHover = true;
-        inventoryObject.Inst.itemHover(this);
-    }
-    public void Exit()
-    {
-        isHover = false;
-        inventoryObject.Inst.itemExit();
-    }
-    public void Down()//클릭시
-    {
-        if (Input.GetMouseButtonDown(0))
-            inventoryObject.Inst.itemLeftDown(this);
-    }
+    int temp = 0;
     void Update()
     {   
-       if(isHover)
+        if (isHover)
         {
-            inventoryObject.Inst.itemSummaryMove();
+            if (Input.GetMouseButtonDown(0))
+            { //좌클릭
+                //print("마우스 좌클릭");
+                OriginPos = this.transform.localPosition;
+            }
+            else if (Input.GetMouseButtonDown(1))
+            { //우클릭
+                //print("마우스 우클릭");
+            }
+            else
+            {//호버
+                if (temp == 0)
+                {
+                    inventoryObject.Inst.itemHover(this);
+                    //print("마우스 호버");
+                    temp = 1;
+                }
+            }
         }
+        else
+            temp = 0;
     }
 }

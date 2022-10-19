@@ -32,7 +32,7 @@ public class PlayerStatusControl : ElementControl, IDamgeable
     public float SwitchToChargeTime = 2.0f;
     public float FireRate = 0.25f;
 
-    protected float rotationSpeed = 20.0f;
+    protected float rotationSpeed = 45.0f;
     protected float nextFire = 0.0f;
 
     protected override void Start()

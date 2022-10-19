@@ -25,7 +25,7 @@ public class inventoryObject : MonoBehaviour
         Gold = itemJsonData.gold;//골드 값 로드
         goldObj.GetComponent<RectTransform>().sizeDelta = new Vector2(XSize * Cell, 50f);//골드창 크기
         goldObj.transform.localPosition = new Vector3(0f, -1 * (inventoryObj.GetComponent<RectTransform>().rect.height / 2f + 25f), 0f);//골드창 위치
-        goldObj.transform.GetChild(0).GetComponent<Text>().text = "G " + Gold.ToString();//골드 값 적용
+        setGold();
         items.items = new List<itemData>();
         foreach (var item in itemJsonData.itemList)
             items.items.Add(item);//itemSO 데이터 추가
@@ -300,6 +300,10 @@ public class inventoryObject : MonoBehaviour
             default:
                 return null;
         }
+    }
+    public void setGold()
+    {
+        goldObj.transform.GetChild(0).GetComponent<Text>().text = "G " + Gold.ToString();//골드 값 적용
     }
     #endregion
 }

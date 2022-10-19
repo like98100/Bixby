@@ -45,12 +45,8 @@ public class Shop : MonoBehaviour
                 for (int i = 0; i < shopXSize; i++)
                 {
                     if (existCell.Contains(new Vector2(i, j)))
-                    {
-                        print(shopData.IndexOf(item)+"번째 existCell : (" + i + ", " + j + ")");
                         continue;
-                    }
                     emptyCell.Add(new Vector2(i, j));
-                    print(shopData.IndexOf(item) + "번째 emptyCell : (" + i + ", " + j + ")");
                 }
             }
             foreach (var item_ in emptyCell)

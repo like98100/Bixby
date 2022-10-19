@@ -63,8 +63,11 @@ public class itemObject : MonoBehaviour
     {
         if (ItemData.isSell)
         {
-            if (ItemData.price * 1.5 < inventoryObject.Inst.Gold)
-            { }
+            if (Mathf.FloorToInt(ItemData.price * 1.5f) < inventoryObject.Inst.Gold)
+            {
+                inventoryObject.Inst.Gold -= Mathf.FloorToInt(ItemData.price * 1.5f);
+                inventoryObject.Inst.setGold();
+            }
             else
             {
                 inventoryObject.Inst.setItemPos(this.gameObject, OriginPos);
@@ -100,21 +103,45 @@ public class itemObject : MonoBehaviour
         else if (tempU > (Cell / 2f))
             yPos += Cell;
         yPos = zeroPos.y % Cell == 0 ? yPos + Cell / 2f : yPos;
-        
-        if (
+
+        if (UI_Control.Inst.Shop.getWindow().activeSelf
+            )
+        {
+            Vector3 thisPos = this.transform.position;
+            Vector3 thisSize = Vector3.zero + Vector3.right * this.GetComponent<RectTransform>().rect.width + Vector3.up * this.GetComponent<RectTransform>().rect.height;
+            Vector3 shopPos = UI_Control.Inst.Shop.getWindow().transform.position;
+            Vector3 shopSize = Vector3.zero + Vector3.right * UI_Control.Inst.Shop.getWindow().GetComponent<RectTransform>().rect.width + Vector3.up * UI_Control.Inst.Shop.getWindow().GetComponent<RectTransform>().rect.height;
+            float itemMinX = thisPos.x - thisSize.x / 2f;            float itemMaxX = thisPos.x + thisSize.x / 2f;
+            float shopMinX = shopPos.x - shopSize.x / 2f;            float shopMaxX = shopPos.x + shopSize.x / 2f;
+            float itemMinY = thisPos.y - thisSize.y / 2f;            float itemMaxY = thisPos.y + thisSize.y / 2f;
+            float shopMinY = shopPos.y - shopSize.y / 2f;            float shopMaxY = shopPos.y + shopSize.y / 2f;
+            if (shopMinX < itemMinX && itemMaxX < shopMaxX
+                && shopMinY < itemMinY && itemMaxY < shopMaxY)
+            {
+                //팔 건지 물어보는 알림 창이 있으면 좋긴 하겠는데 솔직히 창 추가하는건 좀 힘들긴 하다
+                inventoryObject.Inst.Gold += this.ItemData.price;
+                inventoryObject.Inst.throwItem(this.gameObject, false);
+                inventoryObject.Inst.setGold();
+            }
+            else
+                inventoryObject.Inst.setItemPos(this.gameObject, OriginPos);
+
+        }
+        else
+        {
+            if (
             (xPos - xSiz) < zeroPos.x
             || (yPos + ySiz) > zeroPos.y
             || (xPos + xSiz) > maxPos.x
             || (yPos - ySiz) < maxPos.y
             )
-        {
-            if (!UI_Control.Inst.Shop.getWindow().activeSelf)
                 inventoryObject.Inst.throwItem(this.gameObject, true);
+            else
+            {
+                inventoryObject.Inst.setItemPos(this.gameObject, new Vector3(xPos, yPos, 0f));
+            }
         }
-        else
-        {
-            inventoryObject.Inst.setItemPos(this.gameObject, new Vector3(xPos, yPos, 0f));
-        }
+        
         #endregion
     }
     public void Hover()

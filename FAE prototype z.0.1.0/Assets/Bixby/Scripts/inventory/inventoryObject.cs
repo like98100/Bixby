@@ -16,6 +16,8 @@ public class inventoryObject : MonoBehaviour
         //cellObj = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Bixby/Prefab/UI/cell.prefab", typeof(GameObject)) as GameObject;
         goldObj = inventoryCanvas.transform.GetChild(1).gameObject;
         //fieldItemPrefab = UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/Bixby/Prefab/Item/fieldItem.prefab", typeof(GameObject)) as GameObject;
+        itemSummary = inventoryCanvas.transform.GetChild(2).gameObject;
+        itemDescription = inventoryCanvas.transform.GetChild(3).gameObject;
     }
     itemSO items;//itemSO, 인벤토리 내 아이템들을 이 안의 items에 저장해둔다
     [SerializeField] GameObject itemPrefab;//아이템 프리팹, 인벤토리 열때, 혹은 아이템 획득할때 인스턴트에 사용
@@ -33,6 +35,8 @@ public class inventoryObject : MonoBehaviour
     [SerializeField] GameObject fieldItemPrefab;
     public GameObject FieldFKey;
     public GameObject KeyF;
+    GameObject itemSummary;
+    GameObject itemDescription;
     void Start()
     {
         inventoryObj.GetComponent<RectTransform>().sizeDelta = new Vector2(XSize * cell, YSize * cell);//인벤창 크기
@@ -64,6 +68,8 @@ public class inventoryObject : MonoBehaviour
         }//아이템 가시화
         inventoryCanvas.SetActive(false);//시작시 인벤창 닫혀있음
         FieldFKey = null;
+        itemSummary.SetActive(false);
+        itemDescription.SetActive(false);
     }
 
     public void setItemPos(GameObject item, Vector3 newOrigonPos)//인벤 내 아이템 위치 이동시 실행(겹침확인)
@@ -186,10 +192,6 @@ public class inventoryObject : MonoBehaviour
         }
         return result;
     }
-    public void itemHover(itemObject itemObj)//인벤토리에서 아이템에 마우스를 올려뒀을 때 실행
-    {
-        print("상세 파라미터 표시");
-    }
     public void throwItem(GameObject itemObj, bool isLeft)//인벤토리에서 아이템 버릴 때
     {
         items.items.Remove(itemObj.GetComponent<itemObject>().ItemData);
@@ -206,4 +208,49 @@ public class inventoryObject : MonoBehaviour
         temp.GetComponent<fieldItem>().setup(data);
         return temp;
     }
+    #region 아이템 마우스 조작
+    public void itemHover(itemObject itemObj)//아이템에 마우스 올렸을 때
+    {
+        itemSummary.SetActive(true);
+        itemSummary.transform.SetAsLastSibling();
+        itemSummary.transform.GetChild(0).GetComponent<Text>().text = itemObj.ItemData.itemName;
+    }
+    public void itemExit()//마우스가 아이템에서 나갔을 때
+    {
+        itemSummary.SetActive(false);
+    }
+    public void itemSummaryMove()//itemSummary 이동
+    {
+        itemSummary.transform.position = Input.mousePosition + Vector3.right * 150f;
+    }
+    public void itemLeftDown(itemObject itemObj)//아이템을 좌클릭 했을 때
+    {
+        itemDescription.SetActive(true);
+        itemDescription.transform.GetChild(0).GetComponent<Text>().text = itemObj.ItemData.itemName;
+        bool isFood = false;
+        string description = "";
+        foreach (var item in itemObj.ItemData.tag)
+        {
+            if (item == "food")
+            {
+                isFood = true;
+                break;
+            }
+        }
+        if (isFood)
+            switch (itemObj.ItemData.itemID)
+            {
+                case 3:
+                    description = "스태미나가 회복될 것 같다";
+                    break;
+            }
+        else
+            switch (itemObj.ItemData.itemID)
+            {
+                default:
+                    break;
+            }
+        itemDescription.transform.GetChild(1).GetComponent<Text>().text = description;
+    }
+    #endregion
 }

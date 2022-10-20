@@ -45,10 +45,11 @@ public class PlayerContorl : PlayerStatusControl
         CHARGE_ATTACK = 6, // 강공격
         ELEMENT_SKILL = 7, // 원소스킬
         ELEMENT_ULT_SKILL = 8, // 원소궁극기
-        STUNNED = 9, // 경직
-        DEAD = 10, // 사망
+        SWIMMING = 9, // 수영 중
+        STUNNED = 10, // 경직
+        DEAD = 11, // 사망
 
-        NUM = 11, // 상태 종류
+        NUM = 12, // 상태 종류
     };
 
     // Start is called before the first frame update
@@ -266,6 +267,18 @@ public class PlayerContorl : PlayerStatusControl
                         this.NextState = STATE.MOVE;
                     }
                     break;
+                case STATE.SWIMMING:
+                    //Water Layer에 접촉 해제하면 스테이트를 Move로 변경.
+                    //지속적으로 스태미나 소모 시켜야 함.
+                    break;
+                case STATE.STUNNED:
+                    //스턴 모션이 끝나면, 바로 Move로 상태 이동해야함.
+                    this.PrevState = this.State;
+                    this.NextState = STATE.MOVE;
+                    break;
+                case STATE.DEAD:
+                    //죽으면 리스폰.
+                    break;
             }
         }
 
@@ -322,6 +335,15 @@ public class PlayerContorl : PlayerStatusControl
                     transform.LookAt(player.transform.position + offset);
                     camera.GetComponent<CamControl>().isOnAim = true;
                     break;
+                case STATE.SWIMMING:
+
+                    break;
+                case STATE.STUNNED:
+
+                    break;
+                case STATE.DEAD:
+                    
+                    break;
             }
             this.StateTimer = 0.0f;
         }
@@ -375,12 +397,28 @@ public class PlayerContorl : PlayerStatusControl
             case STATE.ELEMENT_ULT_SKILL:
                 ultLockOn();
                 break;
+            case STATE.SWIMMING:
+
+                break;
+            case STATE.STUNNED:
+
+                break;
+            case STATE.DEAD:
+                playerDirection.y -= GravityForce * Time.deltaTime;
+                break;
         }
 
         if (isHitted)
         {
 
         }
+    }
+
+    protected override void die()
+    {
+        base.die();
+        this.PrevState = this.State;
+        this.NextState = STATE.DEAD;
     }
 
     private bool isAFK()

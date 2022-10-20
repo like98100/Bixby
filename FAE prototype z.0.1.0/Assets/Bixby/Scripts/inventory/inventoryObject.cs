@@ -284,6 +284,8 @@ public class inventoryObject : MonoBehaviour
     }
     public void itemRightDown(itemObject itemObj)//아이템을 우클릭 했을 때
     {
+        if (itemObj.ItemData.isSell)
+            return;//판매 물품은 우클릭해도 아이템 기능을 실행하지 않음
         foreach (var item in itemObj.ItemData.tag)
         {
             if (item == "equip")
@@ -301,7 +303,7 @@ public class inventoryObject : MonoBehaviour
                     default:
                         break;
                 }
-                throwItem(this.gameObject, false);
+                throwItem(itemObj.gameObject, false);
             }
         }
     }

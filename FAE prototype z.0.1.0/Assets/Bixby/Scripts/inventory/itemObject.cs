@@ -56,7 +56,10 @@ public class itemObject : MonoBehaviour
     #region 이벤트트리거
     public void Drag()
     {
-        //print("드래그");
+        if (ItemData.isSell)
+            return;//판매 물품은 드래그 되지않음
+        if (Input.GetMouseButton(1))
+            return;//우클릭은 드래그로 취급안함
         this.transform.position = Input.mousePosition;//Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
     public void Up()
@@ -93,6 +96,8 @@ public class itemObject : MonoBehaviour
         #region 구매
         if (ItemData.isSell)
         {
+            if (Input.GetMouseButtonUp(0))
+                return;//좌클릭이었을 경우에는 Down에서 한 함수만이 실행됨
             if (Mathf.FloorToInt(ItemData.price * 1.5f) < inventoryObject.Inst.Gold)
             {
                 Vector2 tempPos = inventoryObject.Inst.emptyCell(ItemData.xSize, ItemData.ySize);

@@ -53,7 +53,7 @@ namespace MBT
                     if(colliders[i].tag == "Player")
                     {
                         colliders[i].GetComponent<Player>().TakeDamage(10.0f);
-                        Debug.Log("Hit_10.0f");
+                        Debug.Log("Hit");
                     }
                 }
             }

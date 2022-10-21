@@ -22,6 +22,7 @@ public class Enemy : MonoBehaviour
     }
 
     private Rigidbody rigid;
+    public Animator Anim;
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +35,7 @@ public class Enemy : MonoBehaviour
         State = STATE.IDLE;
 
         rigid = GetComponent<Rigidbody>();
+        Anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -49,7 +51,7 @@ public class Enemy : MonoBehaviour
         if(Stat.hp <= 30.0f)
             State = STATE.RUNAWAY;
 
-        died();
+        //died();
     }
     
     private void stateChange()

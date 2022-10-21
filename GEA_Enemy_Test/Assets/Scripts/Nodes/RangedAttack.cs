@@ -6,16 +6,16 @@ using MBT;
 namespace MBT
 {
     [AddComponentMenu("")]
-    [MBTNode("Tasks/MeleeAttack")]
-    public class MeleeAttack : Leaf
+    [MBTNode("Tasks/RangedAttack")]
+    public class RangedAttack : Leaf
     {
         public GameObjectReference ObjRef = new GameObjectReference(VarRefMode.DisableConstant);
-        public TransformReference destination;
+        public GameObject Bullet;
         public FloatReference Variable = new FloatReference(VarRefMode.DisableConstant);
 
         public float UpdateInterval = 2.0f;
         public float Time_ = 0.0f;
-
+        
         public float AttackRange = 0.0f;
 
 
@@ -27,9 +27,10 @@ namespace MBT
         public override NodeResult Execute()
         {
             GameObject obj = ObjRef.Value;
-            // int Element;
+
+            int Element;
             // CheckElements
-            // Element = (int)obj.GetComponent<Enemy>().Element;
+            Element = (int)obj.GetComponent<Enemy>().Element;
 
             Time_ += Time.deltaTime * 1.5f;
 
@@ -49,24 +50,7 @@ namespace MBT
         public override void OnExit()
         {
             if (Variable.Value <= AttackRange)
-            {
-                Collider[] colliders = Physics.OverlapSphere(transform.position, AttackRange, 
-                                                    1, QueryTriggerInteraction.Ignore);
-            
-                if(colliders.Length > 0)
-                {
-                    for(int i = 0; i < colliders.Length; i++)
-                    {
-                        if(colliders[i].tag == "Player")
-                        {
-                            colliders[i].GetComponent<Player>().TakeDamage(5.0f);
-                            Debug.Log("Hit");
-                        }
-                    }
-                }
-            }
-            
-
+                Instantiate(Bullet, ObjRef.Value.transform.position, ObjRef.Value.transform.rotation);
             ObjRef.Value.GetComponent<Enemy>().Anim.SetBool("IsAttack", false);
         }
     }

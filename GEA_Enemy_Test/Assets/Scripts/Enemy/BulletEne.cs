@@ -14,6 +14,7 @@ public class BulletEne : MonoBehaviour
     {
         if(other.tag == "Player")
         {
+            Debug.Log("Hit");
             Destroy(gameObject);
         }
     }

@@ -40,7 +40,10 @@ public class NPC : MonoBehaviour
         if (playerClose && Input.GetKeyDown(KeyCode.F))
         {
             if (npcName == "shop")
+            {
                 shop.SetUp();
+                nameObj.SetActive(false);
+            }
             else
                 speech.setUp(npcName, talkIndex);
             Destroy(keyInst);

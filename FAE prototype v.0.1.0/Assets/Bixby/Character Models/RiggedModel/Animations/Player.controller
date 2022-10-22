@@ -95,9 +95,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.17204052
+  m_TransitionDuration: 0.61362916
   m_TransitionOffset: 0
-  m_ExitTime: 0.5588236
+  m_ExitTime: 0.5588235
   m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -237,7 +237,7 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.1720405
+  m_TransitionDuration: 0.6136292
   m_TransitionOffset: 0
   m_ExitTime: 0.5588236
   m_HasExitTime: 0
@@ -262,8 +262,8 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
-  m_TransitionOffset: 0
+  m_TransitionDuration: 0.39404488
+  m_TransitionOffset: 0.37576908
   m_ExitTime: 0.87288135
   m_HasExitTime: 0
   m_HasFixedDuration: 1
@@ -657,67 +657,67 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: isAtk
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: isJump
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: isFall
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: isCombat
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: isDead
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: isCharge
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: isAim
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: isLanding
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: isSwimming
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: isDash
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -981,7 +981,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: a80cea3eaaf02f441aba4d68a7ccaf10, type: 3}
+  m_Motion: {fileID: -203655887218126122, guid: b183fc4de5e501a4b95af656b020ef45, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -1091,22 +1091,22 @@ AnimatorStateMachine:
     m_Position: {x: 1230, y: 190, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7629217640018899512}
-    m_Position: {x: 1020, y: 710, z: 0}
+    m_Position: {x: 1020, y: 740, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -7491880252017045177}
     m_Position: {x: 400, y: 170, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 850233952991885500}
-    m_Position: {x: 340, y: 690, z: 0}
+    m_Position: {x: 340, y: 720, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2829963495024568791}
-    m_Position: {x: 360, y: 600, z: 0}
+    m_Position: {x: 360, y: 630, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1284852935375807443}
-    m_Position: {x: 1290, y: 510, z: 0}
+    m_Position: {x: 1340, y: 640, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3189894664045021475}
-    m_Position: {x: 1420, y: 0, z: 0}
+    m_Position: {x: 1410, y: -90, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -1162,9 +1162,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
-  m_TransitionOffset: 0
-  m_ExitTime: 0.6428572
+  m_TransitionDuration: 0.39404482
+  m_TransitionOffset: 0.12503593
+  m_ExitTime: 0.52774954
   m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0

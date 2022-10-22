@@ -54,7 +54,17 @@ public class PlayerAnimation : MonoBehaviour
             }
         }
 
+        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Dash") &&                // Dash 애니메이션이 실행되는 상태에서
+            Input.GetKeyDown(KeyCode.LeftShift))                                    // LeftShift 입력이 발생할 때
+        {
+            animator.Play("Dash", 0);
+        }
 
+        if(animator.GetCurrentAnimatorStateInfo(1).IsName("Charge") &&              // Charge 애니메이션이 실행되는 상태에서
+            !Input.GetKey(KeyCode.Mouse0))                                         // 좌 클릭 입력이 진행 중이지 않을 때
+        {
+            animator.SetBool("isCharge", false);                                    // 애니메이션 굳는 버그 수정 용
+        }
 
         switch (modelContorl.State)
         {

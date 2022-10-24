@@ -12,7 +12,7 @@ public class Mission : MonoBehaviour
         missionWindow = GameObject.Find("Mission");
         missionTitle = missionWindow.transform.GetChild(0).GetComponent<UnityEngine.UI.Text>();
         missionText = missionWindow.transform.GetChild(1).GetComponent<UnityEngine.UI.Text>();
-        missionTitle.text = missionText.text = "";
+        missionTitle.text = missionText.text = "Å×½ºÆ®";
         missionWindow.SetActive(false);
     }
 
@@ -25,7 +25,8 @@ public class Mission : MonoBehaviour
             missionWindow.SetActive(true);
         else
             missionWindow.SetActive(!(UI_Control.Inst.OpenedWindow.name == "Inventory"
-                                    || UI_Control.Inst.OpenedWindow.name == "Shop"));
+                                    || UI_Control.Inst.OpenedWindow.name == "Shop"
+                                    || UI_Control.Inst.OpenedWindow.name == "Speech"));
     }
     public void misssionSet(string missionTitle, string missionText)
     {

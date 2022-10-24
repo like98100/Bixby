@@ -45,7 +45,21 @@ public class NPC : MonoBehaviour
                 nameObj.SetActive(false);
             }
             else
+            {
                 speech.setUp(npcName, talkIndex);
+                if (npcName == "Quest")
+                {
+                    switch (talkIndex)
+                    {
+                        case 0:
+                            UI_Control.Inst.Mission.misssionSet("Æ©Åä¸®¾ó", "¾îÂ¼±¸¸¦ ÀúÂ¼±¸ ÇÏ¼¼¿ä");
+                            talkIndex++;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
             Destroy(keyInst);
             keyInst = null;
         }

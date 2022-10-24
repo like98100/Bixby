@@ -27,6 +27,8 @@ public class NPC : MonoBehaviour
         nameUI.text = npcName;
         nameObj.SetActive(playerClose);
         shop = UI_Control.Inst.Shop;
+        keyInst = Instantiate(inventoryObject.Inst.getObj("KeyF"), GameObject.Find("Canvas").transform);
+        keyInst.SetActive(false);
     }
 
     // Update is called once per frame
@@ -35,6 +37,14 @@ public class NPC : MonoBehaviour
         Vector3 camRotate = GameObject.FindGameObjectWithTag("MainCamera").transform.eulerAngles;
         camRotate -= Vector3.right * 90f;
         notify.transform.rotation = Quaternion.Euler(camRotate);
+        if (UI_Control.Inst.OpenedWindow != null)
+        {
+            if (UI_Control.Inst.OpenedWindow.name == "Map")
+                nameObj.SetActive(false);
+            else
+                nameObj.SetActive(playerClose);
+            keyInst.SetActive(nameObj.activeSelf);
+        }
         if (nameObj.activeSelf)
             nameObj.transform.position = Camera.main.WorldToScreenPoint(this.transform.position + Vector3.up * 2f);
         if (playerClose && Input.GetKeyDown(KeyCode.F))
@@ -66,9 +76,9 @@ public class NPC : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player" && keyInst == null)
+        if (other.tag == "Player" && !keyInst.activeSelf)
         {
-            keyInst = Instantiate(inventoryObject.Inst.getObj("KeyF"), GameObject.Find("Canvas").transform);
+            keyInst.SetActive(true);
             var wantedPos = Camera.main.WorldToScreenPoint(this.transform.position);
             keyInst.transform.position = wantedPos + Vector3.right * 200f;
             playerClose = true;
@@ -79,8 +89,7 @@ public class NPC : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            Destroy(keyInst);
-            keyInst = null;
+            keyInst.SetActive(false);
             playerClose = false;
             nameObj.SetActive(playerClose);
         }

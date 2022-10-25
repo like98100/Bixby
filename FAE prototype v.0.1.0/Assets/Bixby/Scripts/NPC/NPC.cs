@@ -43,7 +43,7 @@ public class NPC : MonoBehaviour
                 nameObj.SetActive(false);
             else
                 nameObj.SetActive(playerClose);
-            keyInst.SetActive(nameObj.activeSelf);
+            keyInst.SetActive(false);
         }
         if (nameObj.activeSelf)
             nameObj.transform.position = Camera.main.WorldToScreenPoint(this.transform.position + Vector3.up * 2f);
@@ -70,8 +70,7 @@ public class NPC : MonoBehaviour
                     }
                 }
             }
-            Destroy(keyInst);
-            keyInst = null;
+            keyInst.SetActive(false);
         }
     }
     private void OnTriggerEnter(Collider other)

@@ -58,11 +58,11 @@ public class PlayerStatusControl : ElementControl, IDamgeable
     }
 
     // 건드린 부분
-    public virtual void TakeElementHit(float damage, EnemyElement element)
+    public virtual void TakeElementHit(float damage, ElementType enemyElement)
     {
         isHitted = true;
-        enemyElementCheck(element);
-        float curDamage = attackedOnNormal(damage, EnemyElement, MyElement);
+        setEnemyElement(enemyElement); // 이렇게 EnemyElement로 바꿔서 쓰거나 enemyElement그대로 써도 될듯.
+        float curDamage = attackedOnNormal(damage);
 
         // 처음에 빈 stack에서 peek하려다보니 문제가 생기는 것 같음. 아닐 수도 ㅎ
         // if (EnemyElement != ElementType.NONE && EnemyElement != ElementStack.Peek())

@@ -6,7 +6,7 @@ public class ElementControl : ElementRule, IElementReaction
 {
     public ElementType MyElement;
     public ElementType EnemyElement;
-    public Stack<ElementType> ElementStack = new Stack<ElementType>(); // 속성 합성 시너지 스택. 2스택 쌓이면 바로 전부 팝!
+    public Stack<ElementType> ElementStack = new Stack<ElementType>(); // ¼?¼º ??¼º ½?³??? ½º??. 2½º?? ½×??¸? ¹?·? ??º? Æ?!
 
     protected Color mySkillStartColor = Color.yellow;
     protected Color mySkillEndColor = Color.white;
@@ -86,27 +86,27 @@ public class ElementControl : ElementRule, IElementReaction
         ElementType firstElement = ElementStack.Pop();
         ElementType secondElement = ElementStack.Pop();
 
-        if (firstElement == ElementType.FIRE && secondElement == ElementType.ICE) //융해
+        if (firstElement == ElementType.FIRE && secondElement == ElementType.ICE) //?¶?Ø
         {
             Fusion();
         }
-        else if (firstElement == ElementType.WATER && secondElement == ElementType.ICE) //빙결
+        else if (firstElement == ElementType.WATER && secondElement == ElementType.ICE) //º?°?
         {
             Freezing();
         }
-        else if (firstElement == ElementType.ELECTRICITY && secondElement == ElementType.ICE) //전도
+        else if (firstElement == ElementType.ELECTRICITY && secondElement == ElementType.ICE) //????
         {
             Transmission();
         }
-        else if (firstElement == ElementType.ELECTRICITY && secondElement == ElementType.FIRE) //폭발
+        else if (firstElement == ElementType.ELECTRICITY && secondElement == ElementType.FIRE) //Æø¹ß
         {
             Explosion();
         }
-        else if (firstElement == ElementType.ELECTRICITY && secondElement == ElementType.WATER) //감전
+        else if (firstElement == ElementType.ELECTRICITY && secondElement == ElementType.WATER) //°¨??
         {
             ElectricShock();
         }
-        else if (firstElement == ElementType.WATER && secondElement == ElementType.FIRE) //증발
+        else if (firstElement == ElementType.WATER && secondElement == ElementType.FIRE) //??¹ß
         {
             Evaporation();
         }
@@ -117,9 +117,9 @@ public class ElementControl : ElementRule, IElementReaction
     }
 
     // 건드린 부분
-    protected float attackedOnNormal(float damage, ElementType myElement, ElementType otherElement)
+    protected float attackedOnNormal(float damage)
     {
-        int adventage = CheckAdventage(myElement, otherElement);
+        int adventage = CheckAdventage(MyElement, EnemyElement);
         switch (adventage)
         {
             case 1:
@@ -180,18 +180,9 @@ public class ElementControl : ElementRule, IElementReaction
 
 
     // 건드린 부분
-    protected void enemyElementCheck(EnemyElement element)
+    protected void setEnemyElement(ElementType element)
     {
-        if ((int)element == 0)
-            this.EnemyElement = ElementType.NONE;
-        else if ((int)element == 1)
-            this.EnemyElement = ElementType.FIRE;
-        else if ((int)element == 2)
-            this.EnemyElement = ElementType.ICE;
-        else if ((int)element == 3)
-            this.EnemyElement = ElementType.WATER;
-        else if ((int)element == 4)
-            this.EnemyElement = ElementType.ELECTRICITY;
+        EnemyElement = element;
     }
 
 

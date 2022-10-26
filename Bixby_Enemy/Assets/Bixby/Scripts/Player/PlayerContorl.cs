@@ -723,11 +723,11 @@ public class PlayerContorl : PlayerStatusControl
                     this.gameObject.GetComponent<PlayerLineSkill>().ShowAttackEffect((int)this.State, (int)this.MyElement, ProjectileStart);
                     this.gameObject.GetComponent<PlayerLineSkill>().ShowHitEffect(hitInfo.point);
                     StartCoroutine(shootEffect());
-                    // ??? ??
+                    // 건드린 부분
                     if (hitInfo.collider.tag == "Enemy")
                     {
-                        enemyElementCheck(hitInfo.collider.GetComponent<Enemy>().Stat.enemyElement);
-                        hitInfo.collider.GetComponent<Enemy>().TakeDamage(attackedOnNormal(10.0f, MyElement, EnemyElement));
+                        setEnemyElement(hitInfo.collider.GetComponent<Enemy>().Stat.enemyElement);
+                        hitInfo.collider.GetComponent<Enemy>().TakeDamage(attackedOnNormal(10.0f));
                     }
                 }
                 else

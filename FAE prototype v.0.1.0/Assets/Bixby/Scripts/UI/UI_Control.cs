@@ -15,6 +15,8 @@ public class UI_Control : MonoBehaviour
         Map = GameObject.Find("Map");
         aimPoint = GameObject.Find("AimPoint");
         Shop = this.gameObject.GetComponent<Shop>();
+        Mission = this.gameObject.GetComponent<Mission>();
+        Gauge = GameObject.Find("Gauge").GetComponent<UI_Gauge>();
     }
     GameObject optionObj;
     UI_Option option;
@@ -25,6 +27,9 @@ public class UI_Control : MonoBehaviour
     public GameObject OpenedWindow;
     GameObject aimPoint;
     public Shop Shop;
+    public Mission Mission;
+    public UI_Gauge Gauge;
+    [SerializeField] GameObject damagePrefab;
     void Start()
     {
         windows = new List<GameObject>();
@@ -112,5 +117,13 @@ public class UI_Control : MonoBehaviour
             }
         }
         return result;
+    }
+
+    public void damageShow(float damage, GameObject subject)
+    {
+        GameObject temp = Instantiate(damagePrefab, GameObject.Find("UI").transform.GetChild(1));
+        temp.transform.position = Camera.main.WorldToScreenPoint(subject.transform.position + Vector3.up * 5f);
+        temp.GetComponent<TMPro.TextMeshProUGUI>().text = damage.ToString();
+        temp.GetComponent<UI_Damage>().setup();
     }
 }

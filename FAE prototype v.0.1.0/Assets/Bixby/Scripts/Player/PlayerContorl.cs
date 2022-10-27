@@ -283,7 +283,7 @@ public class PlayerContorl : PlayerStatusControl
                             this.PrevState = this.State;
                             this.NextState = STATE.MOVE;
                         }
-                        if (Stamina <= 0)
+                        if(Stamina <= 0)
                         {
                             //die();
                         }
@@ -312,7 +312,7 @@ public class PlayerContorl : PlayerStatusControl
 
                         break;
                     case STATE.MOVE:
-                        MyCurrentSpeed = Speed;
+                        MyCurrentSpeed = Speed * SpeedMultiply;
                         camera.GetComponent<CamControl>().isOnAim = false;
                         break;
                     case STATE.AIM:
@@ -325,11 +325,11 @@ public class PlayerContorl : PlayerStatusControl
                         isDashed = false;
                         break;
                     case STATE.RUN:
-                        MyCurrentSpeed = RunSpeed;
+                        MyCurrentSpeed = RunSpeed * SpeedMultiply;
                         camera.GetComponent<CamControl>().isOnAim = false;
                         break;
                     case STATE.ATTACK:
-                        MyCurrentSpeed = Speed;
+                        MyCurrentSpeed = Speed * SpeedMultiply;
                         switch (this.isAimAttack)
                         {
                             case true:
@@ -340,7 +340,7 @@ public class PlayerContorl : PlayerStatusControl
                         }
                         break;
                     case STATE.CHARGE_ATTACK:
-                        MyCurrentSpeed = Speed;
+                        MyCurrentSpeed = Speed * SpeedMultiply;
                         camera.GetComponent<CamControl>().isOnAim = true;
                         break;
                     case STATE.ELEMENT_SKILL:
@@ -353,7 +353,7 @@ public class PlayerContorl : PlayerStatusControl
                         camera.GetComponent<CamControl>().isOnAim = true;
                         break;
                     case STATE.SWIMMING:
-                        MyCurrentSpeed = SwimSpeed;
+                        MyCurrentSpeed = SwimSpeed * SpeedMultiply;
                         camera.GetComponent<CamControl>().isOnAim = false;
                         break;
                     case STATE.STUNNED:
@@ -513,42 +513,42 @@ public class PlayerContorl : PlayerStatusControl
                Time.deltaTime * rotationSpeed);
         }
 
-        else if ((Input.GetKey(KeyCode.A)) && (Input.GetKey(KeyCode.W)))
+        else if((Input.GetKey(KeyCode.A)) && (Input.GetKey(KeyCode.W)))
         {
             this.transform.rotation = Quaternion.Lerp(this.transform.rotation,
                Quaternion.LookRotation(-(playerRight - playerForward).normalized),
                Time.deltaTime * rotationSpeed);
         }
 
-        else if ((Input.GetKey(KeyCode.D)) && (Input.GetKey(KeyCode.S)))
+        else if((Input.GetKey(KeyCode.D)) && (Input.GetKey(KeyCode.S)))
         {
             this.transform.rotation = Quaternion.Lerp(this.transform.rotation,
                Quaternion.LookRotation(-(-playerRight + playerForward).normalized),
                Time.deltaTime * rotationSpeed);
         }
 
-        else if (Input.GetKey(KeyCode.W))
+        else if(Input.GetKey(KeyCode.W))
         {
             this.transform.rotation = Quaternion.Lerp(this.transform.rotation,
                 Quaternion.LookRotation(playerForward),
                 Time.deltaTime * rotationSpeed);
         }
 
-        else if (Input.GetKey(KeyCode.S))
+        else if(Input.GetKey(KeyCode.S))
         {
             this.transform.rotation = Quaternion.Lerp(this.transform.rotation,
                 Quaternion.LookRotation(-playerForward),
                 Time.deltaTime * rotationSpeed);
         }
 
-        else if (Input.GetKey(KeyCode.D))
+        else if(Input.GetKey(KeyCode.D))
         {
             this.transform.rotation = Quaternion.Lerp(this.transform.rotation,
                 Quaternion.LookRotation(playerRight),
                 Time.deltaTime * rotationSpeed);
         }
 
-        else if (Input.GetKey(KeyCode.A))
+        else if(Input.GetKey(KeyCode.A))
         {
             this.transform.rotation = Quaternion.Lerp(this.transform.rotation,
                Quaternion.LookRotation(-playerRight),
@@ -687,7 +687,7 @@ public class PlayerContorl : PlayerStatusControl
         StartCoroutine(dashCoroutine());
         isDashed = true;
     }
-    private IEnumerator dashCoroutine()
+    private IEnumerator dashCoroutine() 
     {
         Vector3 snapGround = Vector3.zero;
         if (player.isGrounded) snapGround = Vector3.down;
@@ -715,15 +715,19 @@ public class PlayerContorl : PlayerStatusControl
         {
             case true:
                 rayOrigin = camera.GetComponent<Camera>().ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0f));
-
+                
                 projectileLine.SetPosition(0, ProjectileStart.position);
-                if (Physics.Raycast(rayOrigin, camera.transform.forward, out hitInfo, ShootDistance))
+                if(Physics.Raycast(rayOrigin, camera.transform.forward, out hitInfo, ShootDistance))
                 {
                     projectileLine.SetPosition(1, hitInfo.point);
                     this.gameObject.GetComponent<PlayerLineSkill>().ShowAttackEffect((int)this.State, (int)this.MyElement, ProjectileStart);
                     this.gameObject.GetComponent<PlayerLineSkill>().ShowHitEffect(hitInfo.point);
                     StartCoroutine(shootEffect());
-                    //hitInfo.collider.GetComponent<StatusControl>();  맞는 대상의 정보를 가져옴. 추후 다뤄질 예정.
+                    if (hitInfo.collider.tag == "Enemy")
+                    {
+                        enemyElementCheck(hitInfo.collider.GetComponent<Enemy>().Stat.enemyElement);
+                        hitInfo.collider.GetComponent<Enemy>().TakeDamage(attackDamage);
+                    }
                 }
                 else
                 {
@@ -741,7 +745,11 @@ public class PlayerContorl : PlayerStatusControl
                     this.gameObject.GetComponent<PlayerLineSkill>().ShowAttackEffect((int)this.State, (int)this.MyElement, ProjectileStart);
                     this.gameObject.GetComponent<PlayerLineSkill>().ShowHitEffect(hitInfo.point);
                     StartCoroutine(shootEffect());
-                    //hitInfo.collider.GetComponent<StatusControl>();  맞는 대상의 정보를 가져옴. 추후 다뤄질 예정.
+                    if (hitInfo.collider.tag == "Enemy")
+                    {
+                        enemyElementCheck(hitInfo.collider.GetComponent<Enemy>().Stat.enemyElement);
+                        hitInfo.collider.GetComponent<Enemy>().TakeDamage(attackDamage);
+                    }
                 }
                 else
                 {
@@ -768,7 +776,11 @@ public class PlayerContorl : PlayerStatusControl
             this.gameObject.GetComponent<PlayerLineSkill>().ShowAttackEffect((int)this.State, (int)this.MyElement, ProjectileStart);
             this.gameObject.GetComponent<PlayerLineSkill>().ShowHitEffect(hitInfo.point);
             StartCoroutine(shootEffect());
-            //hitInfo.collider.GetComponent<StatusControl>();  맞는 대상의 정보를 가져옴. 추후 다뤄질 예정.
+            if (hitInfo.collider.tag == "Enemy")
+            {
+                enemyElementCheck(hitInfo.collider.GetComponent<Enemy>().Stat.enemyElement);
+                hitInfo.collider.GetComponent<Enemy>().TakeDamage(attackedOnNormal(attackDamage, MyElement, EnemyElement));
+            }
         }
         else
         {
@@ -791,7 +803,7 @@ public class PlayerContorl : PlayerStatusControl
         var offset = camera.transform.forward;
         offset.y = 0;
         transform.LookAt(player.transform.position + offset);
-        player.Move(snapGround);
+        player.Move( snapGround);
     }
 
     private void elementUltSkill()
@@ -805,7 +817,7 @@ public class PlayerContorl : PlayerStatusControl
         projectileLine.SetPosition(0, ProjectileStart.position);
 
         hitInfo_all = Physics.RaycastAll(rayOrigin, camera.transform.forward, ShootDistance);
-        for (int i = 0; i < hitInfo_all.Length; i++)
+        for(int i = 0; i < hitInfo_all.Length; i++)
         {
             hitInfo = hitInfo_all[i];
             //hitInfo.collider.GetComponent<StatusControl>();  맞는 대상의 정보를 가져옴. 추후 다뤄질 예정.

@@ -15,17 +15,6 @@ public class UI_Gauge : MonoBehaviour
     CamControl cameraControl;
     Vector3 staminaOriginPos;
     GameObject staminaObj;
-    public class enemyHp
-    {
-        public List<GameObject> hpObjects;
-        public List<Enemy> enemies;
-        public enemyHp()
-        {
-            hpObjects = new List<GameObject>();
-            enemies = new List<Enemy>();
-        }
-    }
-    public static enemyHp EnemyHps;
     void Start()
     {
         staminaObj = this.transform.GetChild(1).gameObject;
@@ -38,16 +27,6 @@ public class UI_Gauge : MonoBehaviour
         staminaBackAmount = playerControl.MyStartingStamina;
         timeTack = 0f;
         staminaOriginPos = staminaObj.transform.position;
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        EnemyHps = new enemyHp();
-        foreach (var item in enemies)
-        {
-            EnemyHps.hpObjects.Add(Instantiate(hp.gameObject, this.transform.parent));
-            EnemyHps.enemies.Add(item.GetComponent<Enemy>());
-            EnemyHps.hpObjects[EnemyHps.hpObjects.Count - 1].transform.position =
-            Camera.main.WorldToScreenPoint(item.transform.position + Vector3.up * 1.3f);
-            EnemyHps.hpObjects[EnemyHps.hpObjects.Count - 1].transform.localScale = Vector3.one * 0.5f;
-        }
     }
 
     // Update is called once per frame
@@ -69,13 +48,6 @@ public class UI_Gauge : MonoBehaviour
             staminaBackAmount = Mathf.Abs(staminaBackAmount - playerControl.Stamina) < 1 ? playerControl.Stamina : Mathf.Lerp(playerControl.Stamina, staminaBackAmount, 0.5f);
             staminaBack.GetComponent<RectTransform>().sizeDelta = new Vector2(staminaBackAmount / playerControl.MyStartingStamina * 200f, 0);
             timeTack = 0f;
-        }
-        foreach (var item in EnemyHps.hpObjects)
-        {
-            if (EnemyHps.enemies[EnemyHps.hpObjects.IndexOf(item)].gameObject == null)
-                continue;
-            item.GetComponent<Slider>().value = EnemyHps.enemies[EnemyHps.hpObjects.IndexOf(item)].Stat.hp / EnemyHps.enemies[EnemyHps.hpObjects.IndexOf(item)].Stat.maxHp;
-            item.transform.position = Camera.main.WorldToScreenPoint(EnemyHps.enemies[EnemyHps.hpObjects.IndexOf(item)].gameObject.transform.position + Vector3.up * 1.3f);
         }
     }
 }

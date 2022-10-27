@@ -6,7 +6,7 @@ public class Enemy : MonoBehaviour
 {
     public EnemyStatus Stat;
     public EnemyType Type;
-    public EnemyElement Element;
+    public ElementRule.ElementType Element;
 
     public float EnemySight;
     public float Timer;
@@ -105,7 +105,6 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(float value)
     {
         isHitted = true;
-        UI_Control.Inst.damageShow(value, this.gameObject);
         Stat.hp -= value;
     }
 

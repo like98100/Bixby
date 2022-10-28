@@ -1713,7 +1713,7 @@
     "m_Guid": {
         "m_GuidSerialized": "eed86f32-101b-48dc-86aa-900f5b0ee86a"
     },
-    "m_Name": "Color",
+    "m_Name": "SnowColor",
     "m_DefaultReferenceName": "Color_659efa2e70544a4ab0a72b82000336ba",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,

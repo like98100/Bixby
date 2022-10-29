@@ -25,12 +25,31 @@ public class UI_DamageObject : MonoBehaviour
             this.transform.position = basePos;
             lastTime = 5f;
             this.gameObject.AddComponent<Rigidbody>();
-            float randomX;
-            if(Random.RandomRange(0, 2)==0)
-                randomX = 1f;
+            Vector3 upper = Vector3.up * 100f;
+            if (Random.RandomRange(0, 2) == 0)
+                upper += GameObject.FindGameObjectWithTag("MainCamera").transform.right * 100f;
             else
-                randomX = -1f;
-            this.gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(randomX*100f, 100f, 0));
+                upper += GameObject.FindGameObjectWithTag("MainCamera").transform.right * -100f;
+
+            this.gameObject.GetComponent<Rigidbody>().AddForce(upper);
+            switch (TMP.text)
+            {
+                case "열기":
+                    TMP.color = ElementControl.FireSkillStartColor;
+                    break;
+                case "냉기":
+                    TMP.color = ElementControl.IceSkillStartColor;
+                    break;
+                case "습기":
+                    TMP.color = ElementControl.WaterSkillStartColor;
+                    break;
+                case "전기":
+                    TMP.color = ElementControl.ElectroSkillStartColor;
+                    break;
+                default:
+                    break;
+            }
+            
         }
         if (this.transform.root.tag == "Player")//플레이어의 경우
         {

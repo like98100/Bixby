@@ -144,7 +144,6 @@ public class UI_Control : MonoBehaviour
     public void damageSet(string content, GameObject subject)
     {
         GameObject temp = Instantiate(damagePrefab, subject.transform);
-        if(subject.tag=="Player") print(temp);
         temp.GetComponent<TMPro.TextMeshPro>().text = content;
     }
 }

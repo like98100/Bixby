@@ -10,6 +10,7 @@ public class UI_DamageObject : MonoBehaviour
     float lastTime;//지속할 시간
     float upSpeed;//올라가는 속도
     float height;//시작 및 기준높이
+    [SerializeField] List<Material> fontMaterials;
     void Start()
     {
         timeLast = 0;
@@ -18,8 +19,14 @@ public class UI_DamageObject : MonoBehaviour
         lastTime = 1f;
         upSpeed = 2.5f;
         int temp;
-        if (!int.TryParse(TMP.text, out temp))//대미지의 경우
+        if (this.transform.root.tag == "Player")//플레이어의 경우
         {
+            TMP.fontSize = 6f;
+            upSpeed = 1f;
+        }
+        if (!int.TryParse(TMP.text, out temp))//대미지가 아닐 경우
+        {
+            TMP.fontMaterial = fontMaterials[0];
             basePos = this.transform.root.position + Vector3.up * 2.5f;
             basePos.y = basePos.y + timeLast * upSpeed;
             this.transform.position = basePos;
@@ -31,7 +38,6 @@ public class UI_DamageObject : MonoBehaviour
             else
                 upper += GameObject.FindGameObjectWithTag("MainCamera").transform.right * -100f;
 
-            this.gameObject.GetComponent<Rigidbody>().AddForce(upper);
             switch (TMP.text)
             {
                 case "열기":
@@ -47,15 +53,18 @@ public class UI_DamageObject : MonoBehaviour
                     TMP.color = ElementControl.ElectroSkillStartColor;
                     break;
                 default:
+                    string tmp = TMP.text;
+                    TMP.text = "<b>" + tmp + "</b>";
+                    TMP.fontSize = 15f;
+                    this.gameObject.GetComponent<Rigidbody>().useGravity = false;
+                    upper = Vector3.up * 100;
                     break;
             }
-            
+            this.gameObject.GetComponent<Rigidbody>().AddForce(upper);
+
         }
-        if (this.transform.root.tag == "Player")//플레이어의 경우
-        {
-            TMP.fontSize = 6f;
-            upSpeed = 1f;
-        }
+        else
+            TMP.color = Color.yellow;
         //switch (GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerContorl>().MyElement)
     }
     void Update()

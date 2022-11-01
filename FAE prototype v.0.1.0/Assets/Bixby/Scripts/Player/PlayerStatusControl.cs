@@ -51,6 +51,7 @@ public class PlayerStatusControl : CombatStatus, IDamgeable
     {
         isHitted = true;
         Health -= damage * AdditionalDamage;
+        UI_Control.Inst.damageSet((damage * AdditionalDamage).ToString(), GameObject.FindGameObjectWithTag("Player"));//대미지 UI 추가 코드
         DealtDamage = Mathf.Round(damage * 10) * 0.1f;
         if (Health <= 0 && !Dead)
         {

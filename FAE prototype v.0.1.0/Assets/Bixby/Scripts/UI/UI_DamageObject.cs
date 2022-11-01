@@ -37,28 +37,46 @@ public class UI_DamageObject : MonoBehaviour
                 upper += GameObject.FindGameObjectWithTag("MainCamera").transform.right * 100f;
             else
                 upper += GameObject.FindGameObjectWithTag("MainCamera").transform.right * -100f;
-
+            bool isSynergy = false;
             switch (TMP.text)
             {
-                case "열기":
-                    TMP.color = ElementControl.FireSkillStartColor;
+                case "열기":  TMP.color = ElementControl.FireSkillStartColor;
                     break;
-                case "냉기":
-                    TMP.color = ElementControl.IceSkillStartColor;
+                case "냉기":  TMP.color = ElementControl.IceSkillStartColor;
                     break;
-                case "습기":
-                    TMP.color = ElementControl.WaterSkillStartColor;
+                case "습기":  TMP.color = ElementControl.WaterSkillStartColor;
                     break;
-                case "전기":
-                    TMP.color = ElementControl.ElectroSkillStartColor;
+                case "전기":  TMP.color = ElementControl.ElectroSkillStartColor;
                     break;
                 default:
-                    string tmp = TMP.text;
-                    TMP.text = "<b>" + tmp + "</b>";
-                    TMP.fontSize = 15f;
-                    this.gameObject.GetComponent<Rigidbody>().useGravity = false;
-                    upper = Vector3.up * 100;
+                    isSynergy = true;
                     break;
+            }
+            if(isSynergy)
+            {
+                switch (TMP.text)
+                {
+                    case "융해":  TMP.color = ElementControl.IceSkillStartColor;
+                        break;
+                    case "빙결":  TMP.color = ElementControl.IceSkillStartColor;
+                        break;
+                    case "전도":  TMP.color = ElementControl.ElectroSkillStartColor;
+                        break;
+                    case "폭발":  TMP.color = ElementControl.FireSkillStartColor;
+                        break;
+                    case "감전":  TMP.color = ElementControl.ElectroSkillStartColor;
+                        break;
+                    case "증발":  TMP.color = ElementControl.WaterSkillStartColor;
+                        break;
+                    default:
+                        break;
+                }
+                string tmp = TMP.text;
+                TMP.text = "<b>" + tmp + "</b>";
+                TMP.fontSize = 10f;
+                lastTime = 1f;
+                this.gameObject.GetComponent<Rigidbody>().useGravity = false;
+                upper = Vector3.up * 100;
             }
             this.gameObject.GetComponent<Rigidbody>().AddForce(upper);
 

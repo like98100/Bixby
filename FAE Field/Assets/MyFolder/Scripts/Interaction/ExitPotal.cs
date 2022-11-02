@@ -10,8 +10,8 @@ public class ExitPotal : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("MainCamera"))
-        {            
-            SceneManager.LoadScene("FieldScene");
+        {
+            LoadingSceneController.Instance.LoadScene("FieldScene");
         }
     }
 }

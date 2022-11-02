@@ -12,7 +12,7 @@ public class Dissolve : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        shaderManager = this.GetComponent<ShaderManager>();
+        shaderManager = this.gameObject.GetComponent<ShaderManager>();
 
         isDissolve = false;
     }

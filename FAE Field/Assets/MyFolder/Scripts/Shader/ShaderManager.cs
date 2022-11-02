@@ -14,7 +14,7 @@ public class ShaderManager : MonoBehaviour
     }
     public void ChangeMaterial(GameObject obj, Material material)
     { 
-        MeshRenderer mr = obj.GetComponent<MeshRenderer>();   // 일단 MeshRenderer 컴포넌트를 얻고
+        MeshRenderer mr = obj.GetComponent<MeshRenderer>();
         mr.material = material;  
     }
     

@@ -10,7 +10,7 @@ public class BluePotal : MonoBehaviour
     {
         if (other.CompareTag("MainCamera"))
         {
-            SceneManager.LoadScene("WaterDungeon");
+            LoadingSceneController.Instance.LoadScene("WaterDungeon");
         }
     }
 }

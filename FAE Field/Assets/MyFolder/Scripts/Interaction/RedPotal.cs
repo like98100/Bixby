@@ -10,7 +10,7 @@ public class RedPotal : MonoBehaviour
     {
         if (other.CompareTag("MainCamera"))
         {
-            SceneManager.LoadScene("FireDungeon");
+            LoadingSceneController.Instance.LoadScene("FireDungeon");
         }
     }
 }

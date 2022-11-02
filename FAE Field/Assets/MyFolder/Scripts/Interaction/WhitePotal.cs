@@ -10,7 +10,7 @@ public class WhitePotal : MonoBehaviour
     {
         if(other.CompareTag("MainCamera"))
         {
-            SceneManager.LoadScene("IceDungeon");
+            LoadingSceneController.Instance.LoadScene("IceDungeon");
         }
     }
 }

@@ -11,7 +11,7 @@ public class IceMapping : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        shaderManager = this.GetComponent<ShaderManager>();
+        shaderManager = this.gameObject.GetComponent<ShaderManager>();
 
         GameObject[] iceObjects = GameObject.FindGameObjectsWithTag("iceObject");
 

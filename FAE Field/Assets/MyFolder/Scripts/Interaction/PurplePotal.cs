@@ -10,7 +10,7 @@ public class PurplePotal : MonoBehaviour
     {
         if (other.CompareTag("MainCamera"))
         {
-            SceneManager.LoadScene("ElectricDungeon");
+            LoadingSceneController.Instance.LoadScene("ElectricDungeon");
         }
     }
 }

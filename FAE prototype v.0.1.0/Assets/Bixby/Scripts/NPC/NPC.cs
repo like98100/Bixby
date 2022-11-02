@@ -27,7 +27,7 @@ public class NPC : MonoBehaviour
         nameUI.text = npcName;
         nameObj.SetActive(playerClose);
         shop = UI_Control.Inst.Shop;
-        keyInst = Instantiate(inventoryObject.Inst.getObj("KeyF"), GameObject.Find("Canvas").transform);
+        keyInst = Instantiate(inventoryObject.Inst.getObj("KeyF"), this.gameObject.transform.GetChild(0));
         keyInst.SetActive(false);
     }
 
@@ -37,6 +37,11 @@ public class NPC : MonoBehaviour
         Vector3 camRotate = GameObject.FindGameObjectWithTag("MainCamera").transform.eulerAngles;
         camRotate -= Vector3.right * 90f;
         notify.transform.rotation = Quaternion.Euler(camRotate);
+        if(keyInst.activeSelf)
+        {
+            var wantedPos = Camera.main.WorldToScreenPoint(this.transform.position);
+            keyInst.transform.position = wantedPos + Vector3.right * 200f;
+        }
         if (UI_Control.Inst.OpenedWindow != null)
         {
             if (UI_Control.Inst.OpenedWindow.name == "Map")
@@ -78,8 +83,6 @@ public class NPC : MonoBehaviour
         if (other.tag == "Player" && !keyInst.activeSelf)
         {
             keyInst.SetActive(true);
-            var wantedPos = Camera.main.WorldToScreenPoint(this.transform.position);
-            keyInst.transform.position = wantedPos + Vector3.right * 200f;
             playerClose = true;
             nameObj.SetActive(playerClose);
         }

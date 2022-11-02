@@ -41,6 +41,9 @@ public class Enemy : MonoBehaviour
 
         rigid = GetComponent<Rigidbody>();
         Anim = GetComponent<Animator>();
+
+        UI_EnemyHp.EnemyHps.hpObjects.Add(Instantiate(UI_Control.Inst.EnemyHp.getPrefab(), GameObject.Find("UI").transform.GetChild(1)));
+        UI_EnemyHp.EnemyHps.enemies.Add(this);
     }
 
     // Update is called once per frame
@@ -105,6 +108,7 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(float value)
     {
         isHitted = true;
+        UI_Control.Inst.damageSet(value.ToString(), this.gameObject);//대미지 UI 추가 부분
         Stat.hp -= value;
     }
 
@@ -118,5 +122,11 @@ public class Enemy : MonoBehaviour
         if(Stat.hp == Stat.maxHp)
             State = STATE.IDLE;
     }
-
+    private void OnDestroy()//에너미 HP바 해제 및 파괴 추가 부분
+    {
+        int index = UI_EnemyHp.EnemyHps.enemies.IndexOf(this);
+        UI_EnemyHp.EnemyHps.enemies.RemoveAt(index);
+        Destroy(UI_EnemyHp.EnemyHps.hpObjects[index]);
+        UI_EnemyHp.EnemyHps.hpObjects.RemoveAt(index);
+    }
 }

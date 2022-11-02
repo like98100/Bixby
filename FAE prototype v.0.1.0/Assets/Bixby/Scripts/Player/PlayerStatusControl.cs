@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStatusControl : ElementControl, IDamgeable
+public class PlayerStatusControl : CombatStatus, IDamgeable
 {
     public const float GravityForce = 30.0f;
 
@@ -11,7 +11,9 @@ public class PlayerStatusControl : ElementControl, IDamgeable
     public float MyStartingStamina = 100.0f;
     public float Stamina;
 
-    public float attackDamage = 10.0f;
+    public float AttackDamage = 10.0f;
+    public float SkillDamage = 10.0f;
+    public float UltDamage = 50.0f;
 
     protected bool isHitted;
     public bool Dead;
@@ -34,13 +36,9 @@ public class PlayerStatusControl : ElementControl, IDamgeable
 
     public float ShootDistance = 50f;
     public float SwitchToChargeTime = 2.0f;
-    public float FireRate = 0.25f;
 
     protected float rotationSpeed = 45.0f;
     protected float nextFire = 0.0f;
-
-    public float AdditionalDamage = 1.0f; // 퍼센티지 스탯으로 연산되어, 받는 피해 추가계수를 나타낸다.
-    public float SpeedMultiply = 1.0f; // 속도 감소 디버프, 혹은 속도 증가 버프를 위한 계수.
 
     protected override void Start()
     {
@@ -55,26 +53,13 @@ public class PlayerStatusControl : ElementControl, IDamgeable
     {
         isHitted = true;
         Health -= damage * AdditionalDamage;
+        UI_Control.Inst.damageSet((damage * AdditionalDamage).ToString(), GameObject.FindGameObjectWithTag("Player"));//대미지 UI 추가 코드
         DealtDamage = Mathf.Round(damage * 10) * 0.1f;
         if (Health <= 0 && !Dead)
         {
             die();
         }
     }
-    //public virtual void TakeElementHit(float damage, ElementRule.ElementType elementType)
-    //{
-    //    isHitted = true;
-    //    if (elementType != ElementType.NONE && elementType != ElementStack.Peek())
-    //    {
-    //        this.ElementStack.Push(elementType);
-    //    }
-    //    Health -= damage * AdditionalDamage;
-    //    DealtDamage = Mathf.Round(damage * 10) * 0.1f;
-    //    if (Health <= 0 && !Dead)
-    //    {
-    //        die();
-    //    }
-    //}
 
     public virtual void TakeElementHit(float damage, ElementRule.ElementType enemyElement) //나중에 삭제될 가능성 있음.
     {
@@ -88,18 +73,21 @@ public class PlayerStatusControl : ElementControl, IDamgeable
             {
                 if (EnemyElement != this.ElementStack.Peek())
                 {
+                    Debug.Log("Pushed!");
                     this.ElementStack.Push(EnemyElement);
                     checkIsPopTime();
                 }
             }
             else
             {
+                Debug.Log("Pushed!");
                 this.ElementStack.Push(EnemyElement);
                 checkIsPopTime();
             }
         }
 
-        Health -= curDamage;
+        Health -= curDamage * AdditionalDamage;
+        UI_Control.Inst.damageSet((curDamage * AdditionalDamage).ToString(), GameObject.FindGameObjectWithTag("Player"));//대미지 UI 추가 코드
         DealtDamage = Mathf.Round(curDamage * 10) * 0.1f;
         if (Health <= 0 && !Dead)
         {

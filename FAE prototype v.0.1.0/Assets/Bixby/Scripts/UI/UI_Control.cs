@@ -16,6 +16,8 @@ public class UI_Control : MonoBehaviour
         aimPoint = GameObject.Find("AimPoint");
         Shop = this.gameObject.GetComponent<Shop>();
         Mission = this.gameObject.GetComponent<Mission>();
+        player = GameObject.FindGameObjectWithTag("Player");
+        EnemyHp = this.gameObject.GetComponent<UI_EnemyHp>();
     }
     GameObject optionObj;
     UI_Option option;
@@ -27,6 +29,10 @@ public class UI_Control : MonoBehaviour
     GameObject aimPoint;
     public Shop Shop;
     public Mission Mission;
+    [SerializeField] GameObject damagePrefab;
+    float elementalLast;
+    GameObject player;
+    public UI_EnemyHp EnemyHp;
     void Start()
     {
         windows = new List<GameObject>();
@@ -37,10 +43,31 @@ public class UI_Control : MonoBehaviour
         Map.SetActive(false);
         OpenedWindow = null;
         Cursor.lockState = CursorLockMode.Locked;
+        elementalLast = 0f;
     }
 
     void Update()
     {
+        elementalLast += Time.deltaTime;
+        if (player.GetComponent<PlayerContorl>().ElementStack.Count != 0 && elementalLast > 0.5f)
+        {
+            switch (player.GetComponent<PlayerContorl>().ElementStack.Peek())
+            {
+                case ElementRule.ElementType.FIRE:
+                    damageSet("열기", player);
+                    break;
+                case ElementRule.ElementType.ICE:
+                    damageSet("냉기", player);
+                    break;
+                case ElementRule.ElementType.WATER:
+                    damageSet("습기", player);
+                    break;
+                case ElementRule.ElementType.ELECTRICITY:
+                    damageSet("전기", player);
+                    break;
+            }
+            elementalLast = 0f;
+        }
         if (Input.GetKeyDown(KeyCode.Escape))
             optionWindow();
         if (Input.anyKeyDown)
@@ -114,5 +141,11 @@ public class UI_Control : MonoBehaviour
             }
         }
         return result;
+    }
+
+    public void damageSet(string content, GameObject subject)
+    {
+        GameObject temp = Instantiate(damagePrefab, subject.transform);
+        temp.GetComponent<TMPro.TextMeshPro>().text = content;
     }
 }

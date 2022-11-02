@@ -22,7 +22,7 @@ public class Speech : MonoBehaviour
         Button nextSpeech = speechWindow.transform.GetChild(2).GetComponent<Button>();
         nextSpeech.onClick.AddListener(() => speechNext());
     }
-    public void setUp(string name, int index)//말 걸었을 때
+    public void setUp(string name, int index)//말 걸었을 때      // name 일치 및 isClear == true일 때 text 변경
     {
         speechList = new List<string>();//대화 리스트 초기화
         this.talker.text = name;//가시화
@@ -41,10 +41,11 @@ public class Speech : MonoBehaviour
             speech.text = speechList[speechIndex];//대화내용은 리스트 중 해당 인덱스의 내용
     }
 
-    public void speechNext()//대화 넘기기 버튼
+    public void speechNext()//대화 넘기기 버튼             // name 일치 및 isClear == true일 때 questindex 변경
     {
         if (speechIndex + 1 == speechList.Count)//마지막일때
         {
+            // GameManager.Gameobject.GetComponent<QuestObject>.SetNextQuest
             speechIndex = 0;//초기화
             UI_Control.Inst.windowSet(speechWindow);
         }

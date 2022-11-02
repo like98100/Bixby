@@ -9,11 +9,13 @@ public class QuestObject : MonoBehaviour
     private void Awake()
     {
         isClear = false;
+        objectIndex = -1;
     }
 
-    questJsonData JsonData;    // Quest Json Data
+    questJsonData JsonData;         // Quest Json Data
     bool isClear;                   // Quest isClear bool var
-
+    questData currentQuest;
+    int objectIndex;                // Quest Object Index var;
     // Start is called before the first frame update
     void Start()
     {
@@ -44,39 +46,69 @@ public class QuestObject : MonoBehaviour
 
             json.CreateJsonFile(Application.dataPath, "quests", questStr);  // Create Json FIle
         }
+
+        currentQuest = JsonData.questList[JsonData.questIndex];
     }
 
     // Update is called once per frame
     void Update()
     {
         // 퀘스트 진행 여부 확인
-        // enum questObject로 확인할 것
+        switch (currentQuest.questObject)
+        {
+            case QuestKind.management:
+                Debug.Log("Developer's Kind");
+                SetNextQuest();
+                break;
+            default:
+                CheckQuestCount();
+                break;
+        }
         // 이후 quest text print
+
+        
     }
 
-    void SetKillCount()                                         // 처치 카운트 계산 함수
+    public int GetObjectIndex()                                 // Get ObjectIndex Var Func
     {
-
+        return objectIndex;
     }
 
-    void SetCookCount()                                         // 요리 여부 확인 함수
+
+    public void SetObjectIndex(int idx)                         // Set ObjectIndex Var Func
     {
-
+        objectIndex = idx;
     }
 
-    void SetHuntCount()                                         // 수렵 카운트 계산 함수
+    void CheckQuestCount()                                      // Quest Index Check Func
     {
-
+        if (objectIndex == currentQuest.objectVar)
+            SetIsClear(true);
     }
 
-    void SetInteractiveCount()                                  // 상호작용 여부 확인 함수
-    {
+    //void SetCookCount()                                         // 요리 여부 확인 함수
+    //{
+    //    if (objectIndex == currentQuest.objectVar)
+    //        SetIsClear(true);
+    //}
 
-    }
+    //void SetHuntCount()                                         // 수렵 카운트 확인 함수
+    //{
+    //    if (objectIndex == currentQuest.objectVar)
+    //        SetIsClear(true);
+    //}
+
+    //void SetInteractiveCount()                                  // 상호작용 여부 확인 함수
+    //{
+    //    if (objectIndex == currentQuest.objectVar)
+    //        SetIsClear(true);
+    //}
 
     void SetNextQuest()                                         // 다음 퀘스트 이동 함수
     {
-
+        JsonData.questIndex += 1;                               // Quest Index++
+        currentQuest = JsonData.questList[JsonData.questIndex]; // Update Current Quest
+        SetObjectIndex(-1);
     }
 
     public bool GetIsClear()

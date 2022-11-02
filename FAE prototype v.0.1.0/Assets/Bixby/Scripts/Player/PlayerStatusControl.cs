@@ -11,7 +11,9 @@ public class PlayerStatusControl : CombatStatus, IDamgeable
     public float MyStartingStamina = 100.0f;
     public float Stamina;
 
-    public float attackDamage = 10.0f;
+    public float AttackDamage = 10.0f;
+    public float SkillDamage = 10.0f;
+    public float UltDamage = 50.0f;
 
     protected bool isHitted;
     public bool Dead;

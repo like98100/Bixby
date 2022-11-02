@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class NPC : MonoBehaviour
 {
     Speech speech;
-    [SerializeField] string npcName;
+    string npcName;
     bool playerClose;
     GameObject keyInst;
     [SerializeField] int talkIndex;
@@ -16,6 +16,7 @@ public class NPC : MonoBehaviour
     Shop shop;
     void Start()
     {
+        npcName = this.gameObject.name;
         canvasObj = this.transform.GetChild(0).gameObject;
         nameObj = canvasObj.transform.GetChild(0).gameObject;
         speech = UI_Control.Inst.Speech;
@@ -61,7 +62,7 @@ public class NPC : MonoBehaviour
             }
             else
             {
-                speech.setUp(npcName, talkIndex);
+                speech.setUp(npcName, npcName + talkIndex.ToString());
             }
             keyInst.SetActive(false);
         }

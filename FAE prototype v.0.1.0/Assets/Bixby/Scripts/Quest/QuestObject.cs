@@ -22,7 +22,6 @@ public class QuestObject : MonoBehaviour
         if (json.FileExist(Application.dataPath, "quests"))                                      // Quest 파일이 존재할 시
         {
             JsonData = json.LoadJsonFile<questJsonData>(Application.dataPath, "quests");   // Quest Load
-
             Debug.Log("Load Complete : " + JsonData.questList[0].npcName);
         }
         else                                                                                    // Quest 파일이 존재하지 않을 때
@@ -58,6 +57,7 @@ public class QuestObject : MonoBehaviour
         {
             case QuestKind.management:
                 Debug.Log("Developer's Kind");
+                UI_Control.Inst.Mission.misssionSet("튜토리얼", "임시텍스트. 퀘스트 무사 로드.");
                 SetNextQuest();
                 break;
             default:
@@ -104,7 +104,7 @@ public class QuestObject : MonoBehaviour
     //        SetIsClear(true);
     //}
 
-    void SetNextQuest()                                         // 다음 퀘스트 이동 함수
+    public void SetNextQuest()                                         // 다음 퀘스트 이동 함수
     {
         JsonData.questIndex += 1;                               // Quest Index++
         currentQuest = JsonData.questList[JsonData.questIndex]; // Update Current Quest
@@ -119,5 +119,11 @@ public class QuestObject : MonoBehaviour
     public void SetIsClear(bool idx)
     {
         isClear = idx;
+        if (idx && currentQuest.npcName == "none")//NPC에게 가지않고 퀘스트가 클리어되는 경우
+            SetNextQuest();
+    }
+    public string GetNPCName()
+    {
+        return currentQuest.npcName;
     }
 }

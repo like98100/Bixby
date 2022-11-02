@@ -22,12 +22,12 @@ public class Speech : MonoBehaviour
         Button nextSpeech = speechWindow.transform.GetChild(2).GetComponent<Button>();
         nextSpeech.onClick.AddListener(() => speechNext());
     }
-    public void setUp(string name, int index)//말 걸었을 때      // name 일치 및 isClear == true일 때 text 변경
+    public void setUp(string name, string content)//말 걸었을 때      // name 일치 및 isClear == true일 때 text 변경
     {
         speechList = new List<string>();//대화 리스트 초기화
         this.talker.text = name;//가시화
-        if (json.FileExist(Application.dataPath, name + index.ToString()))//해당 이름의 json파일 존재 확인
-            speechJsonData = json.LoadJsonFile<speechJsonData>(Application.dataPath, name + index.ToString());//로드해옴
+        if (json.FileExist(Application.dataPath, content))//해당 이름의 json파일 존재 확인
+            speechJsonData = json.LoadJsonFile<speechJsonData>(Application.dataPath, content);//로드해옴
         foreach (var item in speechJsonData.speechDatas)//로드한 json데이터의 speechDatas의 내용을
         {
             speechList.Add(item);//대화 리스트에 넣음
@@ -45,7 +45,9 @@ public class Speech : MonoBehaviour
     {
         if (speechIndex + 1 == speechList.Count)//마지막일때
         {
-            // GameManager.Gameobject.GetComponent<QuestObject>.SetNextQuest
+            if (GameObject.Find("GameManager").GetComponent<QuestObject>().GetIsClear()
+                && this.talker.text == GameObject.Find("GameManager").GetComponent<QuestObject>().GetNPCName())
+                GameObject.Find("GameManager").GetComponent<QuestObject>().SetNextQuest();
             speechIndex = 0;//초기화
             UI_Control.Inst.windowSet(speechWindow);
         }

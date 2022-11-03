@@ -8,7 +8,7 @@ public class NPC : MonoBehaviour
     string npcName;
     bool playerClose;
     GameObject keyInst;
-    [SerializeField] int talkIndex;
+    int talkIndex;
     GameObject canvasObj;
     GameObject nameObj;
     Text nameUI;
@@ -84,6 +84,14 @@ public class NPC : MonoBehaviour
             playerClose = false;
             nameObj.SetActive(playerClose);
         }
+    }
+    public int GetIndex()
+    {
+        return talkIndex;
+    }
+    public void SetIndex(int value)
+    {
+        talkIndex = value;
     }
 }
 

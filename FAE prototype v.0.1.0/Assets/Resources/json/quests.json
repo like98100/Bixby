@@ -4,13 +4,19 @@
       "questObject": 0,
       "objectVar": -1,
       "time": -1.0,
-      "npcName": "missingNo"
+      "npcName": "villagerA"
+    },
+    {
+      "questObject": 2,
+      "objectVar": -2,
+      "time": -1.0,
+      "npcName": "villagerA"
     },
     {
       "questObject": 1,
-      "objectVar": -1,
+      "objectVar": 4,
       "time": -1.0,
-      "npcName": "missingNo"
+      "npcName": "villagerA"
     }
   ],
   "questIndex": 0

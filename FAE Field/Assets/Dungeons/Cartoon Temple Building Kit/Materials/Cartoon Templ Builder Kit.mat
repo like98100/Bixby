@@ -22,13 +22,13 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Cartoon Templ Builder Kit
   m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-  m_ShaderKeywords: _ALPHATEST_ON _EMISSION
+  m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 1
-  m_CustomRenderQueue: 2450
+  m_CustomRenderQueue: 2000
   stringTagMap:
-    RenderType: TransparentCutout
+    RenderType: Opaque
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
@@ -106,7 +106,7 @@ Material:
     - Vector1_0327815e3bd84a1ebffb4f7937bcfb5e: 5
     - Vector1_06f1d0e51a124078b18c0e05a9273061: 1
     - Vector1_d1b20024d8744ce0a661d0e01819f876: 0.3
-    - _AlphaClip: 1
+    - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
     - _ClearCoat: 0

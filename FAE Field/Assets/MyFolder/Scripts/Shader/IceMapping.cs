@@ -6,7 +6,7 @@ public class IceMapping : MonoBehaviour
 {
     private ShaderManager shaderManager;
 
-    [SerializeField] private Shader iceShader;
+    [SerializeField] private Material iceMaterial;
     
     // Start is called before the first frame update
     void Start()
@@ -15,6 +15,6 @@ public class IceMapping : MonoBehaviour
 
         GameObject[] iceObjects = GameObject.FindGameObjectsWithTag("iceObject");
 
-        shaderManager.ChangeShader(iceObjects, iceShader);
+        shaderManager.ChangeMaterials(iceObjects, iceMaterial);
     }
 }

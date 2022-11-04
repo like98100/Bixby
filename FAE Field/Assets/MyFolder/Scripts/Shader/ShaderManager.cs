@@ -17,5 +17,14 @@ public class ShaderManager : MonoBehaviour
         MeshRenderer mr = obj.GetComponent<MeshRenderer>();
         mr.material = material;  
     }
-    
+
+    public void ChangeMaterials(GameObject[] objects, Material material)
+    {
+        foreach (GameObject obj in objects)
+        {
+            MeshRenderer mr = obj.GetComponent<MeshRenderer>();
+            mr.material = material;
+        }
+    }
+
 }

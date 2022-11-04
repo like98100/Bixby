@@ -5,7 +5,6 @@ using UnityEngine;
 public class SpawnPlayer : MonoBehaviour
 {
     private Vector3 startPosition;
-
     private void Start()
     {
         if (startPosition != new Vector3(0.0f, 0.0f, 0.0f))
@@ -32,7 +31,11 @@ public class SpawnPlayer : MonoBehaviour
                 startPosition = new Vector3(284.0f, 14.0f, -271.0f);
                 break;
 
-             default :
+            case "BossDungeon":
+                startPosition = new Vector3(85.0f, 10.0f, -158.0f);
+                break;
+
+            default :
                 startPosition = new Vector3(0.0f, 0.0f, 0.0f);
                 break;
         }

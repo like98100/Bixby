@@ -64,7 +64,6 @@ public class LoadingSceneController : MonoBehaviour
     {
         progressBar.fillAmount = 0.0f;
         yield return StartCoroutine(Fade(true));
-
         AsyncOperation op = SceneManager.LoadSceneAsync(loadSceneName);
         op.allowSceneActivation = false;
         float timer = 0.0f;
@@ -109,7 +108,6 @@ public class LoadingSceneController : MonoBehaviour
             timer += Time.unscaledDeltaTime * 3.0f;
             canvasGroup.alpha = isFadeIn ? Mathf.Lerp(0.0f, 1.0f, timer) : Mathf.Lerp(1.0f, 0.0f, timer);
         }
-
         if (!isFadeIn)
         {
             this.gameObject.SetActive(false);

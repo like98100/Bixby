@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/MyFolder/Scenes/ElectricDungeon.unity
     guid: f9c03b29e89a3554caf00f79446ec58c
+  - enabled: 1
+    path: Assets/MyFolder/Scenes/BossDungeon.unity
+    guid: d2d15b74efb2d15418d8af4cce1cfc35
   m_configObjects: {}

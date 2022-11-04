@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
-public class Enemy : MonoBehaviour
+public class Enemy : CombatStatus, IDamgeable
 {
     public EnemyStatus Stat;
     public EnemyType Type;
-    public ElementRule.ElementType Element;
+    public ElementType Element;
 
-    public float EnemySight;
     public float Timer;
 
     public STATE State;
@@ -26,8 +26,11 @@ public class Enemy : MonoBehaviour
     public bool isHitted = false;
     public bool runChance = true;
 
+    public NavMeshAgent MyAgent;
     public Animator Anim;
     private Rigidbody rigid;
+
+    public float DealtDamage;
 
     // Start is called before the first frame update
     void Start()
@@ -35,20 +38,27 @@ public class Enemy : MonoBehaviour
         Stat = new EnemyStatus();
         Stat = Stat.SetEnemyStatus(Type, Element);
 
+        this.MyElement = Stat.element;
+
         Timer = 0.0f;
 
         State = STATE.IDLE;
 
-        rigid = GetComponent<Rigidbody>();
+        MyAgent = GetComponent<NavMeshAgent>();
         Anim = GetComponent<Animator>();
+        rigid = GetComponent<Rigidbody>();
+
+        UI_EnemyHp.EnemyHps.hpObjects.Add(Instantiate(UI_Control.Inst.EnemyHp.getPrefab(), GameObject.Find("UI").transform.GetChild(1)));
+        UI_EnemyHp.EnemyHps.enemies.Add(this);
     }
 
     // Update is called once per frame
     void Update()
     {
         rigid.velocity = Vector3.zero;
+        MyAgent.speed = Stat.moveSpeed * SpeedMultiply;
 
-        findPlayer();
+        findPlayer(Stat.sight);
 
         if(State != STATE.CHASE && State != STATE.RUNAWAY)
             stateChange();
@@ -59,13 +69,15 @@ public class Enemy : MonoBehaviour
         if(runChance && Stat.hp % Stat.maxHp <= 0.34)
         {
             runChance = false;
+            isHitted = false;
             State = STATE.RUNAWAY;
         }
 
         if(isHitted)
+        {
             State = STATE.CHASE;
+        }
 
-        //died();
     }
     
     private void stateChange()
@@ -82,9 +94,9 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void findPlayer()
+    private void findPlayer(float sight)
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, EnemySight, 
+        Collider[] colliders = Physics.OverlapSphere(transform.position, sight, 
                                                     Mask, QueryTriggerInteraction.Ignore);
 
         if(colliders.Length > 0)
@@ -96,16 +108,68 @@ public class Enemy : MonoBehaviour
 
     private void died()
     {
-        if(Stat.hp <= 0.0f)
-            Destroy(gameObject);
+        Destroy(gameObject);
     }
 
-
-
-    public void TakeDamage(float value)
+    public void MeleeAttack()
     {
-        isHitted = true;
-        Stat.hp -= value;
+        Collider[] colliders = Physics.OverlapSphere(transform.position, Stat.attackRange, 
+                                                    Mask, QueryTriggerInteraction.Ignore);
+            
+        if(colliders.Length > 0)
+        {
+            setEnemyElement(colliders[0].GetComponent<PlayerContorl>().MyElement);
+            colliders[0].GetComponent<PlayerContorl>().TakeElementHit(Stat.damage, Stat.element);
+            Debug.Log("Hit");
+        }
+    }
+
+    public virtual void TakeHit(float damage)
+    {
+        if (!isHitted)
+        {
+            isHitted = true;
+            findPlayer(100.0f);
+        }
+        Stat.hp -= damage * AdditionalDamage;
+        UI_Control.Inst.damageSet(damage.ToString(), this.gameObject);//����� UI �߰� �ڵ�
+        DealtDamage = Mathf.Round(damage * 10) * 0.1f;
+        
+    }
+
+    public virtual void TakeElementHit(float damage, ElementRule.ElementType enemyElement) //���߿� ������ ���ɼ� ����.
+    {
+        if (!isHitted)
+        {
+            isHitted = true;
+            findPlayer(100.0f);
+        }
+        setEnemyElement(enemyElement); // �̷��� EnemyElement�� �ٲ㼭 ���ų� enemyElement�״�� �ᵵ �ɵ�.
+        float curDamage = attackedOnNormal(damage);
+
+        if (EnemyElement != ElementType.NONE)
+        {
+            if (ElementStack.Count != 0)
+            {
+                if (EnemyElement != this.ElementStack.Peek())
+                {
+                    Debug.Log("Pushed!");
+                    this.ElementStack.Push(EnemyElement);
+                    checkIsPopTime();
+                }
+            }
+            else
+            {
+                Debug.Log("Pushed!");
+                this.ElementStack.Push(EnemyElement);
+                checkIsPopTime();
+            }
+        }
+
+        Stat.hp -= curDamage * AdditionalDamage;
+        UI_Control.Inst.damageSet(curDamage.ToString(), this.gameObject);//����� UI �߰� �ڵ�
+        DealtDamage = Mathf.Round(curDamage * 10) * 0.1f;
+        
     }
 
     public void RunToSleepChange()
@@ -118,5 +182,11 @@ public class Enemy : MonoBehaviour
         if(Stat.hp == Stat.maxHp)
             State = STATE.IDLE;
     }
-
+    private void OnDestroy()//���ʹ� HP�� ���� �� �ı� �߰� �κ�
+    {
+        int index = UI_EnemyHp.EnemyHps.enemies.IndexOf(this);
+        UI_EnemyHp.EnemyHps.enemies.RemoveAt(index);
+        Destroy(UI_EnemyHp.EnemyHps.hpObjects[index]);
+        UI_EnemyHp.EnemyHps.hpObjects.RemoveAt(index);
+    }
 }

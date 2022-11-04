@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStatusControl : ElementControl, IDamgeable
+public class PlayerStatusControl : CombatStatus, IDamgeable
 {
     public const float GravityForce = 30.0f;
 
@@ -10,6 +10,10 @@ public class PlayerStatusControl : ElementControl, IDamgeable
     public float Health;
     public float MyStartingStamina = 100.0f;
     public float Stamina;
+
+    public float AttackDamage = 10.0f;
+    public float SkillDamage = 10.0f;
+    public float UltDamage = 50.0f;
 
     protected bool isHitted;
     public bool Dead;
@@ -32,7 +36,6 @@ public class PlayerStatusControl : ElementControl, IDamgeable
 
     public float ShootDistance = 50f;
     public float SwitchToChargeTime = 2.0f;
-    public float FireRate = 0.25f;
 
     protected float rotationSpeed = 45.0f;
     protected float nextFire = 0.0f;
@@ -49,7 +52,8 @@ public class PlayerStatusControl : ElementControl, IDamgeable
     public virtual void TakeHit(float damage)
     {
         isHitted = true;
-        Health -= damage;
+        Health -= damage * AdditionalDamage;
+        UI_Control.Inst.damageSet((damage * AdditionalDamage).ToString(), GameObject.FindGameObjectWithTag("Player"));//����� UI �߰� �ڵ�
         DealtDamage = Mathf.Round(damage * 10) * 0.1f;
         if (Health <= 0 && !Dead)
         {
@@ -57,19 +61,33 @@ public class PlayerStatusControl : ElementControl, IDamgeable
         }
     }
 
-    // 건드린 부분
-    public virtual void TakeElementHit(float damage, ElementType enemyElement)
+    public virtual void TakeElementHit(float damage, ElementRule.ElementType enemyElement) //���߿� ������ ���ɼ� ����.
     {
         isHitted = true;
-        setEnemyElement(enemyElement); // 이렇게 EnemyElement로 바꿔서 쓰거나 enemyElement그대로 써도 될듯.
+        setEnemyElement(enemyElement); // �̷��� EnemyElement�� �ٲ㼭 ���ų� enemyElement�״�� �ᵵ �ɵ�.
         float curDamage = attackedOnNormal(damage);
 
-        // 처음에 빈 stack에서 peek하려다보니 문제가 생기는 것 같음. 아닐 수도 ㅎ
-        // if (EnemyElement != ElementType.NONE && EnemyElement != ElementStack.Peek())
-        // {
-        //     this.ElementStack.Push(EnemyElement);
-        // }
-        Health -= curDamage;
+        if (EnemyElement != ElementType.NONE)
+        {
+            if (ElementStack.Count != 0)
+            {
+                if (EnemyElement != this.ElementStack.Peek())
+                {
+                    Debug.Log("Pushed!");
+                    this.ElementStack.Push(EnemyElement);
+                    checkIsPopTime();
+                }
+            }
+            else
+            {
+                Debug.Log("Pushed!");
+                this.ElementStack.Push(EnemyElement);
+                checkIsPopTime();
+            }
+        }
+
+        Health -= curDamage * AdditionalDamage;
+        UI_Control.Inst.damageSet((curDamage * AdditionalDamage).ToString(), GameObject.FindGameObjectWithTag("Player"));//����� UI �߰� �ڵ�
         DealtDamage = Mathf.Round(curDamage * 10) * 0.1f;
         if (Health <= 0 && !Dead)
         {
@@ -89,12 +107,12 @@ public class PlayerStatusControl : ElementControl, IDamgeable
 
     public virtual void StaminaRegerenate()
     {
-        if (Stamina != MyStartingStamina)
+        if(Stamina != MyStartingStamina)
         {
             Stamina += Time.deltaTime * 10f;
         }
 
-        if (Stamina > MyStartingStamina)
+        if(Stamina > MyStartingStamina)
         {
             Stamina = MyStartingStamina;
         }

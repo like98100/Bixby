@@ -6,7 +6,10 @@ public class ElementControl : ElementRule, IElementReaction
 {
     public ElementType MyElement;
     public ElementType EnemyElement;
-    public Stack<ElementType> ElementStack = new Stack<ElementType>(); // ¨ù?¨ù¨¬ ??¨ù¨¬ ¨ö?©ø??? ¨ö¨¬??. 2¨ö¨¬?? ¨ö¡¿??¢¬? ©ö?¡¤? ??¨¬? ¨¡?!
+    public Stack<ElementType> ElementStack = new Stack<ElementType>(); // ï¿½Ó¼ï¿½ ï¿½Õ¼ï¿½ ï¿½Ã³ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½. 2ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½Ù·ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½!
+
+    public GameObject ExplosionObj;
+    public GameObject TransmissionObj;
 
     protected Color mySkillStartColor = Color.yellow;
     protected Color mySkillEndColor = Color.white;
@@ -23,9 +26,17 @@ public class ElementControl : ElementRule, IElementReaction
     public static Color ElectroSkillStartColor = new Color(112 / 255f, 69 / 255f, 255 / 255f);
     public static Color ElectroSkillEndColor = new Color(112 / 255f, 69 / 255f, 255 / 255f);
 
+    public bool IsFusion = false;
+    public bool IsEvaporation = false;
+    public bool IsElectronicShock = false;
+    public bool IsExplosion = false;
+    public bool IsFreezing = false;
+    public bool IsTransmission = false;
+
     // Start is called before the first frame update
     protected virtual void Start()
     {
+        //ElementStack ;
         if (Elements.Count < 4)
         {
             Elements.AddLast(ElementType.WATER);
@@ -38,42 +49,10 @@ public class ElementControl : ElementRule, IElementReaction
         EnemyElement = ElementType.NONE;
     }
 
-    // Update is called once per frame
-    protected virtual void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            this.mySkillStartColor = FireSkillStartColor;
-            this.mySkillEndColor = FireSkillEndColor;
-            this.MyElement = ElementType.FIRE;
-            Debug.Log("current element : FIRE");
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            this.mySkillStartColor = IceSkillStartColor;
-            this.mySkillEndColor = IceSkillEndColor;
-            this.MyElement = ElementType.ICE;
-            Debug.Log("current element : ICE");
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            this.mySkillStartColor = WaterSkillStartColor;
-            this.mySkillEndColor = WaterSkillEndColor;
-            this.MyElement = ElementType.WATER;
-            Debug.Log("current element : WATER");
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            this.mySkillStartColor = ElectroSkillStartColor;
-            this.mySkillEndColor = ElectroSkillEndColor;
-            this.MyElement = ElementType.ELECTRICITY;
-            Debug.Log("current element : ELECTRICITY");
-        }
-    }
 
     protected void checkIsPopTime()
     {
-        if (ElementStack.Count >= 2)
+        if (this.ElementStack.Count >= 2)
         {
             elementReaction();
         }
@@ -86,37 +65,74 @@ public class ElementControl : ElementRule, IElementReaction
         ElementType firstElement = ElementStack.Pop();
         ElementType secondElement = ElementStack.Pop();
 
-        if (firstElement == ElementType.FIRE && secondElement == ElementType.ICE) //?¢Ò?¨ª
+        if ((firstElement == ElementType.FIRE && secondElement == ElementType.ICE)
+            || (secondElement == ElementType.FIRE && firstElement == ElementType.ICE)) //ï¿½ï¿½ï¿½ï¿½
         {
-            Fusion();
+            if (!IsFusion)
+            {
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½!");
+                Fusion();
+                IsFusion = true;
+                UI_Control.Inst.damageSet("ï¿½ï¿½ï¿½ï¿½", this.gameObject);
+            }
         }
-        else if (firstElement == ElementType.WATER && secondElement == ElementType.ICE) //¨¬?¡Æ?
+        if ((firstElement == ElementType.WATER && secondElement == ElementType.ICE)
+            || (secondElement == ElementType.WATER && firstElement == ElementType.ICE)) //ï¿½ï¿½ï¿½ï¿½
         {
-            Freezing();
+            if (!IsFreezing)
+            {
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½!");
+                Freezing();
+                IsFreezing = true;
+                UI_Control.Inst.damageSet("ï¿½ï¿½ï¿½ï¿½", this.gameObject);
+            }
         }
-        else if (firstElement == ElementType.ELECTRICITY && secondElement == ElementType.ICE) //????
+        if ((firstElement == ElementType.ELECTRICITY && secondElement == ElementType.ICE)
+            || (secondElement == ElementType.ELECTRICITY && firstElement == ElementType.ICE)) //ï¿½ï¿½ï¿½ï¿½
         {
-            Transmission();
+            if (!IsTransmission)
+            {
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½!");
+                Transmission();
+                //IsTransmission = true;
+                UI_Control.Inst.damageSet("ï¿½ï¿½ï¿½ï¿½", this.gameObject);
+            }
         }
-        else if (firstElement == ElementType.ELECTRICITY && secondElement == ElementType.FIRE) //¨¡©ª©ö©¬
+        if ((firstElement == ElementType.ELECTRICITY && secondElement == ElementType.FIRE)
+            || (secondElement == ElementType.ELECTRICITY && firstElement == ElementType.FIRE)) //ï¿½ï¿½ï¿½ï¿½
         {
-            Explosion();
+            if (!IsExplosion)
+            {
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½!");
+                Explosion();
+                //IsExplosion = true;
+                UI_Control.Inst.damageSet("ï¿½ï¿½ï¿½ï¿½", this.gameObject);
+            }
         }
-        else if (firstElement == ElementType.ELECTRICITY && secondElement == ElementType.WATER) //¡Æ¡§??
+        if ((firstElement == ElementType.ELECTRICITY && secondElement == ElementType.WATER)
+            || (secondElement == ElementType.ELECTRICITY && firstElement == ElementType.WATER)) //ï¿½ï¿½ï¿½ï¿½
         {
-            ElectricShock();
+            if (!IsElectronicShock)
+            {
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½!");
+                ElectricShock();
+                IsElectronicShock = true;
+                UI_Control.Inst.damageSet("ï¿½ï¿½ï¿½ï¿½", this.gameObject);
+            }
         }
-        else if (firstElement == ElementType.WATER && secondElement == ElementType.FIRE) //??©ö©¬
+        if ((firstElement == ElementType.WATER && secondElement == ElementType.FIRE)
+            || (secondElement == ElementType.WATER && firstElement == ElementType.FIRE)) //ï¿½ï¿½ï¿½ï¿½
         {
-            Evaporation();
-        }
-        else
-        {
-            return;
+            if (!IsEvaporation)
+            {
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½!");
+                Evaporation();
+                IsEvaporation = true;
+                UI_Control.Inst.damageSet("ï¿½ï¿½ï¿½ï¿½", this.gameObject);
+            }
         }
     }
 
-    // °Çµå¸° ºÎºÐ
     protected float attackedOnNormal(float damage)
     {
         int adventage = CheckAdventage(MyElement, EnemyElement);
@@ -124,19 +140,16 @@ public class ElementControl : ElementRule, IElementReaction
         {
             case 1:
                 return damage * 2;
-                //break;
             case 0:
                 return damage * 1;
-                //break;
             case -1:
                 return damage / 2;
-                //break;
         }
         return 0;
     }
 
-    protected void attackedOnSheild()
-    {
+    protected void attackedOnSheild() // ï¿½Ýµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½É¼ï¿½ï¿½ï¿½ ï¿½Ö±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½È¯ï¿½ï¿½ï¿½ï¿½ ï¿½Ï´ï¿½ voidï¿½ï¿½ ï¿½Ñ´ï¿½. 
+    { // ï¿½Ú±ï¿½ ï¿½Ú½Å¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½È²(ï¿½Ú±ï¿½ ï¿½Ú½Å¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½É¼ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½.
         int adventage = CheckAdventage(MyElement, EnemyElement);
         switch (adventage)
         {
@@ -152,39 +165,108 @@ public class ElementControl : ElementRule, IElementReaction
         }
     }
 
-
     public virtual void Fusion()
     {
-
+        //50ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
+        StartCoroutine(fusion(10.0f));
     }
     public virtual void Freezing()
     {
-
+        StartCoroutine(freezing(10.0f));
+        //ï¿½Ìµï¿½ï¿½Óµï¿½ï¿½ï¿½ 50ï¿½Û¼ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½.
     }
     public virtual void ElectricShock()
     {
-
+        StartCoroutine(eletricShock(5.0f, 10.0f));
     }
     public virtual void Explosion()
     {
-
+        Instantiate(ExplosionObj, this.transform.position, this.transform.rotation);
+        IsExplosion = false;
     }
     public virtual void Evaporation()
     {
-
+        //ï¿½ï¿½ï¿½Ýµï¿½ï¿½ï¿½ï¿½Ì°ï¿½ 2ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
+        StartCoroutine(evaporation(10.0f));
     }
     public virtual void Transmission()
     {
-
+        Instantiate(TransmissionObj, this.transform.position, this.transform.rotation);
+        IsTransmission = false;
     }
 
+    IEnumerator fusion(float time)
+    {
+        this.gameObject.GetComponent<CombatStatus>().AdditionalDamage = 1.5f; //50ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        while (time > 0)
+        {
+            time--;
+            yield return new WaitForSeconds(1.0f);
+        }
+        IsEvaporation = false;
+        this.gameObject.GetComponent<CombatStatus>().AdditionalDamage = 1.0f;
 
-    // °Çµå¸° ºÎºÐ
+        float temp = this.gameObject.GetComponent<CombatStatus>().FireRate;
+
+        this.gameObject.GetComponent<CombatStatus>().FireRate =
+        this.gameObject.GetComponent<CombatStatus>().FireRate * 2.0f;
+        while (time > 0)
+        {
+            time--;
+            yield return new WaitForSeconds(1.0f);
+        }
+        IsFusion = false;
+        this.gameObject.GetComponent<CombatStatus>().FireRate = temp;
+    }
+
+    IEnumerator freezing(float time)
+    {
+        this.gameObject.GetComponent<CombatStatus>().SpeedMultiply = 0.5f;
+        while (time > 0)
+        {
+            time--;
+            yield return new WaitForSeconds(1.0f);
+        }
+        IsFreezing = false;
+        this.gameObject.GetComponent<CombatStatus>().SpeedMultiply = 1.0f;
+    }
+
+    IEnumerator eletricShock(float time, float damage)
+    {
+        while(time > 0)
+        {
+            if (this.gameObject.tag == "Player")
+            {
+                this.gameObject.GetComponent<PlayerStatusControl>().TakeHit(damage);
+            }
+            else if(this.gameObject.tag == "Enemy")
+            {
+                this.gameObject.GetComponent<Enemy>().TakeHit(damage);
+            }
+            time--;
+            yield return new WaitForSeconds(1.0f);
+        }
+        IsElectronicShock = false;
+    }
+
+    IEnumerator evaporation(float time)
+    {
+        float temp = this.gameObject.GetComponent<CombatStatus>().FireRate;
+
+        this.gameObject.GetComponent<CombatStatus>().FireRate =
+        this.gameObject.GetComponent<CombatStatus>().FireRate * 2.0f;
+        while (time > 0)
+        {
+            time--;
+            yield return new WaitForSeconds(1.0f);
+        }
+        IsFusion = false;
+        this.gameObject.GetComponent<CombatStatus>().FireRate = temp;
+    }
+
+    // ï¿½Ó½ï¿½ ï¿½ß°ï¿½ï¿½Îºï¿½. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½, ï¿½Û¼ï¿½ï¿½ï¿½: ï¿½ï¿½Ã¢ï¿½ï¿½
     protected void setEnemyElement(ElementType element)
     {
         EnemyElement = element;
     }
-
-
 }
-

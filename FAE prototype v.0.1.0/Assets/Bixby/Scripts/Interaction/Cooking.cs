@@ -12,7 +12,7 @@ public class Cooking : MonoBehaviour
     public GameObject cookPanel;
 
     public GameObject Player; //플레이어 오브젝트
-
+    bool isPlayerClose;
     public enum COOK
     {
         NONE = 0,
@@ -29,7 +29,7 @@ public class Cooking : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        isPlayerClose = false;
     }
 
     // Update is called once per frame
@@ -39,18 +39,17 @@ public class Cooking : MonoBehaviour
         if (Vector3.Distance(Player.transform.position, transform.position) <= 2.0f)
         {
             //f키 생성
-            if (inventoryObject.Inst.FieldFKey == null)
+            if (!inventoryObject.Inst.FieldFKey.activeSelf&&!isPlayerClose)
             {
-                inventoryObject.Inst.FieldFKey = Instantiate(inventoryObject.Inst.getObj("KeyF"), GameObject.Find("Canvas").transform);
-                var wantedPos = Camera.main.WorldToScreenPoint(this.transform.position);
-                inventoryObject.Inst.FieldFKey.transform.position = wantedPos + Vector3.right * 200f;
+                inventoryObject.Inst.FieldFKey.SetActive(true);
+                isPlayerClose = true;
             }
 
 
             if (Input.GetKeyDown(KeyCode.F))
             {
                 UI_Control.Inst.windowSet(cookPanel);
-
+                inventoryObject.Inst.FieldFKey.SetActive(false);
                 ////UI창이 켜졌을때
                 //if (cookPanel.gameObject.activeSelf == true)
                 //{
@@ -64,6 +63,12 @@ public class Cooking : MonoBehaviour
                 //}
             }
         }
+        else if(isPlayerClose)
+        {
+            inventoryObject.Inst.FieldFKey.SetActive(false);
+            isPlayerClose = false;
+        }
+            
     }
 
   

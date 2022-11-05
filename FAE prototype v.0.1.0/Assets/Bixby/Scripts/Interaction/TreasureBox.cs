@@ -52,11 +52,9 @@ public class TreasureBox : MonoBehaviour
 
             //UI 띄우기 f키 누르기 아이콘
             //f키 생성
-            if (inventoryObject.Inst.FieldFKey == null)
+            if (!inventoryObject.Inst.FieldFKey.activeSelf)
             {
-                inventoryObject.Inst.FieldFKey = Instantiate(inventoryObject.Inst.getObj("KeyF"), GameObject.Find("Canvas").transform);
-                var wantedPos = Camera.main.WorldToScreenPoint(this.transform.position);
-                inventoryObject.Inst.FieldFKey.transform.position = wantedPos + Vector3.right * 200f;
+                inventoryObject.Inst.FieldFKey.SetActive(true);
             }
 
 
@@ -88,8 +86,7 @@ public class TreasureBox : MonoBehaviour
         }
         else if (Vector3.Distance(Player.transform.position, transform.position) > 2.0f && boxState && a == false)
         {
-            Destroy(inventoryObject.Inst.FieldFKey);
-            inventoryObject.Inst.FieldFKey = null;
+            inventoryObject.Inst.FieldFKey.SetActive(false);
 
             a = true;
         }

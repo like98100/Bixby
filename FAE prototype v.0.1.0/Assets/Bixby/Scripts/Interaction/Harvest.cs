@@ -74,11 +74,9 @@ public class Harvest : MonoBehaviour
             //Debug.Log(other.name);
 
             //f키 생성
-            if (inventoryObject.Inst.FieldFKey == null && this.meshTest.enabled == true)
+            if (!inventoryObject.Inst.FieldFKey.activeSelf && this.meshTest.enabled == true)
             {
-                inventoryObject.Inst.FieldFKey = Instantiate(inventoryObject.Inst.getObj("KeyF"), GameObject.Find("Canvas").transform);
-                var wantedPos = Camera.main.WorldToScreenPoint(this.transform.position);
-                inventoryObject.Inst.FieldFKey.transform.position = wantedPos + Vector3.right * 200f;
+                inventoryObject.Inst.FieldFKey.SetActive(true);
             }
 
             
@@ -98,8 +96,7 @@ public class Harvest : MonoBehaviour
 
                 //인벤토리 추가 및 제이슨 저장
                 inventoryObject.Inst.jsonSave();
-                Destroy(inventoryObject.Inst.FieldFKey);
-                inventoryObject.Inst.FieldFKey = null;
+                inventoryObject.Inst.FieldFKey.SetActive(false);
             }
         }
     }
@@ -108,8 +105,7 @@ public class Harvest : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            Destroy(inventoryObject.Inst.FieldFKey);
-            inventoryObject.Inst.FieldFKey = null;
+            inventoryObject.Inst.FieldFKey.SetActive(false);
         }
     }
 

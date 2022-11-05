@@ -77,11 +77,19 @@ public class inventoryObject : MonoBehaviour
             itemObjects.Add(temp);
         }//아이템 가시화
         inventoryCanvas.SetActive(false);//시작시 인벤창 닫혀있음
-        FieldFKey = null;
+        FieldFKey = Instantiate(keyF, GameObject.Find("Canvas").transform);
+        FieldFKey.SetActive(false);
         itemSummary.SetActive(false);
         itemDescription.SetActive(false);
     }
-
+    private void Update()
+    {
+        if (FieldFKey.activeSelf)
+        {
+            Vector3 wantedPos = Camera.main.WorldToScreenPoint(GameObject.FindGameObjectWithTag("Player").transform.position);
+            FieldFKey.transform.position = wantedPos + Vector3.right * 200f + Vector3.up * 200f;
+        }
+    }
     public void setItemPos(GameObject item, Vector3 newOrigonPos)//인벤 내 아이템 위치 이동시 실행(겹침확인)
     {
         itemObject itemObj = item.GetComponent<itemObject>();
@@ -144,8 +152,7 @@ public class inventoryObject : MonoBehaviour
             itemGet(newXSize, newYSize, tempPos.x, tempPos.y, newData);
             Destroy(newItem);
             jsonSave();
-            Destroy(FieldFKey);
-            FieldFKey = null;
+            FieldFKey.SetActive(false);
         }
         //알림창 만들면 else에서 아이템 획득 불가 알릴 것
     }
@@ -202,6 +209,12 @@ public class inventoryObject : MonoBehaviour
         tempItem.ItemData.Left = itemX;
         tempItem.ItemData.Up = itemY;
         items.items.Add(tempItem.ItemData);
+
+        QuestObject quest = GameObject.Find("GameManager").GetComponent<QuestObject>();
+
+        if (quest.GetQuestKind() == QuestKind.cook
+            && itemData.itemID == quest.GetObjectId())
+            quest.SetObjectIndex(quest.GetObjectIndex() + 1);
     }
     public Vector2 emptyCell(float newXSize, float newYSize)//인벤토리에서 해당 크기의 아이템이 들어올 수 있는 위치
     {

@@ -26,7 +26,8 @@ public class CookingGage : MonoBehaviour
     public float min_max = 0.7f; //최소값의 최대값
     public float sliderInterval = 0.2f; //최소값 최대값 사이 길이
 
-    
+    [SerializeField] GameObject cookingWindow;
+    [SerializeField] GameObject buttonWindow;
 
     private void Awake()
     {
@@ -39,6 +40,9 @@ public class CookingGage : MonoBehaviour
     void Start()
     {
         tttt = Time.deltaTime;
+        cookingWindow.SetActive(false);
+        //cookingWindow = this.transform.parent.GetChild(2).gameObject;
+        //buttonWindow = this.transform.parent.GetChild(1).gameObject;
     }
 
     //아이템 데이터
@@ -60,6 +64,9 @@ public class CookingGage : MonoBehaviour
             gageSlider.gameObject.SetActive(false);
             minSlider.gameObject.SetActive(false);
             maxSlider.gameObject.SetActive(false);
+            cookingWindow.SetActive(false);
+            buttonWindow.SetActive(!cookingWindow.activeSelf);
+
             gageSlider.value = 0;
             start = false;
 
@@ -109,6 +116,8 @@ public class CookingGage : MonoBehaviour
             gageSlider.gameObject.SetActive(false);
             minSlider.gameObject.SetActive(false);
             maxSlider.gameObject.SetActive(false);
+            cookingWindow.SetActive(false);
+            buttonWindow.SetActive(!cookingWindow.activeSelf);
             gageSlider.value = 0;
             start = false;
         }
@@ -117,13 +126,14 @@ public class CookingGage : MonoBehaviour
     //요리하기 버튼 눌렀을 때 -> Cooking에 있는 변수를 받아와서 어던 요리를 하는지 판단해야함
     public void Cooking()
     {
+        if (start)
+            return;
         //초기화
         cookData = new itemData();
         //
-        int FruitCount = 0;
-        int GreenonionCount = 0;
-        int RiceCount = 0;
-
+        List<int> FruitIndex = new List<int>();
+        List<int> GreenIndex = new List<int>();
+        List<int> RiceIndex = new List<int>();
         foreach (var item in inventoryObject.Inst.items.items)
         {
             if (item.tag.Length != 2)
@@ -135,24 +145,29 @@ public class CookingGage : MonoBehaviour
                 switch (item.itemID)
                 {
                     case 1000:
-                        FruitCount++;
+                        FruitIndex.Add(inventoryObject.Inst.items.items.IndexOf(item));
                         break;
                     case 1001:
-                        GreenonionCount++;
+                        GreenIndex.Add(inventoryObject.Inst.items.items.IndexOf(item));
                         break;
                     case 1002:
-                        RiceCount++;
+                        RiceIndex.Add(inventoryObject.Inst.items.items.IndexOf(item));
                         break;
                     default:
                         break;
                 }
             }
         }
-        
+        print("실행됨");
+        foreach (var item in FruitIndex)
+        {
+            print(inventoryObject.Inst.items.items[item].itemName);
+            print(inventoryObject.Inst.itemObjects[item].GetComponent<itemObject>().ItemData.itemName);
+        }
 
         cookData.itemName = num.text;
 
-        if (num.text == "과일주스" && FruitCount >= 2)
+        if (num.text == "과일주스" && FruitIndex.Count >= 2)
         {
             cookData.itemID = 2001;
             cookData.xSize = 1; cookData.ySize = 2;
@@ -160,55 +175,25 @@ public class CookingGage : MonoBehaviour
             //길이는 소모하는 재료 수
             for (int i = 0; i < 2; i++)
             {
-                foreach (var item in inventoryObject.Inst.itemObjects)
-                {
-                    if (item.tag.Length != 2)
-                    {
-                        continue;
-                    }
-
-                    if (item.GetComponent<itemObject>().ItemData.tag[1] == "harvest" && item.GetComponent<itemObject>().ItemData.itemID == 1000)
-                    {
-                        FruitCount--;
-                        inventoryObject.Inst.throwItem(item, false);
-                        break;
-                    }
-                }
+                inventoryObject.Inst.throwItem(inventoryObject.Inst.itemObjects[FruitIndex[i]], false);
             }
+
         }
-        else if (num.text == "한식" && GreenonionCount >= 1 && RiceCount >= 1)
+        else if (num.text == "한식" && GreenIndex.Count >= 1 && RiceIndex.Count >= 1)
         {
             cookData.itemID = 2002;
             cookData.xSize = 2; cookData.ySize = 1;
             //요리 재료 제거
-            foreach (var item in inventoryObject.Inst.itemObjects)
-            {
-                if (item.tag.Length != 2)
-                {
-                    continue;
-                }
-
-                if (item.GetComponent<itemObject>().ItemData.tag[1] == "harvest" && item.GetComponent<itemObject>().ItemData.itemID == 1001)
-                {
-                    GreenonionCount--;
-                    inventoryObject.Inst.throwItem(item, false);
-                    break;
-                }
-            }
-            foreach (var item in inventoryObject.Inst.itemObjects)
-            {
-                if (item.tag.Length != 2)
-                {
-                    continue;
-                }
-
-                if (item.GetComponent<itemObject>().ItemData.tag[1] == "harvest" && item.GetComponent<itemObject>().ItemData.itemID == 1002)
-                {
-                    RiceCount--;
-                    inventoryObject.Inst.throwItem(item, false);
-                    break;
-                }
-            }
+            inventoryObject.Inst.throwItem(inventoryObject.Inst.itemObjects[GreenIndex[0]], false);
+            inventoryObject.Inst.throwItem(inventoryObject.Inst.itemObjects[RiceIndex[0]], false);
+            //for (int i = 0; i < 1; i++)
+            //{
+            //    inventoryObject.Inst.throwItem(inventoryObject.Inst.itemObjects[GreenIndex[i]], false);
+            //}
+            //for (int i = 0; i < 1; i++)
+            //{
+            //    inventoryObject.Inst.throwItem(inventoryObject.Inst.itemObjects[RiceIndex[i]], false);
+            //}
         }
         else
         {
@@ -219,6 +204,9 @@ public class CookingGage : MonoBehaviour
 
         success_fail.text = "-";
         //요리시작할때 setActive키기
+        if (cookingWindow.activeSelf == false)
+            cookingWindow.SetActive(true);
+        buttonWindow.SetActive(!cookingWindow.activeSelf);
         if (gageSlider.gameObject.activeSelf == false)
         {
             gageSlider.gameObject.SetActive(true);

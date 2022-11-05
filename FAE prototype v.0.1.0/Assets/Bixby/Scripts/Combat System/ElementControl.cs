@@ -6,7 +6,7 @@ public class ElementControl : ElementRule, IElementReaction
 {
     public ElementType MyElement;
     public ElementType EnemyElement;
-    public Stack<ElementType> ElementStack; // 속성 합성 시너지 스택. 2스택 쌓이면 바로 전부 팝!
+    public Stack<ElementType> ElementStack = new Stack<ElementType>(); // 속성 합성 시너지 스택. 2스택 쌓이면 바로 전부 팝!
 
     public GameObject ExplosionObj;
     public GameObject TransmissionObj;
@@ -36,7 +36,6 @@ public class ElementControl : ElementRule, IElementReaction
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        ElementStack = new Stack<ElementType>();
         if (Elements.Count < 4)
         {
             Elements.AddLast(ElementType.WATER);
@@ -44,9 +43,6 @@ public class ElementControl : ElementRule, IElementReaction
             Elements.AddLast(ElementType.ICE);
             Elements.AddLast(ElementType.ELECTRICITY);
         }
-
-        MyElement = ElementType.NONE;
-        EnemyElement = ElementType.NONE;
     }
 
 
@@ -138,28 +134,28 @@ public class ElementControl : ElementRule, IElementReaction
         int adventage = CheckAdventage(MyElement, EnemyElement);
         switch (adventage)
         {
-            case 1:
-                return damage * 2;
-            case 0:
-                return damage * 1;
-            case -1:
+            case 1: //내가 이김. 약하게 맞아야 함.
                 return damage / 2;
+            case 0: //서로 비김. 적당히 맞아야 함.
+                return damage * 1;
+            case -1: //내가 짐. 세게 맞아야 함.
+                return damage * 2;
         }
         return 0;
     }
 
-    protected void attackedOnSheild() // 반동을 입을 가능성이 있기 때문에, 반환형은 일단 void로 한다. 
-    { // 자기 자신에게 대미지를 줘야 할 상황(자기 자신에 대한 접근)이 생길 가능성이 있다.
+    protected void attackedOnSheild() // 반동을 줄 가능성이 있기 때문에, 반환형은 일단 void로 한다. 
+    { // 상대방에게 대미지를 줘야 할 상황(상대방에 대한 접근)이 생길 가능성이 있다.
         int adventage = CheckAdventage(MyElement, EnemyElement);
         switch (adventage)
         {
-            case 1:
+            case 1: //내가 이김. 상대방이 맞아야 함.
 
                 break;
-            case 0:
+            case 0: //서로 비김. 난 안 맞아야 함.
 
                 break;
-            case -1:
+            case -1: //내가 짐. 세게 맞아야 함.
 
                 break;
         }
@@ -235,13 +231,9 @@ public class ElementControl : ElementRule, IElementReaction
     {
         while(time > 0)
         {
-            if (this.gameObject.tag == "Player")
+            if (this.gameObject.tag == "Player" || this.gameObject.tag == "Enemy")
             {
-                this.gameObject.GetComponent<PlayerStatusControl>().TakeHit(damage);
-            }
-            else if(this.gameObject.tag == "Enemy")
-            {
-                this.gameObject.GetComponent<Enemy>().TakeDamage(damage);
+                this.gameObject.GetComponent<IDamgeable>().TakeHit(damage);
             }
             time--;
             yield return new WaitForSeconds(1.0f);

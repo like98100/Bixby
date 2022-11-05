@@ -21,7 +21,8 @@ public class inventoryObject : MonoBehaviour
         closeBtn = inventoryCanvas.transform.GetChild(4).gameObject.GetComponent<Button>();
         closeBtn.onClick.AddListener(() => UI_Control.Inst.windowClose());
     }
-    itemSO items;//itemSO, 인벤토리 내 아이템들을 이 안의 items에 저장해둔다
+    //이거 변경됨
+    public itemSO items;//itemSO, 인벤토리 내 아이템들을 이 안의 items에 저장해둔다
     [SerializeField] GameObject itemPrefab;//아이템 프리팹, 인벤토리 열때, 혹은 아이템 획득할때 인스턴트에 사용
     itemJsonData itemJsonData;//json데이터
     GameObject inventoryCanvas;
@@ -31,7 +32,8 @@ public class inventoryObject : MonoBehaviour
     public float Cell;
     public float XSize;
     public float YSize;
-    List<GameObject> itemObjects;
+    //이거 변경됨
+    public List<GameObject> itemObjects;
     Vector3 zero;
     public int Gold;
     [SerializeField] GameObject fieldItemPrefab;
@@ -117,7 +119,8 @@ public class inventoryObject : MonoBehaviour
         float tempD = upA + ySizeA > upB + ysizeB ? upB + ysizeB : upA + ySizeA;
         return tempL < tempR && tempU < tempD;
     }
-    void jsonSave()//json저장
+    //이거 변경됨
+    public void jsonSave()//json저장
     {
         itemJsonData temp = new itemJsonData();
         temp.itemList = new List<itemData>();

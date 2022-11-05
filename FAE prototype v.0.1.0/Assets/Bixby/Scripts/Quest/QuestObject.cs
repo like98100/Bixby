@@ -87,7 +87,7 @@ public class QuestObject : MonoBehaviour
             SetObjectIndex(tempItem.itemID);
             GameObject.Find(currentQuest.npcName).GetComponent<NPC>().SetIndex(GameObject.Find(currentQuest.npcName).GetComponent<NPC>().GetIndex() + 1);
         }
-        
+
     }
 
     public int GetObjectId()
@@ -155,8 +155,8 @@ public class QuestObject : MonoBehaviour
     public void SetIsClear(bool idx)
     {
         isClear = idx;
-        
-        if(idx)
+
+        if (idx)
         {
             if (currentQuest.npcName == "none")//NPC에게 가지않고 퀘스트가 클리어되는 경우
                 SetNextQuest();
@@ -168,7 +168,7 @@ public class QuestObject : MonoBehaviour
     {
         return currentQuest.npcName;
     }
-    
+
     public void MissionSet()
     {
         string missionTitle = "";

@@ -70,7 +70,7 @@ public class questData
         objectCnt = -1;
         time = -1f;
         npcName = "missingNo";
-        position = new float[]{-999, -999, -999};
+        position = new float[] { -999, -999, -999 };
     }
 
     public void Log()

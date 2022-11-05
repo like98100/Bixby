@@ -3,9 +3,9 @@
     {
       "questObject": 0,
       "objectId": -1,
-      "objectCnt": 0,
+      "objectCnt": -1,
       "time": -1.0,
-      "npcName": "villagerA",
+      "npcName": "missingNo",
       "position": [ -999.0, -999.0, -999.0 ]
     },
     {

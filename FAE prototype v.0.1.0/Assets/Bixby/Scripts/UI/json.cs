@@ -42,25 +42,70 @@ public class speechJsonData
         speechDatas.Add("");
     }
 }
+
+public enum QuestKind     // 퀘스트 종류
+{
+    management,             // 디버깅용 변수(0)
+    kill,                   // 처치(1)
+    cook,                   // 요리(2)
+    hunt,                   // 수렵(3)
+    interactive,            // 상호작용(4)
+    spot                    // 특정 위치 도달(5)
+};
+
+[System.Serializable]
+public class questData
+{
+    public QuestKind questObject;
+    public int objectId;        // 각 목적에 따라 사용할 변수(처치 적, 요리 아이템 및 상호작용 오브젝트 ID)
+    public int objectCnt;       // 각 목적에 따라 사용할 변수(카운트)
+    public float time;          // 제한 시간
+    public string npcName;      // 퀘스트 조건 만족 후 완료를 위해 대화해야 하는 npc 이름(없으면 -1 등과 같은 특정 기호로 표시할 것)
+    public float[] position;    // spot quest의 위치 변수
+
+    public questData()
+    {
+        questObject = QuestKind.management;
+        objectId = -1;
+        objectCnt = -1;
+        time = -1f;
+        npcName = "missingNo";
+        position = new float[] { -999, -999, -999 };
+    }
+
+    public void Log()
+    {
+        Debug.Log(questObject);
+        Debug.Log(objectId);
+        Debug.Log(objectCnt);
+        Debug.Log(time);
+        Debug.Log(npcName);
+        Debug.Log(position);
+    }
+}
+
+public class questJsonData
+{
+    public List<questData> questList = new List<questData>();
+    public int questIndex;      // 메인 퀘스트 플롯 순서 변수
+    public questJsonData()
+    {
+        questData nullQuest = new questData();
+        questList.Add(nullQuest);
+        questIndex = 0;
+    }
+}
+
 public class json
 {
     public static string ObjectToJson(object obj) { return JsonUtility.ToJson(obj); }
     public static T JsonToObject<T>(string jsonData) { return JsonUtility.FromJson<T>(jsonData); }
-    public static void CreateJsonFile(string createPath, string fileName, string jsonData)
-    {
-        FileStream fileStream = new FileStream(string.Format("{0}/Resources/json/{1}.json", createPath, fileName), FileMode.Create);
-        byte[] data = Encoding.UTF8.GetBytes(jsonData);
-        fileStream.Write(data, 0, data.Length);
-        fileStream.Close();
-    }
+    public static void CreateJsonFile(string createPath, string fileName, string jsonData) { File.WriteAllText(string.Format("{0}/Resources/json/{1}.json", createPath, fileName), jsonData); }
     public static T LoadJsonFile<T>(string loadPath, string fileName)
     {
-        FileStream fileStream = new FileStream(string.Format("{0}/Resources/json/{1}.json", loadPath, fileName), FileMode.Open);
-        byte[] data = new byte[fileStream.Length];
-        fileStream.Read(data, 0, data.Length);
-        fileStream.Close();
-        string jsonData = Encoding.UTF8.GetString(data);
-        return JsonUtility.FromJson<T>(jsonData);
+        string temp = File.ReadAllText(string.Format("{0}/Resources/json/{1}.json", loadPath, fileName));
+        T jsonData = JsonToObject<T>(temp);
+        return jsonData;
     }
     public static bool FileExist(string loadPath, string fileName)
     {

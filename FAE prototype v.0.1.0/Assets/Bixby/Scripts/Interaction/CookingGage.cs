@@ -32,26 +32,26 @@ public class CookingGage : MonoBehaviour
     {
         
     }
+    float tttt;
 
 
     // Start is called before the first frame update
     void Start()
     {
-       
+        tttt = Time.deltaTime;
     }
 
     //아이템 데이터
     itemData cookData;
 
+   
     // Update is called once per frame
     void Update()
     {
-
-
         if (start == true)
         {
             //게이지 슬라이더 증가
-            gageSlider.value += gageSpeed * Time.deltaTime;
+            gageSlider.value += gageSpeed * tttt;
         }
 
         if (gageSlider.value == 1)

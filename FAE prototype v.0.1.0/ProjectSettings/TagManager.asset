@@ -6,9 +6,11 @@ TagManager:
   tags:
   - FxTemporaire
   - item
-  - pattern
-  - etrigger
+  - Water
+  - Enemy
   - connect
+  - etrigger
+  - pattern
   layers:
   - Default
   - TransparentFX
@@ -16,8 +18,8 @@ TagManager:
   - Ground
   - Water
   - UI
+  - Player
   - Item
-  - 
   - 
   - 
   - 

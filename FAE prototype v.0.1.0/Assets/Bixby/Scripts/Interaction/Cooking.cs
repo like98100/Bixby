@@ -49,17 +49,19 @@ public class Cooking : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.F))
             {
-                //UI창이 켜졌을때
-                if (cookPanel.gameObject.activeSelf == true)
-                {
-                    cookPanel.gameObject.SetActive(false);
-                }
-                else
-                {
-                    cookPanel.gameObject.SetActive(true);
-                    Destroy(inventoryObject.Inst.FieldFKey);
-                    inventoryObject.Inst.FieldFKey = null;
-                }
+                UI_Control.Inst.windowSet(cookPanel);
+
+                ////UI창이 켜졌을때
+                //if (cookPanel.gameObject.activeSelf == true)
+                //{
+                //    cookPanel.gameObject.SetActive(false);
+                //}
+                //else
+                //{
+                //    cookPanel.gameObject.SetActive(true);
+                //    Destroy(inventoryObject.Inst.FieldFKey);
+                //    inventoryObject.Inst.FieldFKey = null;
+                //}
             }
         }
     }

@@ -9,7 +9,7 @@ public class QuestObject : MonoBehaviour
     private void Awake()
     {
         isClear = false;
-        objectIndex = -1;
+        objectIndex = 0;
     }
 
     questJsonData JsonData;         // Quest Json Data
@@ -90,6 +90,17 @@ public class QuestObject : MonoBehaviour
         
     }
 
+    public int GetObjectId()
+    {
+        return currentQuest.objectId;
+    }
+
+    public float[] GetPosition()
+    {
+        return currentQuest.position;
+    }
+
+
     public int GetObjectIndex()                                 // Get ObjectIndex Var Func
     {
         return objectIndex;
@@ -103,7 +114,7 @@ public class QuestObject : MonoBehaviour
 
     void CheckQuestCount()                                      // Quest Index Check Func
     {
-        if (objectIndex == currentQuest.objectVar)
+        if (objectIndex == currentQuest.objectCnt)
         {
             SetIsClear(true);
         }
@@ -166,15 +177,15 @@ public class QuestObject : MonoBehaviour
         switch (currentQuest.questObject)//요리와 상호작용의 경우 여기에서 어떤 요리 혹은 어떤 상호작용인지 설정
         {
             case QuestKind.kill:
-                questPurpose = currentQuest.objectVar.ToString();
+                questPurpose = currentQuest.objectCnt.ToString();
                 missionText = "적을" + questPurpose + "마리 처치하시오";
                 break;
             case QuestKind.hunt:
-                questPurpose = currentQuest.objectVar.ToString();
+                questPurpose = currentQuest.objectCnt.ToString();
                 missionText = "적을" + questPurpose + "마리 사냥하시오";
                 break;
             case QuestKind.cook:
-                if (currentQuest.objectVar == -2)
+                if (currentQuest.objectId == -2)
                     questPurpose = "무언가";
                 missionText = questPurpose + "을(를) 만드시오";
                 break;

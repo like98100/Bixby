@@ -5,10 +5,10 @@ using UnityEngine.UI;
 public class NPC : MonoBehaviour
 {
     Speech speech;
-    [SerializeField] string npcName;
+    string npcName;
     bool playerClose;
     GameObject keyInst;
-    [SerializeField] int talkIndex;
+    int talkIndex;
     GameObject canvasObj;
     GameObject nameObj;
     Text nameUI;
@@ -16,6 +16,7 @@ public class NPC : MonoBehaviour
     Shop shop;
     void Start()
     {
+        npcName = this.gameObject.name;
         canvasObj = this.transform.GetChild(0).gameObject;
         nameObj = canvasObj.transform.GetChild(0).gameObject;
         speech = UI_Control.Inst.Speech;
@@ -61,19 +62,7 @@ public class NPC : MonoBehaviour
             }
             else
             {
-                speech.setUp(npcName, talkIndex);
-                if (npcName == "Quest")
-                {
-                    switch (talkIndex)
-                    {
-                        case 0:
-                            UI_Control.Inst.Mission.misssionSet("Æ©Åä¸®¾ó", "¾îÂ¼±¸¸¦ ÀúÂ¼±¸ ÇÏ¼¼¿ä");
-                            talkIndex++;
-                            break;
-                        default:
-                            break;
-                    }
-                }
+                speech.setUp(npcName, npcName + talkIndex.ToString());
             }
             keyInst.SetActive(false);
         }
@@ -95,6 +84,14 @@ public class NPC : MonoBehaviour
             playerClose = false;
             nameObj.SetActive(playerClose);
         }
+    }
+    public int GetIndex()
+    {
+        return talkIndex;
+    }
+    public void SetIndex(int value)
+    {
+        talkIndex = value;
     }
 }
 

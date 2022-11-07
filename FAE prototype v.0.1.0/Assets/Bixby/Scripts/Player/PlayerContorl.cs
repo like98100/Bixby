@@ -883,7 +883,7 @@ public class PlayerContorl : PlayerStatusControl
             if (hitInfo.collider.tag == "Enemy")
             {
                 setEnemyElement(hitInfo.collider.GetComponent<Enemy>().Stat.element);
-                hitInfo.collider.GetComponent<Enemy>().TakeHit(attackedOnNormal(UltDamage));
+                hitInfo.collider.GetComponent<Enemy>().TakeElementHit(UltDamage, MyElement);
             }
         }
         projectileLine.SetPosition(1, rayOrigin + (m_camera.transform.forward * ShootDistance));

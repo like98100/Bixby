@@ -16,7 +16,7 @@ public class QuestObject : MonoBehaviour
     bool isClear;                   // Quest isClear bool var
     questData currentQuest;
     int objectIndex;                // Quest Object Index var;
-    GameObject tutorialImage;
+    //GameObject tutorialImage;
     // Start is called before the first frame update
     void Start()
     {
@@ -49,17 +49,19 @@ public class QuestObject : MonoBehaviour
 
         currentQuest = JsonData.questList[JsonData.questIndex];
         MissionSet();
-        tutorialImage = GameObject.Find("TutorialImage");
+        if (JsonData.questIndex == 0)
+            UI_Control.Inst.Mission.misssionSet("튜토리얼", "villagerA에게 말을 거시오");
+        //tutorialImage = GameObject.Find("TutorialImage");
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (JsonData.questIndex == 0 && Input.anyKeyDown)
-        {
-            tutorialImage.SetActive(false);
-            UI_Control.Inst.Mission.misssionSet("튜토리얼", "villagerA에게 말을 거시오");
-        }
+        //if (JsonData.questIndex == 0 && Input.anyKeyDown)
+        //{
+        //    tutorialImage.SetActive(false);
+        //    UI_Control.Inst.Mission.misssionSet("튜토리얼", "villagerA에게 말을 거시오");
+        //}
         // 퀘스트 진행 여부 확인
         switch (currentQuest.questObject)
         {

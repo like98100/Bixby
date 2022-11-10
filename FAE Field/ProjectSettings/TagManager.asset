@@ -6,6 +6,7 @@ TagManager:
   tags:
   - item
   - iceObject
+  - Test
   layers:
   - Default
   - TransparentFX

@@ -10,12 +10,12 @@ public class LoadingSceneController : MonoBehaviour
     private static LoadingSceneController instance;
 
     [SerializeField] private CanvasGroup canvasGroup;
-    [SerializeField] private Image progressBar;
 
     private string loadSceneName;
     private string previousSceneName;
 
     private SpawnPlayer spawnPlayer;
+    private LoadingUIManager loadingUIManager;
     public static LoadingSceneController Instance
     {
         get
@@ -40,10 +40,12 @@ public class LoadingSceneController : MonoBehaviour
             Destroy(this.gameObject);
             return;
         }
-
         DontDestroyOnLoad(this.gameObject);
     }
-
+    private void OnEnable()
+    {
+        loadingUIManager = this.gameObject.GetComponent<LoadingUIManager>();
+    }
     private static LoadingSceneController Create()
     {
         return Instantiate(Resources.Load<LoadingSceneController>("LoadingUI"));
@@ -62,26 +64,21 @@ public class LoadingSceneController : MonoBehaviour
 
     private IEnumerator LoadSceneProceess()
     {
-        progressBar.fillAmount = 0.0f;
+        loadingUIManager.SetDungeonInfo(loadSceneName);
+
         yield return StartCoroutine(Fade(true));
+
         AsyncOperation op = SceneManager.LoadSceneAsync(loadSceneName);
         op.allowSceneActivation = false;
-        float timer = 0.0f;
+
         while (!op.isDone)
         {
             yield return null;
-            if (op.progress < 0.9f)
+
+            if (loadingUIManager.SetProgressBar(op.progress))
             {
-                progressBar.fillAmount = op.progress;
-            }
-            else {
-                timer += Time.unscaledDeltaTime;
-                progressBar.fillAmount = Mathf.Lerp(0.9f, 1.0f, timer);
-                if (progressBar.fillAmount >= 1.0f)
-                {
-                    op.allowSceneActivation = true;
-                    yield break;
-                }
+                op.allowSceneActivation = true;
+                yield break;
             }
         }
     }

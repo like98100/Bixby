@@ -143,7 +143,7 @@ public class Enemy : CombatStatus, IDamgeable
             findPlayer(100.0f);
         }
         Stat.hp -= damage * AdditionalDamage;
-        UI_Control.Inst.damageSet((damage * AdditionalDamage).ToString(), this.gameObject);//����� UI �߰� �ڵ�
+        UI_Control.Inst.damageSet((damage * AdditionalDamage).ToString(), this.gameObject);//대미지 UI 추가 코드
         DealtDamage = Mathf.Round(damage * 10) * 0.1f;
         
     }
@@ -195,6 +195,19 @@ public class Enemy : CombatStatus, IDamgeable
     }
     private void OnDestroy()//���ʹ� HP�� ���� �� �ı� �߰� �κ�
     {
+        QuestObject questObject = GameObject.Find("GameManager").GetComponent<QuestObject>();
+        switch (questObject.GetQuestKind())
+        {
+            case QuestKind.kill:
+                //if(questObject.GetObjectId()) 에너미 ID 설정 후 조정할 것
+                int sum = questObject.GetObjectIndex() + 1;
+                questObject.SetObjectIndex(sum);
+                break;
+            default:
+                break;
+        }
+        questObject = null;
+
         int index = UI_EnemyHp.EnemyHps.enemies.IndexOf(this);
         UI_EnemyHp.EnemyHps.enemies.RemoveAt(index);
         Destroy(UI_EnemyHp.EnemyHps.hpObjects[index]);

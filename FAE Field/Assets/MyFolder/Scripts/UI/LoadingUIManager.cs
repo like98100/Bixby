@@ -55,10 +55,6 @@ public class LoadingUIManager : MonoBehaviour
         int index = Random.Range(5, 9);
         SetInfo(index);
     }
-    private void SetBackground(int index)
-    {
-        background.sprite = bgSprites[index];
-    }
     public void SetDungeonInfo(string nextDungeonName)
     {
         switch(nextDungeonName)

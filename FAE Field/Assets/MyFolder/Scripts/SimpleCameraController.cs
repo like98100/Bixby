@@ -121,7 +121,7 @@ namespace UnityTemplateProjects
         }
 #endif
 
-        void OnEnable()
+        void Start()
         {
             m_TargetCameraState.SetFromTransform(transform);
             m_InterpolatingCameraState.SetFromTransform(transform);

@@ -1,0 +1,61 @@
+{
+  "questList": [
+    {
+      "questObject": [ 0 ],
+      "objectId": [ -1 ],
+      "objectCnt": [ -1 ],
+      "time": [ -1.0 ],
+      "npcName": "villagerA",
+      "position": [
+        {
+          "x": -6.0,
+          "y": 8.0,
+          "z": 2.0
+        }
+      ]
+    },
+    {
+      "questObject": [ 2 ],
+      "objectId": [ 2001 ],
+      "objectCnt": [ 1 ],
+      "time": [ -1.0 ],
+      "npcName": "villagerA",
+      "position": [
+        {
+          "x": -999.0,
+          "y": -999.0,
+          "z": -999.0
+        }
+      ]
+    },
+    {
+      "questObject": [ 0 ],
+      "objectId": [ 0 ],
+      "objectCnt": [ 1 ],
+      "time": [ -1.0 ],
+      "npcName": "villagerA",
+      "position": [
+        {
+          "x": -999.0,
+          "y": -999.0,
+          "z": -999.0
+        }
+      ]
+    },
+    {
+      "questObject": [ 1 ],
+      "objectId": [ -1 ],
+      "objectCnt": [ 2 ],
+      "time": [ -1.0 ],
+      "npcName": "villagerA",
+      "position": [
+        {
+          "x": -999.0,
+          "y": -999.0,
+          "z": -999.0
+        }
+      ]
+    }
+  ],
+  "questIndex": 0
+}

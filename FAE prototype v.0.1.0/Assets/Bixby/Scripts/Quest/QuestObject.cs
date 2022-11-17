@@ -97,9 +97,9 @@ public class QuestObject : MonoBehaviour
         return currentQuest.objectId[questSubIndex];
     }
 
-    public float[] GetPosition()
+    public Vector3 GetPosition()
     {
-        return currentQuest.position;
+        return currentQuest.position[questSubIndex];
     }
 
 

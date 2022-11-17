@@ -62,7 +62,7 @@ public class questData
     public List<int> objectCnt;       // 각 목적에 따라 사용할 변수(카운트)
     public List<float> time;          // 제한 시간
     public string npcName;      // 퀘스트 조건 만족 후 완료를 위해 대화해야 하는 npc 이름(없으면 -1 등과 같은 특정 기호로 표시할 것)
-    public float[] position;    // spot quest의 위치 변수
+    public List<Vector3> position;    // spot quest의 위치 변수
 
     public questData()
     {
@@ -75,7 +75,7 @@ public class questData
         objectCnt = new List<int> { -1 };
         time = new List<float> { -1f };
         npcName = "missingNo";
-        position = new float[] { -999, -999, -999 };
+        position = new List<Vector3> { new Vector3(-999f, -999f, -999f) };
     }
 
     public void Log()
@@ -89,7 +89,8 @@ public class questData
         for (int i = 0; i < objectCnt.Count; i++) Debug.Log(objectCnt[i]);
         for (int i = 0; i < time.Count; i++) Debug.Log(time[i]);
         Debug.Log(npcName);
-        Debug.Log(position);
+        //Debug.Log(position);
+        for (int i = 0; i < position.Count; i++) Debug.Log(position[i]);
     }
 }
 

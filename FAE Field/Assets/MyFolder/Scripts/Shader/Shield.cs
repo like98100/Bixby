@@ -7,22 +7,44 @@ public class Shield : MonoBehaviour
     //오브젝트 풀링 사용하기 
     [SerializeField] private GameObject rippleObj;
     private Material material;
+    Queue<GameObject> ripples = new Queue<GameObject>();
 
     static float heightOffset = 0.1f;
     private void Awake()
     {
         material = this.gameObject.GetComponent<MeshRenderer>().material;
+
+        for(int i = 0; i < 4; i++)
+        {
+            GameObject ripple = Instantiate(rippleObj, transform);
+            ripple.SetActive(false);
+
+            ripples.Enqueue(ripple);
+        }
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.CompareTag("Test"))
+        StartCoroutine(CreateRipple(collision));
+    }
+    IEnumerator CreateRipple(Collision collision)
+    {
+        if(ripples.Count == 0)
         {
-            //오브젝트 풀링 사용하거나 SetActive 사용해서 온오프 하기
-            GameObject ripple = Instantiate(rippleObj, transform);
-            Material mat = ripple.GetComponent<MeshRenderer>().material;
-            mat.SetVector("_SphereCenter", collision.contacts[0].point);
-            Destroy(ripple, 0.5f);
+            GameObject go = Instantiate(rippleObj, transform);
+            go.SetActive(false);
+
+            ripples.Enqueue(go);
         }
+
+        GameObject ripple = ripples.Dequeue();
+        Material mat = ripple.GetComponent<MeshRenderer>().material;
+        mat.SetVector("_SphereCenter", collision.contacts[0].point);
+        ripple.SetActive(true);
+
+        yield return new WaitForSeconds(0.5f);
+
+        ripple.SetActive(false);
+        ripples.Enqueue(ripple);
     }
 
     public void SetActive(bool _bool,Color color)

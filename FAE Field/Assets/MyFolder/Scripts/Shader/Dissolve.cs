@@ -8,16 +8,20 @@ public class Dissolve : MonoBehaviour
 
     [SerializeField] private bool isDissolve;
     [SerializeField] private Material dissolve;
-
-    // Start is called before the first frame update
+    [ColorUsage(true, true)] [SerializeField] private Color color;
+    [SerializeField] private float scale;
     void Start()
     {
         shaderManager = this.gameObject.GetComponent<ShaderManager>();
 
+        dissolve = Instantiate(dissolve);
+        SetColor();
+        SetTexture();
+        SetScale();
+
         isDissolve = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (isDissolve == true && Mathf.Sin(Time.time) <= -0.99)
@@ -34,5 +38,21 @@ public class Dissolve : MonoBehaviour
         yield return new WaitForSeconds(3.1f);
 
         this.gameObject.SetActive(false);
+    }
+
+    private void SetColor()
+    {
+        dissolve.SetColor("_Color", color);
+    }
+
+    private void SetTexture()
+    {
+        Texture texture = this.gameObject.GetComponent<MeshRenderer>().material.mainTexture;
+        dissolve.SetTexture("_MainTexture", texture);
+    }
+
+    private void SetScale()
+    {
+        dissolve.SetFloat("_Scale", scale);
     }
 }

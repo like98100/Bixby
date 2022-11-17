@@ -17,7 +17,7 @@ public class TempScript : MonoBehaviour
     {
         if (setShield)
         {
-            shield.SetActive(true, new Color(Random.Range(0,255), Random.Range(0, 255), 0));
+            shield.SetActive(true, new Color(255, 255, 0));
             setShield = false;
         }
     }

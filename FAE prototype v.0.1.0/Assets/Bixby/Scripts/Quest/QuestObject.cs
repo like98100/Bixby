@@ -99,6 +99,7 @@ public class QuestObject : MonoBehaviour
 
     public Vector3 GetPosition()
     {
+        Debug.Log("현재 위치 : " + currentQuest.position[questSubIndex].x);
         return currentQuest.position[questSubIndex];
     }
 

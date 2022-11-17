@@ -50,7 +50,7 @@ public class LoadingUIManager : MonoBehaviour
         text.text = str[index];
     }
 
-    public void SetRandomInfo()
+    private void SetRandomInfo()
     {
         int index = Random.Range(5, 9);
         SetInfo(index);
@@ -94,11 +94,7 @@ public class LoadingUIManager : MonoBehaviour
             if (progressBar.fillAmount >= 1.0f)
                 return true;
         }
-        return false;
 
-    }
-    public void InitailizeTimer()
-    {
-        timer = 0.0f;
+        return false;
     }
 }

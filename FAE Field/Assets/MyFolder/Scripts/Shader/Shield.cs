@@ -6,12 +6,12 @@ public class Shield : MonoBehaviour
 {
     //오브젝트 풀링 사용하기 
     [SerializeField] private GameObject rippleObj;
-    private Material mat;
+    private Material material;
 
     static float heightOffset = 0.1f;
-    private void Start()
+    private void Awake()
     {
-        mat = this.gameObject.GetComponent<MeshRenderer>().material;
+        material = this.gameObject.GetComponent<MeshRenderer>().material;
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -19,15 +19,25 @@ public class Shield : MonoBehaviour
         {
             //오브젝트 풀링 사용하거나 SetActive 사용해서 온오프 하기
             GameObject ripple = Instantiate(rippleObj, transform);
-            mat = ripple.GetComponent<MeshRenderer>().material;
+            Material mat = ripple.GetComponent<MeshRenderer>().material;
             mat.SetVector("_SphereCenter", collision.contacts[0].point);
             Destroy(ripple, 0.5f);
         }
     }
-    public void SetActive(bool _bool)
+
+    public void SetActive(bool _bool,Color color)
     {
         this.gameObject.SetActive(_bool);
-        float height = this.gameObject.transform.parent.GetComponent<CapsuleCollider>().height + heightOffset;
+        this.SetSize();
+        this.SetColor(color);
+    }
+    private void SetSize()
+    {
+        float height = this.gameObject.transform.parent.GetComponent<BoxCollider>().size.y + heightOffset;
         this.gameObject.transform.localScale = new Vector3(height, height, height);
+    }
+    private void SetColor(Color color)
+    {
+        material.SetColor("_Color", color);
     }
 }

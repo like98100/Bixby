@@ -26,6 +26,7 @@ public class UI_MinimapCam : MonoBehaviour
             minimap.transform.parent.gameObject.SetActive(true);
         else
             minimap.transform.parent.gameObject.SetActive(!(UI_Control.Inst.OpenedWindow.name == "Inventory"
-                                    || UI_Control.Inst.OpenedWindow.name == "Shop"));
+                                    || UI_Control.Inst.OpenedWindow.name == "Shop"
+                                    || UI_Control.Inst.OpenedWindow.transform.parent.gameObject.name == "COOK"));
     }
 }

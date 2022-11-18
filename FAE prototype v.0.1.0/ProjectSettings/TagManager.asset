@@ -4,24 +4,20 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - FxTemporaire
   - item
-  - Water
-  - Enemy
-  - connect
-  - etrigger
-  - pattern
+  - iceObject
+  - Test
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Ground
+  - 
   - Water
   - UI
-  - Player
-  - Item
   - 
   - 
+  - Ground
+  - Village
   - 
   - 
   - 

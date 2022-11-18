@@ -5,10 +5,14 @@ using UnityEngine;
 public class SpawnPlayer : MonoBehaviour
 {
     private Vector3 startPosition;
+    private Quaternion startRotation;
     private void Start()
     {
         if (startPosition != new Vector3(0.0f, 0.0f, 0.0f))
+        {
             this.transform.position = startPosition;
+            transform.SetPositionAndRotation(startPosition, startRotation);
+        }
     }
 
     public void SetPosition(string previousSceneName)
@@ -39,5 +43,7 @@ public class SpawnPlayer : MonoBehaviour
                 startPosition = new Vector3(0.0f, 0.0f, 0.0f);
                 break;
         }
+
+        startRotation = Quaternion.LookRotation(-startPosition);
     }
 }

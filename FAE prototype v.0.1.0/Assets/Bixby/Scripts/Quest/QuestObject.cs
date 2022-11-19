@@ -198,12 +198,12 @@ public class QuestObject : MonoBehaviour
         switch (currentQuest.questObject[questSubIndex])//요리와 상호작용의 경우 여기에서 어떤 요리 혹은 어떤 상호작용인지 설정
         {
             case QuestKind.kill:
-                questPurpose = currentQuest.objectCnt.ToString();
-                missionText = "적을" + questPurpose + "마리 처치하기" + "(" + objectIndex.ToString() + "/" + currentQuest.objectCnt.ToString() + ")";
+                questPurpose = currentQuest.objectCnt[questSubIndex].ToString();
+                missionText = "적을" + questPurpose + "마리 처치하기" + "(" + objectIndex.ToString() + "/" + questPurpose + ")";
                 break;
             case QuestKind.hunt:
-                questPurpose = currentQuest.objectCnt.ToString();
-                missionText = "적을" + questPurpose + "마리 사냥하기" + "(" + objectIndex.ToString() + "/" + currentQuest.objectCnt.ToString() + ")";
+                questPurpose = currentQuest.objectCnt[questSubIndex].ToString();
+                missionText = "적을" + questPurpose + "마리 사냥하기" + "(" + objectIndex.ToString() + "/" + questPurpose + ")";
                 break;
             case QuestKind.cook:
                 if (currentQuest.objectId[questSubIndex] == 2001)

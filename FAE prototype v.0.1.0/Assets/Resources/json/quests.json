@@ -5,12 +5,12 @@
       "objectId": [ -1 ],
       "objectCnt": [ -1 ],
       "time": [ -1.0 ],
-      "npcName": "villagerA",
+      "npcName": "none",
       "position": [
         {
-          "x": -6.0,
-          "y": 8.0,
-          "z": 2.0
+          "x": -48.0,
+          "y": 22.0,
+          "z": 6.0
         }
       ]
     },

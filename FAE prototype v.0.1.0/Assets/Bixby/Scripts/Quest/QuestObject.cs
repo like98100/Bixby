@@ -157,6 +157,8 @@ public class QuestObject : MonoBehaviour
         currentQuest = JsonData.questList[JsonData.questIndex]; // Update Current Quest
         MissionSet();
         GameObject.Find(currentQuest.npcName).GetComponent<NPC>().SetIndex(GameObject.Find(currentQuest.npcName).GetComponent<NPC>().GetIndex() + 1);
+
+        GameObject.Find("GameManager").GetComponent<SetPositionParticle>().InitializeVariable();    // 파티클 위치 변경
     }
 
     public bool GetIsClear()

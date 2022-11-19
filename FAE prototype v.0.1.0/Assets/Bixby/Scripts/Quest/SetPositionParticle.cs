@@ -11,7 +11,7 @@ public class SetPositionParticle : MonoBehaviour
     void Start()
     {
         positionParticle = GameObject.Find("PositionParticle");   
-        initializeVariable();
+        InitializeVariable();
     }
 
     // Update is called once per frame
@@ -20,7 +20,7 @@ public class SetPositionParticle : MonoBehaviour
         
     }
 
-    void initializeVariable()
+    public void InitializeVariable()
     {
         int sum = this.gameObject.GetComponent<QuestObject>().GetObjectId();
         particlePosition = this.gameObject.GetComponent<QuestObject>().GetPosition();

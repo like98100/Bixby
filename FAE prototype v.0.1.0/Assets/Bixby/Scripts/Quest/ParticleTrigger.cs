@@ -8,7 +8,11 @@ public class ParticleTrigger : MonoBehaviour
     {
         if(other.gameObject.tag == "Player")        // 플레이어와 충돌 시
         {
-            GameObject.Find("GameManager").GetComponent<QuestObject>().SetIsClear(true);
+            if(GameObject.Find("GameManager").GetComponent<QuestObject>().GetQuestKind() == QuestKind.spot) // 목적지 도달이 퀘스트 목적일 때
+            {
+                GameObject.Find("GameManager").GetComponent<QuestObject>().SetIsClear(true);                // 클리어
+                GameObject.Find("GameManager").GetComponent<SetPositionParticle>().InitializeVariable();    // 위치 변경
+            }
         }
     }
 }

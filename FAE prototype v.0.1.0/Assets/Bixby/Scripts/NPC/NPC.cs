@@ -5,16 +5,18 @@ using UnityEngine.UI;
 public class NPC : MonoBehaviour
 {
     Speech speech;
-    [SerializeField] string npcName;
+    string npcName;
     bool playerClose;
     GameObject keyInst;
-    [SerializeField] int talkIndex;
+    int talkIndex;
     GameObject canvasObj;
     GameObject nameObj;
     Text nameUI;
     GameObject notify;
+    Shop shop;
     void Start()
     {
+        npcName = this.gameObject.name;
         canvasObj = this.transform.GetChild(0).gameObject;
         nameObj = canvasObj.transform.GetChild(0).gameObject;
         speech = UI_Control.Inst.Speech;
@@ -25,6 +27,9 @@ public class NPC : MonoBehaviour
         nameUI = nameObj.transform.GetChild(0).GetComponent<Text>();
         nameUI.text = npcName;
         nameObj.SetActive(playerClose);
+        shop = UI_Control.Inst.Shop;
+        keyInst = Instantiate(inventoryObject.Inst.getObj("KeyF"), this.gameObject.transform.GetChild(0));
+        keyInst.SetActive(false);
     }
 
     // Update is called once per frame
@@ -33,22 +38,59 @@ public class NPC : MonoBehaviour
         Vector3 camRotate = GameObject.FindGameObjectWithTag("MainCamera").transform.eulerAngles;
         camRotate -= Vector3.right * 90f;
         notify.transform.rotation = Quaternion.Euler(camRotate);
+        if(keyInst.activeSelf)
+        {
+            var wantedPos = Camera.main.WorldToScreenPoint(this.transform.position);
+            keyInst.transform.position = wantedPos + Vector3.right * 200f;
+        }
+        if (UI_Control.Inst.OpenedWindow != null)
+        {
+            if (UI_Control.Inst.OpenedWindow.name == "Map")
+                nameObj.SetActive(false);
+            else
+                nameObj.SetActive(playerClose);
+            keyInst.SetActive(false);
+        }
         if (nameObj.activeSelf)
             nameObj.transform.position = Camera.main.WorldToScreenPoint(this.transform.position + Vector3.up * 2f);
         if (playerClose && Input.GetKeyDown(KeyCode.F))
         {
-            speech.setUp(npcName, talkIndex);
-            Destroy(keyInst);
-            keyInst = null;
+            if (npcName == "shop")
+            {
+                shop.SetUp();
+                nameObj.SetActive(false);
+            }
+            else
+            {
+                QuestObject quest = GameObject.Find("GameManager").GetComponent<QuestObject>();
+                if (npcName == quest.GetNPCName())
+                {
+                    switch (quest.GetIndex())
+                    {
+                        case 1:
+                            talkIndex = quest.GetIsClear() ? quest.GetIndex() + 1 : quest.GetIndex();
+                            break;
+                        case 2:
+                            talkIndex = quest.GetIndex() + 1;
+                            break;
+                        case 3:
+                            talkIndex = quest.GetIsClear() ? quest.GetIndex() + 2 : quest.GetIndex() + 1;
+                            break;
+                        default:
+                            break;
+                    }
+                    
+                }
+                speech.setUp(npcName, npcName + talkIndex.ToString());
+            }
+            keyInst.SetActive(false);
         }
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player" && keyInst == null)
+        if (other.tag == "Player" && !keyInst.activeSelf)
         {
-            keyInst = Instantiate(inventoryObject.Inst.KeyF, GameObject.Find("Canvas").transform);
-            var wantedPos = Camera.main.WorldToScreenPoint(this.transform.position);
-            keyInst.transform.position = wantedPos + Vector3.right * 200f;
+            keyInst.SetActive(true);
             playerClose = true;
             nameObj.SetActive(playerClose);
         }
@@ -57,11 +99,18 @@ public class NPC : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            Destroy(keyInst);
-            keyInst = null;
+            keyInst.SetActive(false);
             playerClose = false;
             nameObj.SetActive(playerClose);
         }
+    }
+    public int GetIndex()
+    {
+        return talkIndex;
+    }
+    public void SetIndex(int value)
+    {
+        talkIndex = value;
     }
 }
 

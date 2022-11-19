@@ -38922,7 +38922,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDissolve: 0
-  dissolve: {fileID: 2100000, guid: 008a2a0a22d81144ebb1ab31c1ebba16, type: 2}
+  dissolve: {fileID: 2100000, guid: fd481701278c4a84e89a4eb05e94b2d5, type: 2}
+  color: {r: 8, g: 0, b: 0, a: 0}
+  scale: 30
 --- !u!136 &1287162998
 CapsuleCollider:
   m_ObjectHideFlags: 0

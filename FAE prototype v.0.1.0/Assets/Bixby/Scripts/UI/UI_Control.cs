@@ -87,6 +87,9 @@ public class UI_Control : MonoBehaviour
                 case "Shop":
                     inventory.SetActive(true);
                     break;
+                //case "Map":
+                //    print("맵 열림");
+                //    break;열 때 맵 위치를 플레이어 중점으로 할 것
             }
             Cursor.lockState = CursorLockMode.None;
             aimPoint.SetActive(false);

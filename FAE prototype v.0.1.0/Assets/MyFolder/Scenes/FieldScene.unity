@@ -5100,6 +5100,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 586512913143498666, guid: f6fe068eef818c8489f052decded0dcf, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 586512913302326051, guid: f6fe068eef818c8489f052decded0dcf, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 9172158770201156260, guid: f6fe068eef818c8489f052decded0dcf, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -5147,6 +5155,10 @@ PrefabInstance:
     - target: {fileID: 9172158770201156263, guid: f6fe068eef818c8489f052decded0dcf, type: 3}
       propertyPath: m_Name
       value: PositionParticle
+      objectReference: {fileID: 0}
+    - target: {fileID: 9172158770201156263, guid: f6fe068eef818c8489f052decded0dcf, type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f6fe068eef818c8489f052decded0dcf, type: 3}
@@ -31729,6 +31741,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CookCube
       objectReference: {fileID: 0}
+    - target: {fileID: 6324973587952342624, guid: 6cf4ae33b16c27845b525b054e27bd88, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6324973587952342631, guid: 6cf4ae33b16c27845b525b054e27bd88, type: 3}
       propertyPath: num
       value: 
@@ -50653,6 +50669,34 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2441173832716544192, guid: b067d70abd640a848a4f24c0781c76e8, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d76abacfcdb474947869ea8a440302fb, type: 3}
+    - target: {fileID: 2441173832716544193, guid: b067d70abd640a848a4f24c0781c76e8, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 2441173832716544193, guid: b067d70abd640a848a4f24c0781c76e8, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 2441173832716544194, guid: b067d70abd640a848a4f24c0781c76e8, type: 3}
+      propertyPath: max.x
+      value: 625
+      objectReference: {fileID: 0}
+    - target: {fileID: 2441173832716544194, guid: b067d70abd640a848a4f24c0781c76e8, type: 3}
+      propertyPath: max.y
+      value: 625
+      objectReference: {fileID: 0}
+    - target: {fileID: 2441173832716544194, guid: b067d70abd640a848a4f24c0781c76e8, type: 3}
+      propertyPath: min.x
+      value: -625
+      objectReference: {fileID: 0}
+    - target: {fileID: 2441173832716544194, guid: b067d70abd640a848a4f24c0781c76e8, type: 3}
+      propertyPath: min.y
+      value: -625
+      objectReference: {fileID: 0}
     - target: {fileID: 4136791962082985572, guid: b067d70abd640a848a4f24c0781c76e8, type: 3}
       propertyPath: m_RootOrder
       value: 11
@@ -51953,6 +51997,10 @@ PrefabInstance:
     - target: {fileID: 2970369942042931971, guid: 1d405ba0b29b39441a3ecf4dc84ee5a2, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 2970369942042931971, guid: 1d405ba0b29b39441a3ecf4dc84ee5a2, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2970369942042931982, guid: 1d405ba0b29b39441a3ecf4dc84ee5a2, type: 3}
       propertyPath: m_RootOrder
@@ -64929,6 +64977,10 @@ PrefabInstance:
     - target: {fileID: 7763525925111056363, guid: f8fb88d4832ef8b43a2e496d6e7d0892, type: 3}
       propertyPath: orthographic
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7763525925111056363, guid: f8fb88d4832ef8b43a2e496d6e7d0892, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 823
       objectReference: {fileID: 0}
     - target: {fileID: 7763525925111056367, guid: f8fb88d4832ef8b43a2e496d6e7d0892, type: 3}
       propertyPath: m_Name

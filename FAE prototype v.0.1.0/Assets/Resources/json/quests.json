@@ -15,12 +15,22 @@
       ]
     },
     {
-      "questObject": [ 2 ],
-      "objectId": [ 2001 ],
-      "objectCnt": [ 1 ],
-      "time": [ -1.0 ],
+      "questObject": [ 5, 2, 2 ],
+      "objectId": [ -1, 1000, 2001 ],
+      "objectCnt": [ -1, 2, 1 ],
+      "time": [ -1.0, -1.0, -1.0 ],
       "npcName": "villagerA",
       "position": [
+        {
+          "x": 26.79,
+          "y": 19.16,
+          "z": 17.45
+        },
+        {
+          "x": -999.0,
+          "y": -999.0,
+          "z": -999.0
+        },
         {
           "x": -999.0,
           "y": -999.0,
@@ -29,10 +39,10 @@
       ]
     },
     {
-      "questObject": [ 0 ],
-      "objectId": [ 0 ],
-      "objectCnt": [ 1 ],
-      "time": [ -1.0 ],
+      "questObject": [-1],
+      "objectId": [-1],
+      "objectCnt": [-1],
+      "time": [-1],
       "npcName": "villagerA",
       "position": [
         {

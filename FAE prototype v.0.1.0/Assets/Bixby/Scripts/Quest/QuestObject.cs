@@ -55,10 +55,11 @@ public class QuestObject : MonoBehaviour
             UI_Control.Inst.Mission.misssionSet("튜토리얼", "villagerA에게 말을 거시오");
         //tutorialImage = GameObject.Find("TutorialImage");
     }
-
+    int tmp;//인덱스 확인용 임시 변수
     // Update is called once per frame
     void Update()
     {
+        tmp = JsonData.questIndex;//인덱스 확인용 임시 변수
         //if (JsonData.questIndex == 0 && Input.anyKeyDown)
         //{
         //    tutorialImage.SetActive(false);
@@ -150,14 +151,14 @@ public class QuestObject : MonoBehaviour
         SetObjectIndex(0);
         if (JsonData.questList.Count <= JsonData.questIndex)
         {
-            GameObject.Find(currentQuest.npcName).GetComponent<NPC>().SetIndex(100);
+            //GameObject.Find(currentQuest.npcName).GetComponent<NPC>().SetIndex(100);
             UI_Control.Inst.Mission.misssionSet("", "");
             return;
         }
         currentQuest = JsonData.questList[JsonData.questIndex]; // Update Current Quest
         MissionSet();
-        GameObject.Find(currentQuest.npcName).GetComponent<NPC>().SetIndex(GameObject.Find(currentQuest.npcName).GetComponent<NPC>().GetIndex() + 1);
-
+        //GameObject.Find(currentQuest.npcName).GetComponent<NPC>().SetIndex(GameObject.Find(currentQuest.npcName).GetComponent<NPC>().GetIndex() + 1);
+        //NPC 대화 인덱스 조정함수, 조정 위치를 NPC 스크립트 내로 이동
         GameObject.Find("GameManager").GetComponent<SetPositionParticle>().InitializeVariable();    // 파티클 위치 변경
     }
 
@@ -197,42 +198,40 @@ public class QuestObject : MonoBehaviour
         string missionTitle = "";
         string missionText = "";
         string questPurpose = "";
+        questPurpose = " " + currentQuest.objectCnt[questSubIndex].ToString();//공통적 사용부분(목표)
+        string questProgress = "(" + objectIndex.ToString() + "/" + questPurpose + ")";//공통적 사용부분(퀘스트 진행상황)
         switch (currentQuest.questObject[questSubIndex])//요리와 상호작용의 경우 여기에서 어떤 요리 혹은 어떤 상호작용인지 설정
         {
             case QuestKind.kill:
-                questPurpose = currentQuest.objectCnt[questSubIndex].ToString();
-                missionText = "적을" + questPurpose + "마리 처치하기" + "(" + objectIndex.ToString() + "/" + questPurpose + ")";
+                missionText = "적을" + questPurpose + "마리 처치하기" + questProgress;
                 break;
             case QuestKind.hunt:
-                questPurpose = currentQuest.objectCnt[questSubIndex].ToString();
-                missionText = "적을" + questPurpose + "마리 사냥하기" + "(" + objectIndex.ToString() + "/" + questPurpose + ")";
+                missionText = "적을" + questPurpose + "마리 사냥하기" + questProgress;
                 break;
             case QuestKind.cook:
-                if (currentQuest.objectId[questSubIndex] == 2001)
-                    questPurpose = "과일주스";
-                missionText = questPurpose + "을(를) 만들기";
+                switch (currentQuest.objectId[questSubIndex])//if문 switch문으로 변경
+                {//이후 json에서 퀘스트 관련 아이템 리스트를 제작하여 해당 id에 맞는 이름이 나오도록 수정 예정
+                    case 1000:
+                        missionText = "과일을";
+                        break;
+                    case 2001:
+                        missionText = "과일주스를";
+                        break;
+                    default:
+                        missionText = "현재 등록되어 있지 않은 아이템을";
+                        break;
+                }
+                missionText += questPurpose + "개 얻거나 만들기" + questProgress;
                 break;
             case QuestKind.interactive:
                 break;
-            default:
-                break;
-        }
-        switch (JsonData.questIndex)
-        {
-            case 1:
-                missionTitle = "Quest " + JsonData.questIndex.ToString();
-                break;
-            case 2:
-            case 4:
-                missionTitle = "";
-                break;
-            case 3:
-                missionTitle = "Quest " + (JsonData.questIndex - 1).ToString();
+            case QuestKind.spot://특정 위치 이동 부분 추가
+                missionText = "어디어디로 가시오.";//위치 지정 필요
                 break;
             default:
                 break;
         }
-
+        missionTitle = JsonData.questIndex % 2 == 0 ? "" : "Quest " + ((JsonData.questIndex + 1) / 2).ToString();
         UI_Control.Inst.Mission.misssionSet(missionTitle, missionText);
     }
     public int GetIndex()

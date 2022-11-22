@@ -4,19 +4,22 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - FxTemporaire
   - item
+  - iceObject
+  - Test
+  - Enemy
+  - Shield
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Ground
+  - 
   - Water
   - UI
   - 
   - 
-  - 
-  - 
+  - Ground
+  - Village
   - 
   - 
   - 

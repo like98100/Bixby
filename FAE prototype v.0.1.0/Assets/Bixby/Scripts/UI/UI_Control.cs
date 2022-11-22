@@ -15,6 +15,8 @@ public class UI_Control : MonoBehaviour
         Map = GameObject.Find("Map");
         aimPoint = GameObject.Find("AimPoint");
         Shop = this.gameObject.GetComponent<Shop>();
+        Mission = this.gameObject.GetComponent<Mission>();
+        EnemyHp = this.gameObject.GetComponent<UI_EnemyHp>();
     }
     GameObject optionObj;
     UI_Option option;
@@ -25,12 +27,18 @@ public class UI_Control : MonoBehaviour
     public GameObject OpenedWindow;
     GameObject aimPoint;
     public Shop Shop;
+    public Mission Mission;
+    [SerializeField] GameObject damagePrefab;
+    public UI_EnemyHp EnemyHp;
+
+    private float genCoolDown = 0.5f;
     void Start()
     {
         windows = new List<GameObject>();
         windows.Add(inventory);
         windows.Add(Map);
         windows.Add(Shop.getWindow());
+        windows.Add(GameObject.Find("COOK").transform.GetChild(0).gameObject);
         option.Set();
         Map.SetActive(false);
         OpenedWindow = null;
@@ -78,7 +86,7 @@ public class UI_Control : MonoBehaviour
             }
             Cursor.lockState = CursorLockMode.None;
             aimPoint.SetActive(false);
-
+            Time.timeScale = 0f;
         }
         else
         {
@@ -97,6 +105,7 @@ public class UI_Control : MonoBehaviour
             }
             Cursor.lockState = CursorLockMode.Locked;
             aimPoint.SetActive(true);
+            Time.timeScale = 1f;
         }
     }
     public bool windowClose()//그냥 창 닫기
@@ -111,5 +120,33 @@ public class UI_Control : MonoBehaviour
             }
         }
         return result;
+    }
+
+    public void damageSet(string content, GameObject subject)
+    {
+        GameObject temp = Instantiate(damagePrefab, subject.transform);
+        temp.GetComponent<TMPro.TextMeshPro>().text = content;
+    }
+
+    public void ElementStateGen(GameObject victim, float timming)
+    {
+        if (victim.GetComponent<ElementControl>().ElementStack.Count != 0 && timming >= 0.5f)
+        {
+            switch (victim.GetComponent<ElementControl>().ElementStack.Peek())
+            {
+                case ElementRule.ElementType.FIRE:
+                    UI_Control.Inst.damageSet("열기", victim.gameObject);
+                    break;
+                case ElementRule.ElementType.ICE:
+                    UI_Control.Inst.damageSet("냉기", victim.gameObject);
+                    break;
+                case ElementRule.ElementType.WATER:
+                    UI_Control.Inst.damageSet("습기", victim.gameObject);
+                    break;
+                case ElementRule.ElementType.ELECTRICITY:
+                    UI_Control.Inst.damageSet("전기", victim.gameObject);
+                    break;
+            }
+        }
     }
 }

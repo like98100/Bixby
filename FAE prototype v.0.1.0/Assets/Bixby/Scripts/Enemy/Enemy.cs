@@ -34,6 +34,8 @@ public class Enemy : CombatStatus, IDamgeable
 
     float genTerm; //현재 묻어있는 속성을 TextMeshPro로 나타내는 부분.
 
+    QuestObject questObject;//퀘스트 오브젝트 선언 위치 변경
+
     // Start is called before the first frame update
     void Start()
     {
@@ -52,6 +54,8 @@ public class Enemy : CombatStatus, IDamgeable
 
         UI_EnemyHp.EnemyHps.hpObjects.Add(Instantiate(UI_Control.Inst.EnemyHp.getPrefab(), GameObject.Find("UI").transform.GetChild(1)));
         UI_EnemyHp.EnemyHps.enemies.Add(this);
+
+        questObject = GameObject.Find("GameManager").GetComponent<QuestObject>();//퀘스트 오브젝트 받아오는 위치 변경
     }
 
     // Update is called once per frame
@@ -193,9 +197,8 @@ public class Enemy : CombatStatus, IDamgeable
         if(Stat.hp == Stat.maxHp)
             State = STATE.IDLE;
     }
-    private void OnDestroy()//���ʹ� HP�� ���� �� �ı� �߰� �κ�
-    {
-        QuestObject questObject = GameObject.Find("GameManager").GetComponent<QuestObject>();
+    private void OnDestroy()//에너미HP바 제거 및 퀘스트 인덱스 조정
+    {//기존 퀘스트 오브젝트 선언 위치
         switch (questObject.GetQuestKind())
         {
             case QuestKind.kill:

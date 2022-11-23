@@ -296,10 +296,10 @@ MonoBehaviour:
   State: 0
   Mask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 8
   target: {fileID: 0}
   isHitted: 0
-  runChance: 1
+  runChance: 0
   MyAgent: {fileID: 0}
   Anim: {fileID: 0}
   DealtDamage: 0

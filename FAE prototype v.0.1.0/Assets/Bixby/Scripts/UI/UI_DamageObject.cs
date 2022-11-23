@@ -11,6 +11,7 @@ public class UI_DamageObject : MonoBehaviour
     float upSpeed;//올라가는 속도
     float height;//시작 및 기준높이
     [SerializeField] List<Material> fontMaterials;
+    Transform rootObject;
     void Start()
     {
         timeLast = 0;
@@ -19,11 +20,12 @@ public class UI_DamageObject : MonoBehaviour
         lastTime = 1f;
         upSpeed = 2.5f;
         int temp;
+        rootObject = this.transform.parent;
         if (!int.TryParse(TMP.text, out temp))//대미지가 아닐 경우
         {
             TMP.fontSize = 6f;
             TMP.fontMaterial = fontMaterials[0];
-            basePos = this.transform.root.position + Vector3.up * 2.5f;
+            basePos = rootObject.position + Vector3.up * 2.5f;
             basePos.y = basePos.y + timeLast * upSpeed;
             this.transform.position = basePos;
             lastTime = 5f;
@@ -89,7 +91,7 @@ public class UI_DamageObject : MonoBehaviour
         }
         else
         {
-            if (this.transform.root.tag == "Player")//플레이어가 대미지를 받는 경우
+            if (rootObject.tag == "Player")//플레이어가 대미지를 받는 경우
             {
                 TMP.fontSize = 6f;
                 upSpeed = 1f;
@@ -145,7 +147,7 @@ public class UI_DamageObject : MonoBehaviour
         timeLast += Time.deltaTime;
         if (this.gameObject.GetComponent<Rigidbody>() == null)
         {
-            basePos = this.transform.root.position + Vector3.up * height;
+            basePos = rootObject.position + Vector3.up * height;
             basePos.y = basePos.y + timeLast * upSpeed;
             this.transform.position = basePos;
         }

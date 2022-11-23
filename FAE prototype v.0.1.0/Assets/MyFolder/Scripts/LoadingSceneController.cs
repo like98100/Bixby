@@ -87,7 +87,7 @@ public class LoadingSceneController : MonoBehaviour
     {
         if (scene.name == loadSceneName)
         {
-            spawnPlayer = GameObject.FindWithTag("MainCamera").GetComponent<SpawnPlayer>();
+            spawnPlayer = GameObject.FindWithTag("Player").GetComponent<SpawnPlayer>();
             spawnPlayer.SetPosition(previousSceneName);
 
             StartCoroutine(Fade(false));            

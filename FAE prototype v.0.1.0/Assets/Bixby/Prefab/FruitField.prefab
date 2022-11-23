@@ -58,5 +58,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rangeObject: {fileID: 5309539780276313062}
-  harvestCount: 3
+  harvestCount: 5
   capsul: {fileID: 5168192444101978213, guid: 539589170483c7844b0b2cb898a7526f, type: 3}

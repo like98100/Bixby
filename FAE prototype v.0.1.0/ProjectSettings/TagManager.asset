@@ -8,11 +8,12 @@ TagManager:
   - iceObject
   - Test
   - Enemy
+  - Water
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - 

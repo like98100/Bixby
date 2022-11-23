@@ -8,7 +8,7 @@ public class RedPotal : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("MainCamera"))
+        if (other.CompareTag("Player"))
         {
             LoadingSceneController.Instance.LoadScene("FireDungeon");
         }

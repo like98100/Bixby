@@ -14,6 +14,7 @@ public class NPC : MonoBehaviour
     Text nameUI;
     GameObject notify;
     Shop shop;
+    QuestObject quest;
     void Start()
     {
         npcName = this.gameObject.name;
@@ -30,13 +31,14 @@ public class NPC : MonoBehaviour
         shop = UI_Control.Inst.Shop;
         keyInst = Instantiate(inventoryObject.Inst.getObj("KeyF"), this.gameObject.transform.GetChild(0));
         keyInst.SetActive(false);
+        quest = GameObject.Find("GameManager").GetComponent<QuestObject>();
     }
 
     // Update is called once per frame
     void Update()
     {
         Vector3 camRotate = GameObject.FindGameObjectWithTag("MainCamera").transform.eulerAngles;
-        camRotate -= Vector3.right * 90f;
+        camRotate += Vector3.right * 90f + Vector3.forward * 180f;
         notify.transform.rotation = Quaternion.Euler(camRotate);
         if(keyInst.activeSelf)
         {
@@ -53,6 +55,27 @@ public class NPC : MonoBehaviour
         }
         if (nameObj.activeSelf)
             nameObj.transform.position = Camera.main.WorldToScreenPoint(this.transform.position + Vector3.up * 2f);
+        if (npcName != quest.GetNPCName() || npcName == "shop")
+        {
+            notify.SetActive(false);
+        }
+        else
+        {
+            if (quest.GetIndex() % 2 == 0)
+            {
+                if (!notify.activeSelf)
+                    notify.SetActive(true);
+                notify.GetComponent<MeshRenderer>().material = quest.NPC_Plane_Marks[0];
+            }
+            else if (quest.GetIsClear())
+            {
+                if (!notify.activeSelf)
+                    notify.SetActive(true);
+                notify.GetComponent<MeshRenderer>().material = quest.NPC_Plane_Marks[1];
+            }
+            else
+                notify.SetActive(false);
+        }
         if (playerClose && Input.GetKeyDown(KeyCode.F))
         {
             if (npcName == "shop")
@@ -62,7 +85,6 @@ public class NPC : MonoBehaviour
             }
             else
             {
-                QuestObject quest = GameObject.Find("GameManager").GetComponent<QuestObject>();
                 if (npcName == quest.GetNPCName())
                 {
                     talkIndex = quest.GetIsClear() ? quest.GetIndex().ToString()+"o": quest.GetIndex().ToString() + "x";//퀘스트 NPC일때 퀘스트에 따라 인덱스 조정

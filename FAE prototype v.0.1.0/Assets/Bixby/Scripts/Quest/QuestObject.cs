@@ -20,6 +20,7 @@ public class QuestObject : MonoBehaviour
     int objectIndex;                // Quest Object Index var;
     //GameObject tutorialImage;
     // Start is called before the first frame update
+    public List<Material> NPC_Plane_Marks;//NPC 퀘스트 마크 추가
     void Start()
     {
         if (json.FileExist(Application.dataPath, "quests"))                                      // Quest 파일이 존재할 시
@@ -119,10 +120,32 @@ public class QuestObject : MonoBehaviour
 
     void CheckQuestCount()                                      // Quest Index Check Func
     {
-        if (objectIndex == currentQuest.objectCnt[questSubIndex])
+        switch (currentQuest.questObject[questSubIndex])//퀘스트 종류에 따라 인덱스 조정 다르게 처리
         {
-            SetIsClear(true);
+            case QuestKind.interactive:
+                break;
+            case QuestKind.kill:
+            case QuestKind.cook:
+            case QuestKind.hunt:
+                if (objectIndex >= currentQuest.objectCnt[questSubIndex])
+                {
+                    SetIsClear(true);
+                }
+                break;
+            case QuestKind.management:
+            case QuestKind.spot:
+                if (objectIndex == currentQuest.objectCnt[questSubIndex])
+                {
+                    SetIsClear(true);
+                }
+                break;
+            default:
+                break;
         }
+        //if (objectIndex == currentQuest.objectCnt[questSubIndex])
+        //{
+        //    SetIsClear(true);
+        //}
     }
 
     //void SetCookCount()                                         // 요리 여부 확인 함수

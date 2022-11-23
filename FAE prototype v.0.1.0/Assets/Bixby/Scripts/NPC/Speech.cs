@@ -37,11 +37,9 @@ public class Speech : MonoBehaviour
         speechIndex = 0;//대화 인덱스로 쓸것임
         UI_Control.Inst.windowSet(speechWindow);
         if (quest.GetNPCName() == this.talker.text
-            && (quest.GetIndex()==0||quest.GetIndex()==2)
+            && (quest.GetIndex() % 2 == 0)
             )
-        {
             quest.SetIsClear(true);
-        }
     }
     void Update()
     {

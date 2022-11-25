@@ -16,13 +16,14 @@ public class Speech : MonoBehaviour
     int speechIndex;//리스트중 현재 대화내용의 순서
     GameObject speechWindow;//대화창
     speechJsonData speechJsonData;
-    QuestObject quest;
+    //QuestObject quest;
+    public List<Material> NPC_Plane_Marks;//NPC 퀘스트 마크 추가
     void Start()
     {
         speechWindow.SetActive(false);
         Button nextSpeech = speechWindow.transform.GetChild(2).GetComponent<Button>();
         nextSpeech.onClick.AddListener(() => speechNext());
-        quest = GameObject.Find("GameManager").GetComponent<QuestObject>();
+        //quest = GameObject.Find("GameManager").GetComponent<QuestObject>();
     }
     public void setUp(string name, string content)//말 걸었을 때      // name 일치 및 isClear == true일 때 text 변경
     {
@@ -36,10 +37,15 @@ public class Speech : MonoBehaviour
         }
         speechIndex = 0;//대화 인덱스로 쓸것임
         UI_Control.Inst.windowSet(speechWindow);
-        if (quest.GetNPCName() == this.talker.text
-            && (quest.GetIndex() % 2 == 0)
-            )
-            quest.SetIsClear(true);
+        //if (quest.GetNPCName() == this.talker.text
+        //    && (quest.GetIndex() % 2 == 0)
+        //    )
+        //    quest.SetIsClear(true);
+
+        if (QuestObject.manager.GetNPCName() == this.talker.text
+            && (QuestObject.manager.GetIndex() % 2 == 0)
+    )
+            QuestObject.manager.SetIsClear(true);
     }
     void Update()
     {
@@ -51,18 +57,23 @@ public class Speech : MonoBehaviour
     {
         if (speechIndex + 1 == speechList.Count)//마지막일때
         {
-            if (quest.GetIsClear()
-                && this.talker.text == quest.GetNPCName())
+            //if (quest.GetIsClear()
+            //    && this.talker.text == quest.GetNPCName())
+            if (QuestObject.manager.GetIsClear()
+                && this.talker.text == QuestObject.manager.GetNPCName())
             {
                 //GameObject.Find(this.talker.text).GetComponent<NPC>().SetIndex(GameObject.Find(this.talker.text).GetComponent<NPC>().GetIndex() + 1);
-                switch (quest.GetQuestKind())
+                
+                //switch (quest.GetQuestKind())
+                switch (QuestObject.manager.GetQuestKind())
                 {
                     case QuestKind.kill:
                         break;
                     case QuestKind.cook:
                         foreach (var item in inventoryObject.Inst.itemObjects)
                         {
-                            if (item.GetComponent<itemObject>().ItemData.itemID == quest.GetObjectId())
+                            //if (item.GetComponent<itemObject>().ItemData.itemID == quest.GetObjectId())
+                            if (item.GetComponent<itemObject>().ItemData.itemID == QuestObject.manager.GetObjectId())
                             {
                                 inventoryObject.Inst.throwItem(item, false);
                                 break;
@@ -76,7 +87,8 @@ public class Speech : MonoBehaviour
                     case QuestKind.spot:
                         break;
                 }
-                quest.SetNextQuest();
+                //quest.SetNextQuest();
+                QuestObject.manager.SetNextQuest();
             }
             speechIndex = 0;//초기화
             UI_Control.Inst.windowSet(speechWindow);

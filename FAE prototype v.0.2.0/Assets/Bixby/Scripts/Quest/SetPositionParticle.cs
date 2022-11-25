@@ -27,8 +27,12 @@ public class SetPositionParticle : MonoBehaviour
 
     public void InitializeVariable()
     {
-        int sum = this.gameObject.GetComponent<QuestObject>().GetObjectId();
-        particlePosition = this.gameObject.GetComponent<QuestObject>().GetPosition();
+        //int sum = this.gameObject.GetComponent<QuestObject>().GetObjectId();
+        //particlePosition = this.gameObject.GetComponent<QuestObject>().GetPosition();
+
+        int sum = QuestObject.manager.GetObjectId();
+        particlePosition = QuestObject.manager.GetPosition();
+
         positionParticle.transform.position = particlePosition;
         Debug.Log("위치 변환 완료");
     }

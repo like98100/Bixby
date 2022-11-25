@@ -4,10 +4,23 @@ using UnityEngine;
 
 public class QuestObject : MonoBehaviour
 {
+    public static QuestObject manager;
+
     // Awake : 변수 Value 적용
     // Start : 데이터 Load / Create
     private void Awake()
     {
+        DontDestroyOnLoad(gameObject);  // 이 오브젝트는 신이 변경되도 제거되지 않는다
+
+        if (manager == null)    // 할당되어 있지 않다면
+        {
+            manager = this;
+        }
+        else if(manager != this)        // 현재 할당되어 있는 오브젝트가아니라면
+        {
+            Destroy(gameObject);        // NAGA
+        }
+
         isClear = false;
         objectIndex = 0;
         questSubIndex = 0;
@@ -16,11 +29,12 @@ public class QuestObject : MonoBehaviour
     questJsonData JsonData;         // Quest Json Data
     bool isClear;                   // Quest isClear bool var
     questData currentQuest;
-    int questSubIndex;              // Quest sub Index var;
+    int questSubIndex;       // Quest sub Index var;
     int objectIndex;                // Quest Object Index var;
     //GameObject tutorialImage;
+
     // Start is called before the first frame update
-    public List<Material> NPC_Plane_Marks;//NPC 퀘스트 마크 추가
+    //public List<Material> NPC_Plane_Marks;//NPC 퀘스트 마크 추가
     void Start()
     {
         if (json.FileExist(Application.dataPath, "quests"))                                      // Quest 파일이 존재할 시
@@ -94,6 +108,12 @@ public class QuestObject : MonoBehaviour
 
     }
 
+    public questJsonData GetQuestData()
+    {
+        if (JsonData == null) return null;      // Except
+        return JsonData;
+    }
+
     public int GetObjectId()
     {
         return currentQuest.objectId[questSubIndex];
@@ -104,7 +124,6 @@ public class QuestObject : MonoBehaviour
         Debug.Log("현재 위치 : " + currentQuest.position[questSubIndex].x);
         return currentQuest.position[questSubIndex];
     }
-
 
     public int GetObjectIndex()                                 // Get ObjectIndex Var Func
     {

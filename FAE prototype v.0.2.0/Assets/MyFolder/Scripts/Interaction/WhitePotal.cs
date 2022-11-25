@@ -8,7 +8,7 @@ public class WhitePotal : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
             LoadingSceneController.Instance.LoadScene("IceDungeon");
         }

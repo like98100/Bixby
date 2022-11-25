@@ -7,12 +7,13 @@ public class fieldItem : MonoBehaviour
     public itemData ItemData;
     float angle;
     bool isPlayerClose;
+    [SerializeField] List<Mesh> foodMesh;//0:양배추, 1:쌀, 2:과일
+    [SerializeField] Material foodMaterial;//0:양배추, 1:쌀, 2:과일
+    MeshFilter meshFilter;
+    MeshRenderer meshRenderer;
     void Start()
     {
-        this.transform.localScale = new Vector3(ItemData.xSize, ItemData.ySize, 1f);
-        Vector3 tempPos = this.transform.position;
-        //tempPos.y = itemData.ySize / 2f;
-        this.transform.position = tempPos;
+        setup(ItemData);
         isPlayerClose = false;
     }
     public void setup(itemData data)
@@ -20,10 +21,38 @@ public class fieldItem : MonoBehaviour
         ItemData = data;
         angle = 0f;
         //keyInst = null;
-        this.transform.localScale = new Vector3(ItemData.xSize, ItemData.ySize, 1f);
+        meshFilter = this.gameObject.GetComponent<MeshFilter>();
+        meshRenderer = this.gameObject.GetComponent<MeshRenderer>();
         Vector3 tempPos = this.transform.position;
+        tempPos += Vector3.up * 0.5f;
         //tempPos.y = itemData.ySize / 2f;
         this.transform.position = tempPos;
+        switch (ItemData.itemID)
+        {
+            case 1000:
+                meshFilter.mesh = foodMesh[2];
+                this.transform.localScale = Vector3.one * 5f;
+                break;
+            case 1001:
+                meshFilter.mesh = foodMesh[0];
+                this.transform.localScale = Vector3.one * 2f;
+                break;
+            case 1002:
+                meshFilter.mesh = foodMesh[1];
+                this.transform.localScale = Vector3.one * 2.5f;
+                break;
+            default:
+                this.transform.localScale = new Vector3(ItemData.xSize/4f, ItemData.ySize/4f, 1/4f);
+                break;
+        }
+        foreach (var item in ItemData.tag)
+        {
+            if(item== "harvest")
+            {
+                meshRenderer.material = foodMaterial;
+                break;
+            }
+        }
     }
     // Update is called once per frame
     void Update()

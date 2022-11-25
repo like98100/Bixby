@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6224425477016243006}
-  - component: {fileID: 6224425477016243005}
   - component: {fileID: 6224425477016243004}
   - component: {fileID: 6224425477016243003}
   - component: {fileID: 6224425477016243007}
   - component: {fileID: 6224425477016242976}
+  - component: {fileID: -339028879676611946}
   m_Layer: 0
   m_Name: fieldItem
   m_TagString: item
@@ -35,14 +35,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &6224425477016243005
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6224425477016243002}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &6224425477016243004
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -109,15 +101,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee4f4b23535fea84e8f067f30a36b65d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemData:
-    itemID: 2
-    itemName: abc
+  ItemData:
+    itemID: 0
+    tag: []
+    itemName: 
     Left: 0
     Up: 0
-    xSize: 1
-    ySize: 3
+    xSize: 0
+    ySize: 0
     isEquip: 0
-  keyF: {fileID: 6375923533990169802, guid: 4b1e6d66876efb547bd6cd8b969f566b, type: 3}
+    price: 0
+    isSell: 0
+  foodMesh:
+  - {fileID: 4300000, guid: 0f50786d35eebcf44805f9d5fb326c11, type: 3}
+  - {fileID: 4300000, guid: fc007040ddf56d841ad2083f918a0924, type: 3}
+  - {fileID: 4300000, guid: b7cf12fb849f2ce4592a36e9c9c8d4f9, type: 3}
+  foodMaterial: {fileID: 2100000, guid: 382e2b1b7fbf94945963320a17603c7c, type: 2}
 --- !u!54 &6224425477016242976
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -134,3 +133,11 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 14
   m_CollisionDetection: 0
+--- !u!33 &-339028879676611946
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6224425477016243002}
+  m_Mesh: {fileID: 4300000, guid: 9e935c9ed6bcda949a5b1c92cde7d8b5, type: 3}

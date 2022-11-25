@@ -59,6 +59,16 @@ public class LoadingSceneController : MonoBehaviour
         previousSceneName = loadSceneName;
         loadSceneName = sceneName;
 
+        //if(json.FileExist(Application.dataPath, "quests"))                                      // 퀘스트 json 파일이 존재할 때
+        //{
+        //    questJsonData currentQuestData =
+        //        GameObject.Find("GameManager").GetComponent<QuestObject>().GetQuestData();      // 현재 퀘스트 진행상황 변수 저장
+
+        //    string questStr = json.ObjectToJson(currentQuestData);                              // To String
+
+        //    json.OverWriteJsonFile(Application.dataPath, "quests", questStr);                   // OverWrite
+        //}
+
         StartCoroutine(LoadSceneProceess());
     }
 
@@ -90,7 +100,9 @@ public class LoadingSceneController : MonoBehaviour
             spawnPlayer = GameObject.FindWithTag("Player").GetComponent<SpawnPlayer>();
             spawnPlayer.SetPosition(previousSceneName);
 
-            StartCoroutine(Fade(false));            
+            StartCoroutine(Fade(false));
+
+            QuestObject.manager.MissionSet();           // 신 로딩이 완료되면 미션 텍스트 재설정
 
             SceneManager.sceneLoaded -= OnSceneLoaded;
         }

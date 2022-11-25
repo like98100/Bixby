@@ -20,10 +20,8 @@ public class PlayerAnimation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if(체력이 다 달았을 때)
-        //    {
-        //    animator.SetBool("isDead", true);
-        //}
+        // 달리기 상태에 따른 애니메이션 재생속도 설정
+        runSpeedCheck();
 
         // 대시 재실행 설정
         reDashCheck();
@@ -45,7 +43,6 @@ public class PlayerAnimation : MonoBehaviour
         {
             case PlayerContorl.STATE.DEAD:                              // 사망 상태
                 animator.SetTrigger("isDead");                          // 사망 상태 활성화
-                initializeAnimParameter();                            // isDead를 제외한 모든 파라미터 비활성화
                 break;
 
             case PlayerContorl.STATE.IDLE:                              // 비전투 상태
@@ -71,7 +68,8 @@ public class PlayerAnimation : MonoBehaviour
 
             case PlayerContorl.STATE.RUN:                               // 달리기 상태
                 animator.SetBool("isDash", false);                      // 대시 애니메이션 정지
-                moveCheck();
+                moveCheck();                                            // 키 입력 시 달리기 애니메이션 실행
+                
                 break;
 
             case PlayerContorl.STATE.SWIMMING:                          // 수영 상태
@@ -135,6 +133,8 @@ public class PlayerAnimation : MonoBehaviour
         animator.SetBool("isDash", false);
         animator.SetBool("isUlt", false);
         animator.SetBool("isSkill", false);
+
+        animator.ResetTrigger("isDead");
     }
 
 
@@ -204,6 +204,14 @@ public class PlayerAnimation : MonoBehaviour
             animator.SetBool("isDash", true);                                       // 대시 애니메이션 실행
             animator.Play("Dash", 0);                                               // Dash 애니메이션을 0부터 강제 실행
         }
+    }
+
+    void runSpeedCheck()
+    {
+        if(modelContorl.State == PlayerContorl.STATE.RUN)           // 달리기 상태일 때
+            animator.SetFloat("MoveSpeed", 1.3f);                   // 재생속도 1.3로 설정
+        else                                                        // 달리기 상태가 아닐 때
+            animator.SetFloat("MoveSpeed", 1.0f);                   // 재생 속도 1.0으로 설정
     }
 
     void reDashCheck()

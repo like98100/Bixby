@@ -11,10 +11,12 @@ public class UI_MinimapCam : MonoBehaviour
     GameObject goalObject;
     //QuestObject quest;
     Vector3 goalPosi;
+    GameObject minimapContour;
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         minimap = GameObject.Find("Minimap");
+        minimapContour = GameObject.Find("minimapContour");
         camDirection = minimap.transform.GetChild(0).gameObject;
         signObject = this.transform.GetChild(0).gameObject;
         goalObject = this.transform.GetChild(1).gameObject;
@@ -22,21 +24,11 @@ public class UI_MinimapCam : MonoBehaviour
     }
     void Update()
     {
-        Vector3 temp = player.transform.position;
-        temp.y += 20f;
-        RaycastHit hitinfo;
-        temp.y = Physics.Linecast(player.transform.position, player.transform.position + Vector3.up * 20, out hitinfo, 1 << LayerMask.NameToLayer("Ground")) ? hitinfo.point.y : temp.y;
-        this.transform.position = temp;
-        Vector3 camRotate = GameObject.FindGameObjectWithTag("MainCamera").transform.eulerAngles;
-        camRotate.z = -camRotate.y;
-        camRotate.y = camRotate.x = 0f;
-        camDirection.transform.rotation = Quaternion.Euler(camRotate);
-        if (UI_Control.Inst.OpenedWindow == null)
-            minimap.transform.parent.gameObject.SetActive(true);
-        else
-            minimap.transform.parent.gameObject.SetActive(!(UI_Control.Inst.OpenedWindow.name == "Inventory"
-                                    || UI_Control.Inst.OpenedWindow.name == "Shop"
-                                    || UI_Control.Inst.OpenedWindow.transform.parent.gameObject.name == "COOK"));
+        camPositionSet();
+
+        directionSet();
+
+        minimapOnOff();
 
         //if (Input.GetKeyDown(KeyCode.Tab))
         //{
@@ -48,6 +40,35 @@ public class UI_MinimapCam : MonoBehaviour
         //{
         //    if(item.GetDistanceToPoint(goalPosi))
         //}
+        minimapSign();
+    }
+    void camPositionSet()
+    {
+        Vector3 temp = player.transform.position;
+        temp.y += 20f;
+        RaycastHit hitinfo;
+        temp.y = Physics.Linecast(player.transform.position, player.transform.position + Vector3.up * 20, out hitinfo, 1 << LayerMask.NameToLayer("Ground")) ? hitinfo.point.y : temp.y;
+        this.transform.position = temp;
+    }
+    void directionSet()
+    {
+        Vector3 camRotate = GameObject.FindGameObjectWithTag("MainCamera").transform.eulerAngles;
+        camRotate.z = -camRotate.y;
+        camRotate.y = camRotate.x = 0f;
+        camDirection.transform.rotation = Quaternion.Euler(camRotate);
+    }
+    void minimapOnOff()
+    {
+        if (UI_Control.Inst.OpenedWindow == null)
+            minimap.transform.parent.gameObject.SetActive(true);
+        else
+            minimap.transform.parent.gameObject.SetActive(!(UI_Control.Inst.OpenedWindow.name == "Inventory"
+                                    || UI_Control.Inst.OpenedWindow.name == "Shop"
+                                    || UI_Control.Inst.OpenedWindow.transform.parent.gameObject.name == "COOK"));
+        minimapContour.SetActive(minimap.transform.parent.gameObject.activeSelf);
+    }
+    void minimapSign()
+    {
         if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "FieldScene")
         {
             //goalPosi = quest.GetPosition() == new Vector3(-999f, -999f, -999f) ? GameObject.Find(quest.GetNPCName()).transform.position : quest.GetPosition();

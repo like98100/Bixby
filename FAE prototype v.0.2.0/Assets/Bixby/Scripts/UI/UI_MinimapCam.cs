@@ -9,7 +9,7 @@ public class UI_MinimapCam : MonoBehaviour
     GameObject minimap;
     GameObject signObject;
     GameObject goalObject;
-    QuestObject quest;
+    //QuestObject quest;
     Vector3 goalPosi;
     private void Start()
     {
@@ -18,7 +18,7 @@ public class UI_MinimapCam : MonoBehaviour
         camDirection = minimap.transform.GetChild(0).gameObject;
         signObject = this.transform.GetChild(0).gameObject;
         goalObject = this.transform.GetChild(1).gameObject;
-        quest = GameObject.Find("GameManager").GetComponent<QuestObject>();
+        //quest = GameObject.Find("GameManager").GetComponent<QuestObject>();
     }
     void Update()
     {
@@ -50,7 +50,8 @@ public class UI_MinimapCam : MonoBehaviour
         //}
         if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "FieldScene")
         {
-            goalPosi = quest.GetPosition() == new Vector3(-999f, -999f, -999f) ? GameObject.Find(quest.GetNPCName()).transform.position : quest.GetPosition();
+            //goalPosi = quest.GetPosition() == new Vector3(-999f, -999f, -999f) ? GameObject.Find(quest.GetNPCName()).transform.position : quest.GetPosition();
+            goalPosi = QuestObject.manager.GetPosition() == new Vector3(-999f, -999f, -999f) ? GameObject.Find(QuestObject.manager.GetNPCName()).transform.position : QuestObject.manager.GetPosition();
             Vector3 direction = this.transform.position + ((goalPosi - this.transform.position).normalized * this.gameObject.GetComponent<Camera>().orthographicSize * 1.025f);
             float dist = 600 / this.gameObject.GetComponent<Camera>().orthographicSize + 120;
             if (Vector3.Distance(this.gameObject.GetComponent<Camera>().WorldToScreenPoint(goalPosi), this.gameObject.GetComponent<Camera>().WorldToScreenPoint(player.transform.position)) > dist)

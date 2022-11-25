@@ -122,4 +122,12 @@ public class json
         FileInfo info = new FileInfo(string.Format("{0}/Resources/json/{1}.json", loadPath, fileName));
         return info.Exists;
     }
+
+    public static void OverWriteJsonFile(string loadPath, string fileName, string jsonData)   // json 파일 수정 함수
+    {
+        FileStream fileStream = new FileStream(string.Format("{0}/Resources/json/{1}.json", loadPath, fileName), FileMode.Truncate);
+        byte[] data = Encoding.UTF8.GetBytes(jsonData);
+        fileStream.Write(data, 0, data.Length);
+        fileStream.Close();
+    }
 }

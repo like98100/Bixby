@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class inventoryObject : MonoBehaviour
 {
     public static inventoryObject Inst { get; private set; }
+
     private void Awake()
     {
         Inst = this;
@@ -21,6 +22,7 @@ public class inventoryObject : MonoBehaviour
         closeBtn = inventoryCanvas.transform.GetChild(4).gameObject.GetComponent<Button>();
         closeBtn.onClick.AddListener(() => UI_Control.Inst.windowClose());
     }
+
     //이거 변경됨
     public itemSO items;//itemSO, 인벤토리 내 아이템들을 이 안의 items에 저장해둔다
     [SerializeField] GameObject itemPrefab;//아이템 프리팹, 인벤토리 열때, 혹은 아이템 획득할때 인스턴트에 사용
@@ -42,6 +44,7 @@ public class inventoryObject : MonoBehaviour
     GameObject itemSummary;
     GameObject itemDescription;
     Button closeBtn;
+
     void Start()
     {
         itemJsonData = json.LoadJsonFile<itemJsonData>(Application.dataPath, "items");//json로드
@@ -82,6 +85,7 @@ public class inventoryObject : MonoBehaviour
         itemSummary.SetActive(false);
         itemDescription.SetActive(false);
     }
+
     private void Update()
     {
         if (FieldFKey.activeSelf)
@@ -89,7 +93,22 @@ public class inventoryObject : MonoBehaviour
             Vector3 wantedPos = Camera.main.WorldToScreenPoint(GameObject.FindGameObjectWithTag("Player").transform.position);
             FieldFKey.transform.position = wantedPos + Vector3.right * 200f + Vector3.up * 200f;
         }
+
+        if(QuestObject.manager.GetQuestKind() == QuestKind.cook) setQuestItemIdx();
     }
+
+    void setQuestItemIdx()
+    {
+        int sum = 0;
+        foreach (var Item in items.items)
+        {
+            if (Item.itemID == QuestObject.manager.GetObjectId())
+                sum++;
+        }
+
+        QuestObject.manager.SetObjectIndex(sum);
+    }
+
     public void setItemPos(GameObject item, Vector3 newOrigonPos)//인벤 내 아이템 위치 이동시 실행(겹침확인)
     {
         itemObject itemObj = item.GetComponent<itemObject>();
@@ -119,6 +138,7 @@ public class inventoryObject : MonoBehaviour
         }
         jsonSave();
     }
+
     bool isCrash(float leftA, float xSizeA, float leftB, float xSizeB, float upA, float ySizeA, float upB, float ysizeB)//충돌확인,기존 아이템이 A
     {
         float tempL = leftA < leftB ? leftB : leftA;
@@ -127,6 +147,7 @@ public class inventoryObject : MonoBehaviour
         float tempD = upA + ySizeA > upB + ysizeB ? upB + ysizeB : upA + ySizeA;
         return tempL < tempR && tempU < tempD;
     }
+
     //이거 변경됨
     public void jsonSave()//json저장
     {
@@ -141,6 +162,7 @@ public class inventoryObject : MonoBehaviour
         string tempStr = json.ObjectToJson(temp);
         json.CreateJsonFile(Application.dataPath, "items", tempStr);
     }
+
     public void getFieldItem(GameObject newItem)//필드에서 신규 아이템 획득
     {
         itemData newData = newItem.GetComponent<fieldItem>().ItemData;
@@ -156,6 +178,7 @@ public class inventoryObject : MonoBehaviour
         }
         //알림창 만들면 else에서 아이템 획득 불가 알릴 것
     }
+
     public List<Vector2> existCells(List<itemData> itemList)//아이템 리스트 내 아이템 존재 칸 확인
     {
         List<Vector2> result = new List<Vector2>();
@@ -180,22 +203,31 @@ public class inventoryObject : MonoBehaviour
         }
         return result;
     }
+
     public void throwItem(GameObject itemObj, bool isLeft)//인벤토리에서 아이템 버릴 때
     {
         items.items.Remove(itemObj.GetComponent<itemObject>().ItemData);
         itemObjects.Remove(itemObj.gameObject);
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         GameObject temp = isLeft ? MakeFieldItem(itemObj.GetComponent<itemObject>().ItemData, player.transform.position) : null;
+
+        //if (QuestObject.manager.GetQuestKind() == QuestKind.cook
+        //        && itemObj.GetComponent<itemObject>().ItemData.itemID == QuestObject.manager.GetObjectId())
+
+        //    QuestObject.manager.SetObjectIndex(QuestObject.manager.GetObjectIndex() - 1);
+
         Destroy(itemObj);
         jsonSave();
         itemSummary.SetActive(false);
     }
+
     public GameObject MakeFieldItem(itemData data, Vector3 position)//필드에 아이템 생성
     {
         GameObject temp = Instantiate(fieldItemPrefab, position, Quaternion.identity);
         temp.GetComponent<fieldItem>().setup(data);
         return temp;
     }
+
     public void itemGet(float itemSizeX, float itemSizeY, float itemX, float itemY, itemData itemData)//아이템 획득
     {
         GameObject temp = Instantiate(itemPrefab, inventoryCanvas.transform);
@@ -210,12 +242,17 @@ public class inventoryObject : MonoBehaviour
         tempItem.ItemData.Up = itemY;
         items.items.Add(tempItem.ItemData);
 
-        QuestObject quest = GameObject.Find("GameManager").GetComponent<QuestObject>();
+        ////QuestObject quest = GameObject.Find("GameManager").GetComponent<QuestObject>();
 
-        if (quest.GetQuestKind() == QuestKind.cook
-            && itemData.itemID == quest.GetObjectId())
-            quest.SetObjectIndex(quest.GetObjectIndex() + 1);
+        ////if (quest.GetQuestKind() == QuestKind.cook
+        ////      && itemData.itemID == quest.GetObjectId())
+        //if (QuestObject.manager.GetQuestKind() == QuestKind.cook
+        //    && itemData.itemID == QuestObject.manager.GetObjectId())
+
+        //    //quest.SetObjectIndex(quest.GetObjectIndex() + 1);
+        //    QuestObject.manager.SetObjectIndex(QuestObject.manager.GetObjectIndex() + 1);
     }
+
     public Vector2 emptyCell(float newXSize, float newYSize)//인벤토리에서 해당 크기의 아이템이 들어올 수 있는 위치
     {
         List<Vector2> existCell = new List<Vector2>();
@@ -249,10 +286,12 @@ public class inventoryObject : MonoBehaviour
         }
         return Vector2.zero - Vector2.one;
     }
+
     public void goldSet()
     {
         goldObj.transform.GetChild(0).GetComponent<Text>().text = "G " + Gold.ToString();//골드 값 적용
     }
+
     #region 아이템 마우스 조작
     public void itemHover(itemObject itemObj)//아이템에 마우스 올렸을 때
     {
@@ -260,14 +299,17 @@ public class inventoryObject : MonoBehaviour
         itemSummary.transform.SetAsLastSibling();
         itemSummary.transform.GetChild(0).GetComponent<Text>().text = itemObj.ItemData.itemName;
     }
+
     public void itemExit()//마우스가 아이템에서 나갔을 때
     {
         itemSummary.SetActive(false);
     }
+
     public void itemSummaryMove()//itemSummary 이동
     {
         itemSummary.transform.position = Input.mousePosition + Vector3.right * 150f;
     }
+
     public void itemLeftDown(itemObject itemObj)//아이템을 좌클릭 했을 때
     {
         #region 설명
@@ -301,6 +343,7 @@ public class inventoryObject : MonoBehaviour
         itemDescription.transform.GetChild(1).GetComponent<Text>().text = description;
         #endregion
     }
+
     public void itemRightDown(itemObject itemObj)//아이템을 우클릭 했을 때
     {
         if (itemObj.ItemData.isSell)
@@ -332,7 +375,9 @@ public class inventoryObject : MonoBehaviour
             }
         }
     }
+
     #endregion
+
     #region get;set;
     public GameObject getObj(string objectKind)
     {

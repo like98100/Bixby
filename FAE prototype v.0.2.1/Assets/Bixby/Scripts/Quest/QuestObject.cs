@@ -40,7 +40,7 @@ public class QuestObject : MonoBehaviour
         if (json.FileExist(Application.dataPath, "quests"))                                      // Quest 파일이 존재할 시
         {
             JsonData = json.LoadJsonFile<questJsonData>(Application.dataPath, "quests");   // Quest Load
-            Debug.Log("Load Complete : " + JsonData.questList[0].npcName);
+            //Debug.Log("Load Complete : " + JsonData.questList[0].npcName);
         }
         else                                                                                    // Quest 파일이 존재하지 않을 때
         {
@@ -121,7 +121,7 @@ public class QuestObject : MonoBehaviour
 
     public Vector3 GetPosition()
     {
-        Debug.Log("현재 위치 : " + currentQuest.position[questSubIndex].x);
+        //Debug.Log("현재 위치 : " + currentQuest.position[questSubIndex].x);
         return currentQuest.position[questSubIndex];
     }
 

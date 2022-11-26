@@ -34,6 +34,6 @@ public class SetPositionParticle : MonoBehaviour
         particlePosition = QuestObject.manager.GetPosition();
 
         positionParticle.transform.position = particlePosition;
-        Debug.Log("위치 변환 완료");
+        //Debug.Log("위치 변환 완료");
     }
 }

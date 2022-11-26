@@ -158,12 +158,12 @@ public class CookingGage : MonoBehaviour
                 }
             }
         }
-        print("½ÇÇàµÊ");
-        foreach (var item in FruitIndex)
-        {
-            print(inventoryObject.Inst.items.items[item].itemName);
-            print(inventoryObject.Inst.itemObjects[item].GetComponent<itemObject>().ItemData.itemName);
-        }
+        //print("½ÇÇàµÊ");
+        //foreach (var item in FruitIndex)
+        //{
+        //    print(inventoryObject.Inst.items.items[item].itemName);
+        //    print(inventoryObject.Inst.itemObjects[item].GetComponent<itemObject>().ItemData.itemName);
+        //}
 
         cookData.itemName = num.text;
 

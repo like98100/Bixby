@@ -85,11 +85,11 @@ public class Harvest : MonoBehaviour
         }
     }
     //동시에 획득하는거 수정해야함 -> 가장 가까이 있는 것 만 제거 어케하지?
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         //Debug.Log(other.name);
 
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.CompareTag("Player"))
         {
             //Debug.Log(other.name);
 

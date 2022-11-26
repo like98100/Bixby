@@ -52,6 +52,13 @@ public class FinalBoss : CombatStatus, IDamgeable
         shield = this.gameObject.transform.Find("Shield").GetComponent<Shield>();
         shield.SetActive(true);
         setShield = true;
+
+        //게이지 생성
+        UI_EnemyHp.EnemyHps.hpObjects.Add(Instantiate(UI_Control.Inst.EnemyHp.getPrefab(true), GameObject.Find("UI").transform.GetChild(1)));
+        UI_EnemyHp.EnemyHps.hpObjects[0].SetActive(false);
+        UI_EnemyHp.EnemyHps.shieldObject = Instantiate(UI_Control.Inst.EnemyHp.getPrefab(false), GameObject.Find("UI").transform.GetChild(1));
+        UI_EnemyHp.EnemyHps.shieldObject.SetActive(false);
+        UI_EnemyHp.EnemyHps.boss = this;
     }
 
     void FixedUpdate()

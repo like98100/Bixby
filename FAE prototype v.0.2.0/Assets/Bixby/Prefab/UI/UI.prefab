@@ -519,6 +519,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hpPrefab: {fileID: 7838560294183959347, guid: ce36cb96652e3064a84af4e84d113b29, type: 3}
+  shieldPrefab: {fileID: 7838560294183959347, guid: e417079c576bbe34495651a18eb64fc2, type: 3}
 --- !u!1 &6918452919519424283
 GameObject:
   m_ObjectHideFlags: 0

@@ -61,7 +61,7 @@ public class Enemy : CombatStatus, IDamgeable
         rigid = GetComponent<Rigidbody>();
         col = GetComponent<BoxCollider>();
 
-        UI_EnemyHp.EnemyHps.hpObjects.Add(Instantiate(UI_Control.Inst.EnemyHp.getPrefab(), GameObject.Find("UI").transform.GetChild(1)));
+        UI_EnemyHp.EnemyHps.hpObjects.Add(Instantiate(UI_Control.Inst.EnemyHp.getPrefab(true), GameObject.Find("UI").transform.GetChild(1)));
         UI_EnemyHp.EnemyHps.enemies.Add(this);
 
         shield = this.gameObject.transform.Find("Shield").GetComponent<Shield>();

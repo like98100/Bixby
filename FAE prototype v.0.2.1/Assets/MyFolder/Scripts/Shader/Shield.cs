@@ -1,0 +1,70 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Shield : MonoBehaviour
+{
+    //오브젝트 풀링 사용하기 
+    [SerializeField] private GameObject rippleObj;
+    private Material material;
+    private Queue<GameObject> ripples = new Queue<GameObject>();
+
+    static float heightOffset = 1.0f;
+    private void Awake()
+    {
+        material = this.gameObject.GetComponent<MeshRenderer>().material;
+        for (int i = 0; i < 4; i++)
+        {
+            GameObject ripple = Instantiate(rippleObj, transform);
+            ripple.SetActive(false);
+
+            ripples.Enqueue(ripple);
+        }
+    }
+    private void Start()
+    {
+        this.Initialize();
+    }
+    public IEnumerator CreateRipple(Vector3 hitPoint)
+    {
+        if(ripples.Count == 0)
+        {
+            GameObject go = Instantiate(rippleObj, transform);
+            go.SetActive(false);
+
+            ripples.Enqueue(go);
+        }
+
+        GameObject ripple = ripples.Dequeue();
+        Material mat = ripple.GetComponent<MeshRenderer>().material;
+        mat.SetVector("_SphereCenter", hitPoint);
+
+        ripple.SetActive(true);
+
+        yield return new WaitForSeconds(0.5f);
+
+        ripple.SetActive(false);
+        ripples.Enqueue(ripple);
+    }
+
+    public void SetActive(bool _bool)
+    { 
+        this.gameObject.SetActive(_bool);
+    }
+    public void Initialize()
+    {
+        Transform parent = this.gameObject.transform.parent;
+
+        //Set Scale
+        float height = parent.GetComponent<BoxCollider>().size.y + heightOffset;
+        this.gameObject.transform.localScale = new Vector3(height, height, height);
+
+        //Set Position
+        Vector3 position = parent.GetComponent<BoxCollider>().center;
+        this.gameObject.transform.localPosition = position;
+
+        //Set Color
+        Color color = parent.GetComponent<Enemy>().GetMyElementColor();
+        this.material.SetColor("_Color", color);
+    }
+}

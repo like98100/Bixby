@@ -36,6 +36,7 @@ namespace MBT
             ObjRef.Value.transform.position = p;
 
             ObjRef.Value.GetComponent<FinalBoss>().Anim.SetTrigger("Water");
+            ObjRef.Value.GetComponent<FinalBoss>().isAttacked = true;
         }
 
         public override NodeResult Execute()
@@ -44,7 +45,7 @@ namespace MBT
             target = targetObjRef.Value.transform.position;
             Time_ += Time.deltaTime;
 
-            if(Time_ > UpdateInterval)
+            if(!ObjRef.Value.GetComponent<FinalBoss>().isAttacked)
             {
                 // Reset time and update destination
                 Time_ = 0.0f;

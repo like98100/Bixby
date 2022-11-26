@@ -6,6 +6,7 @@ using UnityEngine;
 public class EnemyStatus
 {
     public EnemyType type { get; }
+    public int id { get; set; }
     public float maxHp { get; set; }
     public float hp { get; set; }
     public float maxBarrier { get; set; }
@@ -22,9 +23,10 @@ public class EnemyStatus
 
     }
 
-    public EnemyStatus(EnemyType type, float maxHp, float maxBarrier, float damage, float attackRange, float attackSpeed, float moveSpeed, float sight, ElementRule.ElementType element)
+    public EnemyStatus(EnemyType type, int id, float maxHp, float maxBarrier, float damage, float attackRange, float attackSpeed, float moveSpeed, float sight, ElementRule.ElementType element)
     {
         this.type = type;
+        this.id = id;
         this.maxHp = maxHp;
         hp = maxHp;
         this.maxBarrier = maxBarrier;
@@ -40,13 +42,13 @@ public class EnemyStatus
     public EnemyStatus SetEnemyStatus(EnemyType enemyType, ElementRule.ElementType enemyElement)
     {
         EnemyStatus stat = null;
-                                // 종류, 체력, 쉴드, 대미지, 사정거리, 공격속도, 이동속도, 시야, 속성
+                                // 종류, id, 체력, 쉴드, 대미지, 사정거리, 공격속도, 이동속도, 시야, 속성
         if (enemyType == EnemyType.Melee)
-            stat = new EnemyStatus(enemyType, 100.0f, 50.0f, 10.0f, 2.0f, 5.0f, 5.0f, 15.0f, enemyElement);
+            stat = new EnemyStatus(enemyType, 3001, 100.0f, 50.0f, 10.0f, 2.0f, 5.0f, 5.0f, 15.0f, enemyElement);
         else if (enemyType == EnemyType.Ranged)
-            stat = new EnemyStatus(enemyType, 150.0f, 50.0f, 15.0f, 7.0f, 5.0f, 5.0f, 15.0f, enemyElement);
+            stat = new EnemyStatus(enemyType, 3001, 150.0f, 50.0f, 15.0f, 7.0f, 5.0f, 5.0f, 15.0f, enemyElement);
         else if (enemyType == EnemyType.FinalBoss)
-            stat = new EnemyStatus(enemyType, 500.0f, 250.0f, 30.0f, 5.0f, 2.0f, 10.0f, 1000.0f, enemyElement);
+            stat = new EnemyStatus(enemyType, 3002,  500.0f, 50.0f, 30.0f, 3.0f, 2.0f, 10.0f, 1000.0f, enemyElement);
 
         return stat;
     }

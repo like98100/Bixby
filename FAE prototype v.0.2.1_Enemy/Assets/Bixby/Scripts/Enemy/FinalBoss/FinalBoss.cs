@@ -23,6 +23,8 @@ public class FinalBoss : CombatStatus, IDamgeable
 
     public float DealtDamage;
     public bool isBarriered;
+    public bool isAttacked;
+    public bool isMoved;
 
     public float SkillCooldown;
 
@@ -34,6 +36,8 @@ public class FinalBoss : CombatStatus, IDamgeable
 
         this.MyElement = Stat.element;
         isBarriered = true;
+        isAttacked = false;
+        isMoved = false;
 
         SkillCooldown = 0.0f;
 
@@ -57,9 +61,15 @@ public class FinalBoss : CombatStatus, IDamgeable
     void Update()
     {
         rigid.velocity = Vector3.zero;
+        rigid.angularVelocity = Vector3.zero;
         //rigid.AddForce(Vector3.down * 50.0f);
         MyAgent.speed = Stat.moveSpeed * SpeedMultiply;
         findPlayer(Stat.sight);
+
+        // if (isAttacked)
+        //     MyAgent.isStopped = true;
+        // else
+        //     MyAgent.isStopped = false;
 
     }
 
@@ -148,6 +158,11 @@ public class FinalBoss : CombatStatus, IDamgeable
             shield.SetActive(false);
             col.enabled = false;
         }
+    }
+
+    public void EndAttack()
+    {
+        isAttacked = false;
     }
 
 }

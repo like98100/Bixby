@@ -231,6 +231,8 @@ GameObject:
   - component: {fileID: 1839404518718142522}
   - component: {fileID: 4378940502552303127}
   - component: {fileID: 4207395124816690857}
+  - component: {fileID: 4310911097131108926}
+  - component: {fileID: 4398967385446907301}
   m_Layer: 0
   m_Name: BehaviourTree
   m_TagString: Untagged
@@ -271,6 +273,7 @@ MonoBehaviour:
   - {fileID: 2695156726155707738}
   - {fileID: 5020393436015328917}
   - {fileID: 570244235617079662}
+  - {fileID: 4310911097131108926}
   masterBlackboard: {fileID: 0}
 --- !u!114 &6409569189455938790
 MonoBehaviour:
@@ -284,7 +287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedEditorNode: {fileID: 4207395124816690857}
+  selectedEditorNode: {fileID: 6094554536188185469}
   repeatOnFinish: 0
   maxExecutionsPerTick: 1000
   parent: {fileID: 0}
@@ -401,7 +404,7 @@ MonoBehaviour:
   rect:
     serializedVersion: 2
     x: 820
-    y: 60
+    y: 0
     width: 160
     height: 45
   parent: {fileID: 0}
@@ -426,7 +429,7 @@ MonoBehaviour:
   rect:
     serializedVersion: 2
     x: 820
-    y: 120
+    y: 60
     width: 160
     height: 45
   parent: {fileID: 5623805086177925743}
@@ -453,7 +456,7 @@ MonoBehaviour:
   rect:
     serializedVersion: 2
     x: 820
-    y: 180
+    y: 120
     width: 160
     height: 45
   parent: {fileID: 3988560397074260456}
@@ -493,12 +496,12 @@ MonoBehaviour:
   rect:
     serializedVersion: 2
     x: 820
-    y: 240
+    y: 180
     width: 160
     height: 59
   parent: {fileID: 1184993918205978931}
   children:
-  - {fileID: 2407372949107225118}
+  - {fileID: 4398967385446907301}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
@@ -536,7 +539,7 @@ MonoBehaviour:
     y: 320
     width: 160
     height: 59
-  parent: {fileID: 6134685116301786865}
+  parent: {fileID: 4398967385446907301}
   children:
   - {fileID: 195488257820973465}
   behaviourTree: {fileID: 0}
@@ -1961,7 +1964,7 @@ MonoBehaviour:
     mode: 0
     blackboard: {fileID: 0}
     key: 
-    constantValue: 10
+    constantValue: 15
   intReference2:
     useConstant: 1
     mode: 0
@@ -2013,7 +2016,7 @@ MonoBehaviour:
     mode: 0
     blackboard: {fileID: 0}
     key: 
-    constantValue: 9
+    constantValue: 14.5
   intReference2:
     useConstant: 1
     mode: 0
@@ -2065,7 +2068,7 @@ MonoBehaviour:
     mode: 0
     blackboard: {fileID: 0}
     key: 
-    constantValue: 4
+    constantValue: 5
   intReference2:
     useConstant: 1
     mode: 0
@@ -2224,7 +2227,7 @@ MonoBehaviour:
     mode: 0
     blackboard: {fileID: 0}
     key: 
-    constantValue: 3.5
+    constantValue: 4.5
   intReference2:
     useConstant: 1
     mode: 0
@@ -2268,7 +2271,7 @@ MonoBehaviour:
     key: targetObjRef
     constantValue: {fileID: 0}
   agent: {fileID: 1601261783880769920}
-  stopDistance: 3.5
+  stopDistance: 5
   updateInterval: 1
 --- !u!114 &6645468555266829172
 MonoBehaviour:
@@ -2444,7 +2447,7 @@ MonoBehaviour:
     blackboard: {fileID: 1107375551665464079}
     key: enemyToPlayerDist
     constantValue: 0
-  Speed: 17
+  Speed: 20
   UpdateInterval: 2
   Time_: 0
   targetVec: {x: 0, y: 0, z: 0}
@@ -2469,7 +2472,6 @@ MonoBehaviour:
     height: 45
   parent: {fileID: 8162052317690061787}
   children:
-  - {fileID: 2701387273997256014}
   - {fileID: 1993382791461674959}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
@@ -2496,7 +2498,6 @@ MonoBehaviour:
     height: 45
   parent: {fileID: 4408080733918315592}
   children:
-  - {fileID: 3263540594110982259}
   - {fileID: 5379763058822291970}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
@@ -2521,7 +2522,7 @@ MonoBehaviour:
     y: 1080
     width: 160
     height: 45
-  parent: {fileID: 3024782249924623773}
+  parent: {fileID: 0}
   children: []
   behaviourTree: {fileID: 0}
   runtimePriority: 0
@@ -2574,6 +2575,12 @@ MonoBehaviour:
     blackboard: {fileID: 1107375551665464079}
     key: selfObjRef
     constantValue: {fileID: 0}
+  TargetObjRef:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 1107375551665464079}
+    key: targetObjRef
+    constantValue: {fileID: 0}
   myTransform: {x: 0, y: 0, z: 0}
   UpdateInterval: 5.5
   Time_: 0
@@ -2597,7 +2604,7 @@ MonoBehaviour:
     y: 1080
     width: 160
     height: 45
-  parent: {fileID: 6656471888929527032}
+  parent: {fileID: 0}
   children: []
   behaviourTree: {fileID: 0}
   runtimePriority: 0
@@ -2650,6 +2657,12 @@ MonoBehaviour:
     blackboard: {fileID: 1107375551665464079}
     key: selfObjRef
     constantValue: {fileID: 0}
+  TargetObjRef:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 1107375551665464079}
+    key: targetObjRef
+    constantValue: {fileID: 0}
   myTransform: {x: 0, y: 0, z: 0}
   UpdateInterval: 5.5
   Time_: 0
@@ -2675,7 +2688,6 @@ MonoBehaviour:
     height: 45
   parent: {fileID: 6645468555266829172}
   children:
-  - {fileID: 249645149085332927}
   - {fileID: 6094554536188185469}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
@@ -2700,7 +2712,7 @@ MonoBehaviour:
     y: 1020
     width: 160
     height: 45
-  parent: {fileID: 9180743195037871084}
+  parent: {fileID: 0}
   children: []
   behaviourTree: {fileID: 0}
   runtimePriority: 0
@@ -2744,7 +2756,6 @@ MonoBehaviour:
     height: 45
   parent: {fileID: 6635353514241659044}
   children:
-  - {fileID: 144673377393342324}
   - {fileID: 1620911220978622146}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
@@ -2769,7 +2780,7 @@ MonoBehaviour:
     y: 1020
     width: 160
     height: 45
-  parent: {fileID: 7380977767151356666}
+  parent: {fileID: 0}
   children: []
   behaviourTree: {fileID: 0}
   runtimePriority: 0
@@ -3204,7 +3215,6 @@ MonoBehaviour:
     height: 45
   parent: {fileID: 8337521753552033957}
   children:
-  - {fileID: 3434161646214083709}
   - {fileID: 29993406088150286}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
@@ -3298,7 +3308,7 @@ MonoBehaviour:
     y: 1020
     width: 160
     height: 45
-  parent: {fileID: 3840191544586084246}
+  parent: {fileID: 0}
   children: []
   behaviourTree: {fileID: 0}
   runtimePriority: 0
@@ -3988,7 +3998,6 @@ MonoBehaviour:
     height: 45
   parent: {fileID: 3602290474058735363}
   children:
-  - {fileID: 6124173781788147939}
   - {fileID: 8383845358061413150}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
@@ -4013,7 +4022,7 @@ MonoBehaviour:
     y: 1020
     width: 160
     height: 45
-  parent: {fileID: 5614851096220350635}
+  parent: {fileID: 0}
   children: []
   behaviourTree: {fileID: 0}
   runtimePriority: 0
@@ -5100,6 +5109,60 @@ MonoBehaviour:
   targetVec: {x: 0, y: 0, z: 0}
   UpdateInterval: 3.5
   Time_: 0
+--- !u!114 &4310911097131108926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3137919136024940248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ae15c5e6bcb1714080f2e8296c3d17a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: enemyIsMoved
+  val: 0
+--- !u!114 &4398967385446907301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3137919136024940248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebbbb8394b9c3c14aa1ed1f8d6d4abb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Check Is Moved Service
+  rect:
+    serializedVersion: 2
+    x: 820
+    y: 257
+    width: 160
+    height: 45
+  parent: {fileID: 6134685116301786865}
+  children:
+  - {fileID: 2407372949107225118}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  interval: 1
+  randomDeviation: 0
+  callOnEnter: 1
+  ObjRef:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 1107375551665464079}
+    key: selfObjRef
+    constantValue: {fileID: 0}
+  Variable:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 1107375551665464079}
+    key: enemyIsMoved
+    constantValue: 0
 --- !u!1 &4681719079262048544
 GameObject:
   m_ObjectHideFlags: 0
@@ -5556,8 +5619,8 @@ MonoBehaviour:
   col: {fileID: 0}
   DealtDamage: 0
   isBarriered: 0
-  isJumped: 0
-  Count: 0
+  isAttacked: 0
+  isMoved: 0
   SkillCooldown: 0
 --- !u!1 &4681719079262048560
 GameObject:

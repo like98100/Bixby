@@ -23,7 +23,11 @@ namespace MBT
         public override NodeResult Execute()
         {
             Transform self = ObjRef.Value.transform;
-            Transform target = TargetObjRef.Value.transform;
+            Transform target;
+            if (TargetObjRef.Value == null)
+                return NodeResult.failure;
+            else    
+                target = TargetObjRef.Value.transform;
             Vector3 dir = target.position - self.position;
             Vector3 rayVector = new Vector3(self.position.x, self.position.y + 1.0f, self.position.z);
             RaycastHit hitInfo;
@@ -45,14 +49,19 @@ namespace MBT
             {
                 delay += Time.deltaTime / ObjRef.Value.GetComponent<FinalBoss>().FireRate;
 
-                if(((delay > ObjRef.Value.GetComponent<FinalBoss>().Stat.attackSpeed) && Physics.Raycast(rayVector, self.forward, out hitInfo, ObjRef.Value.GetComponent<FinalBoss>().Stat.sight, ObjRef.Value.GetComponent<FinalBoss>().Mask)) ||
+                if(((delay > ObjRef.Value.GetComponent<FinalBoss>().Stat.attackSpeed) && Physics.BoxCast(rayVector, self.lossyScale/2, self.forward, out hitInfo, self.rotation, ObjRef.Value.GetComponent<FinalBoss>().Stat.sight, ObjRef.Value.GetComponent<FinalBoss>().Mask)) ||
                     (ObjRef.Value.GetComponent<FinalBoss>().Stat.hp <= 0))
                 {
                     // Reset time and update destination
                     return NodeResult.success;
                 }
+                if ((Variable.Value > ObjRef.Value.GetComponent<FinalBoss>().Stat.attackRange))
+                    return NodeResult.failure;
             }
             
+            // self.rotation = Quaternion.Lerp(self.rotation, Quaternion.LookRotation(dir), 
+            //                               Time.deltaTime * 20.0f);
+
             self.rotation = Quaternion.Lerp(self.rotation, Quaternion.LookRotation(dir), 
                                           Time.deltaTime * 20.0f);
 

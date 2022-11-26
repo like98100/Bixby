@@ -22,13 +22,12 @@ namespace MBT
             targetVec = targetRef.Value.transform.position;
 
             ObjRef.Value.GetComponent<FinalBoss>().Anim.SetTrigger("Ice");
+            ObjRef.Value.GetComponent<FinalBoss>().isAttacked = true;
         } 
 
         public override NodeResult Execute()
         {
-            Time_ += Time.deltaTime;
-
-            if(Time_ > UpdateInterval)
+            if(!ObjRef.Value.GetComponent<FinalBoss>().isAttacked)
             {
                 // Reset time and update destination
                 Time_ = 0.0f;

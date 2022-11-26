@@ -20,7 +20,10 @@ namespace MBT
             if (ObjRef.Value.tag == "Enemy")
                 ObjRef.Value.GetComponent<Enemy>().Anim.SetBool("IsAttack", true);
             else if (ObjRef.Value.tag == "FinalBoss")
+            {
                 ObjRef.Value.GetComponent<FinalBoss>().Anim.SetTrigger("isAttack");
+                ObjRef.Value.GetComponent<FinalBoss>().isAttacked = true;
+            }
         }
 
         public override NodeResult Execute()
@@ -43,7 +46,7 @@ namespace MBT
             }
             else if (ObjRef.Value.tag == "FinalBoss")
             {
-                if((Time_ > UpdateInterval) || (ObjRef.Value.GetComponent<FinalBoss>().Stat.hp <= 0))
+                if((!ObjRef.Value.GetComponent<FinalBoss>().isAttacked) || (ObjRef.Value.GetComponent<FinalBoss>().Stat.hp <= 0))
                 {
                     // Reset time and update destination
                     Time_ = 0.0f;

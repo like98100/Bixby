@@ -23,7 +23,8 @@ namespace MBT
             targetVec += ObjRef.Value.transform.forward * 10.0f;
             targetVec += ObjRef.Value.transform.right * 10.0f;
 
-            //ObjRef.Value.GetComponent<FinalBoss>().Anim.SetTrigger("asd");
+            ObjRef.Value.GetComponent<FinalBoss>().Anim.SetTrigger("Electrocity");
+            ObjRef.Value.GetComponent<FinalBoss>().isAttacked = true;
 
             Time_ = 0.0f;
         } 
@@ -32,7 +33,7 @@ namespace MBT
         {
             Time_ += Time.deltaTime;
 
-            if(Time_ > UpdateInterval)
+            if(!ObjRef.Value.GetComponent<FinalBoss>().isAttacked)
             {
                 // Reset time and update destination
                 Time_ = 0.0f;

@@ -10,10 +10,25 @@ namespace MBTExample
     public class SetRandomPosition : Leaf
     {
         public Bounds bounds;
+        public GameObjectReference objRef = new GameObjectReference(VarRefMode.DisableConstant);
         public Vector3Reference blackboardVariable = new Vector3Reference(VarRefMode.DisableConstant);
+
+        public Vector3 myCenter;
+
+        public override void OnEnter()
+        {
+            if (!objRef.Value.GetComponent<Enemy>().centerCheck)
+            {
+                myCenter = objRef.Value.transform.position;
+                objRef.Value.GetComponent<Enemy>().centerCheck = true;
+            }
+        }
 
         public override NodeResult Execute()
         {
+            GameObject obj = objRef.Value;
+            bounds.center = myCenter;
+
             // Random values per component inside bounds
             blackboardVariable.Value = new Vector3(
                 Random.Range(bounds.min.x, bounds.max.x),

@@ -23,6 +23,7 @@ public class Enemy : CombatStatus, IDamgeable
 
     public LayerMask Mask = -1;
     public GameObject target;
+    public bool centerCheck;
     public bool isHitted = false;
     public bool runChance = true;
 
@@ -43,6 +44,7 @@ public class Enemy : CombatStatus, IDamgeable
         Stat = Stat.SetEnemyStatus(Type, Element);
 
         this.MyElement = Stat.element;
+        centerCheck = false;
 
         Timer = 0.0f;
 

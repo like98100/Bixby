@@ -10,7 +10,7 @@ namespace MBT
     public class FireSkill : Leaf
     {
         public GameObjectReference ObjRef = new GameObjectReference(VarRefMode.DisableConstant);
-        
+        public GameObjectReference TargetObjRef = new GameObjectReference(VarRefMode.DisableConstant);
         public Vector3 myTransform;
 
         public float UpdateInterval = 5.5f;
@@ -22,18 +22,32 @@ namespace MBT
             myTransform = ObjRef.Value.transform.position;
 
             ObjRef.Value.GetComponent<FinalBoss>().Anim.SetTrigger("Fire");
+            ObjRef.Value.GetComponent<FinalBoss>().isAttacked = true;
         }
 
         public override NodeResult Execute()
         {
+            Transform self = ObjRef.Value.transform;
+            Transform target;
+            if (TargetObjRef.Value == null)
+                return NodeResult.failure;
+            else    
+                target = TargetObjRef.Value.transform;
+            Vector3 dir = target.position - self.position;
+
             Time_ += Time.deltaTime;
 
-            if(Time_ > UpdateInterval)
+            if((!ObjRef.Value.GetComponent<FinalBoss>().isAttacked) || (Time_ > UpdateInterval))
             {
                 // Reset time and update destination
                 Time_ = 0.0f;
                 count = 0;
                 return NodeResult.success;
+            }
+            else if (Time_ <= 1.0)
+            {
+                self.rotation = Quaternion.Lerp(self.rotation, Quaternion.LookRotation(dir), 
+                                                Time.deltaTime * 20.0f);
             }
             else if(Time_ >= 1.0 && count == 0)
             {

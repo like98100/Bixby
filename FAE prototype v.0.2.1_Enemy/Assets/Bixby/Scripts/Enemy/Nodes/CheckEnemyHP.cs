@@ -21,7 +21,7 @@ namespace MBT
                 return;
             }
 
-            if (obj.tag == "Enenmy")
+            if (obj.tag == "Enemy")
                 Variable.Value = obj.GetComponent<Enemy>().Stat.hp;
             else if (obj.tag == "FinalBoss")
                 Variable.Value = obj.GetComponent<FinalBoss>().Stat.hp;

@@ -26,7 +26,10 @@ namespace MBTExample
             if (ObjRef.Value.tag == "Enemy")
                 ObjRef.Value.GetComponent<Enemy>().Anim.SetBool("IsMove", true);
             else if (ObjRef.Value.tag == "FinalBoss")
+            {
                 ObjRef.Value.GetComponent<FinalBoss>().Anim.SetBool("isMove", true);
+                ObjRef.Value.GetComponent<FinalBoss>().isMoved = true;
+            }
         }
         
         public override NodeResult Execute()
@@ -47,6 +50,7 @@ namespace MBTExample
             // Check if agent is very close to destination
             if (agent.remainingDistance < stopDistance)
             {
+                agent.isStopped = true;
                 return NodeResult.success;
             }
             // Check if there is any path (if not pending, it should be set)
@@ -74,7 +78,10 @@ namespace MBTExample
             if (ObjRef.Value.tag == "Enemy")
                 ObjRef.Value.GetComponent<Enemy>().Anim.SetBool("IsMove", false);
             else if (ObjRef.Value.tag == "FinalBoss")
+            {
                 ObjRef.Value.GetComponent<FinalBoss>().Anim.SetBool("isMove", false);
+                ObjRef.Value.GetComponent<FinalBoss>().isMoved = false;
+            }
             
             agent.isStopped = true;
             // agent.ResetPath();

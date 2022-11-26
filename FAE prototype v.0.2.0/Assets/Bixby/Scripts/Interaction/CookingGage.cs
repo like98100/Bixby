@@ -29,17 +29,19 @@ public class CookingGage : MonoBehaviour
     [SerializeField] GameObject cookingWindow;
     [SerializeField] GameObject buttonWindow;
 
+    itemJsonData itemJsonData;//json데이터
+
     private void Awake()
     {
-        
+        itemJsonData = json.LoadJsonFile<itemJsonData>(Application.dataPath, "cook");//json로드
     }
-    float tttt;
+    float dtime;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        tttt = Time.deltaTime;
+        dtime = Time.deltaTime;
         cookingWindow.SetActive(false);
         //cookingWindow = this.transform.parent.GetChild(2).gameObject;
         //buttonWindow = this.transform.parent.GetChild(1).gameObject;
@@ -55,7 +57,7 @@ public class CookingGage : MonoBehaviour
         if (start == true)
         {
             //게이지 슬라이더 증가
-            gageSlider.value += gageSpeed * tttt;
+            gageSlider.value += gageSpeed * dtime;
         }
 
         if (gageSlider.value == 1)
@@ -71,10 +73,14 @@ public class CookingGage : MonoBehaviour
             start = false;
 
             //아이템 지정 스크립트
-            cookData.itemID = 2003; cookData.tag = new string[] { "food", "cooked" }; cookData.itemName = "실패한 요리";
-            cookData.Left = -1; cookData.Up = -1; cookData.xSize = 3; cookData.ySize = 3;
-            cookData.isEquip = false; cookData.isSell = false;
-            cookData.price = 2; //나중에 가격 변경
+            //실패요리
+            foreach (var item in itemJsonData.itemList)
+            {
+                if (item.itemID == 2003)
+                {
+                    cookData = item;
+                }
+            }
 
             Vector2 tempPos;
             tempPos = inventoryObject.Inst.emptyCell(cookData.xSize, cookData.ySize);
@@ -87,14 +93,6 @@ public class CookingGage : MonoBehaviour
             if (gageSlider.value >= minSlider.value && gageSlider.value <= maxSlider.value)
             {
                 success_fail.text = "Success";
-                //성공한 요리 생성
-
-                
-                //아이템 지정 스크립트
-                cookData.tag = new string[] { "food", "cooked" }; 
-                cookData.Left = -1; cookData.Up = -1; 
-                cookData.isEquip = false; cookData.isSell = false;
-                cookData.price = 2; //나중에 가격 변경
             }
             else
             {
@@ -102,10 +100,14 @@ public class CookingGage : MonoBehaviour
                 //실패한 요리 생성
 
                 //아이템 지정 스크립트
-                cookData.itemID = 2003; cookData.tag = new string[] { "food", "cooked" }; cookData.itemName = "실패한 요리";
-                cookData.Left = -1; cookData.Up = -1; cookData.xSize = 2; cookData.ySize = 2;
-                cookData.isEquip = false; cookData.isSell = false;
-                cookData.price = 2; //나중에 가격 변경
+                //실패요리
+                foreach (var item in itemJsonData.itemList)
+                {
+                    if (item.itemID == 2003)
+                    {
+                        cookData = item;
+                    }
+                }
             }
 
             Vector2 tempPos;
@@ -169,20 +171,29 @@ public class CookingGage : MonoBehaviour
 
         if (num.text == "과일주스" && FruitIndex.Count >= 2)
         {
-            cookData.itemID = 2001;
-            cookData.xSize = 1; cookData.ySize = 2;
+            foreach (var item in itemJsonData.itemList)
+            {
+                if (item.itemID == 2001)
+                {
+                    cookData = item;
+                }
+            }
             //요리 재료 제거
             //길이는 소모하는 재료 수
-            for (int i = 0; i < 2; i++)
+            for (int i = 1; i > -1; i--)
             {
                 inventoryObject.Inst.throwItem(inventoryObject.Inst.itemObjects[FruitIndex[i]], false);
             }
-
         }
-        else if (num.text == "한식" && GreenIndex.Count >= 1 && RiceIndex.Count >= 1)
+        else if (num.text == "야채죽" && GreenIndex.Count >= 1 && RiceIndex.Count >= 1)
         {
-            cookData.itemID = 2002;
-            cookData.xSize = 2; cookData.ySize = 1;
+            foreach (var item in itemJsonData.itemList)
+            {
+                if (item.itemID == 2002)
+                {
+                    cookData = item;
+                }
+            }
             //요리 재료 제거
             inventoryObject.Inst.throwItem(inventoryObject.Inst.itemObjects[GreenIndex[0]], false);
             inventoryObject.Inst.throwItem(inventoryObject.Inst.itemObjects[RiceIndex[0]], false);

@@ -49,7 +49,7 @@ public class PlayerContorl : PlayerStatusControl
         ELEMENT_SKILL = 7, // 원소스킬
         ELEMENT_ULT_SKILL = 8, // 원소궁극기
         SWIMMING = 9, // 수영 중
-        STUNNED = 10, // 경직
+        FISHING = 10, // 낚시
         DEAD = 11, // 사망
 
         NUM = 12, // 상태 종류
@@ -138,6 +138,11 @@ public class PlayerContorl : PlayerStatusControl
                 {
                     this.PrevState = this.State;
                     this.NextState = STATE.SWIMMING;
+                }
+                if (Fishing.isPlayerFishing == true)
+                {
+                    this.PrevState = this.State;
+                    this.NextState = STATE.FISHING;
                 }
                 switch (this.State)
                 {
@@ -349,10 +354,13 @@ public class PlayerContorl : PlayerStatusControl
                             //die();
                         }
                         break;
-                    case STATE.STUNNED:
+                    case STATE.FISHING:
                         //스턴 모션이 끝나면, 바로 Move로 상태 이동해야함.
-                        this.PrevState = this.State;
-                        this.NextState = STATE.MOVE;
+                        if (Fishing.isPlayerFishing == false)
+                        {
+                            this.PrevState = this.State;
+                            this.NextState = STATE.MOVE;
+                        }
                         break;
                     case STATE.DEAD:
                         //죽으면 리스폰.
@@ -417,8 +425,8 @@ public class PlayerContorl : PlayerStatusControl
                         MyCurrentSpeed = SwimSpeed;
                         m_camera.GetComponent<CamControl>().isOnAim = false;
                         break;
-                    case STATE.STUNNED:
-
+                    case STATE.FISHING:
+                        m_camera.GetComponent<CamControl>().isOnAim = true;
                         break;
                     case STATE.DEAD:
 
@@ -483,8 +491,8 @@ public class PlayerContorl : PlayerStatusControl
                         StaminaTickUse(SwimStaminaAmount);
                     }
                     break;
-                case STATE.STUNNED:
-
+                case STATE.FISHING:
+                    //낚시 중에는 아무 행동도 못한다.
                     break;
                 case STATE.DEAD:
                     playerDirection.y -= GravityForce * Time.deltaTime;
@@ -795,6 +803,10 @@ public class PlayerContorl : PlayerStatusControl
                     {
                         hitInfo.collider.GetComponent<Enemy>().TakeHit(AttackDamage);
                     }
+                    else if (hitInfo.collider.gameObject.tag == "Shield")
+                    {
+                        StartCoroutine(hitInfo.collider.GetComponent<Shield>().CreateRipple(hitInfo.point));
+                    }
 
                     //퍼즐오브젝트와 상호작용 부분 추가
                     if (hitInfo.collider.gameObject.tag == "pattern")
@@ -806,6 +818,18 @@ public class PlayerContorl : PlayerStatusControl
                         hitInfo.collider.GetComponent<Connect>().GetP(hitInfo.point, hitInfo.normal);
                     }
 
+                    //동물 오브젝트와 상호작용 부분 추가
+                    if (hitInfo.collider.tag == "animal")
+                    {
+                        if (hitInfo.collider.GetComponent<Deer>().GetComeBack() || hitInfo.collider.GetComponent<Deer>().GetIsDead())
+                        {
+                            //아무것도 안한다. 공격안받음
+                        }
+                        else if (!hitInfo.collider.GetComponent<Deer>().GetComeBack())
+                        {
+                            hitInfo.collider.GetComponent<Deer>().Damage(1, transform.position);
+                        }
+                    }
                 }
                 else
                 {
@@ -869,6 +893,19 @@ public class PlayerContorl : PlayerStatusControl
             if (hitInfo.collider.gameObject.tag == "etrigger")
             {
                 hitInfo.collider.GetComponent<Etrigger>().GetElement(MyElement);
+            }
+
+            //동물 오브젝트와 상호작용 부분 추가
+            if (hitInfo.collider.tag == "animal")
+            {
+                if (hitInfo.collider.GetComponent<Deer>().GetComeBack() || hitInfo.collider.GetComponent<Deer>().GetIsDead())
+                {
+                    //아무것도 안한다. 공격안받음
+                }
+                else if (!hitInfo.collider.GetComponent<Deer>().GetComeBack())
+                {
+                    hitInfo.collider.GetComponent<Deer>().Damage(1, transform.position);
+                }
             }
         }
         else

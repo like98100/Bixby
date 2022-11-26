@@ -32,8 +32,4 @@ public class Mission : MonoBehaviour
         this.missionTitle.text = missionTitle;
         this.missionText.text = missionText;
     }
-    public string GetMissionTitle()
-    {
-        return missionTitle.text;
-    }
 }

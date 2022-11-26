@@ -209,7 +209,7 @@ public class PlayerAnimation : MonoBehaviour
     void runSpeedCheck()
     {
         if(modelContorl.State == PlayerContorl.STATE.RUN)           // 달리기 상태일 때
-            animator.SetFloat("MoveSpeed", 1.3f);                   // 재생속도 1.3로 설정
+            animator.SetFloat("MoveSpeed", 1.7f);                   // 재생속도 1.3로 설정
         else                                                        // 달리기 상태가 아닐 때
             animator.SetFloat("MoveSpeed", 1.0f);                   // 재생 속도 1.0으로 설정
     }

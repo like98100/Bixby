@@ -43,7 +43,7 @@ public class Speech : MonoBehaviour
         //    quest.SetIsClear(true);
 
         if (QuestObject.manager.GetNPCName() == this.talker.text
-            && (QuestObject.manager.GetIndex() % 2 == 0)
+            && (QuestObject.manager.GetIndex() % 2 == 0 || QuestObject.manager.GetQuestKind() == QuestKind.management)
     )
             QuestObject.manager.SetIsClear(true);
     }

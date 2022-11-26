@@ -17,12 +17,20 @@ public class Harvest : MonoBehaviour
         RICE = 3, //쌀
     };
 
-
-
+    //json데이터
+    itemJsonData itemJsonData;
     //아이템 데이터
     itemData harvestData;
 
-    private MeshRenderer meshTest; //매쉬 렌더러
+    //private MeshRenderer meshTest; //매쉬 렌더러
+
+    public bool testchack = true; //오브젝트 상태 체크
+    bool isPlayerClose;
+
+    private void Awake()
+    {
+        itemJsonData = json.LoadJsonFile<itemJsonData>(Application.dataPath, "harvest");//json로드
+    }
 
     void Start()
     {
@@ -34,69 +42,68 @@ public class Harvest : MonoBehaviour
                 break;
             case HARVESTSTATE.FRUIT:
                 //아이템 지정 스크립트
-                harvestData.itemID = 1000; harvestData.tag = new string[] { "food", "harvest" }; harvestData.itemName = "과일";
-                harvestData.Left = -1; harvestData.Up = -1; harvestData.xSize = 1; harvestData.ySize = 1;
-                harvestData.isEquip = false; harvestData.isSell = false;
-                harvestData.price = 1; //나중에 가격 변경
+                foreach (var item in itemJsonData.itemList)
+                {
+                    if (item.itemID == 1000)
+                    {
+                        harvestData = item;
+                    }
+                }
                 break;
             case HARVESTSTATE.GREENONION:
                 //아이템 지정 스크립트
-                harvestData.itemID = 1001; harvestData.tag = new string[] { "food", "harvest" }; harvestData.itemName = "파";
-                harvestData.Left = -1; harvestData.Up = -1; harvestData.xSize = 1; harvestData.ySize = 1;
-                harvestData.isEquip = false; harvestData.isSell = false;
-                harvestData.price = 1; //나중에 가격 변경
+                foreach (var item in itemJsonData.itemList)
+                {
+                    if (item.itemID == 1001)
+                    {
+                        harvestData = item;
+                    }
+                }
                 break;
             case HARVESTSTATE.RICE:
                 //아이템 지정 스크립트
-                harvestData.itemID = 1002; harvestData.tag = new string[] { "food", "harvest" }; harvestData.itemName = "쌀";
-                harvestData.Left = -1; harvestData.Up = -1; harvestData.xSize = 1; harvestData.ySize = 1;
-                harvestData.isEquip = false; harvestData.isSell = false;
-                harvestData.price = 1; //나중에 가격 변경
+                foreach (var item in itemJsonData.itemList)
+                {
+                    if (item.itemID == 1002)
+                    {
+                        harvestData = item;
+                    }
+                }
                 break;
             default:
                 break;
         }
-
-        
-
-
-        meshTest = gameObject.GetComponent<MeshRenderer>();
+        isPlayerClose = false;
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F) && isPlayerClose)
+        {
+            Vector2 tempPos;
+            //빈 공간 찾기
+            tempPos = inventoryObject.Inst.emptyCell(harvestData.xSize, harvestData.ySize);
+            inventoryObject.Inst.itemGet(harvestData.xSize, harvestData.ySize, tempPos.x, tempPos.y, harvestData);
 
-    //동시에 획득하는거 수정해야함 -> 가장 가까이 있는 것 만 제거 어케하지?
+            //인벤토리 추가 및 제이슨 저장
+            inventoryObject.Inst.jsonSave();
+            inventoryObject.Inst.FieldFKey.SetActive(false);
+
+            isPlayerClose = false;
+            this.gameObject.SetActive(false);
+            testchack = false;
+        }
+    }
+    
     private void OnTriggerStay(Collider other)
     {
-        //Debug.Log(other.name);
-
         if (other.gameObject.tag == "Player")
         {
-            //Debug.Log(other.name);
-
             //f키 생성
-            if (!inventoryObject.Inst.FieldFKey.activeSelf && this.meshTest.enabled == true)
+            if (!inventoryObject.Inst.FieldFKey.activeSelf)
             {
                 inventoryObject.Inst.FieldFKey.SetActive(true);
-            }
-
-            
-
-            if (Input.GetKeyDown(KeyCode.F) && meshTest.enabled == true)
-            {
-                //Debug.Log("cccc");
-                this.meshTest.enabled = false;
-
-                StartCoroutine(respawn());
-                //아이템 획득 -> 인벤토리랑 연동
-
-                Vector2 tempPos;
-                //빈 공간 찾기
-                tempPos = inventoryObject.Inst.emptyCell(harvestData.xSize, harvestData.ySize);
-                inventoryObject.Inst.itemGet(harvestData.xSize, harvestData.ySize, tempPos.x, tempPos.y, harvestData);
-
-                //인벤토리 추가 및 제이슨 저장
-                inventoryObject.Inst.jsonSave();
-                inventoryObject.Inst.FieldFKey.SetActive(false);
+                isPlayerClose = true;
             }
         }
     }
@@ -105,21 +112,9 @@ public class Harvest : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+            //f키 제거
             inventoryObject.Inst.FieldFKey.SetActive(false);
+            isPlayerClose = false;
         }
-    }
-
-
-    IEnumerator respawn()
-    {
-        //gameObject.SetActive(false);
-        yield return new WaitForSeconds(respawnTime);
-
-        //위치 랜덤 이동
-        transform.position = field.GetComponent<HarvestField>().Return_RandomPosition();
-
-        //gameObject.SetActive(true);
-        this.meshTest.enabled = true;
-
     }
 }

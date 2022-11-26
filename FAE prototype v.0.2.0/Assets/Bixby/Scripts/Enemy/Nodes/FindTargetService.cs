@@ -15,9 +15,18 @@ namespace MBT
 
         public override void Task()
         {
-            
-            TargetObjRef.Value = SelfObjRef.Value.GetComponent<Enemy>().target;
-            
+            GameObject obj = SelfObjRef.Value;
+
+            if (obj == null)
+            {
+                return;
+            }
+
+            if (obj.tag == "Enenmy")
+                TargetObjRef.Value = obj.GetComponent<Enemy>().target;
+            else if (obj.tag == "FinalBoss")
+                TargetObjRef.Value = obj.GetComponent<FinalBoss>().Target;
+
         }
     }
 }

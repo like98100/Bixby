@@ -40,7 +40,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3447278299111811357}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -59,4 +59,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rangeObject: {fileID: 3447278299111811357}
   harvestCount: 5
-  capsul: {fileID: 6671568813366429091, guid: 9e6b3e14ce3d7e249a3827c27c664648, type: 3}
+  respawnTime: 5
+  harvestObj: {fileID: 0}
+  obj: []

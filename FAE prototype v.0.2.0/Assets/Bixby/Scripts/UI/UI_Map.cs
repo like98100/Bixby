@@ -14,6 +14,11 @@ public class UI_Map : MonoBehaviour
     List<Transform> warpPoint;
     void Start()
     {
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "FieldScene")
+        {
+            this.gameObject.SetActive(false);
+            return;
+        }
         realPlayer = GameObject.FindGameObjectWithTag("Player");
         mapPlayer = this.transform.GetChild(0).gameObject;
         realMaxX = max.x;

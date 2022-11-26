@@ -9,19 +9,22 @@ namespace MBT
     public class CheckEnemyHP : Service
     {
         [Space]
-        public GameObjectReference Obj1;
+        public GameObjectReference ObjRef = new GameObjectReference(VarRefMode.DisableConstant);
         public FloatReference Variable = new FloatReference(VarRefMode.DisableConstant);
         
         public override void Task()
         {
-            GameObject obj = Obj1.Value;
+            GameObject obj = ObjRef.Value;
 
             if (obj == null)
             {
                 return;
             }
 
-            Variable.Value = obj.GetComponent<Enemy>().Stat.hp;
+            if (obj.tag == "Enemy")
+                Variable.Value = obj.GetComponent<Enemy>().Stat.hp;
+            else if (obj.tag == "FinalBoss")
+                Variable.Value = obj.GetComponent<FinalBoss>().Stat.hp;
         }
     }
 }

@@ -45,8 +45,11 @@ public class CamControl : MonoBehaviour
 
     void Update()
     {
-        xmove += Input.GetAxis("Mouse X") * mouseSenseX;
-        ymove -= Input.GetAxis("Mouse Y") * mouseSenseY;
+        if (Fishing.isPlayerFishing == false)
+        {
+            xmove += Input.GetAxis("Mouse X") * mouseSenseX;
+            ymove -= Input.GetAxis("Mouse Y") * mouseSenseY;
+        }
 
         ymove = Mathf.Clamp(ymove, -55.0f, 55.0f);
         transform.rotation = Quaternion.Euler(ymove, xmove, 0);

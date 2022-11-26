@@ -83,7 +83,7 @@ public class Cooking : MonoBehaviour
         }
         else if (myNum == 2)
         {
-            num.text = "ÇÑ½Ä";
+            num.text = "¾ßÃ¤Á×";
         }
     }
 }

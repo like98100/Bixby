@@ -37,6 +37,13 @@ public class NPC : MonoBehaviour
             notify.SetActive(true);
             notify.GetComponent<MeshRenderer>().material = speech.NPC_Plane_Marks[2];
         }
+        if (npcName == "partnerA")
+        {
+            this.gameObject.GetComponent<MeshFilter>().mesh =
+                GameObject.FindGameObjectWithTag("Player").transform.GetChild(1).GetChild(0).GetComponent<PlayerMesh>().CharacterMesh[1];
+            this.gameObject.GetComponent<MeshRenderer>().material =
+            GameObject.FindGameObjectWithTag("Player").transform.GetChild(1).GetChild(0).GetComponent<PlayerMesh>().CharacterMaterial[1];
+        }
     }
 
     // Update is called once per frame
@@ -152,4 +159,3 @@ public class NPC : MonoBehaviour
         }
     }
 }
-

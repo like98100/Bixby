@@ -40,7 +40,7 @@ public class QuestObject : MonoBehaviour
         if (json.FileExist(Application.dataPath, "quests"))                                      // Quest 파일이 존재할 시
         {
             JsonData = json.LoadJsonFile<questJsonData>(Application.dataPath, "quests");   // Quest Load
-            Debug.Log("Load Complete : " + JsonData.questList[0].npcName);
+            //Debug.Log("Load Complete : " + JsonData.questList[0].npcName);
         }
         else                                                                                    // Quest 파일이 존재하지 않을 때
         {
@@ -121,7 +121,7 @@ public class QuestObject : MonoBehaviour
 
     public Vector3 GetPosition()
     {
-        Debug.Log("현재 위치 : " + currentQuest.position[questSubIndex].x);
+        //Debug.Log("현재 위치 : " + currentQuest.position[questSubIndex].x);
         return currentQuest.position[questSubIndex];
     }
 
@@ -220,13 +220,14 @@ public class QuestObject : MonoBehaviour
                 questSubIndex++;
                 isClear = false;
                 SetObjectIndex(0);                  // 변수 초기화
+                GameObject.Find("GameManager").GetComponent<SetPositionParticle>().InitializeVariable();    // 파티클 위치 변경
             }
             else
             {
                 if (currentQuest.npcName == "none")//NPC에게 가지않고 퀘스트가 클리어되는 경우
                     SetNextQuest();
                 else
-                    UI_Control.Inst.Mission.misssionSet(UI_Control.Inst.Mission.GetMissionTitle(), currentQuest.npcName + "에게 가시오");
+                    UI_Control.Inst.Mission.misssionSet(JsonData.questIndex % 2 == 0 ? "" : "Quest " + ((JsonData.questIndex + 1) / 2).ToString(), currentQuest.npcName + "에게 가시오");
             }
         }
     }
@@ -237,6 +238,11 @@ public class QuestObject : MonoBehaviour
 
     public void MissionSet()
     {
+        if (isClear)
+        {
+            SetIsClear(isClear);
+            return;
+        }
         string missionTitle = "";
         string missionText = "";
         string questPurpose = "";

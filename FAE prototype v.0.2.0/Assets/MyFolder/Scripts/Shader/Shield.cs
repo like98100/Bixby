@@ -2,32 +2,86 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shield : MonoBehaviour
+public class Shield : MonoBehaviour, IDamgeable
 {
     //오브젝트 풀링 사용하기 
     [SerializeField] private GameObject rippleObj;
-    private Material mat;
+    private Material material;
+    private Queue<GameObject> ripples = new Queue<GameObject>();
 
-    static float heightOffset = 0.1f;
-    private void Start()
+    static float heightOffset = 1.0f;
+    private void Awake()
     {
-        mat = this.gameObject.GetComponent<MeshRenderer>().material;
-    }
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(collision.gameObject.CompareTag("Test"))
+        material = this.gameObject.GetComponent<MeshRenderer>().material;
+        for (int i = 0; i < 4; i++)
         {
-            //오브젝트 풀링 사용하거나 SetActive 사용해서 온오프 하기
             GameObject ripple = Instantiate(rippleObj, transform);
-            mat = ripple.GetComponent<MeshRenderer>().material;
-            mat.SetVector("_SphereCenter", collision.contacts[0].point);
-            Destroy(ripple, 0.5f);
+            ripple.SetActive(false);
+
+            ripples.Enqueue(ripple);
         }
     }
-    public void SetActive(bool _bool)
+    private void Start()
     {
+        this.Initialize();
+    }
+
+    public IEnumerator CreateRipple(Vector3 hitPoint)
+    {
+        if(ripples.Count == 0)
+        {
+            GameObject go = Instantiate(rippleObj, transform);
+            go.SetActive(false);
+
+            ripples.Enqueue(go);
+        }
+
+        GameObject ripple = ripples.Dequeue();
+        Material mat = ripple.GetComponent<MeshRenderer>().material;
+        mat.SetVector("_SphereCenter", hitPoint);
+
+        ripple.SetActive(true);
+
+        yield return new WaitForSeconds(0.5f);
+
+        ripple.SetActive(false);
+        ripples.Enqueue(ripple);
+    }
+
+    public void SetActive(bool _bool)
+    { 
         this.gameObject.SetActive(_bool);
-        float height = this.gameObject.transform.parent.GetComponent<CapsuleCollider>().height + heightOffset;
+    }
+    public void Initialize()
+    {
+        Transform parent = this.gameObject.transform.parent;
+
+        //Set Scale
+        float height = parent.GetComponent<BoxCollider>().size.y + heightOffset;
         this.gameObject.transform.localScale = new Vector3(height, height, height);
+
+        //Set Position
+        Vector3 position = parent.GetComponent<BoxCollider>().center;
+        this.gameObject.transform.localPosition = position;
+
+        //Set Color
+        Color color = parent.GetComponent<Enemy>().GetMyElementColor();
+        this.material.SetColor("_Color", color);
+    }
+
+    public virtual void TakeHit(float damage)
+    {
+        if (transform.parent.tag == "Enemy")
+            transform.GetComponentInParent<Enemy>().TakeHit(damage);
+        if (transform.parent.tag == "FinalBoss")
+            transform.GetComponentInParent<FinalBoss>().TakeHit(damage);
+    }
+
+    public virtual void TakeElementHit(float damage, ElementRule.ElementType enemyElement) //????? ?????? ????? ????.
+    {
+        if (transform.parent.tag == "Enemy")
+            transform.GetComponentInParent<Enemy>().TakeElementHit(damage, enemyElement);
+        if (transform.parent.tag == "FinalBoss")
+            transform.GetComponentInParent<FinalBoss>().TakeElementHit(damage, enemyElement);
     }
 }

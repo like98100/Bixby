@@ -479,7 +479,7 @@ MonoBehaviour:
   NPC_Plane_Marks:
   - {fileID: 2100000, guid: dadf669e563ac2944a40c64c8c3a37f3, type: 2}
   - {fileID: 2100000, guid: ec841fa1466d09b43bb4fdb63b6bcbf2, type: 2}
-  - {fileID: 2100000, guid: 1f30adcd26565084597cbed74380b8ba, type: 2}
+  - {fileID: 2100000, guid: affe56be479553c479ba8b4b65e9dae2, type: 2}
 --- !u!114 &4136791963225882030
 MonoBehaviour:
   m_ObjectHideFlags: 0

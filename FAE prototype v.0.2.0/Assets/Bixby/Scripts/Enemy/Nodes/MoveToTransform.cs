@@ -23,7 +23,13 @@ namespace MBTExample
             time = 0;
             agent.isStopped = false;
             agent.SetDestination(TargetRef.Value.transform.position);
-            ObjRef.Value.GetComponent<Enemy>().Anim.SetBool("IsMove", true);
+            if (ObjRef.Value.tag == "Enemy")
+                ObjRef.Value.GetComponent<Enemy>().Anim.SetBool("IsMove", true);
+            else if (ObjRef.Value.tag == "FinalBoss")
+            {
+                ObjRef.Value.GetComponent<FinalBoss>().Anim.SetBool("isMove", true);
+                ObjRef.Value.GetComponent<FinalBoss>().isMoved = true;
+            }
         }
         
         public override NodeResult Execute()
@@ -42,9 +48,9 @@ namespace MBTExample
                 return NodeResult.running;
             }
             // Check if agent is very close to destination
-            if ((agent.remainingDistance < stopDistance) ||
-                (ObjRef.Value.GetComponent<Enemy>().Stat.hp <= 0))
+            if (agent.remainingDistance < stopDistance)
             {
+                agent.isStopped = true;
                 return NodeResult.success;
             }
             // Check if there is any path (if not pending, it should be set)
@@ -52,13 +58,31 @@ namespace MBTExample
             {
                 return NodeResult.running;
             }
+
+            if (ObjRef.Value.tag == "Enemy")
+            {
+                if (ObjRef.Value.GetComponent<Enemy>().Stat.hp <= 0)
+                    return NodeResult.success;
+            }
+            else if (ObjRef.Value.tag == "FinalBoss")
+            {
+                if (ObjRef.Value.GetComponent<FinalBoss>().Stat.hp <= 0)
+                    return NodeResult.success;
+            }
             // By default return failure
             return NodeResult.failure;
         }
 
         public override void OnExit()
         {
-            ObjRef.Value.GetComponent<Enemy>().Anim.SetBool("IsMove", false);
+            if (ObjRef.Value.tag == "Enemy")
+                ObjRef.Value.GetComponent<Enemy>().Anim.SetBool("IsMove", false);
+            else if (ObjRef.Value.tag == "FinalBoss")
+            {
+                ObjRef.Value.GetComponent<FinalBoss>().Anim.SetBool("isMove", false);
+                ObjRef.Value.GetComponent<FinalBoss>().isMoved = false;
+            }
+            
             agent.isStopped = true;
             // agent.ResetPath();
         }

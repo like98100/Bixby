@@ -7,5 +7,7 @@ public enum EnemyType
 {
     NONE,
     Melee,
-    Ranged
+    Ranged,
+    DungeonBoss,
+    FinalBoss
 }

@@ -255,4 +255,29 @@ public class ElementControl : ElementRule, IElementReaction
     {
         EnemyElement = element;
     }
+
+    public Color GetMyElementColor()
+    {
+        Color color;
+        switch (MyElement)
+        {
+            case ElementType.FIRE:
+                color = FireSkillEndColor;
+                break;
+            case ElementType.ICE:
+                color = IceSkillEndColor;
+                break;
+            case ElementType.WATER:
+                color = WaterSkillEndColor;
+                break;
+            case ElementType.ELECTRICITY:
+                color = ElectroSkillEndColor;
+                break;
+            default:
+                color = new Color(255, 255, 255);
+                break;
+        }
+
+        return color;
+    }
 }

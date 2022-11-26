@@ -18,6 +18,12 @@ public class ShaderManager : MonoBehaviour
         mr.material = material;  
     }
 
+    public void ChangeMaterials(GameObject obj, Material[] materials)
+    {
+        Renderer mr = obj.GetComponent<Renderer>();
+        mr.materials = materials;
+    }
+
     public void ChangeMaterials(GameObject[] objects, Material material)
     {
         foreach (GameObject obj in objects)

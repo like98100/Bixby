@@ -17,7 +17,13 @@ namespace MBT
 
         public override void OnEnter()
         {
-            ObjRef.Value.GetComponent<Enemy>().Anim.SetBool("IsAttack", true);
+            if (ObjRef.Value.tag == "Enemy")
+                ObjRef.Value.GetComponent<Enemy>().Anim.SetBool("IsAttack", true);
+            else if (ObjRef.Value.tag == "FinalBoss")
+            {
+                ObjRef.Value.GetComponent<FinalBoss>().Anim.SetTrigger("isAttack");
+                ObjRef.Value.GetComponent<FinalBoss>().isAttacked = true;
+            }
         }
 
         public override NodeResult Execute()
@@ -28,12 +34,24 @@ namespace MBT
 
             Time_ += Time.deltaTime * 1.5f;
 
-            if((Time_ > UpdateInterval) || ((int)ObjRef.Value.GetComponent<Enemy>().State == 3) ||
-                (ObjRef.Value.GetComponent<Enemy>().Stat.hp <= 0) || (Variable.Value > ObjRef.Value.GetComponent<Enemy>().Stat.attackRange))
+            if (ObjRef.Value.tag == "Enemy")
             {
-                // Reset time and update destination
-                Time_ = 0.0f;
-                return NodeResult.success;
+                if((Time_ > UpdateInterval) || ((int)ObjRef.Value.GetComponent<Enemy>().State == 3) ||
+                    (ObjRef.Value.GetComponent<Enemy>().Stat.hp <= 0) || (Variable.Value > ObjRef.Value.GetComponent<Enemy>().Stat.attackRange))
+                {
+                    // Reset time and update destination
+                    Time_ = 0.0f;
+                    return NodeResult.success;
+                }
+            }
+            else if (ObjRef.Value.tag == "FinalBoss")
+            {
+                if((!ObjRef.Value.GetComponent<FinalBoss>().isAttacked) || (ObjRef.Value.GetComponent<FinalBoss>().Stat.hp <= 0))
+                {
+                    // Reset time and update destination
+                    Time_ = 0.0f;
+                    return NodeResult.success;
+                }
             }
 
             // 무언가 해야한다면 여기
@@ -43,13 +61,14 @@ namespace MBT
 
         public override void OnExit()
         {
-            if (Variable.Value <= ObjRef.Value.GetComponent<Enemy>().Stat.attackRange)
+            if (ObjRef.Value.tag == "Enemy")
             {
-                //ObjRef.Value.GetComponent<Enemy>().MeleeAttack();
-            }
-            
+                if (Variable.Value <= ObjRef.Value.GetComponent<Enemy>().Stat.attackRange)
+                    //ObjRef.Value.GetComponent<Enemy>().MeleeAttack();
+                
 
-            ObjRef.Value.GetComponent<Enemy>().Anim.SetBool("IsAttack", false);
+                ObjRef.Value.GetComponent<Enemy>().Anim.SetBool("IsAttack", false);
+            }
         }
     }
 }

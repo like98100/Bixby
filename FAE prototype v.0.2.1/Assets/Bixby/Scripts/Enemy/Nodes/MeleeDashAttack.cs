@@ -22,6 +22,7 @@ namespace MBT
         public override void OnEnter()
         {
             targetVec = TargetObjRef.Value.transform.position;
+            targetVec += TargetObjRef.Value.transform.forward*5.0f;
             if (ObjRef.Value.tag == "FinalBoss")
             {
                 ObjRef.Value.GetComponent<FinalBoss>().Anim.SetTrigger("isDashAttack");

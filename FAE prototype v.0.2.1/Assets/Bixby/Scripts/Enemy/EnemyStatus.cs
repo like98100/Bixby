@@ -48,7 +48,7 @@ public class EnemyStatus
         else if (enemyType == EnemyType.Ranged)
             stat = new EnemyStatus(enemyType, 3001, 150.0f, 50.0f, 15.0f, 7.0f, 5.0f, 5.0f, 15.0f, enemyElement);
         else if (enemyType == EnemyType.FinalBoss)
-            stat = new EnemyStatus(enemyType, 3002,  500.0f, 50.0f, 30.0f, 3.0f, 2.0f, 10.0f, 100.0f, enemyElement);
+            stat = new EnemyStatus(enemyType, 3002,  500.0f, 50.0f, 30.0f, 5.5f, 2.0f, 10.0f, 100.0f, enemyElement);
 
         return stat;
     }

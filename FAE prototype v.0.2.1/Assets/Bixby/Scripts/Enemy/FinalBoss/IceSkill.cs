@@ -27,16 +27,29 @@ namespace MBT
 
         public override NodeResult Execute()
         {
+            Transform self = ObjRef.Value.transform;
+            Transform target;
+            if (targetRef.Value == null)
+                return NodeResult.failure;
+            else    
+                target = targetRef.Value.transform;
+            Vector3 dir = target.position - self.position;
+
+            Time_ += Time.deltaTime * 1.5f;
+
             if(!ObjRef.Value.GetComponent<FinalBoss>().isAttacked)
             {
                 // Reset time and update destination
                 Time_ = 0.0f;
                 return NodeResult.success;
             }
-            
-            ObjRef.Value.transform.position = Vector3.MoveTowards(transform.position, 
-                                                        targetVec, 
-                                                        15.0f * Time.deltaTime);
+            if (Time_ <= 1.0f)
+                self.rotation = Quaternion.Lerp(self.rotation, Quaternion.LookRotation(dir), 
+                                                Time.deltaTime * 20.0f);
+            else
+                ObjRef.Value.transform.position = Vector3.MoveTowards(transform.position, 
+                                                                    targetVec, 
+                                                                    30.0f * Time.deltaTime);
 
             return NodeResult.running;
         }

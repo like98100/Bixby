@@ -15,6 +15,7 @@ public class FinalBoss : CombatStatus, IDamgeable
     public GameObject WaterBallSpawner;
 
     //public GameObject shield;
+    public Material[] mat;
 
     public NavMeshAgent MyAgent;
     public Animator Anim;
@@ -51,7 +52,6 @@ public class FinalBoss : CombatStatus, IDamgeable
         shield = this.gameObject.transform.Find("Shield").GetComponent<Shield>();
         shield.SetActive(true);
         setShield = true;
-
     }
 
     void FixedUpdate()
@@ -89,20 +89,29 @@ public class FinalBoss : CombatStatus, IDamgeable
 
     public void ChangePhase()
     {
+        Material[] temp;
+
         if ((int)Stat.element == (int)ElementType.FIRE)
         {
             Stat.element = ElementType.ICE;
             this.MyElement = Stat.element;
+            
+            //mat = gameObject.GetComponent<SkinnedMeshRenderer>().materials;
+            temp = transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().materials;
+            temp[1] = mat[0];
+            transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().materials = temp;
         }
         else if ((int)Stat.element == (int)ElementType.ICE)
         {
             Stat.element = ElementType.WATER;
             this.MyElement = Stat.element;
+            //transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().materials[1] = mat[1];
         }
         else if ((int)Stat.element == (int)ElementType.WATER)
         {
             Stat.element = ElementType.ELECTRICITY;
             this.MyElement = Stat.element;
+            //transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().materials[1] = mat[2];
         }
         SetBarrier();
         SkillCooldown = 0.0f;
@@ -124,6 +133,13 @@ public class FinalBoss : CombatStatus, IDamgeable
             Stat.barrier -= damage * AdditionalDamage;
         UI_Control.Inst.damageSet((damage * AdditionalDamage).ToString(), this.gameObject);//대미지 UI 추가 코드
         DealtDamage = Mathf.Round(damage * 10) * 0.1f;
+        
+        if (Stat.barrier <= 0.0f)
+        {
+            setShield = false;
+            shield.SetActive(false);
+            col.enabled = false;
+        }
     }
 
     public virtual void TakeElementHit(float damage, ElementRule.ElementType enemyElement) //���߿� ������ ���ɼ� ����.
@@ -150,20 +166,10 @@ public class FinalBoss : CombatStatus, IDamgeable
             }
         }
 
-        if (!setShield)
-            Stat.hp -= curDamage * AdditionalDamage;
-        else
-            Stat.barrier -= curDamage * AdditionalDamage;
-
+        
+        Stat.hp -= curDamage * AdditionalDamage;
         UI_Control.Inst.damageSet((curDamage * AdditionalDamage).ToString(), this.gameObject);//����� UI �߰� �ڵ�
         DealtDamage = Mathf.Round(curDamage * 10) * 0.1f;
-
-        if (Stat.barrier <= 0.0f)
-        {
-            setShield = false;
-            shield.SetActive(false);
-            col.enabled = false;
-        }
     }
 
     public void EndAttack()

@@ -30,6 +30,7 @@ public class Enemy : CombatStatus, IDamgeable
     public NavMeshAgent MyAgent;
     public Animator Anim;
     private Rigidbody rigid;
+    private BoxCollider col;
 
     public float DealtDamage;
 
@@ -49,6 +50,8 @@ public class Enemy : CombatStatus, IDamgeable
         this.MyElement = Stat.element;
         centerPosition = this.transform.position;
 
+        target = null;
+
         Timer = 0.0f;
 
         State = STATE.IDLE;
@@ -56,6 +59,7 @@ public class Enemy : CombatStatus, IDamgeable
         MyAgent = GetComponent<NavMeshAgent>();
         Anim = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody>();
+        col = GetComponent<BoxCollider>();
 
         UI_EnemyHp.EnemyHps.hpObjects.Add(Instantiate(UI_Control.Inst.EnemyHp.getPrefab(), GameObject.Find("UI").transform.GetChild(1)));
         UI_EnemyHp.EnemyHps.enemies.Add(this);
@@ -104,7 +108,8 @@ public class Enemy : CombatStatus, IDamgeable
         if (setShield)
         {
             shield.SetActive(true);
-            setShield = false;
+            col.enabled = false;
+            //setShield = false;
         }
     }
     
@@ -159,9 +164,20 @@ public class Enemy : CombatStatus, IDamgeable
             isHitted = true;
             findPlayer(100.0f);
         }
-        Stat.hp -= damage * AdditionalDamage;
+        
+        if (!setShield)
+            Stat.hp -= damage * AdditionalDamage;
+        else
+            Stat.barrier -= damage * AdditionalDamage;
         UI_Control.Inst.damageSet((damage * AdditionalDamage).ToString(), this.gameObject);//대미지 UI 추가 코드
         DealtDamage = Mathf.Round(damage * 10) * 0.1f;
+
+        if (Stat.barrier <= 0.0f)
+        {
+            setShield = false;
+            shield.SetActive(false);
+            col.enabled = true;
+        }
         
     }
 

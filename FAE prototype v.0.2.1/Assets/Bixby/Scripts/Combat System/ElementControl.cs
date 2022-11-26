@@ -144,13 +144,10 @@ public class ElementControl : ElementRule, IElementReaction
         switch (adventage)
         {
             case 1: //내가 이김. 상대방이 맞아야 함.
-
                 break;
             case 0: //서로 비김. 난 안 맞아야 함.
-
                 break;
             case -1: //내가 짐. 세게 맞아야 함.
-
                 break;
         }
     }

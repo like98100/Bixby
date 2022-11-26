@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shield : MonoBehaviour, IDamgeable
+public class Shield : ElementControl, IDamgeable
 {
     //오브젝트 풀링 사용하기 
     [SerializeField] private GameObject rippleObj;
@@ -80,8 +80,18 @@ public class Shield : MonoBehaviour, IDamgeable
     public virtual void TakeElementHit(float damage, ElementRule.ElementType enemyElement) //????? ?????? ????? ????.
     {
         if (transform.parent.tag == "Enemy")
-            transform.GetComponentInParent<Enemy>().TakeElementHit(damage, enemyElement);
+        {
+            if (CheckAdventage(enemyElement, transform.GetComponentInParent<Enemy>().Stat.element) < 0)
+                transform.GetComponentInParent<Enemy>().target.GetComponent<PlayerContorl>().TakeHit(20.0f);
+            else
+                transform.GetComponentInParent<Enemy>().TakeHit(10.0f);
+        }
         if (transform.parent.tag == "FinalBoss")
-            transform.GetComponentInParent<FinalBoss>().TakeElementHit(damage, enemyElement);
+        {
+            if (CheckAdventage(enemyElement, transform.GetComponentInParent<FinalBoss>().Stat.element) < 0)
+                transform.GetComponentInParent<FinalBoss>().Target.GetComponent<PlayerContorl>().TakeHit(20.0f);
+            else
+                transform.GetComponentInParent<FinalBoss>().TakeHit(10.0f);
+        }
     }
 }

@@ -192,7 +192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedEditorNode: {fileID: 6094554536188185469}
+  selectedEditorNode: {fileID: 0}
   repeatOnFinish: 0
   maxExecutionsPerTick: 1000
   parent: {fileID: 0}
@@ -971,7 +971,7 @@ MonoBehaviour:
     mode: 0
     blackboard: {fileID: 0}
     key: 
-    constantValue: 10
+    constantValue: 15
   intReference2:
     useConstant: 1
     mode: 0
@@ -1023,7 +1023,7 @@ MonoBehaviour:
     mode: 0
     blackboard: {fileID: 0}
     key: 
-    constantValue: 9
+    constantValue: 14.5
   intReference2:
     useConstant: 1
     mode: 0
@@ -1075,7 +1075,7 @@ MonoBehaviour:
     mode: 0
     blackboard: {fileID: 0}
     key: 
-    constantValue: 4
+    constantValue: 5
   intReference2:
     useConstant: 1
     mode: 0
@@ -1127,7 +1127,7 @@ MonoBehaviour:
     mode: 0
     blackboard: {fileID: 0}
     key: 
-    constantValue: 3.5
+    constantValue: 4.5
   intReference2:
     useConstant: 1
     mode: 0
@@ -1479,7 +1479,6 @@ MonoBehaviour:
     height: 45
   parent: {fileID: 7997889936964685134}
   children:
-  - {fileID: 7483047723779564661}
   - {fileID: 5944715960755373513}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
@@ -1504,7 +1503,7 @@ MonoBehaviour:
     y: 1080
     width: 160
     height: 45
-  parent: {fileID: 9022212008054209808}
+  parent: {fileID: 0}
   children: []
   behaviourTree: {fileID: 0}
   runtimePriority: 0
@@ -1593,7 +1592,6 @@ MonoBehaviour:
     height: 45
   parent: {fileID: 4924392655641464051}
   children:
-  - {fileID: 1536338316943057377}
   - {fileID: 1443094306770292085}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
@@ -1618,7 +1616,7 @@ MonoBehaviour:
     y: 1080
     width: 160
     height: 45
-  parent: {fileID: 6169546481012058524}
+  parent: {fileID: 0}
   children: []
   behaviourTree: {fileID: 0}
   runtimePriority: 0
@@ -5097,7 +5095,7 @@ Transform:
   m_Children:
   - {fileID: 4681719079261883680}
   m_Father: {fileID: 4681719079261883662}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4681719079262048546
 GameObject:
@@ -5265,6 +5263,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4681719079261883660}
   - component: {fileID: 4681719079256841252}
+  - component: {fileID: 6428985675462969272}
   m_Layer: 0
   m_Name: Cube.007
   m_TagString: Untagged
@@ -5280,11 +5279,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4681719079262048556}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_Children: []
   m_Father: {fileID: 4681719079261883662}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &4681719079256841252
 SkinnedMeshRenderer:
@@ -5358,6 +5357,22 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.0000000023283064, y: -0.0012598736, z: 0.0057236734}
     m_Extent: {x: 0.010718556, y: 0.017418027, z: 0.010620287}
   m_DirtyAABB: 0
+--- !u!114 &6428985675462969272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4681719079262048556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 662ddbfe61e69204b8fb505f61d84cd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mat:
+  - {fileID: 2100000, guid: b58c471c32c97fa4993cdd7d03a90853, type: 2}
+  - {fileID: 2100000, guid: ecbac07dc0a052c47ba0a085adf9a9c4, type: 2}
+  - {fileID: 2100000, guid: 2c3f510deb1859345ba4921bb3448b3f, type: 2}
 --- !u!1 &4681719079262048558
 GameObject:
   m_ObjectHideFlags: 0
@@ -5389,10 +5404,10 @@ Transform:
   m_GameObject: {fileID: 4681719079262048558}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
-  - {fileID: 4681719079261883648}
   - {fileID: 4681719079261883660}
+  - {fileID: 4681719079261883648}
   - {fileID: 4681719079261883694}
   - {fileID: 4130538157166699205}
   - {fileID: 355673856088777235}
@@ -5517,6 +5532,10 @@ MonoBehaviour:
   FireBall: {fileID: 6570376534567638675, guid: bc3be6652ef592c4f980b438a2278d35, type: 3}
   WaterBall: {fileID: 2531788073555915697, guid: 979e985b70ea82049a72cff59642bbfe, type: 3}
   WaterBallSpawner: {fileID: 3476918654226696945, guid: 28be06fd10a34494b9e1874c012a0bd1, type: 3}
+  mat:
+  - {fileID: 2100000, guid: b58c471c32c97fa4993cdd7d03a90853, type: 2}
+  - {fileID: 2100000, guid: ecbac07dc0a052c47ba0a085adf9a9c4, type: 2}
+  - {fileID: 2100000, guid: 2c3f510deb1859345ba4921bb3448b3f, type: 2}
   MyAgent: {fileID: 0}
   Anim: {fileID: 0}
   rigid: {fileID: 0}
@@ -6040,7 +6059,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 00f5ac747b6a86a4daf6428f68048ae9, type: 2}
+  - {fileID: 2100000, guid: 921a757f0d1b9534b86125469192079b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6223,6 +6242,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4681719079261883662}
     m_Modifications:
+    - target: {fileID: 7996128035727267940, guid: 41247e9a48943d44abd2f85dda2a0fac, type: 3}
+      propertyPath: ExplosionObj
+      value: 
+      objectReference: {fileID: 1481134630116024679, guid: 69e99c5333091074b90dac5252d2acd9, type: 3}
+    - target: {fileID: 7996128035727267940, guid: 41247e9a48943d44abd2f85dda2a0fac, type: 3}
+      propertyPath: TransmissionObj
+      value: 
+      objectReference: {fileID: 8389957880746753291, guid: 1a891c56444c98145b0268375bb2a6ec, type: 3}
     - target: {fileID: 7996128035727267944, guid: 41247e9a48943d44abd2f85dda2a0fac, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -6270,6 +6297,14 @@ PrefabInstance:
     - target: {fileID: 7996128035727267945, guid: 41247e9a48943d44abd2f85dda2a0fac, type: 3}
       propertyPath: m_Name
       value: Shield
+      objectReference: {fileID: 0}
+    - target: {fileID: 7996128035727267945, guid: 41247e9a48943d44abd2f85dda2a0fac, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7996128035727267947, guid: 41247e9a48943d44abd2f85dda2a0fac, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41247e9a48943d44abd2f85dda2a0fac, type: 3}

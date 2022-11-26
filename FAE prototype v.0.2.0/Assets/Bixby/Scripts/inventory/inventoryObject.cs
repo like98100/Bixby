@@ -360,13 +360,13 @@ public class inventoryObject : MonoBehaviour
                 switch (itemObj.ItemData.itemID)
                 {//id에 따라 food 효과 조정
                     case 3:
-                        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerContorl>().Stamina += 10f;
+                        playerRecovery(10, false);
                         break;
                     case 2001:
-                        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerContorl>().Health += 10f;
+                        playerRecovery(10, true);
                         break;
                     case 2002:
-                        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerContorl>().Health += 20f;
+                        playerRecovery(20, true);
                         break;
                     default:
                         break;
@@ -377,7 +377,15 @@ public class inventoryObject : MonoBehaviour
     }
 
     #endregion
-
+    void playerRecovery(float value, bool isHP)
+    {
+        if (isHP)
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerContorl>().Health
+                    = Mathf.Clamp(GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerContorl>().Health + value, 0, GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerContorl>().MyStartingHealth);
+        else
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerContorl>().Stamina
+                = Mathf.Clamp(GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerContorl>().Stamina + value, 0, GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerContorl>().MyStartingStamina);
+    }
     #region get;set;
     public GameObject getObj(string objectKind)
     {

@@ -65,13 +65,6 @@ public class UI_Control : MonoBehaviour
                     if (isField)
                         windowSet(Map);
                     break;
-                case "I":
-                    windowSet(inventory);
-                    break;
-                case "M":
-                    if (isField)
-                        windowSet(Map);
-                    break;
             }
         }
     }
@@ -94,9 +87,9 @@ public class UI_Control : MonoBehaviour
                 case "Shop":
                     inventory.SetActive(true);
                     break;
-                //case "Map":
-                //    print("맵 열림");
-                //    break;열 때 맵 위치를 플레이어 중점으로 할 것
+                case "Map":
+                    Map.GetComponent<UI_Map>().MapSetUp();
+                    break;// 열 때 맵 위치를 플레이어 중점으로 할 것
             }
             Cursor.lockState = CursorLockMode.None;
             aimPoint.SetActive(false);

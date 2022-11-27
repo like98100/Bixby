@@ -58,12 +58,18 @@ public class UI_Control : MonoBehaviour
 
             switch (temp)
             {
+                case "I":
                 case "i":
                     windowSet(inventory);
                     break;
+                case "M":
                 case "m":
                     if (isField)
                         windowSet(Map);
+                    break;
+                case "X":
+                case "x"://Äù½ºÆ® ½ºÅµ
+                    QuestObject.manager.SetIsClear(true);
                     break;
             }
         }

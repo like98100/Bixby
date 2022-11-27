@@ -24,7 +24,10 @@ public class UI_Tutorial : MonoBehaviour
         foreach (Transform item in canvas.transform)
         {
             if (item.gameObject.GetComponent<TMPro.TextMeshProUGUI>())
+            {
                 elemeneClearText = item.gameObject.GetComponent<TMPro.TextMeshProUGUI>();
+                elemeneClearText.gameObject.SetActive(false);
+            }
             else
             {
                 tutorialImages.Add(item.gameObject);
@@ -50,6 +53,8 @@ public class UI_Tutorial : MonoBehaviour
             {
                 elemeneClearText.gameObject.SetActive(false);
                 canvas.SetActive(false);
+                time = 0;
+                TutoImageSet(1);
             }
         }
         if (QuestObject.manager.GetIndex() == 5 && QuestObject.manager.GetIsClear()&&!didText)
@@ -58,9 +63,10 @@ public class UI_Tutorial : MonoBehaviour
         }
     }
 
-    public void CombatTutoImageSet()
+    public void TutoImageSet(int index)//0:전투튜토리얼, 1:상성튜토리얼, 2:아바타변경튜토리얼
     {
         UI_Control.Inst.windowSet(canvas);
+        openedIndex = index;
         elemeneClearText.gameObject.SetActive(false);
         foreach (var item in tutorialImages)
         {
@@ -70,30 +76,20 @@ public class UI_Tutorial : MonoBehaviour
             }
             item.SetActive(false);
         }
-        tutorialImages[0].SetActive(true);
-        tutorialImages[0].transform.GetChild(0).gameObject.SetActive(true);
-        openedImage = tutorialImages[0].transform.GetChild(0).gameObject;
-        openedIndex = 0;
+        tutorialImages[openedIndex].SetActive(true);
+        tutorialImages[openedIndex].transform.GetChild(0).gameObject.SetActive(true);
+        openedImage = tutorialImages[openedIndex].transform.GetChild(0).gameObject;
+        
     }
     public void NextImage()
     {
         int imageIndex = openedImage.transform.GetSiblingIndex();
         if (tutorialImages[openedIndex].transform.childCount-1 == imageIndex)
         {
-            if (openedIndex == tutorialImages.Count-1)
-            {
-                tutorialImages[openedIndex].transform.GetChild(imageIndex).gameObject.SetActive(false);
-                tutorialImages[openedIndex].SetActive(false);
+            tutorialImages[openedIndex].transform.GetChild(imageIndex).gameObject.SetActive(false);
+            tutorialImages[openedIndex].SetActive(false);
+            if (canvas.activeSelf)
                 UI_Control.Inst.windowSet(canvas);
-            }
-            else
-            {
-                tutorialImages[openedIndex].SetActive(false);
-                tutorialImages[openedIndex + 1].SetActive(true);
-                openedImage = tutorialImages[openedIndex + 1].transform.GetChild(0).gameObject;
-                openedImage.SetActive(true);
-                openedIndex++;
-            }
         }
         else
         {

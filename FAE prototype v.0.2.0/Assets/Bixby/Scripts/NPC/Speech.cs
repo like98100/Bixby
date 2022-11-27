@@ -92,9 +92,16 @@ public class Speech : MonoBehaviour
             }
             speechIndex = 0;//√ ±‚»≠
             UI_Control.Inst.windowSet(speechWindow);
-            if (QuestObject.manager.GetIndex() == 3)
+            switch (QuestObject.manager.GetIndex())
             {
-                GameObject.Find("Tutorial").GetComponent<UI_Tutorial>().CombatTutoImageSet();
+                case 3:
+                    GameObject.Find("Tutorial").GetComponent<UI_Tutorial>().TutoImageSet(0);
+                    break;
+                case 8:
+                    GameObject.Find("Tutorial").GetComponent<UI_Tutorial>().TutoImageSet(2);
+                    break;
+                default:
+                    break;
             }
         }
         else

@@ -6,8 +6,8 @@ using MBT;
 namespace MBT
 {
     [AddComponentMenu("")]
-    [MBTNode("Tasks/Electrocity Skill")]
-    public class ElectrocitySkill : Leaf
+    [MBTNode("Tasks/Electricity Skill")]
+    public class ElectricitySkill : Leaf
     {
         public GameObjectReference ObjRef = new GameObjectReference(VarRefMode.DisableConstant);
         public GameObjectReference targetRef = new GameObjectReference(VarRefMode.DisableConstant);
@@ -20,10 +20,11 @@ namespace MBT
         public override void OnEnter()
         {
             targetVec = targetRef.Value.transform.position;
+            ObjRef.Value.transform.LookAt(targetVec);
             targetVec += ObjRef.Value.transform.forward * 10.0f;
-            targetVec += ObjRef.Value.transform.right * 10.0f;
+            targetVec += ObjRef.Value.transform.right * 5.0f;
 
-            ObjRef.Value.GetComponent<FinalBoss>().Anim.SetTrigger("Electrocity");
+            ObjRef.Value.GetComponent<FinalBoss>().Anim.SetTrigger("Electricity");
             ObjRef.Value.GetComponent<FinalBoss>().isAttacked = true;
 
             Time_ = 0.0f;

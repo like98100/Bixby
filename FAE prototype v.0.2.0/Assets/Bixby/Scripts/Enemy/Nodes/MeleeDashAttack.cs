@@ -22,9 +22,15 @@ namespace MBT
         public override void OnEnter()
         {
             targetVec = TargetObjRef.Value.transform.position;
-            targetVec += TargetObjRef.Value.transform.forward*5.0f;
-            if (ObjRef.Value.tag == "FinalBoss")
+            if (ObjRef.Value.tag == "DungeonBoss")
             {
+                targetVec += TargetObjRef.Value.transform.forward*3.0f;
+                ObjRef.Value.GetComponent<DungeonBoss>().Anim.SetTrigger("isDashAttacked");
+                ObjRef.Value.GetComponent<DungeonBoss>().isAttacked = true;
+            }
+            else if (ObjRef.Value.tag == "FinalBoss")
+            {
+                targetVec += TargetObjRef.Value.transform.forward*5.0f;
                 ObjRef.Value.GetComponent<FinalBoss>().Anim.SetTrigger("isDashAttack");
                 ObjRef.Value.GetComponent<FinalBoss>().isAttacked = true;
             }
@@ -46,13 +52,23 @@ namespace MBT
             
             Time_ += Time.deltaTime * 1.5f;
 
-            if(!ObjRef.Value.GetComponent<FinalBoss>().isAttacked)
+            // if (ObjRef.Value.tag == "Enemy")
+            // {
+            //     if(!ObjRef.Value.GetComponent<Enemy>().isAttacked)
+            //         return NodeResult.success;
+            // }
+            if (ObjRef.Value.tag == "DungeonBoss")
             {
-                // Reset time and update destination
-                Time_ = 0.0f;
-                return NodeResult.success;
+                if(!ObjRef.Value.GetComponent<DungeonBoss>().isAttacked)
+                    return NodeResult.success;
             }
-            else if (Time_ <= 1.0f)
+            else if (ObjRef.Value.tag == "FinalBoss")
+            {
+                if(!ObjRef.Value.GetComponent<FinalBoss>().isAttacked)
+                    return NodeResult.success;
+            }
+            
+            if (Time_ <= 1.0f)
                 self.rotation = Quaternion.Lerp(self.rotation, Quaternion.LookRotation(dir), 
                                           Time.deltaTime * 20.0f);
             else
@@ -65,7 +81,7 @@ namespace MBT
 
         public override void OnExit()
         {
-
+            Time_ = 0.0f;
         }
             
     }

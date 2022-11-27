@@ -64,17 +64,22 @@ public class Shield : ElementControl, IDamgeable
         Vector3 position = parent.GetComponent<BoxCollider>().center;
         this.gameObject.transform.localPosition = position;
 
+        Color color = Color.black;
+
         //Set Color
-        Color color = parent.GetComponent<Enemy>().GetMyElementColor();
+        if (parent.gameObject.tag == "Enemy")
+            color = parent.GetComponent<Enemy>().GetMyElementColor();
+        else if (parent.gameObject.tag == "DungeonBoss")
+            color = parent.GetComponent<DungeonBoss>().GetMyElementColor();
+        else if (parent.gameObject.tag == "FinalBoss")
+            color = parent.GetComponent<FinalBoss>().GetMyElementColor();
+        
         this.material.SetColor("_Color", color);
     }
 
     public virtual void TakeHit(float damage)
     {
-        if (transform.parent.tag == "Enemy")
-            transform.GetComponentInParent<Enemy>().TakeHit(damage);
-        if (transform.parent.tag == "FinalBoss")
-            transform.GetComponentInParent<FinalBoss>().TakeHit(damage);
+        
     }
 
     public virtual void TakeElementHit(float damage, ElementRule.ElementType enemyElement) //????? ?????? ????? ????.
@@ -85,6 +90,13 @@ public class Shield : ElementControl, IDamgeable
                 transform.GetComponentInParent<Enemy>().target.GetComponent<PlayerContorl>().TakeHit(20.0f);
             else
                 transform.GetComponentInParent<Enemy>().TakeHit(10.0f);
+        }
+        if (transform.parent.tag == "DungeonBoss")
+        {
+            if (CheckAdventage(enemyElement, transform.GetComponentInParent<DungeonBoss>().Stat.element) < 0)
+                transform.GetComponentInParent<DungeonBoss>().target.GetComponent<PlayerContorl>().TakeHit(20.0f);
+            else
+                transform.GetComponentInParent<DungeonBoss>().TakeHit(10.0f);
         }
         if (transform.parent.tag == "FinalBoss")
         {

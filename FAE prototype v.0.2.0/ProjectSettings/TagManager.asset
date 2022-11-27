@@ -15,6 +15,9 @@ TagManager:
   - etrigger
   - pattern
   - animal
+  - FinalBoss
+  - FireBall
+  - DungeonBoss
   layers:
   - Default
   - TransparentFX

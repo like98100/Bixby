@@ -136,8 +136,6 @@ GameObject:
   - component: {fileID: 1839404518718142522}
   - component: {fileID: 4378940502552303127}
   - component: {fileID: 4207395124816690857}
-  - component: {fileID: 4310911097131108926}
-  - component: {fileID: 4398967385446907301}
   m_Layer: 0
   m_Name: BehaviourTree
   m_TagString: Untagged
@@ -178,7 +176,6 @@ MonoBehaviour:
   - {fileID: 2695156726155707738}
   - {fileID: 5020393436015328917}
   - {fileID: 570244235617079662}
-  - {fileID: 4310911097131108926}
   masterBlackboard: {fileID: 0}
 --- !u!114 &6409569189455938790
 MonoBehaviour:
@@ -406,7 +403,7 @@ MonoBehaviour:
     height: 59
   parent: {fileID: 1184993918205978931}
   children:
-  - {fileID: 4398967385446907301}
+  - {fileID: 2407372949107225118}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
@@ -444,7 +441,7 @@ MonoBehaviour:
     y: 320
     width: 160
     height: 59
-  parent: {fileID: 4398967385446907301}
+  parent: {fileID: 6134685116301786865}
   children:
   - {fileID: 195488257820973465}
   behaviourTree: {fileID: 0}
@@ -3047,7 +3044,7 @@ MonoBehaviour:
     y: 1080
     width: 160
     height: 45
-  parent: {fileID: 2742462924496046486}
+  parent: {fileID: 0}
   children: []
   behaviourTree: {fileID: 0}
   runtimePriority: 0
@@ -3091,7 +3088,6 @@ MonoBehaviour:
     height: 45
   parent: {fileID: 961129959062273936}
   children:
-  - {fileID: 7232943870166452555}
   - {fileID: 5613256454569453714}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
@@ -3144,7 +3140,6 @@ MonoBehaviour:
     height: 45
   parent: {fileID: 8516869108445578398}
   children:
-  - {fileID: 966824602696559322}
   - {fileID: 8730467090564529646}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
@@ -3169,7 +3164,7 @@ MonoBehaviour:
     y: 1080
     width: 160
     height: 45
-  parent: {fileID: 6689010452175145490}
+  parent: {fileID: 0}
   children: []
   behaviourTree: {fileID: 0}
   runtimePriority: 0
@@ -3629,7 +3624,7 @@ MonoBehaviour:
     y: 1140
     width: 160
     height: 45
-  parent: {fileID: 4262646831909491709}
+  parent: {fileID: 0}
   children: []
   behaviourTree: {fileID: 0}
   runtimePriority: 0
@@ -3673,7 +3668,6 @@ MonoBehaviour:
     height: 45
   parent: {fileID: 1839404518718142522}
   children:
-  - {fileID: 984189176477737622}
   - {fileID: 4378940502552303127}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
@@ -3750,7 +3744,7 @@ MonoBehaviour:
     y: 1140
     width: 160
     height: 45
-  parent: {fileID: 8425993276175782163}
+  parent: {fileID: 0}
   children: []
   behaviourTree: {fileID: 0}
   runtimePriority: 0
@@ -3794,7 +3788,6 @@ MonoBehaviour:
     height: 45
   parent: {fileID: 7807603653648388692}
   children:
-  - {fileID: 8784656892012842926}
   - {fileID: 4207395124816690857}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
@@ -5012,60 +5005,6 @@ MonoBehaviour:
   targetVec: {x: 0, y: 0, z: 0}
   UpdateInterval: 3.5
   Time_: 0
---- !u!114 &4310911097131108926
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3137919136024940248}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ae15c5e6bcb1714080f2e8296c3d17a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  key: enemyIsMoved
-  val: 0
---- !u!114 &4398967385446907301
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3137919136024940248}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ebbbb8394b9c3c14aa1ed1f8d6d4abb3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  title: Check Is Moved Service
-  rect:
-    serializedVersion: 2
-    x: 820
-    y: 257
-    width: 160
-    height: 45
-  parent: {fileID: 6134685116301786865}
-  children:
-  - {fileID: 2407372949107225118}
-  behaviourTree: {fileID: 0}
-  runtimePriority: 0
-  breakpoint: 0
-  interval: 1
-  randomDeviation: 0
-  callOnEnter: 1
-  ObjRef:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 1107375551665464079}
-    key: selfObjRef
-    constantValue: {fileID: 0}
-  Variable:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 1107375551665464079}
-    key: enemyIsMoved
-    constantValue: 0
 --- !u!1 &4681719079262048544
 GameObject:
   m_ObjectHideFlags: 0
@@ -5389,7 +5328,7 @@ GameObject:
   - component: {fileID: 1601261783880769920}
   - component: {fileID: 1327451376188605603}
   m_Layer: 0
-  m_Name: FireWarrior
+  m_Name: FinalBoss
   m_TagString: FinalBoss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5541,9 +5480,7 @@ MonoBehaviour:
   rigid: {fileID: 0}
   col: {fileID: 0}
   DealtDamage: 0
-  isBarriered: 0
   isAttacked: 0
-  isMoved: 0
   SkillCooldown: 0
   setShield: 0
 --- !u!1 &4681719079262048560
@@ -6304,7 +6241,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7996128035727267947, guid: 41247e9a48943d44abd2f85dda2a0fac, type: 3}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41247e9a48943d44abd2f85dda2a0fac, type: 3}

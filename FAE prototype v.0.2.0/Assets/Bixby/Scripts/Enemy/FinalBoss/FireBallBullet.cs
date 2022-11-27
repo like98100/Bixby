@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireBallBullet : MonoBehaviour, IDamgeable
+public class FireBallBullet : ElementControl, IDamgeable
 {
     public Transform Target;
     public LayerMask Mask = -1;
@@ -45,14 +45,14 @@ public class FireBallBullet : MonoBehaviour, IDamgeable
     {
         if(other.tag == "Player")
         {
-            
+            other.GetComponent<PlayerContorl>().TakeElementHit(10.0f, ElementType.FIRE);
             Destroy(gameObject);
         }
     }
     
     private void findPlayer()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 10000.0f, 
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 100.0f, 
                                                     Mask, QueryTriggerInteraction.Ignore);
 
         if (colliders.Length > 0)
@@ -63,10 +63,11 @@ public class FireBallBullet : MonoBehaviour, IDamgeable
 
     public void TakeHit(float damage)
     {
-        Destroy(gameObject);
+        
     }
-    public void TakeElementHit(float damage, ElementRule.ElementType elementType)
+    public void TakeElementHit(float damage, ElementRule.ElementType enemyElement)
     {
-        Destroy(gameObject);
+        if (CheckAdventage(enemyElement, transform.GetComponentInParent<Enemy>().Stat.element) > 0)
+            Destroy(gameObject);
     }
 }

@@ -27,7 +27,7 @@ namespace MBT
         public override void OnEnter()
         {
             //ObjRef.Value.GetComponent<FinalBoss>().Anim.SetTrigger("qwe");
-            p  = new Vector3(1140.0f, -452.11f, 350.0f);
+            p  = new Vector3(1140.0f, -0.4521f, 350.0f);
             p1 = new Vector3(1080.0f, 85.0f, 285.0f);
             p2 = new Vector3(1200.0f, 85.0f, 285);
             p3 = new Vector3(1100.0f, 85.0f, 420.0f);
@@ -42,7 +42,17 @@ namespace MBT
         public override NodeResult Execute()
         {
             obj = ObjRef.Value;
-            target = targetObjRef.Value.transform.position;
+
+            Transform self = ObjRef.Value.transform;
+            Transform target;
+
+            if (targetObjRef.Value == null)
+                return NodeResult.failure;
+            else    
+                target = targetObjRef.Value.transform;
+
+            Vector3 dir = target.position - self.position;
+
             Time_ += Time.deltaTime;
 
             if(!ObjRef.Value.GetComponent<FinalBoss>().isAttacked)
@@ -52,12 +62,29 @@ namespace MBT
                 return NodeResult.success;
             }
 
-            Instantiate(obj.GetComponent<FinalBoss>().WaterBall, p1, transform.rotation);
-            Instantiate(obj.GetComponent<FinalBoss>().WaterBall, p2, transform.rotation);
-            Instantiate(obj.GetComponent<FinalBoss>().WaterBall, p3, transform.rotation);
-            Instantiate(obj.GetComponent<FinalBoss>().WaterBall, p4, transform.rotation);
+            if (Time_ <= 1.0)
+            {
+                self.rotation = Quaternion.Lerp(self.rotation, Quaternion.LookRotation(dir), 
+                                                Time.deltaTime * 10.0f);
+            }
+
+            if (count == 0)
+            {
+                Instantiate(obj.GetComponent<FinalBoss>().WaterBall, p1, transform.rotation);
+                Instantiate(obj.GetComponent<FinalBoss>().WaterBall, p2, transform.rotation);
+                Instantiate(obj.GetComponent<FinalBoss>().WaterBall, p3, transform.rotation);
+                Instantiate(obj.GetComponent<FinalBoss>().WaterBall, p4, transform.rotation);
+
+                Instantiate(obj.GetComponent<FinalBoss>().WaterBallSpawner,
+                        new Vector3(target.position.x, target.position.y+20.0f, target.position.z),
+                        transform.rotation);
+
+                count ++;
+            }
             
-            return NodeResult.success;
+            ObjRef.Value.transform.position = p;
+
+            return NodeResult.running;
             //return NodeResult.running;
         }
 
@@ -65,9 +92,6 @@ namespace MBT
         {
             //ObjRef.Value.GetComponent<FinalBoss>().Count = 0;
 
-            Instantiate(obj.GetComponent<FinalBoss>().WaterBallSpawner,
-                        new Vector3(target.x, target.y+20.0f, target.z),
-                        transform.rotation);
             ObjRef.Value.GetComponent<FinalBoss>().SkillCooldown = 10.0f;
         }
     }

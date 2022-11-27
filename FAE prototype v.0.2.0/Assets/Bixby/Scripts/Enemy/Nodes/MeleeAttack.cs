@@ -19,6 +19,11 @@ namespace MBT
         {
             if (ObjRef.Value.tag == "Enemy")
                 ObjRef.Value.GetComponent<Enemy>().Anim.SetBool("IsAttack", true);
+            else if (ObjRef.Value.tag == "DungeonBoss")
+            {
+                ObjRef.Value.GetComponent<DungeonBoss>().Anim.SetTrigger("isAttacked");
+                ObjRef.Value.GetComponent<DungeonBoss>().isAttacked = true;
+            }
             else if (ObjRef.Value.tag == "FinalBoss")
             {
                 ObjRef.Value.GetComponent<FinalBoss>().Anim.SetTrigger("isAttack");
@@ -38,6 +43,15 @@ namespace MBT
             {
                 if((Time_ > UpdateInterval) || ((int)ObjRef.Value.GetComponent<Enemy>().State == 3) ||
                     (ObjRef.Value.GetComponent<Enemy>().Stat.hp <= 0) || (Variable.Value > ObjRef.Value.GetComponent<Enemy>().Stat.attackRange))
+                {
+                    // Reset time and update destination
+                    Time_ = 0.0f;
+                    return NodeResult.success;
+                }
+            }
+            else if (ObjRef.Value.tag == "DungeonBoss")
+            {
+                if((!ObjRef.Value.GetComponent<DungeonBoss>().isAttacked) || (ObjRef.Value.GetComponent<DungeonBoss>().Stat.hp <= 0))
                 {
                     // Reset time and update destination
                     Time_ = 0.0f;

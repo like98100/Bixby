@@ -25,11 +25,10 @@ namespace MBTExample
             agent.SetDestination(TargetRef.Value.transform.position);
             if (ObjRef.Value.tag == "Enemy")
                 ObjRef.Value.GetComponent<Enemy>().Anim.SetBool("IsMove", true);
+            else if (ObjRef.Value.tag == "DungeonBoss")
+                ObjRef.Value.GetComponent<DungeonBoss>().Anim.SetBool("isMoved", true);
             else if (ObjRef.Value.tag == "FinalBoss")
-            {
                 ObjRef.Value.GetComponent<FinalBoss>().Anim.SetBool("isMove", true);
-                ObjRef.Value.GetComponent<FinalBoss>().isMoved = true;
-            }
         }
         
         public override NodeResult Execute()
@@ -64,6 +63,11 @@ namespace MBTExample
                 if (ObjRef.Value.GetComponent<Enemy>().Stat.hp <= 0)
                     return NodeResult.success;
             }
+            else if (ObjRef.Value.tag == "DungeonBoss")
+            {
+                if (ObjRef.Value.GetComponent<DungeonBoss>().Stat.hp <= 0)
+                    return NodeResult.success;
+            }
             else if (ObjRef.Value.tag == "FinalBoss")
             {
                 if (ObjRef.Value.GetComponent<FinalBoss>().Stat.hp <= 0)
@@ -77,11 +81,10 @@ namespace MBTExample
         {
             if (ObjRef.Value.tag == "Enemy")
                 ObjRef.Value.GetComponent<Enemy>().Anim.SetBool("IsMove", false);
+            else if (ObjRef.Value.tag == "DungeonBoss")
+                ObjRef.Value.GetComponent<DungeonBoss>().Anim.SetBool("isMoved", false);
             else if (ObjRef.Value.tag == "FinalBoss")
-            {
                 ObjRef.Value.GetComponent<FinalBoss>().Anim.SetBool("isMove", false);
-                ObjRef.Value.GetComponent<FinalBoss>().isMoved = false;
-            }
             
             agent.isStopped = true;
             // agent.ResetPath();

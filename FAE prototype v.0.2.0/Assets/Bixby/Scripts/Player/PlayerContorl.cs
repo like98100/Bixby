@@ -803,16 +803,15 @@ public class PlayerContorl : PlayerStatusControl
                     {
                         hitInfo.collider.GetComponent<Enemy>().TakeHit(AttackDamage);
                     }
+                    else if (hitInfo.collider.tag == "DungeonBoss")
+                    {
+                        hitInfo.collider.GetComponent<DungeonBoss>().TakeHit(AttackDamage);
+                    }
                     else if (hitInfo.collider.tag == "FinalBoss")
                     {
                         hitInfo.collider.GetComponent<FinalBoss>().TakeHit(AttackDamage);
                     }
-                    else if (hitInfo.collider.gameObject.tag == "Shield")
-                    {
-                        StartCoroutine(hitInfo.collider.GetComponent<Shield>().CreateRipple(hitInfo.point));
-                        hitInfo.collider.GetComponent<Shield>().TakeHit(AttackDamage);
-                    }
-
+                    
                     //퍼즐오브젝트와 상호작용 부분 추가
                     if (hitInfo.collider.gameObject.tag == "pattern")
                     {
@@ -856,15 +855,14 @@ public class PlayerContorl : PlayerStatusControl
                     {
                         hitInfo.collider.GetComponent<Enemy>().TakeHit(AttackDamage);
                     }
+                    else if (hitInfo.collider.tag == "DungeonBoss")
+                    {
+                        hitInfo.collider.GetComponent<DungeonBoss>().TakeHit(AttackDamage);
+                    }
                     else if (hitInfo.collider.tag == "FinalBoss")
                     {
                         hitInfo.collider.GetComponent<FinalBoss>().TakeHit(AttackDamage);
-                    }
-                    else if (hitInfo.collider.gameObject.tag == "Shield")
-                    {
-                        StartCoroutine(hitInfo.collider.GetComponent<Shield>().CreateRipple(hitInfo.point));
-                        hitInfo.collider.GetComponent<Shield>().TakeHit(AttackDamage);
-                    }
+                    }                    
                 }
                 else
                 {
@@ -902,7 +900,29 @@ public class PlayerContorl : PlayerStatusControl
                 }
                 if (ElementGauge > 100.0f) ElementGauge = 100.0f;
             }
+            else if (hitInfo.collider.tag == "DungeonBoss")
+            {
+                setEnemyElement(hitInfo.collider.GetComponent<DungeonBoss>().Stat.element);
+                hitInfo.collider.GetComponent<DungeonBoss>().TakeElementHit(AttackDamage, MyElement);
+
+                if (MyElement != ElementType.NONE)
+                {
+                    ElementGauge += ElementGaugeChargeAmount; //원소게이지 ++
+                }
+                if (ElementGauge > 100.0f) ElementGauge = 100.0f;
+            }
             else if (hitInfo.collider.tag == "FinalBoss")
+            {
+                setEnemyElement(hitInfo.collider.GetComponent<FinalBoss>().Stat.element);
+                hitInfo.collider.GetComponent<FinalBoss>().TakeElementHit(AttackDamage, MyElement);
+
+                if (MyElement != ElementType.NONE)
+                {
+                    ElementGauge += ElementGaugeChargeAmount; //원소게이지 ++
+                }
+                if (ElementGauge > 100.0f) ElementGauge = 100.0f;
+            }
+            else if (hitInfo.collider.tag == "FireBall")
             {
                 setEnemyElement(hitInfo.collider.GetComponent<FinalBoss>().Stat.element);
                 hitInfo.collider.GetComponent<FinalBoss>().TakeElementHit(AttackDamage, MyElement);
@@ -923,8 +943,7 @@ public class PlayerContorl : PlayerStatusControl
                 {
                     ElementGauge += ElementGaugeChargeAmount; //원소게이지 ++
                 }
-                if (ElementGauge > 100.0f) ElementGauge = 100.0f;
-                
+                if (ElementGauge > 100.0f) ElementGauge = 100.0f;                
             }
 
             //퍼즐오브젝트와 상호작용 추가
@@ -999,6 +1018,16 @@ public class PlayerContorl : PlayerStatusControl
             {
                 setEnemyElement(hitInfo.collider.GetComponent<Enemy>().Stat.element);
                 hitInfo.collider.GetComponent<Enemy>().TakeElementHit(UltDamage, MyElement);
+            }
+            else if (hitInfo.collider.tag == "DungeonBoss")
+            {
+                setEnemyElement(hitInfo.collider.GetComponent<DungeonBoss>().Stat.element);
+                hitInfo.collider.GetComponent<DungeonBoss>().TakeElementHit(AttackDamage, MyElement);
+            }
+            else if (hitInfo.collider.tag == "FinalBoss")
+            {
+                setEnemyElement(hitInfo.collider.GetComponent<FinalBoss>().Stat.element);
+                hitInfo.collider.GetComponent<FinalBoss>().TakeElementHit(AttackDamage, MyElement);
             }
         }
         projectileLine.SetPosition(1, rayOrigin + (m_camera.transform.forward * ShootDistance));

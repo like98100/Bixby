@@ -87,20 +87,20 @@ public class Enemy : CombatStatus, IDamgeable
 
         findPlayer(Stat.sight);
 
-        if(State != STATE.CHASE && State != STATE.RUNAWAY)
+        if (State != STATE.CHASE && State != STATE.RUNAWAY)
             stateChange();
 
-        if(Stat.hp % Stat.maxHp == 1)
+        if (Stat.hp % Stat.maxHp == 1)
             runChance = true;
 
-        if(runChance && Stat.hp % Stat.maxHp <= 0.34)
+        if (runChance && Stat.hp % Stat.maxHp <= 0.34)
         {
             runChance = false;
             isHitted = false;
             State = STATE.RUNAWAY;
         }
 
-        if(isHitted)
+        if (isHitted)
         {
             State = STATE.CHASE;
         }
@@ -112,14 +112,14 @@ public class Enemy : CombatStatus, IDamgeable
             //setShield = false;
         }
     }
-    
+
     private void stateChange()
     {
         Timer += Time.deltaTime;
 
-        if(Timer >= 5.0f)
+        if (Timer >= 5.0f)
         {
-            if(State == STATE.IDLE)
+            if (State == STATE.IDLE)
                 State = STATE.PATROL;
             else
                 State = STATE.IDLE;
@@ -129,11 +129,11 @@ public class Enemy : CombatStatus, IDamgeable
 
     private void findPlayer(float sight)
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, sight, 
+        Collider[] colliders = Physics.OverlapSphere(transform.position, sight,
                                                     Mask, QueryTriggerInteraction.Ignore);
 
-        if(colliders.Length > 0)
-        {    
+        if (colliders.Length > 0)
+        {
             target = colliders[0].gameObject;
             State = STATE.CHASE;
         }
@@ -146,14 +146,13 @@ public class Enemy : CombatStatus, IDamgeable
 
     public void MeleeAttack()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, Stat.attackRange, 
+        Collider[] colliders = Physics.OverlapSphere(transform.position, Stat.attackRange,
                                                     Mask, QueryTriggerInteraction.Ignore);
-            
-        if(colliders.Length > 0)
+
+        if (colliders.Length > 0)
         {
             setEnemyElement(colliders[0].GetComponent<PlayerContorl>().MyElement);
             colliders[0].GetComponent<PlayerContorl>().TakeElementHit(Stat.damage, Stat.element);
-            Debug.Log("Hit");
         }
     }
 
@@ -164,7 +163,7 @@ public class Enemy : CombatStatus, IDamgeable
             isHitted = true;
             findPlayer(100.0f);
         }
-        
+
         if (!setShield)
             Stat.hp -= damage * AdditionalDamage;
         else
@@ -178,7 +177,7 @@ public class Enemy : CombatStatus, IDamgeable
             shield.SetActive(false);
             col.enabled = true;
         }
-        
+
     }
 
     public virtual void TakeElementHit(float damage, ElementRule.ElementType enemyElement) //���߿� ������ ���ɼ� ����.
@@ -213,7 +212,7 @@ public class Enemy : CombatStatus, IDamgeable
         Stat.hp -= curDamage * AdditionalDamage;
         UI_Control.Inst.damageSet((curDamage * AdditionalDamage).ToString(), this.gameObject);//����� UI �߰� �ڵ�
         DealtDamage = Mathf.Round(curDamage * 10) * 0.1f;
-        
+
     }
 
     public void RunToSleepChange()
@@ -223,7 +222,7 @@ public class Enemy : CombatStatus, IDamgeable
 
     public void ReCharge()
     {
-        if(Stat.hp == Stat.maxHp)
+        if (Stat.hp == Stat.maxHp)
             State = STATE.IDLE;
     }
     private void OnDestroy()//에너미HP바 제거 및 퀘스트 인덱스 조정
@@ -239,18 +238,13 @@ public class Enemy : CombatStatus, IDamgeable
      //        break;
      //}
      //questObject = null;
-        if (Stat.hp <= 0)
+        if (Stat.hp <= 0
+            && QuestObject.manager.GetQuestKind()==QuestKind.kill
+            && QuestObject.manager.GetObjectId() == Stat.id)
         {
-            switch (QuestObject.manager.GetQuestKind())
-            {
-                case QuestKind.kill:
-                    if (QuestObject.manager.GetObjectId() == Stat.id)
-                        QuestObject.manager.SetObjectIndex(QuestObject.manager.GetObjectIndex() + 1);
-                    break;
-                default:
-                    break;
-            }
+            QuestObject.manager.SetObjectIndex(QuestObject.manager.GetObjectIndex() + 1);
         }
+
         int index = UI_EnemyHp.EnemyHps.enemies.IndexOf(this);
         UI_EnemyHp.EnemyHps.enemies.RemoveAt(index);
         Destroy(UI_EnemyHp.EnemyHps.hpObjects[index]);

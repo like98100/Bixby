@@ -23,9 +23,7 @@ public class FinalBoss : CombatStatus, IDamgeable
     public SphereCollider col;
 
     public float DealtDamage;
-    public bool isBarriered;
     public bool isAttacked;
-    public bool isMoved;
 
     public float SkillCooldown;
 
@@ -40,7 +38,6 @@ public class FinalBoss : CombatStatus, IDamgeable
 
         this.MyElement = Stat.element;
         isAttacked = false;
-        isMoved = false;
 
         SkillCooldown = 0.0f;
 
@@ -103,7 +100,6 @@ public class FinalBoss : CombatStatus, IDamgeable
             Stat.element = ElementType.ICE;
             this.MyElement = Stat.element;
             
-            //mat = gameObject.GetComponent<SkinnedMeshRenderer>().materials;
             temp = transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().materials;
             temp[1] = mat[0];
             transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().materials = temp;
@@ -112,13 +108,19 @@ public class FinalBoss : CombatStatus, IDamgeable
         {
             Stat.element = ElementType.WATER;
             this.MyElement = Stat.element;
-            //transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().materials[1] = mat[1];
+            
+            temp = transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().materials;
+            temp[1] = mat[1];
+            transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().materials = temp;
         }
         else if ((int)Stat.element == (int)ElementType.WATER)
         {
             Stat.element = ElementType.ELECTRICITY;
             this.MyElement = Stat.element;
-            //transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().materials[1] = mat[2];
+
+            temp = transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().materials;
+            temp[1] = mat[2];
+            transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().materials = temp;
         }
         SetBarrier();
         SkillCooldown = 0.0f;

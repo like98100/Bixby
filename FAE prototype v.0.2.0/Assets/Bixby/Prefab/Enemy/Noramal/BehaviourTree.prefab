@@ -131,7 +131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedEditorNode: {fileID: 0}
+  selectedEditorNode: {fileID: 7469444798081147333}
   repeatOnFinish: 0
   maxExecutionsPerTick: 1000
   parent: {fileID: 0}
@@ -312,9 +312,9 @@ MonoBehaviour:
   interval: 1
   randomDeviation: 0
   callOnEnter: 1
-  Obj1:
+  ObjRef:
     useConstant: 0
-    mode: 0
+    mode: 1
     blackboard: {fileID: 8528748061431720136}
     key: enemyObjReference
     constantValue: {fileID: 0}
@@ -769,12 +769,19 @@ MonoBehaviour:
   bounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
+  objRef:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 8528748061431720136}
+    key: enemyObjReference
+    constantValue: {fileID: 0}
   blackboardVariable:
     useConstant: 0
     mode: 1
     blackboard: {fileID: 8528748061431720136}
     key: setMovePosition
     constantValue: {x: 0, y: 0, z: 0}
+  myCenter: {x: 0, y: 0, z: 0}
 --- !u!114 &2968405623996883011
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -929,12 +936,19 @@ MonoBehaviour:
   bounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
+  objRef:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 8528748061431720136}
+    key: enemyObjReference
+    constantValue: {fileID: 0}
   blackboardVariable:
     useConstant: 0
     mode: 1
     blackboard: {fileID: 8528748061431720136}
     key: setMovePosition
     constantValue: {x: 0, y: 0, z: 0}
+  myCenter: {x: 0, y: 0, z: 0}
 --- !u!114 &1742466956738691688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1264,11 +1278,17 @@ MonoBehaviour:
   interval: 1
   randomDeviation: 0
   callOnEnter: 1
-  Transform1:
+  ObjRef:
     useConstant: 0
-    mode: 0
+    mode: 1
     blackboard: {fileID: 8528748061431720136}
     key: enemyObjReference
+    constantValue: {fileID: 0}
+  targetObjRef:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 8528748061431720136}
+    key: targetObjReference
     constantValue: {fileID: 0}
   Variable:
     useConstant: 0
@@ -1795,6 +1815,7 @@ MonoBehaviour:
   Speed: 10
   UpdateInterval: 1
   Time_: 0
+  targetVec: {x: 0, y: 0, z: 0}
 --- !u!114 &8299672091413825365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1823,11 +1844,17 @@ MonoBehaviour:
   interval: 1
   randomDeviation: 0
   callOnEnter: 1
-  Transform1:
+  ObjRef:
     useConstant: 0
-    mode: 0
+    mode: 1
     blackboard: {fileID: 8528748061431720136}
     key: enemyObjReference
+    constantValue: {fileID: 0}
+  targetObjRef:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 8528748061431720136}
+    key: targetObjReference
     constantValue: {fileID: 0}
   Variable:
     useConstant: 0

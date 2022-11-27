@@ -20,7 +20,7 @@ namespace MBT
                 return;
 
             if (obj.tag == "FinalBoss")
-                Variable.Value = obj.GetComponent<FinalBoss>().isMoved;                
+                return;           
         }
     }
 }

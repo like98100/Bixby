@@ -5,7 +5,7 @@ using UnityEngine;
 public class UI_CharacterFrame : MonoBehaviour
 {
     PlayerContorl playerContorl;
-    [SerializeField] int ableElementCount;
+    [SerializeField] int ableElementCount;//사용 가능한 속성 수, 이후 개발함에 따라 현 스크립트에서는 제거 예정
     List<GameObject> avaters;
     void Start()
     {
@@ -14,7 +14,6 @@ public class UI_CharacterFrame : MonoBehaviour
         avaters = new List<GameObject>();
         foreach (Transform item in this.transform)
             avaters.Add(item.gameObject);
-        //ableCountSet();
         SetAvatars();
     }
 
@@ -26,15 +25,17 @@ public class UI_CharacterFrame : MonoBehaviour
     public void SetAvatars()//가능한 아바타들 가시화, 불가능한 아바타 비가시화
     {
         float height = avaters[0].GetComponent<RectTransform>().rect.height * 1.5f;
-        for (int i = 0; i < avaters.Count; i++)
+        int i = 0;
+        foreach (var item in avaters)
         {
             if (i < ableElementCount)
             {
-                avaters[i].SetActive(true);
-                avaters[i].transform.localPosition = Vector3.zero + Vector3.up * (0.5f * ableElementCount - (i + 0.5f)) * height;
+                item.SetActive(true);
+                item.transform.localPosition = Vector3.zero + Vector3.up * (0.5f * ableElementCount - (i + 0.5f)) * height;
             }
             else
-                avaters[i].SetActive(false);
+                item.SetActive(false);
+            i++;
         }
         NowAvater();
     }
@@ -54,13 +55,5 @@ public class UI_CharacterFrame : MonoBehaviour
             }
                 
         }
-    }
-    void ableCountSet()//인덱스에 맞게 우측 아바타 개수 조정하는 함수, 이후 퀘스트 추가에 따라 처리 필요
-    {
-        if (QuestObject.manager.GetIndex() <= 7)
-            ableElementCount = 1;
-        else
-            ableElementCount = 2;
-        SetAvatars();
     }
 }

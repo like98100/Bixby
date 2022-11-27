@@ -21,7 +21,10 @@ namespace MBT
                 return;
             }
 
-            Variable.Value = obj.GetComponent<FinalBoss>().SkillCooldown;
+            if (obj.tag == "DungeonBoss")
+                Variable.Value = obj.GetComponent<DungeonBoss>().SkillCooldown;
+            else if (obj.tag == "FinalBoss")
+                Variable.Value = obj.GetComponent<FinalBoss>().SkillCooldown;
         }
     }
 }

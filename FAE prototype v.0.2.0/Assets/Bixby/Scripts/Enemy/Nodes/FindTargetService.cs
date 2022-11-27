@@ -22,8 +22,10 @@ namespace MBT
                 return;
             }
 
-            if (obj.tag == "Enenmy")
+            if (obj.tag == "Enemy")
                 TargetObjRef.Value = obj.GetComponent<Enemy>().target;
+            else if (obj.tag == "DungeonBoss")
+                TargetObjRef.Value = obj.GetComponent<DungeonBoss>().target;
             else if (obj.tag == "FinalBoss")
                 TargetObjRef.Value = obj.GetComponent<FinalBoss>().Target;
 

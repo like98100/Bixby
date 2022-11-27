@@ -32,23 +32,23 @@ public class WaterBallSpawner : MonoBehaviour
             Instantiate(WaterBall, transform.position, transform.rotation);
             count ++;
         }
-        else if (Time_ >= 2.0f && count == 1)
+        else if (Time_ >= 3.0f && count == 1)
         {
             Instantiate(WaterBall, transform.position, transform.rotation);
             count ++;
         }
-        else if (Time_ >= 3.0f && count == 2)
+        else if (Time_ >= 5.0f && count == 2)
         {
             Instantiate(WaterBall, transform.position, transform.rotation);
             count ++;
         }
-        else if (Time_ >= 4.0f)
+        else if (Time_ >= 5.5f)
             Destroy(gameObject);
     }
 
     private void findPlayer()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, 100.0f, 
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 10000.0f, 
                                                     Mask, QueryTriggerInteraction.Ignore);
 
         if (colliders.Length > 0)

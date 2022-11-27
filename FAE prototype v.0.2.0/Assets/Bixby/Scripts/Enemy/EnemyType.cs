@@ -8,6 +8,9 @@ public enum EnemyType
     NONE,
     Melee,
     Ranged,
-    DungeonBoss,
+    FireBoss,
+    IceBoss,
+    WaterBoss,
+    ElectricityBoss,
     FinalBoss
 }

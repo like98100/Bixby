@@ -61,7 +61,7 @@ public class DungeonBoss : CombatStatus, IDamgeable
         shield = this.gameObject.transform.Find("Shield").GetComponent<Shield>();
         setShield = false;
 
-        Skill_1_Obj.GetComponent<Skill_1>().element = Stat.element;
+        Skill_1_Obj.transform.GetChild(0).GetComponent<Skill_1>().element = Stat.element;
     }
 
     void FixedUpdate()

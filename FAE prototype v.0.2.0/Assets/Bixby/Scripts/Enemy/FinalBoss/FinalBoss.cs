@@ -24,6 +24,8 @@ public class FinalBoss : CombatStatus, IDamgeable
 
     public float DealtDamage;
     public bool isAttacked;
+    public bool elecAttack;
+    public bool isHitted;
 
     public float SkillCooldown;
 
@@ -38,6 +40,7 @@ public class FinalBoss : CombatStatus, IDamgeable
 
         this.MyElement = Stat.element;
         isAttacked = false;
+        isHitted = false;
 
         SkillCooldown = 0.0f;
 
@@ -77,6 +80,19 @@ public class FinalBoss : CombatStatus, IDamgeable
         //     MyAgent.isStopped = true;
         // else
         //     MyAgent.isStopped = false;
+
+        if (elecAttack && !isHitted)
+        {
+            Collider[] colliders = Physics.OverlapSphere(transform.position, Stat.attackRange*1.5f, 
+                                                    Mask, QueryTriggerInteraction.Ignore);
+
+            if (colliders.Length > 0)
+            {    
+                setEnemyElement(colliders[0].GetComponent<PlayerContorl>().MyElement);
+                colliders[0].GetComponent<PlayerContorl>().TakeElementHit(Stat.damage, Stat.element);
+                isHitted = true;
+            }
+        }
 
     }
 
@@ -220,6 +236,11 @@ public class FinalBoss : CombatStatus, IDamgeable
             setEnemyElement(colliders[0].GetComponent<PlayerContorl>().MyElement);
             colliders[0].GetComponent<PlayerContorl>().TakeElementHit(Stat.damage, Stat.element);
         }
+    }
+
+    public void IceSkillAniInit()
+    {
+        Anim.SetFloat("AnimSpeed", 1.4f);
     }
 
 }

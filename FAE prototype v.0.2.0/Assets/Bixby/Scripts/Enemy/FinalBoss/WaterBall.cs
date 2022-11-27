@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WaterBall : MonoBehaviour
+public class WaterBall : ElementControl
 {
     public GameObject Water;
     public LayerMask mask;
@@ -32,7 +32,7 @@ public class WaterBall : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            Debug.Log("Hit");
+            other.gameObject.GetComponent<PlayerContorl>().TakeElementHit(10.0f, ElementType.WATER);
             Destroy(gameObject);
         }
             //other.gameObject.GetComponent<Player>().Take

@@ -2,13 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletEne : MonoBehaviour
+public class BulletEne : ElementControl
 {
     public GameObject ObjRef;
+    public bool isCharged;
+    public ElementType myEle;
+    public float myDmg;
 
+    void Start()
+    {
+        if (isCharged)
+            transform.localScale += new Vector3(1.0f, 1.0f, 1.0f);
+    }
     // Update is called once per frame
     void Update()
     {
+
         transform.Translate(Vector3.forward * 0.05f);
     }
 
@@ -16,8 +25,10 @@ public class BulletEne : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            other.gameObject.GetComponent<PlayerContorl>().TakeElementHit(ObjRef.GetComponent<Enemy>().Stat.damage, ObjRef.GetComponent<Enemy>().Stat.element);
-            Debug.Log("Hit");
+            if (isCharged)
+                other.gameObject.GetComponent<PlayerContorl>().TakeElementHit(myDmg*2.0f, myEle);
+            else
+                other.gameObject.GetComponent<PlayerContorl>().TakeElementHit(myDmg, myEle);
             Destroy(gameObject);
         }
     }

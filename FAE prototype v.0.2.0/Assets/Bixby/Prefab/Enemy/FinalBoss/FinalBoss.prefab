@@ -47,10 +47,8 @@ GameObject:
   - component: {fileID: 7997889936964685134}
   - component: {fileID: 1620911220978622146}
   - component: {fileID: 9022212008054209808}
-  - component: {fileID: 7483047723779564661}
   - component: {fileID: 5944715960755373513}
   - component: {fileID: 6169546481012058524}
-  - component: {fileID: 1536338316943057377}
   - component: {fileID: 1443094306770292085}
   - component: {fileID: 5252561815394226352}
   - component: {fileID: 7839161792402518484}
@@ -70,14 +68,10 @@ GameObject:
   - component: {fileID: 6094554536188185469}
   - component: {fileID: 3024782249924623773}
   - component: {fileID: 6656471888929527032}
-  - component: {fileID: 2701387273997256014}
   - component: {fileID: 1993382791461674959}
-  - component: {fileID: 3263540594110982259}
   - component: {fileID: 5379763058822291970}
   - component: {fileID: 9180743195037871084}
-  - component: {fileID: 249645149085332927}
   - component: {fileID: 7380977767151356666}
-  - component: {fileID: 144673377393342324}
   - component: {fileID: 724854180413108398}
   - component: {fileID: 540140421936282409}
   - component: {fileID: 6237775718482474757}
@@ -86,12 +80,9 @@ GameObject:
   - component: {fileID: 8337521753552033957}
   - component: {fileID: 961129959062273936}
   - component: {fileID: 8516869108445578398}
-  - component: {fileID: 7232943870166452555}
   - component: {fileID: 2742462924496046486}
   - component: {fileID: 3840191544586084246}
   - component: {fileID: 6689010452175145490}
-  - component: {fileID: 966824602696559322}
-  - component: {fileID: 3434161646214083709}
   - component: {fileID: 29993406088150286}
   - component: {fileID: 2367261061272668536}
   - component: {fileID: 4381797200249042298}
@@ -101,15 +92,12 @@ GameObject:
   - component: {fileID: 3824923900869611082}
   - component: {fileID: 3003499262031318030}
   - component: {fileID: 2309367445524684355}
-  - component: {fileID: 984189176477737622}
   - component: {fileID: 4262646831909491709}
   - component: {fileID: 971453114028931635}
-  - component: {fileID: 8784656892012842926}
   - component: {fileID: 8425993276175782163}
   - component: {fileID: 164130825943152994}
   - component: {fileID: 3602290474058735363}
   - component: {fileID: 5614851096220350635}
-  - component: {fileID: 6124173781788147939}
   - component: {fileID: 8383845358061413150}
   - component: {fileID: 6894355326585071018}
   - component: {fileID: 8291256283779281389}
@@ -136,6 +124,14 @@ GameObject:
   - component: {fileID: 1839404518718142522}
   - component: {fileID: 4378940502552303127}
   - component: {fileID: 4207395124816690857}
+  - component: {fileID: 6000799942239251401}
+  - component: {fileID: 3544197892530853196}
+  - component: {fileID: 1412575260171492401}
+  - component: {fileID: 164510946498101488}
+  - component: {fileID: 9155632422278853597}
+  - component: {fileID: 7428834419965827063}
+  - component: {fileID: 6220209016534251310}
+  - component: {fileID: 8641694016887713233}
   m_Layer: 0
   m_Name: BehaviourTree
   m_TagString: Untagged
@@ -189,7 +185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedEditorNode: {fileID: 0}
+  selectedEditorNode: {fileID: 4207395124816690857}
   repeatOnFinish: 0
   maxExecutionsPerTick: 1000
   parent: {fileID: 0}
@@ -1167,9 +1163,16 @@ MonoBehaviour:
     blackboard: {fileID: 1107375551665464079}
     key: targetObjRef
     constantValue: {fileID: 0}
+  Variable:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 1107375551665464079}
+    key: enemyToPlayerDist
+    constantValue: 0
   agent: {fileID: 1601261783880769920}
   stopDistance: 3.5
   updateInterval: 1
+  ExitDist: 14.5
 --- !u!114 &5313673097166010557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1239,6 +1242,7 @@ MonoBehaviour:
     blackboard: {fileID: 1107375551665464079}
     key: enemyToPlayerDist
     constantValue: 0
+  delay: 0
 --- !u!114 &2886632688054386766
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1300,7 +1304,8 @@ MonoBehaviour:
   children:
   - {fileID: 4924392655641464051}
   - {fileID: 7997889936964685134}
-  - {fileID: 7380977767151356666}
+  - {fileID: 1412575260171492401}
+  - {fileID: 164510946498101488}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
@@ -1320,7 +1325,7 @@ MonoBehaviour:
   title: Number Condition
   rect:
     serializedVersion: 2
-    x: -440
+    x: -300
     y: 960
     width: 160
     height: 45
@@ -1424,8 +1429,8 @@ MonoBehaviour:
   title: MeleeDashAttack
   rect:
     serializedVersion: 2
-    x: 260
-    y: 1020
+    x: 20
+    y: 1080
     width: 160
     height: 45
   parent: {fileID: 7380977767151356666}
@@ -1451,9 +1456,10 @@ MonoBehaviour:
     blackboard: {fileID: 1107375551665464079}
     key: enemyToPlayerDist
     constantValue: 0
-  Speed: 17
+  Speed: 20
   UpdateInterval: 2
   Time_: 0
+  AnimOnOff: 0
   targetVec: {x: 0, y: 0, z: 0}
 --- !u!114 &9022212008054209808
 MonoBehaviour:
@@ -1481,48 +1487,6 @@ MonoBehaviour:
   runtimePriority: 0
   breakpoint: 0
   random: 0
---- !u!114 &7483047723779564661
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3137919136024940248}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a16f6dd4f79e6b4582112b41192cff1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  title: Look Target
-  rect:
-    serializedVersion: 2
-    x: -220
-    y: 1080
-    width: 160
-    height: 45
-  parent: {fileID: 0}
-  children: []
-  behaviourTree: {fileID: 0}
-  runtimePriority: 0
-  breakpoint: 0
-  ObjRef:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 1107375551665464079}
-    key: selfObjRef
-    constantValue: {fileID: 0}
-  TargetObjRef:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 1107375551665464079}
-    key: targetObjRef
-    constantValue: {fileID: 0}
-  Variable:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 1107375551665464079}
-    key: enemyToPlayerDist
-    constantValue: 0
 --- !u!114 &5944715960755373513
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1538,7 +1502,7 @@ MonoBehaviour:
   title: Ice Skill
   rect:
     serializedVersion: 2
-    x: -60
+    x: -140
     y: 1080
     width: 160
     height: 45
@@ -1568,6 +1532,9 @@ MonoBehaviour:
   targetVec: {x: 0, y: 0, z: 0}
   UpdateInterval: 3.5
   Time_: 0
+  Speed: 30
+  EnemyToPlayerDistance: 0
+  AnimOnOff: 0
 --- !u!114 &6169546481012058524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1583,7 +1550,7 @@ MonoBehaviour:
   title: Sequence
   rect:
     serializedVersion: 2
-    x: -440
+    x: -300
     y: 1020
     width: 160
     height: 45
@@ -1594,48 +1561,6 @@ MonoBehaviour:
   runtimePriority: 0
   breakpoint: 0
   random: 0
---- !u!114 &1536338316943057377
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3137919136024940248}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a16f6dd4f79e6b4582112b41192cff1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  title: Look Target
-  rect:
-    serializedVersion: 2
-    x: -540
-    y: 1080
-    width: 160
-    height: 45
-  parent: {fileID: 0}
-  children: []
-  behaviourTree: {fileID: 0}
-  runtimePriority: 0
-  breakpoint: 0
-  ObjRef:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 1107375551665464079}
-    key: selfObjRef
-    constantValue: {fileID: 0}
-  TargetObjRef:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 1107375551665464079}
-    key: targetObjRef
-    constantValue: {fileID: 0}
-  Variable:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 1107375551665464079}
-    key: enemyToPlayerDist
-    constantValue: 0
 --- !u!114 &1443094306770292085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1651,7 +1576,7 @@ MonoBehaviour:
   title: Ice Skill
   rect:
     serializedVersion: 2
-    x: -380
+    x: -300
     y: 1080
     width: 160
     height: 45
@@ -1681,6 +1606,9 @@ MonoBehaviour:
   targetVec: {x: 0, y: 0, z: 0}
   UpdateInterval: 3.5
   Time_: 0
+  Speed: 30
+  EnemyToPlayerDistance: 0
+  AnimOnOff: 0
 --- !u!114 &5252561815394226352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2044,6 +1972,7 @@ MonoBehaviour:
     blackboard: {fileID: 1107375551665464079}
     key: enemyToPlayerDist
     constantValue: 0
+  delay: 0
 --- !u!114 &4436707170595975271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2170,9 +2099,16 @@ MonoBehaviour:
     blackboard: {fileID: 1107375551665464079}
     key: targetObjRef
     constantValue: {fileID: 0}
+  Variable:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 1107375551665464079}
+    key: enemyToPlayerDist
+    constantValue: 0
   agent: {fileID: 1601261783880769920}
   stopDistance: 5
   updateInterval: 1
+  ExitDist: 14.5
 --- !u!114 &6645468555266829172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2196,7 +2132,8 @@ MonoBehaviour:
   children:
   - {fileID: 8162052317690061787}
   - {fileID: 4408080733918315592}
-  - {fileID: 9180743195037871084}
+  - {fileID: 6000799942239251401}
+  - {fileID: 3544197892530853196}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
@@ -2216,7 +2153,7 @@ MonoBehaviour:
   title: Number Condition
   rect:
     serializedVersion: 2
-    x: -1900
+    x: -1740
     y: 960
     width: 160
     height: 45
@@ -2320,8 +2257,8 @@ MonoBehaviour:
   title: MeleeDashAttack
   rect:
     serializedVersion: 2
-    x: -1180
-    y: 1020
+    x: -1420
+    y: 1080
     width: 160
     height: 45
   parent: {fileID: 9180743195037871084}
@@ -2350,6 +2287,7 @@ MonoBehaviour:
   Speed: 20
   UpdateInterval: 2
   Time_: 0
+  AnimOnOff: 0
   targetVec: {x: 0, y: 0, z: 0}
 --- !u!114 &3024782249924623773
 MonoBehaviour:
@@ -2366,7 +2304,7 @@ MonoBehaviour:
   title: Sequence
   rect:
     serializedVersion: 2
-    x: -1900
+    x: -1740
     y: 1020
     width: 160
     height: 45
@@ -2403,48 +2341,6 @@ MonoBehaviour:
   runtimePriority: 0
   breakpoint: 0
   random: 0
---- !u!114 &2701387273997256014
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3137919136024940248}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a16f6dd4f79e6b4582112b41192cff1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  title: Look Target
-  rect:
-    serializedVersion: 2
-    x: -1980
-    y: 1080
-    width: 160
-    height: 45
-  parent: {fileID: 0}
-  children: []
-  behaviourTree: {fileID: 0}
-  runtimePriority: 0
-  breakpoint: 0
-  ObjRef:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 1107375551665464079}
-    key: selfObjRef
-    constantValue: {fileID: 0}
-  TargetObjRef:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 1107375551665464079}
-    key: targetObjRef
-    constantValue: {fileID: 0}
-  Variable:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 1107375551665464079}
-    key: enemyToPlayerDist
-    constantValue: 0
 --- !u!114 &1993382791461674959
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2460,7 +2356,7 @@ MonoBehaviour:
   title: Fire Skill
   rect:
     serializedVersion: 2
-    x: -1820
+    x: -1740
     y: 1080
     width: 160
     height: 45
@@ -2485,48 +2381,6 @@ MonoBehaviour:
   UpdateInterval: 5.5
   Time_: 0
   count: 0
---- !u!114 &3263540594110982259
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3137919136024940248}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a16f6dd4f79e6b4582112b41192cff1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  title: Look Target
-  rect:
-    serializedVersion: 2
-    x: -1660
-    y: 1080
-    width: 160
-    height: 45
-  parent: {fileID: 0}
-  children: []
-  behaviourTree: {fileID: 0}
-  runtimePriority: 0
-  breakpoint: 0
-  ObjRef:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 1107375551665464079}
-    key: selfObjRef
-    constantValue: {fileID: 0}
-  TargetObjRef:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 1107375551665464079}
-    key: targetObjRef
-    constantValue: {fileID: 0}
-  Variable:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 1107375551665464079}
-    key: enemyToPlayerDist
-    constantValue: 0
 --- !u!114 &5379763058822291970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2542,7 +2396,7 @@ MonoBehaviour:
   title: Fire Skill
   rect:
     serializedVersion: 2
-    x: -1500
+    x: -1580
     y: 1080
     width: 160
     height: 45
@@ -2582,59 +2436,17 @@ MonoBehaviour:
   title: Sequence
   rect:
     serializedVersion: 2
-    x: -1260
-    y: 960
+    x: -1420
+    y: 1020
     width: 160
     height: 45
-  parent: {fileID: 6645468555266829172}
+  parent: {fileID: 6000799942239251401}
   children:
   - {fileID: 6094554536188185469}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
   random: 0
---- !u!114 &249645149085332927
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3137919136024940248}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a16f6dd4f79e6b4582112b41192cff1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  title: Look Target
-  rect:
-    serializedVersion: 2
-    x: -1340
-    y: 1020
-    width: 160
-    height: 45
-  parent: {fileID: 0}
-  children: []
-  behaviourTree: {fileID: 0}
-  runtimePriority: 0
-  breakpoint: 0
-  ObjRef:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 1107375551665464079}
-    key: selfObjRef
-    constantValue: {fileID: 0}
-  TargetObjRef:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 1107375551665464079}
-    key: targetObjRef
-    constantValue: {fileID: 0}
-  Variable:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 1107375551665464079}
-    key: enemyToPlayerDist
-    constantValue: 0
 --- !u!114 &7380977767151356666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2650,59 +2462,17 @@ MonoBehaviour:
   title: Sequence
   rect:
     serializedVersion: 2
-    x: 180
-    y: 960
+    x: 20
+    y: 1020
     width: 160
     height: 45
-  parent: {fileID: 6635353514241659044}
+  parent: {fileID: 1412575260171492401}
   children:
   - {fileID: 1620911220978622146}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
   random: 0
---- !u!114 &144673377393342324
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3137919136024940248}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a16f6dd4f79e6b4582112b41192cff1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  title: Look Target
-  rect:
-    serializedVersion: 2
-    x: 100
-    y: 1020
-    width: 160
-    height: 45
-  parent: {fileID: 0}
-  children: []
-  behaviourTree: {fileID: 0}
-  runtimePriority: 0
-  breakpoint: 0
-  ObjRef:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 1107375551665464079}
-    key: selfObjRef
-    constantValue: {fileID: 0}
-  TargetObjRef:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 1107375551665464079}
-    key: targetObjRef
-    constantValue: {fileID: 0}
-  Variable:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 1107375551665464079}
-    key: enemyToPlayerDist
-    constantValue: 0
 --- !u!114 &724854180413108398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2886,7 +2656,7 @@ MonoBehaviour:
     mode: 0
     blackboard: {fileID: 0}
     key: 
-    constantValue: 10
+    constantValue: 15
   intReference2:
     useConstant: 1
     mode: 0
@@ -2916,7 +2686,8 @@ MonoBehaviour:
   children:
   - {fileID: 961129959062273936}
   - {fileID: 8516869108445578398}
-  - {fileID: 3840191544586084246}
+  - {fileID: 9155632422278853597}
+  - {fileID: 7428834419965827063}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
@@ -2936,7 +2707,7 @@ MonoBehaviour:
   title: Number Condition
   rect:
     serializedVersion: 2
-    x: 980
+    x: 1140
     y: 960
     width: 160
     height: 45
@@ -3025,48 +2796,6 @@ MonoBehaviour:
     blackboard: {fileID: 0}
     key: 
     constantValue: 0
---- !u!114 &7232943870166452555
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3137919136024940248}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a16f6dd4f79e6b4582112b41192cff1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  title: Look Target
-  rect:
-    serializedVersion: 2
-    x: 900
-    y: 1080
-    width: 160
-    height: 45
-  parent: {fileID: 0}
-  children: []
-  behaviourTree: {fileID: 0}
-  runtimePriority: 0
-  breakpoint: 0
-  ObjRef:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 1107375551665464079}
-    key: selfObjRef
-    constantValue: {fileID: 0}
-  TargetObjRef:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 1107375551665464079}
-    key: targetObjRef
-    constantValue: {fileID: 0}
-  Variable:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 1107375551665464079}
-    key: enemyToPlayerDist
-    constantValue: 0
 --- !u!114 &2742462924496046486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3082,7 +2811,7 @@ MonoBehaviour:
   title: Sequence
   rect:
     serializedVersion: 2
-    x: 980
+    x: 1140
     y: 1020
     width: 160
     height: 45
@@ -3108,11 +2837,11 @@ MonoBehaviour:
   title: Sequence
   rect:
     serializedVersion: 2
-    x: 1620
-    y: 960
+    x: 1460
+    y: 1020
     width: 160
     height: 45
-  parent: {fileID: 8337521753552033957}
+  parent: {fileID: 9155632422278853597}
   children:
   - {fileID: 29993406088150286}
   behaviourTree: {fileID: 0}
@@ -3145,90 +2874,6 @@ MonoBehaviour:
   runtimePriority: 0
   breakpoint: 0
   random: 0
---- !u!114 &966824602696559322
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3137919136024940248}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a16f6dd4f79e6b4582112b41192cff1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  title: Look Target
-  rect:
-    serializedVersion: 2
-    x: 1220
-    y: 1080
-    width: 160
-    height: 45
-  parent: {fileID: 0}
-  children: []
-  behaviourTree: {fileID: 0}
-  runtimePriority: 0
-  breakpoint: 0
-  ObjRef:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 1107375551665464079}
-    key: selfObjRef
-    constantValue: {fileID: 0}
-  TargetObjRef:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 1107375551665464079}
-    key: targetObjRef
-    constantValue: {fileID: 0}
-  Variable:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 1107375551665464079}
-    key: enemyToPlayerDist
-    constantValue: 0
---- !u!114 &3434161646214083709
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3137919136024940248}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a16f6dd4f79e6b4582112b41192cff1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  title: Look Target
-  rect:
-    serializedVersion: 2
-    x: 1540
-    y: 1020
-    width: 160
-    height: 45
-  parent: {fileID: 0}
-  children: []
-  behaviourTree: {fileID: 0}
-  runtimePriority: 0
-  breakpoint: 0
-  ObjRef:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 1107375551665464079}
-    key: selfObjRef
-    constantValue: {fileID: 0}
-  TargetObjRef:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 1107375551665464079}
-    key: targetObjRef
-    constantValue: {fileID: 0}
-  Variable:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 1107375551665464079}
-    key: enemyToPlayerDist
-    constantValue: 0
 --- !u!114 &29993406088150286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3244,8 +2889,8 @@ MonoBehaviour:
   title: MeleeDashAttack
   rect:
     serializedVersion: 2
-    x: 1700
-    y: 1020
+    x: 1460
+    y: 1080
     width: 160
     height: 45
   parent: {fileID: 3840191544586084246}
@@ -3271,9 +2916,10 @@ MonoBehaviour:
     blackboard: {fileID: 1107375551665464079}
     key: enemyToPlayerDist
     constantValue: 0
-  Speed: 17
+  Speed: 20
   UpdateInterval: 2
   Time_: 0
+  AnimOnOff: 0
   targetVec: {x: 0, y: 0, z: 0}
 --- !u!114 &2367261061272668536
 MonoBehaviour:
@@ -3320,7 +2966,7 @@ MonoBehaviour:
     mode: 0
     blackboard: {fileID: 0}
     key: 
-    constantValue: 9
+    constantValue: 14.5
   intReference2:
     useConstant: 1
     mode: 0
@@ -3372,7 +3018,7 @@ MonoBehaviour:
     mode: 0
     blackboard: {fileID: 0}
     key: 
-    constantValue: 3.5
+    constantValue: 4.5
   intReference2:
     useConstant: 1
     mode: 0
@@ -3415,9 +3061,16 @@ MonoBehaviour:
     blackboard: {fileID: 1107375551665464079}
     key: targetObjRef
     constantValue: {fileID: 0}
+  Variable:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 1107375551665464079}
+    key: enemyToPlayerDist
+    constantValue: 0
   agent: {fileID: 1601261783880769920}
   stopDistance: 3.5
   updateInterval: 1
+  ExitDist: 14.5
 --- !u!114 &5303099731436351873
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3539,6 +3192,7 @@ MonoBehaviour:
     blackboard: {fileID: 1107375551665464079}
     key: enemyToPlayerDist
     constantValue: 0
+  delay: 0
 --- !u!114 &3003499262031318030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3605,48 +3259,6 @@ MonoBehaviour:
   runtimePriority: 0
   breakpoint: 0
   random: 0
---- !u!114 &984189176477737622
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3137919136024940248}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a16f6dd4f79e6b4582112b41192cff1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  title: Look Target
-  rect:
-    serializedVersion: 2
-    x: 2340
-    y: 1140
-    width: 160
-    height: 45
-  parent: {fileID: 0}
-  children: []
-  behaviourTree: {fileID: 0}
-  runtimePriority: 0
-  breakpoint: 0
-  ObjRef:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 1107375551665464079}
-    key: selfObjRef
-    constantValue: {fileID: 0}
-  TargetObjRef:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 1107375551665464079}
-    key: targetObjRef
-    constantValue: {fileID: 0}
-  Variable:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 1107375551665464079}
-    key: enemyToPlayerDist
-    constantValue: 0
 --- !u!114 &4262646831909491709
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3662,7 +3274,7 @@ MonoBehaviour:
   title: Sequence
   rect:
     serializedVersion: 2
-    x: 2420
+    x: 2580
     y: 1080
     width: 160
     height: 45
@@ -3688,7 +3300,7 @@ MonoBehaviour:
   title: Number Condition
   rect:
     serializedVersion: 2
-    x: 2420
+    x: 2580
     y: 960
     width: 160
     height: 45
@@ -3724,48 +3336,6 @@ MonoBehaviour:
     mode: 0
     blackboard: {fileID: 0}
     key: 
-    constantValue: 0
---- !u!114 &8784656892012842926
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3137919136024940248}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a16f6dd4f79e6b4582112b41192cff1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  title: Look Target
-  rect:
-    serializedVersion: 2
-    x: 2660
-    y: 1140
-    width: 160
-    height: 45
-  parent: {fileID: 0}
-  children: []
-  behaviourTree: {fileID: 0}
-  runtimePriority: 0
-  breakpoint: 0
-  ObjRef:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 1107375551665464079}
-    key: selfObjRef
-    constantValue: {fileID: 0}
-  TargetObjRef:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 1107375551665464079}
-    key: targetObjRef
-    constantValue: {fileID: 0}
-  Variable:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 1107375551665464079}
-    key: enemyToPlayerDist
     constantValue: 0
 --- !u!114 &8425993276175782163
 MonoBehaviour:
@@ -3868,7 +3438,8 @@ MonoBehaviour:
   children:
   - {fileID: 971453114028931635}
   - {fileID: 164130825943152994}
-  - {fileID: 5614851096220350635}
+  - {fileID: 6220209016534251310}
+  - {fileID: 8641694016887713233}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
@@ -3888,59 +3459,17 @@ MonoBehaviour:
   title: Sequence
   rect:
     serializedVersion: 2
-    x: 3060
-    y: 960
+    x: 2900
+    y: 1020
     width: 160
     height: 45
-  parent: {fileID: 3602290474058735363}
+  parent: {fileID: 6220209016534251310}
   children:
   - {fileID: 8383845358061413150}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
   random: 0
---- !u!114 &6124173781788147939
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3137919136024940248}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a16f6dd4f79e6b4582112b41192cff1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  title: Look Target
-  rect:
-    serializedVersion: 2
-    x: 2980
-    y: 1020
-    width: 160
-    height: 45
-  parent: {fileID: 0}
-  children: []
-  behaviourTree: {fileID: 0}
-  runtimePriority: 0
-  breakpoint: 0
-  ObjRef:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 1107375551665464079}
-    key: selfObjRef
-    constantValue: {fileID: 0}
-  TargetObjRef:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 1107375551665464079}
-    key: targetObjRef
-    constantValue: {fileID: 0}
-  Variable:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 1107375551665464079}
-    key: enemyToPlayerDist
-    constantValue: 0
 --- !u!114 &8383845358061413150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3956,8 +3485,8 @@ MonoBehaviour:
   title: MeleeDashAttack
   rect:
     serializedVersion: 2
-    x: 3140
-    y: 1020
+    x: 2900
+    y: 1080
     width: 160
     height: 45
   parent: {fileID: 5614851096220350635}
@@ -3983,9 +3512,10 @@ MonoBehaviour:
     blackboard: {fileID: 1107375551665464079}
     key: enemyToPlayerDist
     constantValue: 0
-  Speed: 17
+  Speed: 20
   UpdateInterval: 2
   Time_: 0
+  AnimOnOff: 0
   targetVec: {x: 0, y: 0, z: 0}
 --- !u!114 &6894355326585071018
 MonoBehaviour:
@@ -4060,7 +3590,7 @@ MonoBehaviour:
     mode: 0
     blackboard: {fileID: 0}
     key: 
-    constantValue: 9
+    constantValue: 14.5
   intReference2:
     useConstant: 1
     mode: 0
@@ -4112,7 +3642,7 @@ MonoBehaviour:
     mode: 0
     blackboard: {fileID: 0}
     key: 
-    constantValue: 3.5
+    constantValue: 4.5
   intReference2:
     useConstant: 1
     mode: 0
@@ -4155,9 +3685,16 @@ MonoBehaviour:
     blackboard: {fileID: 1107375551665464079}
     key: targetObjRef
     constantValue: {fileID: 0}
+  Variable:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 1107375551665464079}
+    key: enemyToPlayerDist
+    constantValue: 0
   agent: {fileID: 1601261783880769920}
   stopDistance: 3.5
   updateInterval: 1
+  ExitDist: 14.5
 --- !u!114 &1537893509260289163
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4203,7 +3740,7 @@ MonoBehaviour:
     mode: 0
     blackboard: {fileID: 0}
     key: 
-    constantValue: 10
+    constantValue: 15
   intReference2:
     useConstant: 1
     mode: 0
@@ -4331,6 +3868,7 @@ MonoBehaviour:
     blackboard: {fileID: 1107375551665464079}
     key: enemyToPlayerDist
     constantValue: 0
+  delay: 0
 --- !u!114 &2929938758645707296
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4384,7 +3922,7 @@ MonoBehaviour:
   title: Water Skill
   rect:
     serializedVersion: 2
-    x: 1060
+    x: 1140
     y: 1080
     width: 160
     height: 45
@@ -4423,7 +3961,7 @@ MonoBehaviour:
   title: Water Skill
   rect:
     serializedVersion: 2
-    x: 1380
+    x: 1300
     y: 1080
     width: 160
     height: 45
@@ -4903,7 +4441,7 @@ MonoBehaviour:
   title: Repeater
   rect:
     serializedVersion: 2
-    x: 2420
+    x: 2580
     y: 1020
     width: 160
     height: 45
@@ -4930,7 +4468,7 @@ MonoBehaviour:
   title: Electrocity Skill
   rect:
     serializedVersion: 2
-    x: 2500
+    x: 2580
     y: 1140
     width: 160
     height: 45
@@ -4958,8 +4496,10 @@ MonoBehaviour:
     key: enemyToPlayerDist
     constantValue: 0
   targetVec: {x: 0, y: 0, z: 0}
+  Speed: 20
   UpdateInterval: 3.5
   Time_: 0
+  AnimOnOff: 0
 --- !u!114 &4207395124816690857
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4975,7 +4515,7 @@ MonoBehaviour:
   title: Electrocity Skill
   rect:
     serializedVersion: 2
-    x: 2820
+    x: 2740
     y: 1140
     width: 160
     height: 45
@@ -5003,8 +4543,402 @@ MonoBehaviour:
     key: enemyToPlayerDist
     constantValue: 0
   targetVec: {x: 0, y: 0, z: 0}
+  Speed: 20
   UpdateInterval: 3.5
   Time_: 0
+  AnimOnOff: 0
+--- !u!114 &6000799942239251401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3137919136024940248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b95a918be8d9a4f9085201010bdec1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Number Condition
+  rect:
+    serializedVersion: 2
+    x: -1420
+    y: 960
+    width: 160
+    height: 45
+  parent: {fileID: 6645468555266829172}
+  children:
+  - {fileID: 9180743195037871084}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  abort: 0
+  type: 0
+  floatReference:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 1107375551665464079}
+    key: enemyToPlayerDist
+    constantValue: 0
+  intReference:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 0
+  comparator: 2
+  floatReference2:
+    useConstant: 1
+    mode: 0
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 20
+  intReference2:
+    useConstant: 1
+    mode: 0
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 0
+--- !u!114 &3544197892530853196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3137919136024940248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52e288dd76fb41f4d939e5a3395057b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Move To Transform
+  rect:
+    serializedVersion: 2
+    x: -1260
+    y: 960
+    width: 160
+    height: 45
+  parent: {fileID: 6645468555266829172}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  ObjRef:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 1107375551665464079}
+    key: selfObjRef
+    constantValue: {fileID: 0}
+  TargetRef:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 1107375551665464079}
+    key: targetObjRef
+    constantValue: {fileID: 0}
+  Variable:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 1107375551665464079}
+    key: enemyToPlayerDist
+    constantValue: 0
+  agent: {fileID: 1601261783880769920}
+  stopDistance: 19
+  updateInterval: 1
+  ExitDist: 14.5
+--- !u!114 &1412575260171492401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3137919136024940248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b95a918be8d9a4f9085201010bdec1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Number Condition
+  rect:
+    serializedVersion: 2
+    x: 20
+    y: 960
+    width: 160
+    height: 45
+  parent: {fileID: 6635353514241659044}
+  children:
+  - {fileID: 7380977767151356666}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  abort: 0
+  type: 0
+  floatReference:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 1107375551665464079}
+    key: enemyToPlayerDist
+    constantValue: 0
+  intReference:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 0
+  comparator: 2
+  floatReference2:
+    useConstant: 1
+    mode: 0
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 20
+  intReference2:
+    useConstant: 1
+    mode: 0
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 0
+--- !u!114 &164510946498101488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3137919136024940248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52e288dd76fb41f4d939e5a3395057b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Move To Transform
+  rect:
+    serializedVersion: 2
+    x: 180
+    y: 960
+    width: 160
+    height: 45
+  parent: {fileID: 6635353514241659044}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  ObjRef:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 1107375551665464079}
+    key: selfObjRef
+    constantValue: {fileID: 0}
+  TargetRef:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 1107375551665464079}
+    key: targetObjRef
+    constantValue: {fileID: 0}
+  Variable:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 1107375551665464079}
+    key: enemyToPlayerDist
+    constantValue: 0
+  agent: {fileID: 1601261783880769920}
+  stopDistance: 19
+  updateInterval: 1
+  ExitDist: 14.5
+--- !u!114 &9155632422278853597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3137919136024940248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b95a918be8d9a4f9085201010bdec1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Number Condition
+  rect:
+    serializedVersion: 2
+    x: 1460
+    y: 960
+    width: 160
+    height: 45
+  parent: {fileID: 8337521753552033957}
+  children:
+  - {fileID: 3840191544586084246}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  abort: 0
+  type: 0
+  floatReference:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 1107375551665464079}
+    key: enemyToPlayerDist
+    constantValue: 0
+  intReference:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 0
+  comparator: 2
+  floatReference2:
+    useConstant: 1
+    mode: 0
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 20
+  intReference2:
+    useConstant: 1
+    mode: 0
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 0
+--- !u!114 &7428834419965827063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3137919136024940248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52e288dd76fb41f4d939e5a3395057b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Move To Transform
+  rect:
+    serializedVersion: 2
+    x: 1620
+    y: 960
+    width: 160
+    height: 45
+  parent: {fileID: 8337521753552033957}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  ObjRef:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 1107375551665464079}
+    key: selfObjRef
+    constantValue: {fileID: 0}
+  TargetRef:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 1107375551665464079}
+    key: targetObjRef
+    constantValue: {fileID: 0}
+  Variable:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 1107375551665464079}
+    key: enemyToPlayerDist
+    constantValue: 0
+  agent: {fileID: 1601261783880769920}
+  stopDistance: 19
+  updateInterval: 1
+  ExitDist: 14.5
+--- !u!114 &6220209016534251310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3137919136024940248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b95a918be8d9a4f9085201010bdec1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Number Condition
+  rect:
+    serializedVersion: 2
+    x: 2900
+    y: 960
+    width: 160
+    height: 45
+  parent: {fileID: 3602290474058735363}
+  children:
+  - {fileID: 5614851096220350635}
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  abort: 0
+  type: 0
+  floatReference:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 1107375551665464079}
+    key: enemyToPlayerDist
+    constantValue: 0
+  intReference:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 0
+  comparator: 2
+  floatReference2:
+    useConstant: 1
+    mode: 0
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 20
+  intReference2:
+    useConstant: 1
+    mode: 0
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 0
+--- !u!114 &8641694016887713233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3137919136024940248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52e288dd76fb41f4d939e5a3395057b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Move To Transform
+  rect:
+    serializedVersion: 2
+    x: 3060
+    y: 960
+    width: 160
+    height: 45
+  parent: {fileID: 3602290474058735363}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  ObjRef:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 1107375551665464079}
+    key: selfObjRef
+    constantValue: {fileID: 0}
+  TargetRef:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 1107375551665464079}
+    key: targetObjRef
+    constantValue: {fileID: 0}
+  Variable:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 1107375551665464079}
+    key: enemyToPlayerDist
+    constantValue: 0
+  agent: {fileID: 1601261783880769920}
+  stopDistance: 19
+  updateInterval: 1
+  ExitDist: 14.5
 --- !u!1 &4681719079262048544
 GameObject:
   m_ObjectHideFlags: 0

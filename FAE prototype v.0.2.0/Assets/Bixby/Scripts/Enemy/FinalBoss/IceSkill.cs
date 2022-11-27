@@ -17,11 +17,19 @@ namespace MBT
         public float UpdateInterval = 3.5f;
         public float Time_ = 0.0f;
 
+        public float Speed = 30.0f;
+        public float EnemyToPlayerDistance; //거리
+        public bool AnimOnOff;
+
         public override void OnEnter()
         {
             targetVec = targetRef.Value.transform.position;
+            targetVec += ObjRef.Value.transform.forward*4.0f;
 
-            ObjRef.Value.GetComponent<FinalBoss>().Anim.SetTrigger("Ice");
+            EnemyToPlayerDistance = Vector3.Distance(targetVec, ObjRef.Value.transform.position);
+
+            AnimOnOff = false;
+
             ObjRef.Value.GetComponent<FinalBoss>().isAttacked = true;
         } 
 
@@ -35,7 +43,7 @@ namespace MBT
                 target = targetRef.Value.transform;
             Vector3 dir = target.position - self.position;
 
-            Time_ += Time.deltaTime * 1.5f;
+            Time_ += Time.deltaTime;
 
             if(!ObjRef.Value.GetComponent<FinalBoss>().isAttacked)
             {
@@ -47,18 +55,24 @@ namespace MBT
                 self.rotation = Quaternion.Lerp(self.rotation, Quaternion.LookRotation(dir), 
                                                 Time.deltaTime * 20.0f);
             else
-                ObjRef.Value.transform.position = Vector3.MoveTowards(transform.position, 
-                                                                    targetVec, 
-                                                                    30.0f * Time.deltaTime);
-
+            {
+                if (!AnimOnOff)
+                {
+                    ObjRef.Value.GetComponent<FinalBoss>().Anim.SetFloat("AnimSpeed", (Speed / EnemyToPlayerDistance)*1.4f);
+                    ObjRef.Value.GetComponent<FinalBoss>().Anim.SetTrigger("Ice");
+                    AnimOnOff = true;
+                }
+                ObjRef.Value.transform.position = Vector3.MoveTowards(transform.position,
+                                                                targetVec,
+                                                                Speed * Time.deltaTime);
+            }
             return NodeResult.running;
         }
 
         public override void OnExit()
         {
-            //ObjRef.Value.GetComponent<FinalBoss>().Count = 0;
-            // // agent.ResetPath();
             ObjRef.Value.GetComponent<FinalBoss>().SkillCooldown = 10.0f;
+            ObjRef.Value.GetComponent<FinalBoss>().Anim.SetFloat("AnimSpeed", 1.0f);
         }
     }
 

@@ -13,7 +13,7 @@ namespace MBT
         public GameObjectReference TargetObjRef = new GameObjectReference(VarRefMode.DisableConstant);
         public FloatReference Variable = new FloatReference(VarRefMode.DisableConstant);
 
-        float delay;
+        public float delay;
 
         public override void OnEnter()
         {
@@ -29,21 +29,23 @@ namespace MBT
             else    
                 target = TargetObjRef.Value.transform;
             Vector3 dir = target.position - self.position;
-            Vector3 rayVector = new Vector3(self.position.x, self.position.y + 1.0f, self.position.z);
+            Vector3 rayVector = new Vector3(self.position.x, self.position.y +1.0f, self.position.z);
             RaycastHit hitInfo;
 
             if (ObjRef.Value.tag == "Enemy")
             {
+                //delay += Time.deltaTime;
                 delay += Time.deltaTime / ObjRef.Value.GetComponent<Enemy>().FireRate;
 
                 //(Time_ > UpdateInterval) ||
-                if(((delay > ObjRef.Value.GetComponent<Enemy>().Stat.attackSpeed) && Physics.Raycast(rayVector, self.forward, out hitInfo, 10.0f, ObjRef.Value.GetComponent<Enemy>().Mask)) ||
-                    ((int)ObjRef.Value.GetComponent<Enemy>().State == 3) || (ObjRef.Value.GetComponent<Enemy>().Stat.hp <= 0) || 
-                    (Variable.Value > ObjRef.Value.GetComponent<Enemy>().Stat.attackRange))
+                if(((delay > ObjRef.Value.GetComponent<Enemy>().Stat.attackSpeed) && Physics.BoxCast(rayVector, self.lossyScale/2, self.forward, out hitInfo, self.rotation, ObjRef.Value.GetComponent<Enemy>().Stat.sight, ObjRef.Value.GetComponent<Enemy>().Mask)))
                 {
                     // Reset time and update destination
                     return NodeResult.success;
                 }
+                if ((Variable.Value > ObjRef.Value.GetComponent<Enemy>().Stat.attackRange) ||
+                    ((int)ObjRef.Value.GetComponent<Enemy>().State == 3) || (ObjRef.Value.GetComponent<Enemy>().Stat.hp <= 0))
+                    return NodeResult.failure;
             }
             else if (ObjRef.Value.tag == "DungeonBoss")
             {

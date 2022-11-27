@@ -23,9 +23,12 @@ public class Enemy : CombatStatus, IDamgeable
 
     public LayerMask Mask = -1;
     public GameObject target;
+    public GameObject Bullet;
     public Vector3 centerPosition;
     public bool isHitted = false;
     public bool runChance = true;
+    public bool isAttacked = false;
+    public int shootCount;
 
     public NavMeshAgent MyAgent;
     public Animator Anim;
@@ -51,6 +54,7 @@ public class Enemy : CombatStatus, IDamgeable
         centerPosition = this.transform.position;
 
         target = null;
+        shootCount = 0;
 
         Timer = 0.0f;
 
@@ -156,6 +160,15 @@ public class Enemy : CombatStatus, IDamgeable
         }
     }
 
+    public void RangedAttack()
+    {
+        this.Bullet.GetComponent<BulletEne>().myEle = Stat.element;
+        this.Bullet.GetComponent<BulletEne>().myDmg = Stat.damage;
+        Vector3 myVec = transform.position;
+        //myVec += Vector3.forward*1.5f;
+        Instantiate(this.Bullet, myVec, transform.rotation);
+    }
+
     public virtual void TakeHit(float damage)
     {
         if (!isHitted)
@@ -254,4 +267,10 @@ public class Enemy : CombatStatus, IDamgeable
         Destroy(UI_EnemyHp.EnemyHps.hpObjects[index]);
         UI_EnemyHp.EnemyHps.hpObjects.RemoveAt(index);
     }
+
+    public void EndAttack()
+    {
+        isAttacked = false;
+    }
+
 }

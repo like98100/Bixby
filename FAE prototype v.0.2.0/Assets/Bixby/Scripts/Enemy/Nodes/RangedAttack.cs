@@ -10,35 +10,34 @@ namespace MBT
     public class RangedAttack : Leaf
     {
         public GameObjectReference ObjRef = new GameObjectReference(VarRefMode.DisableConstant);
-        public GameObject Bullet;
         public FloatReference Variable = new FloatReference(VarRefMode.DisableConstant);
-
-        public float UpdateInterval = 2.0f;
-        public float Time_ = 0.0f;
-        
-        public float AttackRange = 0.0f;
-
 
         public override void OnEnter()
         {
+            if (ObjRef.Value.GetComponent<Enemy>().shootCount < 2)
+            {
+                ObjRef.Value.GetComponent<Enemy>().Bullet.GetComponent<BulletEne>().isCharged = false;
+                ObjRef.Value.GetComponent<Enemy>().shootCount++;
+            }
+            else
+            {
+                ObjRef.Value.GetComponent<Enemy>().Bullet.GetComponent<BulletEne>().isCharged = true;
+                ObjRef.Value.GetComponent<Enemy>().shootCount = 0;
+            }
             ObjRef.Value.GetComponent<Enemy>().Anim.SetBool("IsAttack", true);
+            ObjRef.Value.GetComponent<Enemy>().isAttacked = true;
         }
 
         public override NodeResult Execute()
         {
             GameObject obj = ObjRef.Value;
 
-            int Element;
-            // CheckElements
-            Element = (int)obj.GetComponent<Enemy>().Element;
-
-            Time_ += Time.deltaTime * 1.5f;
-
-            if((Time_ > UpdateInterval) || ((int)obj.GetComponent<Enemy>().State == 3) ||
-                (obj.GetComponent<Enemy>().Stat.hp <= 0) || (Variable.Value > AttackRange))
+            if(((int)obj.GetComponent<Enemy>().State == 3) ||
+                (obj.GetComponent<Enemy>().Stat.hp <= 0) || 
+                (Variable.Value > ObjRef.Value.GetComponent<Enemy>().Stat.attackRange) ||
+                (!ObjRef.Value.GetComponent<Enemy>().isAttacked))
             {
                 // Reset time and update destination
-                Time_ = 0.0f;
                 return NodeResult.success;
             }
 
@@ -49,8 +48,6 @@ namespace MBT
 
         public override void OnExit()
         {
-            if (Variable.Value <= AttackRange)
-                Instantiate(Bullet, ObjRef.Value.transform.position, ObjRef.Value.transform.rotation);
             ObjRef.Value.GetComponent<Enemy>().Anim.SetBool("IsAttack", false);
         }
     }

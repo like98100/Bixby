@@ -45,21 +45,21 @@ public class EnemyStatus
                                 // 종류, id, 체력, 쉴드, 대미지, 사정거리, 공격속도, 이동속도, 시야, 속성
         // 일반 몬스터
         if (enemyType == EnemyType.Melee)
-            stat = new EnemyStatus(enemyType, 3000, 100.0f, 50.0f, 10.0f, 2.0f, 5.0f, 5.0f, 15.0f, enemyElement);
+            stat = new EnemyStatus(enemyType, 3000, 100.0f, 30.0f, 10.0f, 3.0f, 2.0f, 5.0f, 15.0f, enemyElement);
         else if (enemyType == EnemyType.Ranged)
-            stat = new EnemyStatus(enemyType, 3000, 150.0f, 50.0f, 15.0f, 7.0f, 5.0f, 5.0f, 15.0f, enemyElement);
+            stat = new EnemyStatus(enemyType, 3000, 150.0f, 30.0f, 15.0f, 7.0f, 5.0f, 5.0f, 15.0f, enemyElement);
         // 중간보스
         else if (enemyType == EnemyType.FireBoss) // 쓸지 안 쓸지 모르겠지만 일단은...
-            stat = new EnemyStatus(enemyType, 3001,  250.0f, 50.0f, 30.0f, 5.5f, 2.0f, 10.0f, 50.0f, enemyElement);
+            stat = new EnemyStatus(enemyType, 3001,  250.0f, 40.0f, 30.0f, 5.5f, 2.0f, 10.0f, 50.0f, enemyElement);
         else if (enemyType == EnemyType.IceBoss)
-            stat = new EnemyStatus(enemyType, 3002,  250.0f, 50.0f, 30.0f, 5.5f, 2.0f, 10.0f, 50.0f, enemyElement);
+            stat = new EnemyStatus(enemyType, 3002,  250.0f, 40.0f, 30.0f, 5.5f, 2.0f, 10.0f, 50.0f, enemyElement);
         else if (enemyType == EnemyType.WaterBoss)
-            stat = new EnemyStatus(enemyType, 3003,  250.0f, 50.0f, 30.0f, 5.5f, 2.0f, 10.0f, 50.0f, enemyElement);
+            stat = new EnemyStatus(enemyType, 3003,  250.0f, 40.0f, 30.0f, 5.5f, 2.0f, 10.0f, 50.0f, enemyElement);
         else if (enemyType == EnemyType.ElectricityBoss)
-            stat = new EnemyStatus(enemyType, 3004,  250.0f, 50.0f, 30.0f, 5.5f, 2.0f, 10.0f, 50.0f, enemyElement);
+            stat = new EnemyStatus(enemyType, 3004,  250.0f, 40.0f, 30.0f, 5.5f, 2.0f, 10.0f, 50.0f, enemyElement);
         // 최종보스
         else if (enemyType == EnemyType.FinalBoss)
-            stat = new EnemyStatus(enemyType, 3005,  250.0f, 50.0f, 30.0f, 5.5f, 2.0f, 10.0f, 100.0f, enemyElement);
+            stat = new EnemyStatus(enemyType, 3005,  500.0f, 50.0f, 30.0f, 5.5f, 2.0f, 10.0f, 100.0f, enemyElement);
 
         return stat;
     }

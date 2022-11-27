@@ -12,11 +12,14 @@ namespace MBTExample
     {
         public GameObjectReference ObjRef = new GameObjectReference(VarRefMode.DisableConstant);
         public GameObjectReference TargetRef =  new GameObjectReference(VarRefMode.DisableConstant);
+        public FloatReference Variable = new FloatReference(VarRefMode.DisableConstant);
         public NavMeshAgent agent;
         public float stopDistance = 2f;
         [Tooltip("How often target position should be updated")]
         public float updateInterval = 1f;
         private float time = 0;
+
+        public float ExitDist = 14.5f;
 
         public override void OnEnter()
         {
@@ -61,17 +64,17 @@ namespace MBTExample
             if (ObjRef.Value.tag == "Enemy")
             {
                 if (ObjRef.Value.GetComponent<Enemy>().Stat.hp <= 0)
-                    return NodeResult.success;
+                    return NodeResult.failure;
             }
             else if (ObjRef.Value.tag == "DungeonBoss")
             {
                 if (ObjRef.Value.GetComponent<DungeonBoss>().Stat.hp <= 0)
-                    return NodeResult.success;
+                    return NodeResult.failure;
             }
             else if (ObjRef.Value.tag == "FinalBoss")
             {
-                if (ObjRef.Value.GetComponent<FinalBoss>().Stat.hp <= 0)
-                    return NodeResult.success;
+                if (ObjRef.Value.GetComponent<FinalBoss>().Stat.hp <= 0 || ExitDist <= Variable.Value)
+                    return NodeResult.failure;
             }
             // By default return failure
             return NodeResult.failure;

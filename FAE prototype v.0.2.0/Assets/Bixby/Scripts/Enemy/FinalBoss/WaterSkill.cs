@@ -76,7 +76,7 @@ namespace MBT
                 Instantiate(obj.GetComponent<FinalBoss>().WaterBall, p4, transform.rotation);
 
                 Instantiate(obj.GetComponent<FinalBoss>().WaterBallSpawner,
-                        new Vector3(target.position.x, target.position.y+20.0f, target.position.z),
+                        new Vector3(target.position.x, target.position.y+10.0f, target.position.z),
                         transform.rotation);
 
                 count ++;

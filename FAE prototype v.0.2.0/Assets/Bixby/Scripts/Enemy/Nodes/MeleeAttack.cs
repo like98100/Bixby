@@ -12,13 +12,16 @@ namespace MBT
         public GameObjectReference ObjRef = new GameObjectReference(VarRefMode.DisableConstant);
         public FloatReference Variable = new FloatReference(VarRefMode.DisableConstant);
 
-        public float UpdateInterval = 2.0f;
+        public float UpdateInterval = 5.0f;
         public float Time_ = 0.0f;
 
         public override void OnEnter()
         {
             if (ObjRef.Value.tag == "Enemy")
+            {
                 ObjRef.Value.GetComponent<Enemy>().Anim.SetBool("IsAttack", true);
+                ObjRef.Value.GetComponent<Enemy>().isAttacked = true;
+            }
             else if (ObjRef.Value.tag == "DungeonBoss")
             {
                 ObjRef.Value.GetComponent<DungeonBoss>().Anim.SetTrigger("isAttacked");
@@ -33,16 +36,14 @@ namespace MBT
 
         public override NodeResult Execute()
         {
-            // int Element;
-            // CheckElements
-            // Element = (int)ObjRef.Value.GetComponent<Enemy>().Element;
-
-            Time_ += Time.deltaTime * 1.5f;
+            Time_ += Time.deltaTime;
 
             if (ObjRef.Value.tag == "Enemy")
             {
-                if((Time_ > UpdateInterval) || ((int)ObjRef.Value.GetComponent<Enemy>().State == 3) ||
-                    (ObjRef.Value.GetComponent<Enemy>().Stat.hp <= 0) || (Variable.Value > ObjRef.Value.GetComponent<Enemy>().Stat.attackRange))
+                if(((int)ObjRef.Value.GetComponent<Enemy>().State == 3) || 
+                    (ObjRef.Value.GetComponent<Enemy>().Stat.hp <= 0) || 
+                    (Variable.Value > ObjRef.Value.GetComponent<Enemy>().Stat.attackRange) ||
+                    (!ObjRef.Value.GetComponent<Enemy>().isAttacked))
                 {
                     // Reset time and update destination
                     Time_ = 0.0f;

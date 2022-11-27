@@ -17,28 +17,22 @@ namespace MBT
 
         public override void OnEnter()
         {
-            ObjRef.Value.GetComponent<Enemy>().Anim.SetTrigger("IsDied");
+            if (ObjRef.Value.tag == "Enemy")
+                ObjRef.Value.GetComponent<Enemy>().Anim.SetTrigger("IsDied");
+            else if (ObjRef.Value.tag == "DungeonBoss")
+                ObjRef.Value.GetComponent<DungeonBoss>().Anim.SetTrigger("isDied");
+            else if (ObjRef.Value.tag == "FinalBoss")
+                ObjRef.Value.GetComponent<FinalBoss>().Anim.SetTrigger("isDied");
         }
 
         public override NodeResult Execute()
         {
-            Time_ += Time.deltaTime * 1.5f;
-
-            if((Time_ > UpdateInterval))
-            {
-                // Reset time and update destination
-                Time_ = 0.0f;
-                return NodeResult.success;
-            }
-
-            // 무언가 해야한다면 여기
-
             return NodeResult.running;
         }
 
         public override void OnExit()
         {
-            Destroy(ObjRef.Value);
+            
         }
     }
 }

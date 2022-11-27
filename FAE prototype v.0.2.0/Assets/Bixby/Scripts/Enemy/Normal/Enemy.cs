@@ -143,7 +143,7 @@ public class Enemy : CombatStatus, IDamgeable
         }
     }
 
-    private void died()
+    private void Died()
     {
         Destroy(gameObject);
     }

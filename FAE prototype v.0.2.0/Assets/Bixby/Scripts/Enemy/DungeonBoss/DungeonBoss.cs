@@ -95,6 +95,11 @@ public class DungeonBoss : CombatStatus, IDamgeable
         }
     }
 
+    public void Died()
+    {
+        Destroy(gameObject);
+    }
+
     private void findPlayer(float sight)
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, sight, 

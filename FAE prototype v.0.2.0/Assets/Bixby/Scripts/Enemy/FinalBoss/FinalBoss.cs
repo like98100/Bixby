@@ -96,6 +96,12 @@ public class FinalBoss : CombatStatus, IDamgeable
 
     }
 
+    public void Died()
+    {
+        // 만약 시체 남겨둘 것이라면 건들일 것.
+        Destroy(gameObject);
+    }
+
     private void findPlayer(float sight)
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, sight, 

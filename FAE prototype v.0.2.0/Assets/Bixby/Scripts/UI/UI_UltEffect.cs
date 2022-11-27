@@ -12,6 +12,7 @@ public class UI_UltEffect : MonoBehaviour
     float circleAngleB;
     void Start()
     {
+        this.gameObject.GetComponent<Canvas>().worldCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         playerControl = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerContorl>();
         magicCircleA = magicCircleB = null;
         foreach (Transform item in this.transform)

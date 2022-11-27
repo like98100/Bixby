@@ -92,6 +92,10 @@ public class Speech : MonoBehaviour
             }
             speechIndex = 0;//초기화
             UI_Control.Inst.windowSet(speechWindow);
+            if (QuestObject.manager.GetIndex() == 3)
+            {
+                GameObject.Find("Tutorial").GetComponent<UI_Tutorial>().CombatTutoImageSet();
+            }
         }
         else
             speechIndex++;//아니면 넘기기

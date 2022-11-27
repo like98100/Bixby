@@ -75,6 +75,8 @@ public class UI_Control : MonoBehaviour
     }
     public void windowSet(GameObject window)//Ã¢ ¿­°í ´Ý±â
     {
+        if (!windows.Contains(window))
+            windows.Add(window);
         if (!(OpenedWindow == null || OpenedWindow == window))
             return;
         window.SetActive(!window.activeSelf);

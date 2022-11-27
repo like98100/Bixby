@@ -239,17 +239,18 @@ public class Enemy : CombatStatus, IDamgeable
      //        break;
      //}
      //questObject = null;
-
-        switch (QuestObject.manager.GetQuestKind())
+        if (Stat.hp <= 0)
         {
-            case QuestKind.kill:
-                if (QuestObject.manager.GetObjectId() == Stat.id)
-                    QuestObject.manager.SetObjectIndex(QuestObject.manager.GetObjectIndex() + 1);
-                break;
-            default:
-                break;
+            switch (QuestObject.manager.GetQuestKind())
+            {
+                case QuestKind.kill:
+                    if (QuestObject.manager.GetObjectId() == Stat.id)
+                        QuestObject.manager.SetObjectIndex(QuestObject.manager.GetObjectIndex() + 1);
+                    break;
+                default:
+                    break;
+            }
         }
-
         int index = UI_EnemyHp.EnemyHps.enemies.IndexOf(this);
         UI_EnemyHp.EnemyHps.enemies.RemoveAt(index);
         Destroy(UI_EnemyHp.EnemyHps.hpObjects[index]);

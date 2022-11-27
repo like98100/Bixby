@@ -1,0 +1,123 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class UI_Tutorial : MonoBehaviour
+{
+    GameObject canvas;
+    List<GameObject> tutorialImages;
+    TMPro.TextMeshProUGUI elemeneClearText;
+    GameObject openedImage;
+    int openedIndex;
+    float time;
+    bool didText;
+    // Start is called before the first frame update
+    void Start()
+    {
+        canvas = this.gameObject.transform.GetChild(0).gameObject;
+        tutorialImages = new List<GameObject>();
+        elemeneClearText = null;
+        openedImage = null;
+        openedIndex = 0;
+        time = 0;
+        didText = false;
+        foreach (Transform item in canvas.transform)
+        {
+            if (item.gameObject.GetComponent<TMPro.TextMeshProUGUI>())
+                elemeneClearText = item.gameObject.GetComponent<TMPro.TextMeshProUGUI>();
+            else
+            {
+                tutorialImages.Add(item.gameObject);
+                foreach (Transform item_ in item)
+                {
+                    item_.gameObject.SetActive(false);
+                }
+            }
+        }
+        canvas.SetActive(false);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (elemeneClearText.gameObject.activeSelf)
+        {
+            time += Time.deltaTime;
+            Color temp = elemeneClearText.color;
+            temp.a = (3f - time) / 3f;
+            elemeneClearText.color = temp;
+            if (temp.a < 0.1f)
+            {
+                elemeneClearText.gameObject.SetActive(false);
+                canvas.SetActive(false);
+            }
+        }
+        if (QuestObject.manager.GetIndex() == 5 && QuestObject.manager.GetIsClear()&&!didText)
+        {
+            dungeonClearText(0);
+        }
+    }
+
+    public void CombatTutoImageSet()
+    {
+        UI_Control.Inst.windowSet(canvas);
+        elemeneClearText.gameObject.SetActive(false);
+        foreach (var item in tutorialImages)
+        {
+            foreach (Transform item_ in item.transform)
+            {
+                item_.gameObject.SetActive(false);
+            }
+            item.SetActive(false);
+        }
+        tutorialImages[0].SetActive(true);
+        tutorialImages[0].transform.GetChild(0).gameObject.SetActive(true);
+        openedImage = tutorialImages[0].transform.GetChild(0).gameObject;
+        openedIndex = 0;
+    }
+    public void NextImage()
+    {
+        int imageIndex = openedImage.transform.GetSiblingIndex();
+        if (tutorialImages[openedIndex].transform.childCount-1 == imageIndex)
+        {
+            if (openedIndex == tutorialImages.Count-1)
+            {
+                tutorialImages[openedIndex].transform.GetChild(imageIndex).gameObject.SetActive(false);
+                tutorialImages[openedIndex].SetActive(false);
+                UI_Control.Inst.windowSet(canvas);
+            }
+            else
+            {
+                tutorialImages[openedIndex].SetActive(false);
+                tutorialImages[openedIndex + 1].SetActive(true);
+                openedImage = tutorialImages[openedIndex + 1].transform.GetChild(0).gameObject;
+                openedImage.SetActive(true);
+                openedIndex++;
+            }
+        }
+        else
+        {
+            tutorialImages[openedIndex].transform.GetChild(imageIndex).gameObject.SetActive(false);
+            tutorialImages[openedIndex].transform.GetChild(imageIndex+1).gameObject.SetActive(true);
+            openedImage = tutorialImages[openedIndex].transform.GetChild(imageIndex + 1).gameObject;
+        }
+    }
+
+    void dungeonClearText(int index)
+    {
+        canvas.SetActive(true);
+        elemeneClearText.gameObject.SetActive(true);
+        switch (index)
+        {
+            case 0:
+                elemeneClearText.text = "<<불>>원소 힘 개방";
+                elemeneClearText.color = Color.red;
+                break;
+            default:
+                elemeneClearText.text = "<<설정되지 않은>>원소 힘 개방";
+                elemeneClearText.color = Color.black;
+                break;
+        }
+        didText = true;
+    }
+}

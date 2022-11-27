@@ -32,25 +32,37 @@ public class NPC : MonoBehaviour
         keyInst = Instantiate(inventoryObject.Inst.getObj("KeyF"), this.gameObject.transform.GetChild(0));
         keyInst.SetActive(false);
         //quest = GameObject.Find("GameManager").GetComponent<QuestObject>();
-        if (npcName == "shop")
+        switch (npcName)
         {
-            notify.SetActive(true);
-            notify.GetComponent<MeshRenderer>().material = speech.NPC_Plane_Marks[2];
-        }
-        if (npcName == "partnerA")
-        {
-            this.gameObject.GetComponent<MeshFilter>().mesh =
+            case "shop":
+                notify.SetActive(true);
+                notify.GetComponent<MeshRenderer>().material = speech.NPC_Plane_Marks[2];
+                break;
+            case "partnerA":
+                this.gameObject.GetComponent<MeshFilter>().mesh =
                 GameObject.FindGameObjectWithTag("Player").transform.GetChild(1).GetChild(0).GetComponent<PlayerMesh>().CharacterMesh[1];
-            this.gameObject.GetComponent<MeshRenderer>().material =
-            GameObject.FindGameObjectWithTag("Player").transform.GetChild(1).GetChild(0).GetComponent<PlayerMesh>().CharacterMaterial[1];
+                this.gameObject.GetComponent<MeshRenderer>().material =
+                GameObject.FindGameObjectWithTag("Player").transform.GetChild(1).GetChild(0).GetComponent<PlayerMesh>().CharacterMaterial[1];
+                break;
+            case "partnerB":
+                this.gameObject.GetComponent<MeshFilter>().mesh =
+                GameObject.FindGameObjectWithTag("Player").transform.GetChild(1).GetChild(0).GetComponent<PlayerMesh>().CharacterMesh[2];
+                this.gameObject.GetComponent<MeshRenderer>().material =
+                GameObject.FindGameObjectWithTag("Player").transform.GetChild(1).GetChild(0).GetComponent<PlayerMesh>().CharacterMaterial[2];
+                break;
+            default:
+                break;
         }
     }
 
     // Update is called once per frame
     void Update()
     {
+        //onOff
+        npcOnOff();
+
         // Inst F
-        if(keyInst.activeSelf)
+        if (keyInst.activeSelf)
         {
             var wantedPos = Camera.main.WorldToScreenPoint(this.transform.position);
             keyInst.transform.position = wantedPos + Vector3.right * 200f;
@@ -156,6 +168,22 @@ public class NPC : MonoBehaviour
                     QuestObject.manager.GetIndex().ToString() + "x";    //퀘스트 NPC일때 퀘스트에 따라 인덱스 조정
             }
             speech.setUp(npcName, npcName + talkIndex);//그 외의 경우, 인덱스 조정 필요
+        }
+    }
+
+    void npcOnOff()
+    {
+        switch (npcName)
+        {
+            case "partnerA":
+                if (QuestObject.manager.GetIndex() > 7)
+                    this.gameObject.SetActive(false);
+                break;
+            case "partnerB":
+                
+                break;
+            default:
+                break;
         }
     }
 }

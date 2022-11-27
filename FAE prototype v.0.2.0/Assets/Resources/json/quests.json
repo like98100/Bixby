@@ -86,9 +86,9 @@
       ]
     },
     {
-      "questObject": [ 5, 2, 5 ],
-      "objectId": [ -1, -1, -1 ],
-      "objectCnt": [ -1, 1, -1 ],
+      "questObject": [ 5, 1, 5 ],
+      "objectId": [ -1, 3001, -1 ],
+      "objectCnt": [ -1, 19, -1 ],
       "time": [ -1.0, -1.0, -1.0 ],
       "npcName": "villagerA",
       "position": [
@@ -190,5 +190,5 @@
       ]
     }
   ],
-  "questIndex": 0
+  "questIndex": 4
 }

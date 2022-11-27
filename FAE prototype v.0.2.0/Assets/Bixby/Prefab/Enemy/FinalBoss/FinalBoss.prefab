@@ -136,8 +136,6 @@ GameObject:
   - component: {fileID: 1839404518718142522}
   - component: {fileID: 4378940502552303127}
   - component: {fileID: 4207395124816690857}
-  - component: {fileID: 4310911097131108926}
-  - component: {fileID: 4398967385446907301}
   m_Layer: 0
   m_Name: BehaviourTree
   m_TagString: Untagged
@@ -178,7 +176,6 @@ MonoBehaviour:
   - {fileID: 2695156726155707738}
   - {fileID: 5020393436015328917}
   - {fileID: 570244235617079662}
-  - {fileID: 4310911097131108926}
   masterBlackboard: {fileID: 0}
 --- !u!114 &6409569189455938790
 MonoBehaviour:
@@ -406,7 +403,7 @@ MonoBehaviour:
     height: 59
   parent: {fileID: 1184993918205978931}
   children:
-  - {fileID: 4398967385446907301}
+  - {fileID: 2407372949107225118}
   behaviourTree: {fileID: 0}
   runtimePriority: 0
   breakpoint: 0
@@ -444,7 +441,7 @@ MonoBehaviour:
     y: 320
     width: 160
     height: 59
-  parent: {fileID: 4398967385446907301}
+  parent: {fileID: 6134685116301786865}
   children:
   - {fileID: 195488257820973465}
   behaviourTree: {fileID: 0}
@@ -5008,60 +5005,6 @@ MonoBehaviour:
   targetVec: {x: 0, y: 0, z: 0}
   UpdateInterval: 3.5
   Time_: 0
---- !u!114 &4310911097131108926
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3137919136024940248}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ae15c5e6bcb1714080f2e8296c3d17a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  key: enemyIsMoved
-  val: 0
---- !u!114 &4398967385446907301
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3137919136024940248}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ebbbb8394b9c3c14aa1ed1f8d6d4abb3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  title: Check Is Moved Service
-  rect:
-    serializedVersion: 2
-    x: 820
-    y: 257
-    width: 160
-    height: 45
-  parent: {fileID: 6134685116301786865}
-  children:
-  - {fileID: 2407372949107225118}
-  behaviourTree: {fileID: 0}
-  runtimePriority: 0
-  breakpoint: 0
-  interval: 1
-  randomDeviation: 0
-  callOnEnter: 1
-  ObjRef:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 1107375551665464079}
-    key: selfObjRef
-    constantValue: {fileID: 0}
-  Variable:
-    useConstant: 0
-    mode: 1
-    blackboard: {fileID: 1107375551665464079}
-    key: enemyIsMoved
-    constantValue: 0
 --- !u!1 &4681719079262048544
 GameObject:
   m_ObjectHideFlags: 0

@@ -760,9 +760,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   target: {fileID: 0}
+  Skill_1_Obj: {fileID: 0}
   MyAgent: {fileID: 0}
   Anim: {fileID: 0}
   DealtDamage: 0
+  isAttacked: 0
+  SkillCooldown: 0
   setShield: 0
 --- !u!1 &7058312655552948190
 GameObject:
@@ -992,9 +995,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 675620037013239922, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: selectedEditorNode
+      value: 
+      objectReference: {fileID: 5901222025022368584}
     - target: {fileID: 2410069637237784618, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
       propertyPath: m_Name
       value: DungeonBoss_BT
+      objectReference: {fileID: 0}
+    - target: {fileID: 4269237371418508582, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: agent
+      value: 
+      objectReference: {fileID: 8189780285117893357}
+    - target: {fileID: 4269237371418508582, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.x
+      value: 900
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
@@ -1003,3 +1018,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 363801421564813956, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
   m_PrefabInstance: {fileID: 7699531313112651374}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5901222025022368584 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4269237371418508582, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+  m_PrefabInstance: {fileID: 7699531313112651374}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52e288dd76fb41f4d939e5a3395057b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

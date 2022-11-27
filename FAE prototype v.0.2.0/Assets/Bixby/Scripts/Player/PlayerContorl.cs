@@ -803,6 +803,10 @@ public class PlayerContorl : PlayerStatusControl
                     {
                         hitInfo.collider.GetComponent<Enemy>().TakeHit(AttackDamage);
                     }
+                    else if (hitInfo.collider.tag == "DungeonBoss")
+                    {
+                        hitInfo.collider.GetComponent<DungeonBoss>().TakeHit(AttackDamage);
+                    }
                     else if (hitInfo.collider.tag == "FinalBoss")
                     {
                         hitInfo.collider.GetComponent<FinalBoss>().TakeHit(AttackDamage);
@@ -851,6 +855,10 @@ public class PlayerContorl : PlayerStatusControl
                     {
                         hitInfo.collider.GetComponent<Enemy>().TakeHit(AttackDamage);
                     }
+                    else if (hitInfo.collider.tag == "DungeonBoss")
+                    {
+                        hitInfo.collider.GetComponent<DungeonBoss>().TakeHit(AttackDamage);
+                    }
                     else if (hitInfo.collider.tag == "FinalBoss")
                     {
                         hitInfo.collider.GetComponent<FinalBoss>().TakeHit(AttackDamage);
@@ -885,6 +893,17 @@ public class PlayerContorl : PlayerStatusControl
             {
                 setEnemyElement(hitInfo.collider.GetComponent<Enemy>().Stat.element);
                 hitInfo.collider.GetComponent<Enemy>().TakeElementHit(AttackDamage, MyElement);
+
+                if (MyElement != ElementType.NONE)
+                {
+                    ElementGauge += ElementGaugeChargeAmount; //원소게이지 ++
+                }
+                if (ElementGauge > 100.0f) ElementGauge = 100.0f;
+            }
+            else if (hitInfo.collider.tag == "DungeonBoss")
+            {
+                setEnemyElement(hitInfo.collider.GetComponent<DungeonBoss>().Stat.element);
+                hitInfo.collider.GetComponent<DungeonBoss>().TakeElementHit(AttackDamage, MyElement);
 
                 if (MyElement != ElementType.NONE)
                 {
@@ -999,6 +1018,16 @@ public class PlayerContorl : PlayerStatusControl
             {
                 setEnemyElement(hitInfo.collider.GetComponent<Enemy>().Stat.element);
                 hitInfo.collider.GetComponent<Enemy>().TakeElementHit(UltDamage, MyElement);
+            }
+            else if (hitInfo.collider.tag == "DungeonBoss")
+            {
+                setEnemyElement(hitInfo.collider.GetComponent<DungeonBoss>().Stat.element);
+                hitInfo.collider.GetComponent<DungeonBoss>().TakeElementHit(AttackDamage, MyElement);
+            }
+            else if (hitInfo.collider.tag == "FinalBoss")
+            {
+                setEnemyElement(hitInfo.collider.GetComponent<FinalBoss>().Stat.element);
+                hitInfo.collider.GetComponent<FinalBoss>().TakeElementHit(AttackDamage, MyElement);
             }
         }
         projectileLine.SetPosition(1, rayOrigin + (m_camera.transform.forward * ShootDistance));

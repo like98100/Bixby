@@ -9854,12 +9854,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93bb13b8a4cbed845b1df6ee42f6ac32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MyElement: 0
+  EnemyElement: 0
+  ExplosionObj: {fileID: 0}
+  TransmissionObj: {fileID: 0}
+  IsFusion: 0
+  IsEvaporation: 0
+  IsElectronicShock: 0
+  IsExplosion: 0
+  IsFreezing: 0
+  IsTransmission: 0
   Target: {fileID: 0}
   Mask:
     serializedVersion: 2
     m_Bits: 8
   Vec: {x: 0, y: 0, z: 0}
-  UpdateInterval: 15
+  UpdateInterval: 20
   Time_: 0
   Speed: 25
 --- !u!1 &8044249898145497632

@@ -62,7 +62,7 @@ namespace MBT
                 return NodeResult.success;
             }
 
-            else if (Time_ <= 1.0)
+            if (Time_ <= 1.0)
             {
                 self.rotation = Quaternion.Lerp(self.rotation, Quaternion.LookRotation(dir), 
                                                 Time.deltaTime * 10.0f);

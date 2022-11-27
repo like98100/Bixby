@@ -45,6 +45,19 @@ namespace MBT
                     return NodeResult.success;
                 }
             }
+            else if (ObjRef.Value.tag == "DungeonBoss")
+            {
+                delay += Time.deltaTime / ObjRef.Value.GetComponent<DungeonBoss>().FireRate;
+
+                if(((delay > ObjRef.Value.GetComponent<DungeonBoss>().Stat.attackSpeed) && Physics.BoxCast(rayVector, self.lossyScale/2, self.forward, out hitInfo, self.rotation, ObjRef.Value.GetComponent<DungeonBoss>().Stat.sight, ObjRef.Value.GetComponent<DungeonBoss>().Mask)) ||
+                    (ObjRef.Value.GetComponent<DungeonBoss>().Stat.hp <= 0))
+                {
+                    // Reset time and update destination
+                    return NodeResult.success;
+                }
+                if ((Variable.Value > ObjRef.Value.GetComponent<DungeonBoss>().Stat.attackRange))
+                    return NodeResult.failure;
+            }
             else if (ObjRef.Value.tag == "FinalBoss")
             {
                 delay += Time.deltaTime / ObjRef.Value.GetComponent<FinalBoss>().FireRate;

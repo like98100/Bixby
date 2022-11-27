@@ -18,6 +18,7 @@ public class DungeonBoss : CombatStatus, IDamgeable
 
     public LayerMask Mask = -1;
     public GameObject target;
+    public GameObject Skill_1_Obj;
 
     public NavMeshAgent MyAgent;
     public Animator Anim;
@@ -25,6 +26,9 @@ public class DungeonBoss : CombatStatus, IDamgeable
     private BoxCollider col;
 
     public float DealtDamage;
+    public bool isAttacked;
+    
+    public float SkillCooldown;
 
     float genTerm; //현재 묻어있는 속성을 TextMeshPro로 나타내는 부분.
 
@@ -38,7 +42,10 @@ public class DungeonBoss : CombatStatus, IDamgeable
         Stat = Stat.SetEnemyStatus(EnemyType.FireBoss, Element);
 
         this.MyElement = Stat.element;
+        isAttacked = false;
         
+        SkillCooldown = 0.0f;
+
         target = null;
         
         State = STATE.IDLE;
@@ -53,6 +60,14 @@ public class DungeonBoss : CombatStatus, IDamgeable
 
         shield = this.gameObject.transform.Find("Shield").GetComponent<Shield>();
         setShield = false;
+
+        Skill_1_Obj.GetComponent<Skill_1>().element = Stat.element;
+    }
+
+    void FixedUpdate()
+    {
+        if (SkillCooldown > 0.0f)
+            SkillCooldown -= Time.deltaTime;
     }
 
     // Update is called once per frame
@@ -140,13 +155,30 @@ public class DungeonBoss : CombatStatus, IDamgeable
         
     }
     
-    public void MeleeAttack()
+    public void EndAttack()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, Stat.attackRange, 
+        isAttacked = false;
+    }
+
+    public void NormalAttackAreaCheck()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position+Vector3.forward*1.0f, Stat.attackRange, 
                                                     Mask, QueryTriggerInteraction.Ignore);
-            
-        if(colliders.Length > 0)
-        {
+
+        if (colliders.Length > 0)
+        {    
+            setEnemyElement(colliders[0].GetComponent<PlayerContorl>().MyElement);
+            colliders[0].GetComponent<PlayerContorl>().TakeElementHit(Stat.damage, Stat.element);
+        }
+    }
+
+    public void DashAttackAreaCheck()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, Stat.attackRange*1.5f, 
+                                                    Mask, QueryTriggerInteraction.Ignore);
+
+        if (colliders.Length > 0)
+        {    
             setEnemyElement(colliders[0].GetComponent<PlayerContorl>().MyElement);
             colliders[0].GetComponent<PlayerContorl>().TakeElementHit(Stat.damage, Stat.element);
         }

@@ -44,7 +44,10 @@ public class FireBallBullet : ElementControl, IDamgeable
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Player")
+        {
             other.GetComponent<PlayerContorl>().TakeElementHit(10.0f, ElementType.FIRE);
+            Destroy(gameObject);
+        }
     }
     
     private void findPlayer()

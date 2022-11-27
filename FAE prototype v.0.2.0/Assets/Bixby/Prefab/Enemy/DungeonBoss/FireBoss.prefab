@@ -569,7 +569,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1222674779674635480}
   - component: {fileID: 1222674779681784624}
-  - component: {fileID: 867508046057042342}
+  - component: {fileID: 6175321699144114405}
   - component: {fileID: 8265337094419747770}
   - component: {fileID: 46170737224048073}
   - component: {fileID: 5295585528144972963}
@@ -617,7 +617,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!54 &867508046057042342
+--- !u!54 &6175321699144114405
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -700,9 +700,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   target: {fileID: 0}
+  Skill_1_Obj: {fileID: 25369382013007618, guid: e1f4fce62c9a9144ead8f1f0f69d8876, type: 3}
   MyAgent: {fileID: 0}
   Anim: {fileID: 0}
   DealtDamage: 0
+  isAttacked: 0
+  SkillCooldown: 0
   setShield: 0
 --- !u!1 &1222674779674407162
 GameObject:
@@ -918,17 +921,753 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 443998845443690599, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: Speed
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 443998845443690599, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.x
+      value: 740
+      objectReference: {fileID: 0}
+    - target: {fileID: 443998845443690599, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.y
+      value: 900
+      objectReference: {fileID: 0}
+    - target: {fileID: 443998845443690599, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: ObjRef.key
+      value: selfObjRef
+      objectReference: {fileID: 0}
+    - target: {fileID: 443998845443690599, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: Variable.key
+      value: enemyToPlayerDist
+      objectReference: {fileID: 0}
+    - target: {fileID: 443998845443690599, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: TargetObjRef.key
+      value: targetObjRef
+      objectReference: {fileID: 0}
+    - target: {fileID: 443998845443690599, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: ObjRef.blackboard
+      value: 
+      objectReference: {fileID: 6058091112817050578}
+    - target: {fileID: 443998845443690599, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: Variable.blackboard
+      value: 
+      objectReference: {fileID: 6058091112817050578}
+    - target: {fileID: 443998845443690599, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: TargetObjRef.blackboard
+      value: 
+      objectReference: {fileID: 6058091112817050578}
+    - target: {fileID: 546104440258385110, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.x
+      value: 1220
+      objectReference: {fileID: 0}
+    - target: {fileID: 546104440258385110, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.y
+      value: 900
+      objectReference: {fileID: 0}
+    - target: {fileID: 546104440258385110, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: ObjRef.key
+      value: selfObjRef
+      objectReference: {fileID: 0}
+    - target: {fileID: 546104440258385110, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: Variable.key
+      value: enemyToPlayerDist
+      objectReference: {fileID: 0}
+    - target: {fileID: 546104440258385110, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: ObjRef.blackboard
+      value: 
+      objectReference: {fileID: 6058091112817050578}
+    - target: {fileID: 546104440258385110, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: Variable.blackboard
+      value: 
+      objectReference: {fileID: 6058091112817050578}
+    - target: {fileID: 675620037013239922, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: selectedEditorNode
+      value: 
+      objectReference: {fileID: 4153683315364846861}
+    - target: {fileID: 768943322860350534, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: ObjRef.key
+      value: selfObjRef
+      objectReference: {fileID: 0}
+    - target: {fileID: 768943322860350534, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: Variable.key
+      value: enemyHp
+      objectReference: {fileID: 0}
+    - target: {fileID: 768943322860350534, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: ObjRef.blackboard
+      value: 
+      objectReference: {fileID: 6058091112817050578}
+    - target: {fileID: 768943322860350534, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: Variable.blackboard
+      value: 
+      objectReference: {fileID: 6058091112817050578}
+    - target: {fileID: 798499325895691337, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: comparator
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 798499325895691337, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: floatReference.key
+      value: enemyHp
+      objectReference: {fileID: 0}
+    - target: {fileID: 798499325895691337, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: floatReference.blackboard
+      value: 
+      objectReference: {fileID: 6058091112817050578}
+    - target: {fileID: 964019478180263326, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.x
+      value: 420
+      objectReference: {fileID: 0}
+    - target: {fileID: 964019478180263326, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.y
+      value: 1020
+      objectReference: {fileID: 0}
+    - target: {fileID: 1472258413784668561, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.x
+      value: 101
+      objectReference: {fileID: 0}
+    - target: {fileID: 1472258413784668561, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.y
+      value: 1200
+      objectReference: {fileID: 0}
+    - target: {fileID: 1597319339492589958, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: variables.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1597319339492589958, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: variables.Array.data[5]
+      value: 
+      objectReference: {fileID: 7070663692377437465}
+    - target: {fileID: 1676630271852616019, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.x
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 1676630271852616019, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.y
+      value: 780
+      objectReference: {fileID: 0}
+    - target: {fileID: 1676630271852616019, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: comparator
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1676630271852616019, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: floatReference.key
+      value: enemyToPlayerDist
+      objectReference: {fileID: 0}
+    - target: {fileID: 1676630271852616019, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: floatReference.blackboard
+      value: 
+      objectReference: {fileID: 6058091112817050578}
+    - target: {fileID: 1676630271852616019, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: floatReference2.constantValue
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1801345812550249110, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.x
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1801345812550249110, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.y
+      value: 1020
+      objectReference: {fileID: 0}
+    - target: {fileID: 1818637720446245400, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.x
+      value: 1140
+      objectReference: {fileID: 0}
+    - target: {fileID: 1818637720446245400, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.y
+      value: 780
+      objectReference: {fileID: 0}
+    - target: {fileID: 1818637720446245400, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: comparator
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1818637720446245400, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: floatReference.key
+      value: enemyToPlayerDist
+      objectReference: {fileID: 0}
+    - target: {fileID: 1818637720446245400, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: floatReference.blackboard
+      value: 
+      objectReference: {fileID: 6058091112817050578}
+    - target: {fileID: 1818637720446245400, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: floatReference2.constantValue
+      value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1939014753051679779, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.x
+      value: 900
+      objectReference: {fileID: 0}
+    - target: {fileID: 1939014753051679779, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.y
+      value: 780
+      objectReference: {fileID: 0}
+    - target: {fileID: 1939014753051679779, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: comparator
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1939014753051679779, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: floatReference.key
+      value: enemyToPlayerDist
+      objectReference: {fileID: 0}
+    - target: {fileID: 1939014753051679779, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: floatReference.blackboard
+      value: 
+      objectReference: {fileID: 6058091112817050578}
+    - target: {fileID: 1939014753051679779, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: floatReference2.constantValue
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 2410069637237784618, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
       propertyPath: m_Name
       value: DungeonBoss_BT
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 3540673167192081152, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.x
+      value: 900
+      objectReference: {fileID: 0}
+    - target: {fileID: 3540673167192081152, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.y
+      value: 560
+      objectReference: {fileID: 0}
+    - target: {fileID: 3540673167192081152, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: ObjRef.key
+      value: selfObjRef
+      objectReference: {fileID: 0}
+    - target: {fileID: 3540673167192081152, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: Variable.key
+      value: enemyToPlayerDist
+      objectReference: {fileID: 0}
+    - target: {fileID: 3540673167192081152, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: targetObjRef.key
+      value: targetObjRef
+      objectReference: {fileID: 0}
+    - target: {fileID: 3540673167192081152, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: ObjRef.blackboard
+      value: 
+      objectReference: {fileID: 6058091112817050578}
+    - target: {fileID: 3540673167192081152, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: Variable.blackboard
+      value: 
+      objectReference: {fileID: 6058091112817050578}
+    - target: {fileID: 3540673167192081152, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: targetObjRef.blackboard
+      value: 
+      objectReference: {fileID: 6058091112817050578}
+    - target: {fileID: 4152136405334705502, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: parent
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4152136405334705502, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.x
+      value: 260
+      objectReference: {fileID: 0}
+    - target: {fileID: 4152136405334705502, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.y
+      value: 1020
+      objectReference: {fileID: 0}
+    - target: {fileID: 4269237371418508582, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: agent
+      value: 
+      objectReference: {fileID: 46170737224048073}
+    - target: {fileID: 4269237371418508582, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.x
+      value: 900
+      objectReference: {fileID: 0}
+    - target: {fileID: 4269237371418508582, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.y
+      value: 900
+      objectReference: {fileID: 0}
+    - target: {fileID: 4269237371418508582, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: ObjRef.key
+      value: selfObjRef
+      objectReference: {fileID: 0}
+    - target: {fileID: 4269237371418508582, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: stopDistance
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4269237371418508582, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: TargetRef.key
+      value: targetObjRef
+      objectReference: {fileID: 0}
+    - target: {fileID: 4269237371418508582, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: ObjRef.blackboard
+      value: 
+      objectReference: {fileID: 6058091112817050578}
+    - target: {fileID: 4269237371418508582, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: TargetRef.blackboard
+      value: 
+      objectReference: {fileID: 6058091112817050578}
+    - target: {fileID: 4502657720347947531, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4502657720347947531, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.x
+      value: 900
+      objectReference: {fileID: 0}
+    - target: {fileID: 4502657720347947531, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.y
+      value: 440
+      objectReference: {fileID: 0}
+    - target: {fileID: 4502657720347947531, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: intReference.key
+      value: enemyState
+      objectReference: {fileID: 0}
+    - target: {fileID: 4502657720347947531, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: intReference.blackboard
+      value: 
+      objectReference: {fileID: 6058091112817050578}
+    - target: {fileID: 4502657720347947531, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: intReference2.constantValue
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4641899739578471717, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: ObjRef.key
+      value: selfObjRef
+      objectReference: {fileID: 0}
+    - target: {fileID: 4641899739578471717, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: ObjRef.blackboard
+      value: 
+      objectReference: {fileID: 6058091112817050578}
+    - target: {fileID: 4754472022297883530, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4754472022297883530, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.x
+      value: 740
+      objectReference: {fileID: 0}
+    - target: {fileID: 4754472022297883530, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.y
+      value: 440
+      objectReference: {fileID: 0}
+    - target: {fileID: 4754472022297883530, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: intReference.key
+      value: enemyState
+      objectReference: {fileID: 0}
+    - target: {fileID: 4754472022297883530, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: intReference.blackboard
+      value: 
+      objectReference: {fileID: 6058091112817050578}
+    - target: {fileID: 4972469674857213592, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.x
+      value: 380
+      objectReference: {fileID: 0}
+    - target: {fileID: 4972469674857213592, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.y
+      value: 1160
+      objectReference: {fileID: 0}
+    - target: {fileID: 5584094249654456358, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: floatReference.key
+      value: enemyHp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5584094249654456358, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: floatReference.blackboard
+      value: 
+      objectReference: {fileID: 6058091112817050578}
+    - target: {fileID: 5602999449534595752, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: ObjRef.key
+      value: selfObjRef
+      objectReference: {fileID: 0}
+    - target: {fileID: 5602999449534595752, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: Variable.key
+      value: enemyState
+      objectReference: {fileID: 0}
+    - target: {fileID: 5602999449534595752, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: ObjRef.blackboard
+      value: 
+      objectReference: {fileID: 6058091112817050578}
+    - target: {fileID: 5602999449534595752, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: Variable.blackboard
+      value: 
+      objectReference: {fileID: 6058091112817050578}
+    - target: {fileID: 5749558439209587605, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: parent
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5749558439209587605, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.x
+      value: 580
+      objectReference: {fileID: 0}
+    - target: {fileID: 5749558439209587605, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.y
+      value: 1020
+      objectReference: {fileID: 0}
+    - target: {fileID: 5794152822964493590, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.x
+      value: 900
+      objectReference: {fileID: 0}
+    - target: {fileID: 5794152822964493590, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.y
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 5794152822964493590, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: SelfObjRef.key
+      value: selfObjRef
+      objectReference: {fileID: 0}
+    - target: {fileID: 5794152822964493590, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: TargetObjRef.key
+      value: targetObjRef
+      objectReference: {fileID: 0}
+    - target: {fileID: 5794152822964493590, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: SelfObjRef.blackboard
+      value: 
+      objectReference: {fileID: 6058091112817050578}
+    - target: {fileID: 5794152822964493590, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: TargetObjRef.blackboard
+      value: 
+      objectReference: {fileID: 6058091112817050578}
+    - target: {fileID: 5899481476173356783, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.x
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 5899481476173356783, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.y
+      value: 900
+      objectReference: {fileID: 0}
+    - target: {fileID: 5899481476173356783, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: comparator
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5899481476173356783, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: floatReference.key
+      value: enemySkillCooldown
+      objectReference: {fileID: 0}
+    - target: {fileID: 5899481476173356783, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: children.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5899481476173356783, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: children.Array.data[0]
+      value: 
+      objectReference: {fileID: 3514192965459720374}
+    - target: {fileID: 5899481476173356783, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: floatReference.blackboard
+      value: 
+      objectReference: {fileID: 6058091112817050578}
+    - target: {fileID: 5901868025244040636, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.x
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 5901868025244040636, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.y
+      value: 960
+      objectReference: {fileID: 0}
+    - target: {fileID: 5901868025244040636, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: children.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5901868025244040636, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: children.Array.data[0]
+      value: 
+      objectReference: {fileID: 5126240589622058602}
+    - target: {fileID: 5958194788179086139, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.x
+      value: 900
+      objectReference: {fileID: 0}
+    - target: {fileID: 5958194788179086139, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.y
+      value: 720
+      objectReference: {fileID: 0}
+    - target: {fileID: 7016954519238321303, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.x
+      value: 1060
+      objectReference: {fileID: 0}
+    - target: {fileID: 7016954519238321303, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.y
+      value: 900
+      objectReference: {fileID: 0}
+    - target: {fileID: 7016954519238321303, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: ObjRef.key
+      value: selfObjRef
+      objectReference: {fileID: 0}
+    - target: {fileID: 7016954519238321303, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: Variable.key
+      value: enemyToPlayerDist
+      objectReference: {fileID: 0}
+    - target: {fileID: 7016954519238321303, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: TargetObjRef.key
+      value: targetObjRef
+      objectReference: {fileID: 0}
+    - target: {fileID: 7016954519238321303, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: ObjRef.blackboard
+      value: 
+      objectReference: {fileID: 6058091112817050578}
+    - target: {fileID: 7016954519238321303, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: Variable.blackboard
+      value: 
+      objectReference: {fileID: 6058091112817050578}
+    - target: {fileID: 7016954519238321303, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: TargetObjRef.blackboard
+      value: 
+      objectReference: {fileID: 6058091112817050578}
+    - target: {fileID: 7935552233103027455, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.x
+      value: 740
+      objectReference: {fileID: 0}
+    - target: {fileID: 7935552233103027455, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.y
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 8060571346331385187, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: ObjRef.key
+      value: selfObjRef
+      objectReference: {fileID: 0}
+    - target: {fileID: 8060571346331385187, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: ObjRef.blackboard
+      value: 
+      objectReference: {fileID: 6058091112817050578}
+    - target: {fileID: 8498120066744306429, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.x
+      value: 900
+      objectReference: {fileID: 0}
+    - target: {fileID: 8498120066744306429, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.y
+      value: 640
+      objectReference: {fileID: 0}
+    - target: {fileID: 8498120066744306429, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: ObjRef.key
+      value: selfObjRef
+      objectReference: {fileID: 0}
+    - target: {fileID: 8498120066744306429, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: Variable.key
+      value: enemySkillCooldown
+      objectReference: {fileID: 0}
+    - target: {fileID: 8498120066744306429, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: ObjRef.blackboard
+      value: 
+      objectReference: {fileID: 6058091112817050578}
+    - target: {fileID: 8498120066744306429, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: Variable.blackboard
+      value: 
+      objectReference: {fileID: 6058091112817050578}
+    - target: {fileID: 8561540699339118354, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.x
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 8561540699339118354, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.y
+      value: 840
+      objectReference: {fileID: 0}
+    - target: {fileID: 8586264166232182843, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.x
+      value: 900
+      objectReference: {fileID: 0}
+    - target: {fileID: 8586264166232182843, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.y
+      value: 840
+      objectReference: {fileID: 0}
+    - target: {fileID: 8586264166232182843, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: comparator
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8586264166232182843, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: floatReference.key
+      value: enemyToPlayerDist
+      objectReference: {fileID: 0}
+    - target: {fileID: 8586264166232182843, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: floatReference.blackboard
+      value: 
+      objectReference: {fileID: 6058091112817050578}
+    - target: {fileID: 8586264166232182843, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: floatReference2.constantValue
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8720213143041437811, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: val
+      value: 
+      objectReference: {fileID: 1222674779674407160}
+    - target: {fileID: 8721565503408468916, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.x
+      value: 1140
+      objectReference: {fileID: 0}
+    - target: {fileID: 8721565503408468916, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.y
+      value: 840
+      objectReference: {fileID: 0}
+    - target: {fileID: 8835398148715656927, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.x
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 8835398148715656927, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.y
+      value: 960
+      objectReference: {fileID: 0}
+    - target: {fileID: 8835398148715656927, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: children.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8835398148715656927, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: children.Array.data[0]
+      value: 
+      objectReference: {fileID: 3514192965459720374}
+    - target: {fileID: 8907170407735484249, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.x
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 8907170407735484249, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: rect.y
+      value: 900
+      objectReference: {fileID: 0}
+    - target: {fileID: 8907170407735484249, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: comparator
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8907170407735484249, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: floatReference.key
+      value: enemySkillCooldown
+      objectReference: {fileID: 0}
+    - target: {fileID: 8907170407735484249, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: children.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8907170407735484249, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: children.Array.data[0]
+      value: 
+      objectReference: {fileID: 5126240589622058602}
+    - target: {fileID: 8907170407735484249, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: floatReference.blackboard
+      value: 
+      objectReference: {fileID: 6058091112817050578}
+    m_RemovedComponents:
+    - {fileID: 1801345812550249110, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+    - {fileID: 964019478180263326, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+    - {fileID: 1472258413784668561, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+    - {fileID: 4972469674857213592, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+--- !u!1 &7154585023360483966 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2410069637237784618, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+  m_PrefabInstance: {fileID: 4771696558128759380}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5130730049487446224 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 363801421564813956, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
   m_PrefabInstance: {fileID: 4771696558128759380}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1434206925644848315 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5899481476173356783, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+  m_PrefabInstance: {fileID: 4771696558128759380}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7154585023360483966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b95a918be8d9a4f9085201010bdec1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4153683315364846861 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8907170407735484249, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+  m_PrefabInstance: {fileID: 4771696558128759380}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7154585023360483966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b95a918be8d9a4f9085201010bdec1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6058091112817050578 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1597319339492589958, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+  m_PrefabInstance: {fileID: 4771696558128759380}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7154585023360483966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b2217e4d35c0c94ea02cf2166c17e4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3514192965459720374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7154585023360483966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c95d2aae9bfe65641b594b520df73380, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: DungeonBoss Skill 1
+  rect:
+    serializedVersion: 2
+    x: 100
+    y: 1020
+    width: 160
+    height: 45
+  parent: {fileID: 1434206925644848315}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  ObjRef:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 6058091112817050578}
+    key: selfObjRef
+    constantValue: {fileID: 0}
+  targetObjRef:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 6058091112817050578}
+    key: targetObjRef
+    constantValue: {fileID: 0}
+  UpdateInterval: 5.5
+  Time_: 0
+--- !u!114 &5126240589622058602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7154585023360483966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c95d2aae9bfe65641b594b520df73380, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: DungeonBoss Skill 1
+  rect:
+    serializedVersion: 2
+    x: 420
+    y: 1020
+    width: 160
+    height: 45
+  parent: {fileID: 4153683315364846861}
+  children: []
+  behaviourTree: {fileID: 0}
+  runtimePriority: 0
+  breakpoint: 0
+  ObjRef:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 6058091112817050578}
+    key: selfObjRef
+    constantValue: {fileID: 0}
+  targetObjRef:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 6058091112817050578}
+    key: targetObjRef
+    constantValue: {fileID: 0}
+  UpdateInterval: 5.5
+  Time_: 0
+--- !u!114 &7070663692377437465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7154585023360483966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4be6860a83fe93e4bbd689336d96bdc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: enemyState
+  val: 0
 --- !u!1001 &6923056922241215384
 PrefabInstance:
   m_ObjectHideFlags: 0

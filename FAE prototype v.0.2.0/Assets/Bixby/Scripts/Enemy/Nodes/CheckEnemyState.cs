@@ -18,8 +18,11 @@ namespace MBT
 
             if(obj == null)
                 return;
-
-            Variable.Value = (int)obj.GetComponent<Enemy>().State;                
+            
+            if (obj.tag == "Enemy")
+                Variable.Value = (int)obj.GetComponent<Enemy>().State;                
+            else if (obj.tag == "DungeonBoss")
+                Variable.Value = (int)obj.GetComponent<DungeonBoss>().State;                
         }
     }
 }

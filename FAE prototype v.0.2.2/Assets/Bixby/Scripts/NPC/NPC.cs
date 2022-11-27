@@ -43,12 +43,21 @@ public class NPC : MonoBehaviour
                 GameObject.FindGameObjectWithTag("Player").transform.GetChild(1).GetChild(0).GetComponent<PlayerMesh>().CharacterMesh[1];
                 this.gameObject.GetComponent<MeshRenderer>().material =
                 GameObject.FindGameObjectWithTag("Player").transform.GetChild(1).GetChild(0).GetComponent<PlayerMesh>().CharacterMaterial[1];
+                notify.transform.position += Vector3.up * 1f;
                 break;
             case "partnerB":
                 this.gameObject.GetComponent<MeshFilter>().mesh =
                 GameObject.FindGameObjectWithTag("Player").transform.GetChild(1).GetChild(0).GetComponent<PlayerMesh>().CharacterMesh[2];
                 this.gameObject.GetComponent<MeshRenderer>().material =
                 GameObject.FindGameObjectWithTag("Player").transform.GetChild(1).GetChild(0).GetComponent<PlayerMesh>().CharacterMaterial[2];
+                notify.transform.position += Vector3.up * 1f;
+                break;
+            case "partnerC":
+                this.gameObject.GetComponent<MeshFilter>().mesh =
+                GameObject.FindGameObjectWithTag("Player").transform.GetChild(1).GetChild(0).GetComponent<PlayerMesh>().CharacterMesh[3];
+                this.gameObject.GetComponent<MeshRenderer>().material =
+                GameObject.FindGameObjectWithTag("Player").transform.GetChild(1).GetChild(0).GetComponent<PlayerMesh>().CharacterMaterial[3];
+                notify.transform.position += Vector3.up * 1f;
                 break;
             default:
                 break;
@@ -148,7 +157,7 @@ public class NPC : MonoBehaviour
             keyInst.SetActive(false);
         }
         if (nameObj.activeSelf)
-            nameObj.transform.position = Camera.main.WorldToScreenPoint(this.transform.position + Vector3.up * 2f);
+            nameObj.transform.position = npcName.Contains("partner") ? Camera.main.WorldToScreenPoint(this.transform.position + Vector3.up * 3f) : Camera.main.WorldToScreenPoint(this.transform.position + Vector3.up * 2f);
     }
     void npcInteract()
     {
@@ -176,11 +185,16 @@ public class NPC : MonoBehaviour
         switch (npcName)
         {
             case "partnerA":
-                if (QuestObject.manager.GetIndex() > 7)
+                if (QuestObject.manager.GetIndex() > 9)
                     this.gameObject.SetActive(false);
                 break;
             case "partnerB":
-                
+                if (QuestObject.manager.GetIndex() > 13)
+                    this.gameObject.SetActive(false);
+                break;
+            case "partnerC":
+                if (QuestObject.manager.GetIndex() > 17)
+                    this.gameObject.SetActive(false);
                 break;
             default:
                 break;

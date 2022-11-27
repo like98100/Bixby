@@ -221,5 +221,17 @@ public class FinalBoss : CombatStatus, IDamgeable
             colliders[0].GetComponent<PlayerContorl>().TakeElementHit(Stat.damage, Stat.element);
         }
     }
+    private void OnDestroy()//에너미HP바 제거 및 퀘스트 인덱스 조정
+    {
+        if (Stat.hp <= 0
+            && QuestObject.manager.GetQuestKind() == QuestKind.kill
+            && QuestObject.manager.GetObjectId() == Stat.id)
+        {
+            QuestObject.manager.SetObjectIndex(QuestObject.manager.GetObjectIndex() + 1);
+        }
 
+        UI_EnemyHp.EnemyHps.boss = null;
+        Destroy(UI_EnemyHp.EnemyHps.hpObjects[0]);
+        UI_EnemyHp.EnemyHps.hpObjects.RemoveAt(0);
+    }
 }

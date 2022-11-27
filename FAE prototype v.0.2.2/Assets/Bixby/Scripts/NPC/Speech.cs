@@ -92,13 +92,20 @@ public class Speech : MonoBehaviour
             }
             speechIndex = 0;//√ ±‚»≠
             UI_Control.Inst.windowSet(speechWindow);
+            UI_Tutorial tutorial = GameObject.Find("Tutorial").GetComponent<UI_Tutorial>();
             switch (QuestObject.manager.GetIndex())
             {
                 case 3:
-                    GameObject.Find("Tutorial").GetComponent<UI_Tutorial>().TutoImageSet(0);
+                    tutorial.TutoImageSet(0);
                     break;
-                case 8:
-                    GameObject.Find("Tutorial").GetComponent<UI_Tutorial>().TutoImageSet(2);
+                case 10:
+                    tutorial.ElementGetText(1);
+                    break;
+                case 14:
+                    tutorial.ElementGetText(2);
+                    break;
+                case 18:
+                    tutorial.ElementGetText(3);
                     break;
                 default:
                     break;

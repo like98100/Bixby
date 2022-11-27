@@ -54,12 +54,15 @@ public class UI_Tutorial : MonoBehaviour
                 elemeneClearText.gameObject.SetActive(false);
                 canvas.SetActive(false);
                 time = 0;
-                TutoImageSet(1);
+                if (QuestObject.manager.GetIndex() == 5)
+                    TutoImageSet(1);
+                else if(QuestObject.manager.GetIndex() == 10)
+                    TutoImageSet(2);
             }
         }
         if (QuestObject.manager.GetIndex() == 5 && QuestObject.manager.GetIsClear()&&!didText)
         {
-            dungeonClearText(0);
+            ElementGetText(0);
         }
     }
 
@@ -99,7 +102,7 @@ public class UI_Tutorial : MonoBehaviour
         }
     }
 
-    void dungeonClearText(int index)
+    public void ElementGetText(int index)
     {
         canvas.SetActive(true);
         elemeneClearText.gameObject.SetActive(true);
@@ -107,10 +110,22 @@ public class UI_Tutorial : MonoBehaviour
         {
             case 0:
                 elemeneClearText.text = "<<불>>원소 힘 개방";
-                elemeneClearText.color = Color.red;
+                elemeneClearText.color = ElementControl.FireSkillStartColor;
+                break;
+            case 1:
+                elemeneClearText.text = "<<얼음>>원소 힘 개방";
+                elemeneClearText.color = ElementControl.IceSkillStartColor;
+                break;
+            case 2:
+                elemeneClearText.text = "<<물>>원소 힘 개방";
+                elemeneClearText.color = ElementControl.WaterSkillStartColor;
+                break;
+            case 3:
+                elemeneClearText.text = "<<전기>>원소 힘 개방";
+                elemeneClearText.color = ElementControl.ElectroSkillStartColor;
                 break;
             default:
-                elemeneClearText.text = "<<설정되지 않은>>원소 힘 개방";
+                elemeneClearText.text = "<<정의되지않은>>원소 힘 개방";
                 elemeneClearText.color = Color.black;
                 break;
         }

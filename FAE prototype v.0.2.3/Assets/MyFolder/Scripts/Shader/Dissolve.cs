@@ -30,12 +30,12 @@ public class Dissolve : MonoBehaviour
 
     public IEnumerator Act(GameObject go)
     {
-        yield return new WaitUntil(() => Mathf.Sin(Time.time) <= -0.99);
+        yield return new WaitUntil(() => Mathf.Sin(Time.time) <= -0.9);
 
         isDissolve = false;
         shaderManager.ChangeMaterials(this.gameObject, dissolves);
 
-        yield return new WaitUntil(() => Mathf.Sin(Time.time) >= 0.97);
+        yield return new WaitUntil(() => Mathf.Sin(Time.time) >= 0.6);
 
         this.gameObject.SetActive(false);
         Destroy(go);

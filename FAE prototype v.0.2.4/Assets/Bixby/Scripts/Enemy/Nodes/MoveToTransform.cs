@@ -64,17 +64,26 @@ namespace MBTExample
             if (ObjRef.Value.tag == "Enemy")
             {
                 if (ObjRef.Value.GetComponent<Enemy>().Stat.hp <= 0)
+                {
+                    agent.isStopped = true;
                     return NodeResult.failure;
+                }
             }
             else if (ObjRef.Value.tag == "DungeonBoss")
             {
                 if (ObjRef.Value.GetComponent<DungeonBoss>().Stat.hp <= 0)
+                {   
+                    agent.isStopped = true;
                     return NodeResult.failure;
+                }
             }
             else if (ObjRef.Value.tag == "FinalBoss")
             {
                 if (ObjRef.Value.GetComponent<FinalBoss>().Stat.hp <= 0 || ExitDist <= Variable.Value)
+                {
+                    agent.isStopped = true;
                     return NodeResult.failure;
+                }
             }
             // By default return failure
             return NodeResult.failure;

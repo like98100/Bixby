@@ -55,7 +55,7 @@ public class Enemy : CombatStatus, IDamgeable
 
         target = null;
         shootCount = 0;
-
+        
         Timer = 0.0f;
 
         State = STATE.IDLE;
@@ -186,6 +186,12 @@ public class Enemy : CombatStatus, IDamgeable
         UI_Control.Inst.damageSet((damage * AdditionalDamage).ToString(), this.gameObject);//대미지 UI 추가 코드
         DealtDamage = Mathf.Round(damage * 10) * 0.1f;
 
+        if (Stat.hp <= 0.0f)
+        {
+            MyAgent.isStopped = true;
+            Anim.SetTrigger("IsDied");
+        }
+
         if (Stat.barrier <= 0.0f)
         {
             setShield = false;
@@ -227,7 +233,12 @@ public class Enemy : CombatStatus, IDamgeable
         Stat.hp -= curDamage * AdditionalDamage;
         UI_Control.Inst.damageSet((curDamage * AdditionalDamage).ToString(), this.gameObject);//����� UI �߰� �ڵ�
         DealtDamage = Mathf.Round(curDamage * 10) * 0.1f;
-        
+
+        if (Stat.hp <= 0.0f)
+        {
+            MyAgent.isStopped = true;
+            Anim.SetTrigger("IsDied");
+        }        
     }
 
     public void RunToSleepChange()

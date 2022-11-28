@@ -127,6 +127,12 @@ public class DungeonBoss : CombatStatus, IDamgeable
         UI_Control.Inst.damageSet((damage * AdditionalDamage).ToString(), this.gameObject);//대미지 UI 추가 코드
         DealtDamage = Mathf.Round(damage * 10) * 0.1f;
 
+        if (Stat.hp <= 0.0f)
+        {
+            MyAgent.isStopped = true;
+            Anim.SetTrigger("isDied");
+        }
+
         if (Stat.barrier <= 0.0f)
         {
             setShield = false;
@@ -164,6 +170,11 @@ public class DungeonBoss : CombatStatus, IDamgeable
         UI_Control.Inst.damageSet((curDamage * AdditionalDamage).ToString(), this.gameObject);//����� UI �߰� �ڵ�
         DealtDamage = Mathf.Round(curDamage * 10) * 0.1f;
         
+        if (Stat.hp <= 0.0f)
+        {
+            MyAgent.isStopped = true;
+            Anim.SetTrigger("isDied");
+        }
     }
     
     public void EndAttack()

@@ -462,7 +462,7 @@ Transform:
   m_Children:
   - {fileID: 7058312655553379310}
   m_Father: {fileID: 7058312655553379324}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7058312655552948178
 GameObject:
@@ -651,8 +651,8 @@ Transform:
   m_LocalPosition: {x: 1118.2, y: 0, z: 356.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 7058312655553379312}
   - {fileID: 7058312655553379326}
+  - {fileID: 7058312655553379312}
   - {fileID: 9216526818110940372}
   - {fileID: 8058700705696101610}
   m_Father: {fileID: 0}
@@ -777,8 +777,10 @@ GameObject:
   m_Component:
   - component: {fileID: 7058312655553379326}
   - component: {fileID: 7058312655541381844}
+  - component: {fileID: 3928255133353427222}
+  - component: {fileID: 5301173484748949898}
   m_Layer: 0
-  m_Name: FireFiend
+  m_Name: Cube_001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -792,11 +794,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7058312655552948190}
   m_LocalRotation: {x: 1, y: -0, z: 0, w: -0.000000075500154}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7058312655553379324}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &7058312655541381844
 SkinnedMeshRenderer:
@@ -870,6 +872,36 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.16562831, y: -0.07289624, z: 0.27192783}
     m_Extent: {x: 2.1942077, y: 1.3603294, z: 1.4238065}
   m_DirtyAABB: 0
+--- !u!114 &3928255133353427222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7058312655552948190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4b097a13d214fd4ab963b79da04c277, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5301173484748949898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7058312655552948190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4aa14fd0b2ddba4087ae987ccc0c177, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDissolve: 0
+  dissolve: {fileID: 2100000, guid: fd481701278c4a84e89a4eb05e94b2d5, type: 2}
+  color: {r: 0, g: 0, b: 0, a: 0}
+  scales:
+  - 5000
+  - 30
 --- !u!1001 &1229582041340574908
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1011,6 +1043,10 @@ PrefabInstance:
       propertyPath: rect.x
       value: 900
       objectReference: {fileID: 0}
+    - target: {fileID: 8720213143041437811, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
+      propertyPath: val
+      value: 
+      objectReference: {fileID: 7058312655552948188}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a68c6bf3a93ded4abd8554704497766, type: 3}
 --- !u!4 &8058700705696101610 stripped

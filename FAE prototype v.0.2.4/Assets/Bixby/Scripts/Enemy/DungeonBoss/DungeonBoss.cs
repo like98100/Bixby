@@ -39,7 +39,7 @@ public class DungeonBoss : CombatStatus, IDamgeable
     void Start()
     {
         Stat = new EnemyStatus();
-        Stat = Stat.SetEnemyStatus(EnemyType.FireBoss, Element);
+        Stat = Stat.SetEnemyStatus(Type, Element);
 
         this.MyElement = Stat.element;
         isAttacked = false;
@@ -207,6 +207,7 @@ public class DungeonBoss : CombatStatus, IDamgeable
     }
     private void OnDestroy()
     {
+        print(Stat.id);
         if (Stat.hp <= 0)
             switch (QuestObject.manager.GetQuestKind())
             {

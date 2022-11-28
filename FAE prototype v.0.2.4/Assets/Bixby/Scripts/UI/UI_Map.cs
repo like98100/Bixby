@@ -4,6 +4,17 @@ using UnityEngine;
 
 public class UI_Map : MonoBehaviour
 {
+    private void Awake()
+    {
+        realPlayer = GameObject.FindGameObjectWithTag("Player");
+        mapPlayer = this.transform.GetChild(0).gameObject;
+        realMaxX = max.x;
+        realMaxZ = max.y;
+        realMinX = min.x;
+        realMinZ = min.y;
+        mapX = this.GetComponent<RectTransform>().rect.width;
+        mapY = this.GetComponent<RectTransform>().rect.height;
+    }
     [SerializeField] Vector2 max;
     [SerializeField] Vector2 min;
     float realMaxX, realMaxZ, realMinX, realMinZ;
@@ -19,14 +30,6 @@ public class UI_Map : MonoBehaviour
             this.gameObject.SetActive(false);
             return;
         }
-        realPlayer = GameObject.FindGameObjectWithTag("Player");
-        mapPlayer = this.transform.GetChild(0).gameObject;
-        realMaxX = max.x;
-        realMaxZ = max.y;
-        realMinX = min.x;
-        realMinZ = min.y;
-        mapX = this.GetComponent<RectTransform>().rect.width;
-        mapY = this.GetComponent<RectTransform>().rect.height;
 
         warpPoint = new List<Transform>();
         foreach (Transform item in GameObject.Find("WarpPoints").transform)

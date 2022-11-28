@@ -183,15 +183,24 @@ public class NPC : MonoBehaviour
         {
             case "partnerA":
                 if (QuestObject.manager.GetIndex() > 9)
+                {
                     this.gameObject.SetActive(false);
+                    GameObject.Find("Avatars").GetComponent<UI_CharacterFrame>().SetAvatarIndex((QuestObject.manager.GetIndex() - 1) / 4);
+                }
                 break;
             case "partnerB":
                 if (QuestObject.manager.GetIndex() > 13)
+                {
                     this.gameObject.SetActive(false);
+                    GameObject.Find("Avatars").GetComponent<UI_CharacterFrame>().SetAvatarIndex((QuestObject.manager.GetIndex() - 1) / 4);
+                }
                 break;
             case "partnerC":
                 if (QuestObject.manager.GetIndex() > 17)
+                {
                     this.gameObject.SetActive(false);
+                    GameObject.Find("Avatars").GetComponent<UI_CharacterFrame>().SetAvatarIndex((QuestObject.manager.GetIndex() - 1) / 4);
+                }
                 break;
             default:
                 break;

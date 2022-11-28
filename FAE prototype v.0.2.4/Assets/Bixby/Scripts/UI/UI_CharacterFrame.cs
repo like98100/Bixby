@@ -5,7 +5,7 @@ using UnityEngine;
 public class UI_CharacterFrame : MonoBehaviour
 {
     PlayerContorl playerContorl;
-    [SerializeField] int ableElementCount;//사용 가능한 속성 수, 이후 개발함에 따라 현 스크립트에서는 제거 예정
+    int ableElementCount;//사용 가능한 속성 수
     List<GameObject> avaters;
     void Start()
     {
@@ -13,8 +13,30 @@ public class UI_CharacterFrame : MonoBehaviour
         playerContorl = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerContorl>();
         avaters = new List<GameObject>();
         foreach (Transform item in this.transform)
+        {
             avaters.Add(item.gameObject);
-        SetAvatars();
+            switch (avaters.Count)
+            {
+                case 1:
+                    item.transform.GetChild(2).gameObject.GetComponent<UnityEngine.UI.Text>().text = "알파";
+                    break;
+                case 2:
+                    item.transform.GetChild(2).gameObject.GetComponent<UnityEngine.UI.Text>().text = "베타";
+                    break;
+                case 3:
+                    item.transform.GetChild(2).gameObject.GetComponent<UnityEngine.UI.Text>().text = "델타";
+                    break;
+                case 4:
+                    item.transform.GetChild(2).gameObject.GetComponent<UnityEngine.UI.Text>().text = "감마";
+                    break;
+                default:
+                    break;
+            }
+        }
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "FieldScene")
+            SetAvatarIndex(1);
+        else
+            SetAvatarIndex((QuestObject.manager.GetIndex() - 1) / 4);
     }
 
     void Update()
@@ -55,5 +77,10 @@ public class UI_CharacterFrame : MonoBehaviour
             }
                 
         }
+    }
+    public void SetAvatarIndex(int value)
+    {
+        ableElementCount = value;
+        SetAvatars();
     }
 }

@@ -121,7 +121,8 @@ public class NPC : MonoBehaviour
         notify.transform.rotation = Quaternion.Euler(camRotate);
         if (NpcName == "shop")
             return;
-        if (NpcName != QuestObject.manager.GetNPCName())
+        if (NpcName != QuestObject.manager.GetNPCName()
+            || QuestObject.manager.GetIndex() > 19)
         {
             notify.SetActive(false);
         }
@@ -169,15 +170,10 @@ public class NPC : MonoBehaviour
         }
         else
         {
-            //if (npcName == quest.GetNPCName())
-            if (NpcName == QuestObject.manager.GetNPCName())
-            {
-                //talkIndex = quest.GetIsClear() ? quest.GetIndex().ToString()+"o": quest.GetIndex().ToString() + "x";//퀘스트 NPC일때 퀘스트에 따라 인덱스 조정
-                talkIndex = QuestObject.manager.GetIsClear() ?
+            talkIndex = QuestObject.manager.GetIsClear() ?
                     QuestObject.manager.GetIndex().ToString() + "o" :
-                    QuestObject.manager.GetIndex().ToString() + "x";    //퀘스트 NPC일때 퀘스트에 따라 인덱스 조정
-            }
-            speech.setUp(NpcName, NpcName + talkIndex);//그 외의 경우, 인덱스 조정 필요
+                    QuestObject.manager.GetIndex().ToString() + "x";    //퀘스트에 따라 인덱스 조정
+            speech.setUp(NpcName, NpcName + talkIndex);
         }
     }
 

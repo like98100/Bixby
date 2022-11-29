@@ -71,6 +71,9 @@ public class UI_Control : MonoBehaviour
                 case "x"://Äù½ºÆ® ½ºÅµ
                     QuestObject.manager.SetIsClear(true);
                     break;
+                case "p":
+                    Speech.setUp("partnerA", "temp");
+                    break;
             }
         }
     }

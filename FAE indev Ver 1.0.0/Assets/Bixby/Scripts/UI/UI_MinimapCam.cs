@@ -59,52 +59,44 @@ public class UI_MinimapCam : MonoBehaviour
     }
     void minimapSign()
     {
-        //goalPosi = quest.GetPosition() == new Vector3(-999f, -999f, -999f) ? GameObject.Find(quest.GetNPCName()).transform.position : quest.GetPosition();
-        if (QuestObject.manager.GetQuestKind() != QuestKind.spot && !QuestObject.manager.GetIsClear())
+        bool isField = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "FieldScene";
+        if (QuestObject.manager.GetIndex() % 2 == 0 && isField)
         {
-            signObject.transform.position = goalObject.transform.position = new Vector3(-999f, -999f, -999f);
+            goalPosi = GameObject.Find(UI_Control.Inst.Speech.NameChanger(QuestObject.manager.GetNPCName())).transform.position;
+            signObject.transform.position = goalObject.transform.position = Vector3.one * -999f;
             return;
         }
-        if (QuestObject.manager.GetIsClear() && UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "FieldScene")
-            goalPosi = GameObject.Find(UI_Control.Inst.Speech.NameChanger(QuestObject.manager.GetNPCName())).transform.position;
+        if (QuestObject.manager.GetQuestKind() != QuestKind.spot && !QuestObject.manager.GetIsClear())
+        {
+            goalPosi = signObject.transform.position = goalObject.transform.position = Vector3.one * -999f;
+            return;
+        }
+        if (isField)
+        {
+            if (QuestObject.manager.GetIsClear())
+                goalPosi = GameObject.Find(UI_Control.Inst.Speech.NameChanger(QuestObject.manager.GetNPCName())).transform.position;
+            else
+                goalPosi = QuestObject.manager.GetPosition() == Vector3.one * -999f ? GameObject.Find(UI_Control.Inst.Speech.NameChanger(QuestObject.manager.GetNPCName())).transform.position : QuestObject.manager.GetPosition();
+        }
         else
-            goalPosi = QuestObject.manager.GetPosition() == new Vector3(-999f, -999f, -999f) ? GameObject.Find(UI_Control.Inst.Speech.NameChanger(QuestObject.manager.GetNPCName())).transform.position : QuestObject.manager.GetPosition();
+            goalPosi = goalPosi = QuestObject.manager.GetPosition();
         Vector3 direction = this.transform.position + ((goalPosi - this.transform.position).normalized * this.gameObject.GetComponent<Camera>().orthographicSize * 1.025f);
         float dist = 600 / this.gameObject.GetComponent<Camera>().orthographicSize + 120;
         if (Vector3.Distance(this.gameObject.GetComponent<Camera>().WorldToScreenPoint(goalPosi), this.gameObject.GetComponent<Camera>().WorldToScreenPoint(player.transform.position)) > dist)
         {
             signObject.transform.position = direction;
             signObject.transform.localPosition = new Vector3(signObject.transform.localPosition.x, signObject.transform.localPosition.y, 1f);
-            goalObject.transform.position = new Vector3(-999f, -999f, -999f);
+            goalObject.transform.position = Vector3.one * -999f;
         }
         else
         {
             goalObject.transform.position = goalPosi;
             goalObject.transform.localPosition = new Vector3(goalObject.transform.localPosition.x, goalObject.transform.localPosition.y, 1f);
-            signObject.transform.position = new Vector3(-999f, -999f, -999f);
+            signObject.transform.position = Vector3.one * -999f;
         }
-        //if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "FieldScene")
-        //{
-        //    //goalPosi = quest.GetPosition() == new Vector3(-999f, -999f, -999f) ? GameObject.Find(quest.GetNPCName()).transform.position : quest.GetPosition();
-        //    goalPosi = QuestObject.manager.GetPosition() == new Vector3(-999f, -999f, -999f) ? GameObject.Find(QuestObject.manager.GetNPCName()).transform.position : QuestObject.manager.GetPosition();
-        //    Vector3 direction = this.transform.position + ((goalPosi - this.transform.position).normalized * this.gameObject.GetComponent<Camera>().orthographicSize * 1.025f);
-        //    float dist = 600 / this.gameObject.GetComponent<Camera>().orthographicSize + 120;
-        //    if (Vector3.Distance(this.gameObject.GetComponent<Camera>().WorldToScreenPoint(goalPosi), this.gameObject.GetComponent<Camera>().WorldToScreenPoint(player.transform.position)) > dist)
-        //    {
-        //        signObject.transform.position = direction;
-        //        signObject.transform.localPosition = new Vector3(signObject.transform.localPosition.x, signObject.transform.localPosition.y, 1f);
-        //        goalObject.transform.position = new Vector3(-999f, -999f, -999f);
-        //    }
-        //    else
-        //    {
-        //        goalObject.transform.position = goalPosi;
-        //        goalObject.transform.localPosition = new Vector3(goalObject.transform.localPosition.x, goalObject.transform.localPosition.y, 1f);
-        //        signObject.transform.position = new Vector3(-999f, -999f, -999f);
-        //    }
-        //}
-        //else
-        //{
-        //    signObject.transform.position = goalObject.transform.position = new Vector3(-999f, -999f, -999f);
-        //}
+    }
+    public Vector3 getGoalPos()
+    {
+        return goalPosi;
     }
 }

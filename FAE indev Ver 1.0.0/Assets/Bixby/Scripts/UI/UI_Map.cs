@@ -44,10 +44,11 @@ public class UI_Map : MonoBehaviour
         Vector2 tempPlayer = tempPos(realPlayer.transform.position);
         mapPlayer.transform.localPosition = new Vector3(tempPlayer.x, tempPlayer.y, 0f);
 
-        goalPos.SetActive(QuestObject.manager.GetPosition() != Vector3.one * -999f);
+        Vector3 minimapGoal = GameObject.Find("MinimapCamera").GetComponent<UI_MinimapCam>().getGoalPos();
+        goalPos.SetActive(minimapGoal != Vector3.one * -999f);
         if (goalPos.activeSelf)
         {
-            Vector2 tempGoal = tempPos(QuestObject.manager.GetPosition());
+            Vector2 tempGoal = tempPos(minimapGoal);
             goalPos.transform.localPosition = new Vector3(tempGoal.x, tempGoal.y, 0f);
         }
 

@@ -14,6 +14,7 @@ public class UI_Map : MonoBehaviour
         realMinZ = min.y;
         mapX = this.GetComponent<RectTransform>().rect.width;
         mapY = this.GetComponent<RectTransform>().rect.height;
+        goalPos = this.transform.GetChild(this.transform.childCount - 1).gameObject;
     }
     [SerializeField] Vector2 max;
     [SerializeField] Vector2 min;
@@ -23,6 +24,7 @@ public class UI_Map : MonoBehaviour
     GameObject mapPlayer;
     Vector3 mapBasePos;
     List<Transform> warpPoint;
+    GameObject goalPos;
     void Start()
     {
         if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "FieldScene")
@@ -39,11 +41,16 @@ public class UI_Map : MonoBehaviour
     }
     public void MapSetUp()
     {
-        float xtemp =
-            (mapX * ((realPlayer.transform.position.x - realMinX) / (realMaxX - realMinX) - 0.5f));
-        float ytemp =
-            (mapY * ((realPlayer.transform.position.z - realMinZ) / (realMaxZ - realMinZ) - 0.5f));
-        mapPlayer.transform.localPosition = new Vector3(xtemp, ytemp, 0f);
+        Vector2 tempPlayer = tempPos(realPlayer.transform.position);
+        mapPlayer.transform.localPosition = new Vector3(tempPlayer.x, tempPlayer.y, 0f);
+
+        goalPos.SetActive(QuestObject.manager.GetPosition() != Vector3.one * -999f);
+        if (goalPos.activeSelf)
+        {
+            Vector2 tempGoal = tempPos(QuestObject.manager.GetPosition());
+            goalPos.transform.localPosition = new Vector3(tempGoal.x, tempGoal.y, 0f);
+        }
+
         Vector3 mapPos = new Vector3(Screen.width / 2 - mapPlayer.transform.position.x, Screen.height / 2 - mapPlayer.transform.position.y, 0);
         this.gameObject.transform.position += mapPos;
         mapLimitSet(this.gameObject.transform.localPosition);
@@ -52,6 +59,7 @@ public class UI_Map : MonoBehaviour
     {
         
     }
+    #region mapEventTrigger
     public void mapDown()
     {
         mapBasePos = this.gameObject.transform.localPosition - Input.mousePosition;
@@ -76,7 +84,7 @@ public class UI_Map : MonoBehaviour
             }
         }
     }
-
+    #endregion
     Vector2 mapLimit(float i)
     {
         float xLimit;
@@ -125,5 +133,15 @@ public class UI_Map : MonoBehaviour
         realPlayer.transform.position = warpPoint[i].position;
         realPlayer.GetComponent<PlayerContorl>().enabled = true;
         UI_Control.Inst.windowSet(this.gameObject);
+    }
+
+    Vector2 tempPos(Vector3 pos)
+    {
+        float xtemp =
+            (mapX * ((pos.x - realMinX) / (realMaxX - realMinX) - 0.5f));
+        float ytemp =
+            (mapY * ((pos.z - realMinZ) / (realMaxZ - realMinZ) - 0.5f));
+
+        return new Vector2(xtemp, ytemp);
     }
 }

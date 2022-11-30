@@ -133,12 +133,16 @@ public class Speech : MonoBehaviour
     {
         switch (name)//이름표 조정
         {
+            case "베타":
             case "partnerA":
                 return "베타";
             case "partnerB":
+            case "델타":
                 return "델타";
             case "partnerC":
+            case "감마":
                 return "감마";
+            case "알파":
             case "shop":
                 return name;
             default:

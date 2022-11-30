@@ -257,8 +257,26 @@ public class QuestObject : MonoBehaviour
         {
             case QuestKind.kill:
                 missionText = "적을" + questPurpose + "마리 처치하기" + questProgress;
-                if (currentQuest.objectId[questSubIndex] > 3000)
-                    missionText = "보스를 처치하시오";
+                switch (currentQuest.objectId[questSubIndex])
+                {
+                    case 3002:
+                        missionText = "얼음 보스를 처치하시오";
+                        UI_Control.Inst.Speech.setUp("알파", "(이 앞엔 강한 뭔가 있을 것 같다는 내용)");
+                        break;
+                    case 3003:
+                        missionText = "물 보스를 처치하시오";
+                        UI_Control.Inst.Speech.setUp("알파", "(이 앞엔 강한 뭔가 있을 것 같다는 내용)");
+                        break;
+                    case 3004:
+                        missionText = "전기 보스를 처치하시오";
+                        UI_Control.Inst.Speech.setUp("알파", "(이 앞엔 강한 뭔가 있을 것 같다는 내용)");
+                        break;
+                    case 3005:
+                        missionText = "최종 보스를 처치하시오";
+                        break;
+                    default:
+                        break;
+                }
                 break;
             case QuestKind.hunt:
                 missionText = "적을" + questPurpose + "마리 사냥하기" + questProgress;

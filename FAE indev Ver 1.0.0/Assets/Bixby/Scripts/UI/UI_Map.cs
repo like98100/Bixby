@@ -25,6 +25,7 @@ public class UI_Map : MonoBehaviour
     Vector3 mapBasePos;
     List<Transform> warpPoint;
     GameObject goalPos;
+    [SerializeField] List<Sprite> goalPosSprites;
     void Start()
     {
         if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "FieldScene")
@@ -50,6 +51,22 @@ public class UI_Map : MonoBehaviour
         {
             Vector2 tempGoal = tempPos(minimapGoal);
             goalPos.transform.localPosition = new Vector3(tempGoal.x, tempGoal.y, 0f);
+            Rect rect = new Rect(0, 0, UI_Control.Inst.Speech.NPC_Plane_Marks[1].GetTexture("_MainTex").width, UI_Control.Inst.Speech.NPC_Plane_Marks[1].GetTexture("_MainTex").height);
+            if (QuestObject.manager.GetIsClear())
+            {
+                goalPos.GetComponent<UnityEngine.UI.Image>().sprite = goalPosSprites[1];
+                goalPos.transform.localScale = Vector3.one * 0.3f;
+            }
+            else if (QuestObject.manager.GetIndex() % 2 == 0)
+            {
+                goalPos.GetComponent<UnityEngine.UI.Image>().sprite = goalPosSprites[2];
+                goalPos.transform.localScale = Vector3.one * 0.3f;
+            }
+            else
+            {
+                goalPos.GetComponent<UnityEngine.UI.Image>().sprite = goalPosSprites[0];
+                goalPos.transform.localScale = Vector3.one;
+            }
         }
 
         Vector3 mapPos = new Vector3(Screen.width / 2 - mapPlayer.transform.position.x, Screen.height / 2 - mapPlayer.transform.position.y, 0);
@@ -84,6 +101,13 @@ public class UI_Map : MonoBehaviour
                 mapLimitSet(this.transform.localPosition);
             }
         }
+    }
+    public void warp(int i)
+    {
+        realPlayer.GetComponent<PlayerContorl>().enabled = false;
+        realPlayer.transform.position = warpPoint[i].position;
+        realPlayer.GetComponent<PlayerContorl>().enabled = true;
+        UI_Control.Inst.windowSet(this.gameObject);
     }
     #endregion
     Vector2 mapLimit(float i)
@@ -128,14 +152,6 @@ public class UI_Map : MonoBehaviour
         this.gameObject.transform.localPosition = newPos;//400 820
     }
 
-    public void warp(int i)
-    {
-        realPlayer.GetComponent<PlayerContorl>().enabled = false;
-        realPlayer.transform.position = warpPoint[i].position;
-        realPlayer.GetComponent<PlayerContorl>().enabled = true;
-        UI_Control.Inst.windowSet(this.gameObject);
-    }
-
     Vector2 tempPos(Vector3 pos)
     {
         float xtemp =
@@ -145,4 +161,6 @@ public class UI_Map : MonoBehaviour
 
         return new Vector2(xtemp, ytemp);
     }
+
+
 }

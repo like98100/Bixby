@@ -383,6 +383,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   max: {x: 380, y: 400}
   min: {x: -400, y: -380}
+  goalPosSprites:
+  - {fileID: 21300000, guid: 9b56311d3d9ea9e448a2273567eb2dad, type: 3}
+  - {fileID: 21300000, guid: 6866601537c9bd946b6bd91dde049dd2, type: 3}
+  - {fileID: 21300000, guid: 25960ba7d332294448be9882ba0e5f36, type: 3}
 --- !u!114 &3796798652876780212
 MonoBehaviour:
   m_ObjectHideFlags: 0

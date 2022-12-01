@@ -12,6 +12,7 @@ public class UI_MinimapCam : MonoBehaviour
     //QuestObject quest;
     Vector3 goalPosi;
     GameObject minimapContour;
+    Material goalBaseMaterial;
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -20,7 +21,7 @@ public class UI_MinimapCam : MonoBehaviour
         camDirection = minimap.transform.GetChild(0).gameObject;
         signObject = this.transform.GetChild(0).gameObject;
         goalObject = this.transform.GetChild(1).gameObject;
-        //quest = GameObject.Find("GameManager").GetComponent<QuestObject>();
+        goalBaseMaterial = goalObject.GetComponent<MeshRenderer>().material;
     }
     void Update()
     {
@@ -63,7 +64,9 @@ public class UI_MinimapCam : MonoBehaviour
         if (QuestObject.manager.GetIndex() % 2 == 0 && isField)
         {
             goalPosi = GameObject.Find(UI_Control.Inst.Speech.NameChanger(QuestObject.manager.GetNPCName())).transform.position;
-            signObject.transform.position = goalObject.transform.position = Vector3.one * -999f;
+            //signObject.transform.position = goalObject.transform.position = Vector3.one * -999f;
+            //speech.NPC_Plane_Marks[0];
+            mapObjectSet();
             return;
         }
         if (QuestObject.manager.GetQuestKind() != QuestKind.spot && !QuestObject.manager.GetIsClear())
@@ -80,8 +83,24 @@ public class UI_MinimapCam : MonoBehaviour
         }
         else
             goalPosi = goalPosi = QuestObject.manager.GetPosition();
+        mapObjectSet();
+        
+    }
+    public Vector3 getGoalPos()
+    {
+        return goalPosi;
+    }
+
+    void mapObjectSet()
+    {
         Vector3 direction = this.transform.position + ((goalPosi - this.transform.position).normalized * this.gameObject.GetComponent<Camera>().orthographicSize * 1.025f);
         float dist = 600 / this.gameObject.GetComponent<Camera>().orthographicSize + 120;
+        if (QuestObject.manager.GetIsClear())
+            goalObject.GetComponent<MeshRenderer>().material = UI_Control.Inst.Speech.NPC_Plane_Marks[1];
+        else if (QuestObject.manager.GetIndex() % 2 == 0)
+            goalObject.GetComponent<MeshRenderer>().material = UI_Control.Inst.Speech.NPC_Plane_Marks[0];
+        else
+            goalObject.GetComponent<MeshRenderer>().material = goalBaseMaterial;
         if (Vector3.Distance(this.gameObject.GetComponent<Camera>().WorldToScreenPoint(goalPosi), this.gameObject.GetComponent<Camera>().WorldToScreenPoint(player.transform.position)) > dist)
         {
             signObject.transform.position = direction;
@@ -94,9 +113,5 @@ public class UI_MinimapCam : MonoBehaviour
             goalObject.transform.localPosition = new Vector3(goalObject.transform.localPosition.x, goalObject.transform.localPosition.y, 1f);
             signObject.transform.position = Vector3.one * -999f;
         }
-    }
-    public Vector3 getGoalPos()
-    {
-        return goalPosi;
     }
 }

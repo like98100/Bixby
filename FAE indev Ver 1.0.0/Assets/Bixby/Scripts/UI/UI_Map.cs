@@ -7,14 +7,14 @@ public class UI_Map : MonoBehaviour
     private void Awake()
     {
         realPlayer = GameObject.FindGameObjectWithTag("Player");
-        mapPlayer = this.transform.GetChild(0).gameObject;
+        mapPlayer = this.transform.GetChild(this.transform.childCount - 1).gameObject;
         realMaxX = max.x;
         realMaxZ = max.y;
         realMinX = min.x;
         realMinZ = min.y;
         mapX = this.GetComponent<RectTransform>().rect.width;
         mapY = this.GetComponent<RectTransform>().rect.height;
-        goalPos = this.transform.GetChild(this.transform.childCount - 1).gameObject;
+        goalPos = this.transform.GetChild(1).gameObject; 
     }
     [SerializeField] Vector2 max;
     [SerializeField] Vector2 min;
@@ -25,7 +25,7 @@ public class UI_Map : MonoBehaviour
     Vector3 mapBasePos;
     List<Transform> warpPoint;
     GameObject goalPos;
-    [SerializeField] List<Sprite> goalPosSprites;
+    public List<Sprite> GoalPosSprites;//고리, 물음표, 느낌표
     void Start()
     {
         if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "FieldScene")
@@ -54,17 +54,20 @@ public class UI_Map : MonoBehaviour
             Rect rect = new Rect(0, 0, UI_Control.Inst.Speech.NPC_Plane_Marks[1].GetTexture("_MainTex").width, UI_Control.Inst.Speech.NPC_Plane_Marks[1].GetTexture("_MainTex").height);
             if (QuestObject.manager.GetIsClear())
             {
-                goalPos.GetComponent<UnityEngine.UI.Image>().sprite = goalPosSprites[1];
-                goalPos.transform.localScale = Vector3.one * 0.3f;
+                goalPos.GetComponent<UnityEngine.UI.Image>().sprite = GoalPosSprites[1];
+                goalPos.GetComponent<UnityEngine.UI.Image>().color = Color.white;
+                goalPos.transform.localScale = Vector3.one * 0.6f;
             }
             else if (QuestObject.manager.GetIndex() % 2 == 0)
             {
-                goalPos.GetComponent<UnityEngine.UI.Image>().sprite = goalPosSprites[2];
-                goalPos.transform.localScale = Vector3.one * 0.3f;
+                goalPos.GetComponent<UnityEngine.UI.Image>().sprite = GoalPosSprites[2];
+                goalPos.GetComponent<UnityEngine.UI.Image>().color = Color.white;
+                goalPos.transform.localScale = Vector3.one * 0.6f;
             }
             else
             {
-                goalPos.GetComponent<UnityEngine.UI.Image>().sprite = goalPosSprites[0];
+                goalPos.GetComponent<UnityEngine.UI.Image>().sprite = GoalPosSprites[0];
+                goalPos.GetComponent<UnityEngine.UI.Image>().color = Color.red;
                 goalPos.transform.localScale = Vector3.one;
             }
         }

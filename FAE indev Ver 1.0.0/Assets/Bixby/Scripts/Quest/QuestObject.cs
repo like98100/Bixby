@@ -66,8 +66,6 @@ public class QuestObject : MonoBehaviour
 
         currentQuest = JsonData.questList[JsonData.questIndex];
         MissionSet();
-        if (JsonData.questIndex == 0)
-            UI_Control.Inst.Mission.misssionSet("튜토리얼", "지도자에게 말을 거시오");
         //tutorialImage = GameObject.Find("TutorialImage");
     }
     int tmp;//인덱스 확인용 임시 변수
@@ -243,6 +241,13 @@ public class QuestObject : MonoBehaviour
 
     public void MissionSet()
     {
+        if (JsonData == null)
+            return;
+        if (JsonData.questIndex == 0)
+        {
+            UI_Control.Inst.Mission.misssionSet("튜토리얼", "지도자에게 말을 거시오");
+            return;
+        }
         if (isClear)
         {
             SetIsClear(isClear);

@@ -13,7 +13,10 @@ public class Mission : MonoBehaviour
         missionTitle = missionWindow.transform.GetChild(0).GetComponent<UnityEngine.UI.Text>();
         missionText = missionWindow.transform.GetChild(1).GetComponent<UnityEngine.UI.Text>();
     }
-
+    private void Start()
+    {
+        QuestObject.manager.MissionSet();
+    }
     // Update is called once per frame
     void Update()
     {

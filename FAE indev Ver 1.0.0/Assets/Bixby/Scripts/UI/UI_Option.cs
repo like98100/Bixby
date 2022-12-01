@@ -7,13 +7,16 @@ public class UI_Option : MonoBehaviour
 {
     private void Awake()
     {
-        cameraControl = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CamControl>();
-        mouseSenseSliderX = this.transform.GetChild(0).GetComponent<Slider>();
-        mouseSenseSliderY = this.transform.GetChild(1).GetComponent<Slider>();
-        mouseSenseTextX = this.transform.GetChild(3).GetComponent<Text>();
-        mouseSenseTextY = this.transform.GetChild(4).GetComponent<Text>();
-        Button closeBtn = this.transform.GetChild(2).GetComponent<Button>();
-        closeBtn.onClick.AddListener(() => UI_Control.Inst.windowSet(this.gameObject));
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "Title")
+        {
+            cameraControl = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CamControl>();
+            mouseSenseSliderX = this.transform.GetChild(0).GetComponent<Slider>();
+            mouseSenseSliderY = this.transform.GetChild(1).GetComponent<Slider>();
+            mouseSenseTextX = this.transform.GetChild(3).GetComponent<Text>();
+            mouseSenseTextY = this.transform.GetChild(4).GetComponent<Text>();
+            Button closeBtn = this.transform.GetChild(2).GetComponent<Button>();
+            closeBtn.onClick.AddListener(() => UI_Control.Inst.windowSet(this.gameObject));
+        }
     }
     CamControl cameraControl;
     Slider mouseSenseSliderX;
@@ -33,14 +36,32 @@ public class UI_Option : MonoBehaviour
 
     void Update()
     {
-        mouseSenseX = mouseSenseSliderX.value * 99 + 1f;
-        mouseSenseY = mouseSenseSliderY.value * 99 + 1f;
-        mouseSenseTextX.text = Mathf.FloorToInt(mouseSenseX).ToString();
-        mouseSenseTextY.text = Mathf.FloorToInt(mouseSenseY).ToString();
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "Title")
+        {
+            mouseSenseX = mouseSenseSliderX.value * 99 + 1f;
+            mouseSenseY = mouseSenseSliderY.value * 99 + 1f;
+            mouseSenseTextX.text = Mathf.FloorToInt(mouseSenseX).ToString();
+            mouseSenseTextY.text = Mathf.FloorToInt(mouseSenseY).ToString();
+        }
     }
     public void senseSet(bool isStop)
     {
         cameraControl.mouseSenseX = isStop ? 0 : mouseSenseX * 0.05f;
         cameraControl.mouseSenseY = isStop ? 0 : mouseSenseY * 0.05f;
+    }
+
+    public void TitleSet(bool start)
+    {
+        if (start)
+            UnityEngine.SceneManagement.SceneManager.LoadScene("FieldScene");
+        else
+            Application.Quit();
+    }
+    public void toTitle()
+    {
+        UI_Control.Inst.windowSet(this.gameObject);
+        Cursor.lockState = CursorLockMode.None;
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Title");
+        Time.timeScale = 1f;
     }
 }

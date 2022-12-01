@@ -88,11 +88,11 @@ public class inventoryObject : MonoBehaviour
 
     private void Update()
     {
-        if (FieldFKey.activeSelf)
-        {
-            Vector3 wantedPos = Camera.main.WorldToScreenPoint(GameObject.FindGameObjectWithTag("Player").transform.position);
-            FieldFKey.transform.position = wantedPos + Vector3.right * 200f + Vector3.up * 200f;
-        }
+        //if (FieldFKey.activeSelf)
+        //{
+        //    Vector3 wantedPos = Camera.main.WorldToScreenPoint(GameObject.FindGameObjectWithTag("Player").transform.position);
+        //    FieldFKey.transform.position = wantedPos + Vector3.right * 200f + Vector3.up * 200f;
+        //}
 
         if(QuestObject.manager.GetQuestKind() == QuestKind.cook) setQuestItemIdx();
     }

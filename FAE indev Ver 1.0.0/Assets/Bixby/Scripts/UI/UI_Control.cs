@@ -51,7 +51,7 @@ public class UI_Control : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
-            optionWindow();
+            OptionWindow();
         if (Input.anyKeyDown)
         {
             string temp = Input.inputString;
@@ -77,14 +77,14 @@ public class UI_Control : MonoBehaviour
             }
         }
     }
-    void optionWindow()
+    public void OptionWindow()
     {
         if (!windowClose())
             windowSet(optionObj);
     }
     public void windowSet(GameObject window)//Ã¢ ¿­°í ´Ý±â
     {
-        if (!windows.Contains(window))
+        if (!windows.Contains(window) && window != optionObj)
             windows.Add(window);
         if (!(OpenedWindow == null || OpenedWindow == window))
             return;

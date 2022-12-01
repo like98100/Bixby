@@ -59,12 +59,15 @@ public class fieldItem : MonoBehaviour
     {
         angle += 60 * Time.deltaTime;
         this.transform.localEulerAngles = new Vector3(0f, angle, 15f);
-        if (isPlayerClose && Input.GetKeyDown(KeyCode.F))
-            inventoryObject.Inst.getFieldItem(this.gameObject);
-        if (isPlayerClose && inventoryObject.Inst.FieldFKey.activeSelf)
+        if (isPlayerClose)
         {
-            var wantedPos = Camera.main.WorldToScreenPoint(this.transform.position);
-            inventoryObject.Inst.FieldFKey.transform.position = wantedPos + Vector3.right * 200f;
+            if (Input.GetKeyDown(KeyCode.F))
+                inventoryObject.Inst.getFieldItem(this.gameObject);
+            if (inventoryObject.Inst.FieldFKey.activeSelf)
+            {
+                var wantedPos = Camera.main.WorldToScreenPoint(this.transform.position);
+                inventoryObject.Inst.FieldFKey.transform.position = wantedPos + Vector3.right * 200f;
+            }
         }
     }
     private void OnTriggerStay(Collider other)

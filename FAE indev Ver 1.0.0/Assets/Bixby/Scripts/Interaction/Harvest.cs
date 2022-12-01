@@ -78,6 +78,11 @@ public class Harvest : MonoBehaviour
 
     private void Update()
     {
+        if (isPlayerClose && inventoryObject.Inst.FieldFKey.activeSelf)
+        {
+            var wantedPos = Camera.main.WorldToScreenPoint(this.transform.position);
+            inventoryObject.Inst.FieldFKey.transform.position = wantedPos + Vector3.right * 200f;
+        }
         if (Input.GetKeyDown(KeyCode.F) && isPlayerClose)
         {
             Vector2 tempPos;

@@ -119,8 +119,16 @@ public class NPC : MonoBehaviour
         Vector3 camRotate = GameObject.FindGameObjectWithTag("MainCamera").transform.eulerAngles;
         camRotate += Vector3.right * 90f + Vector3.forward * 180f;
         notify.transform.rotation = Quaternion.Euler(camRotate);
+        notify.transform.localScale = Vector3.one * 0.15f;
         if (NpcName == "shop")
+        {
+            float dist = Vector3.Distance(GameObject.FindGameObjectWithTag("Player").transform.position, this.gameObject.transform.position);
+            if (dist > 15)
+                notify.transform.localScale = Vector3.one * 0.45f;
+            else if (dist>10)
+                notify.transform.localScale = Vector3.one * 0.3f;
             return;
+        }
         if (NpcName != QuestObject.manager.GetNPCName()
             || QuestObject.manager.GetIndex() > 19)
         {
@@ -128,21 +136,17 @@ public class NPC : MonoBehaviour
         }
         else
         {
-            //if (quest.GetIndex() % 2 == 0)
             if (QuestObject.manager.GetIndex() % 2 == 0)
             {
                 if (!notify.activeSelf)
                     notify.SetActive(true);
                 notify.GetComponent<MeshRenderer>().material = speech.NPC_Plane_Marks[0];
-                //notify.GetComponent<MeshRenderer>().material = QuestObject.manager.NPC_Plane_Marks[0];
             }
-            //else if (quest.GetIsClear())
             else if (QuestObject.manager.GetIsClear())
             {
                 if (!notify.activeSelf)
                     notify.SetActive(true);
                 notify.GetComponent<MeshRenderer>().material = speech.NPC_Plane_Marks[1];
-                //notify.GetComponent<MeshRenderer>().material = QuestObject.manager.NPC_Plane_Marks[1];
             }
             else
                 notify.SetActive(false);

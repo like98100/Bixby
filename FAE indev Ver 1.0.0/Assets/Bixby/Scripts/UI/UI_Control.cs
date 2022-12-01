@@ -31,8 +31,9 @@ public class UI_Control : MonoBehaviour
     [SerializeField] GameObject damagePrefab;
     public UI_EnemyHp EnemyHp;
     bool isField;
-
     private float genCoolDown = 0.5f;
+    GameObject bossText;
+    float bossTimer;
     void Start()
     {
         windows = new List<GameObject>();
@@ -46,6 +47,12 @@ public class UI_Control : MonoBehaviour
         Map.SetActive(false);
         OpenedWindow = null;
         Cursor.lockState = CursorLockMode.Locked;
+        bossText = GameObject.Find("bossText");
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "BossDungeon")
+            bossText.SetActive(false);
+        else
+            TextOn("불 타입의 경우, 불 덩어리를 쏩니다.\n물 속성 차지 공격으로 꺼버립시다.");
+        bossTimer = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "BossDungeon" ? 0 : 0.1f;
     }
 
     void Update()
@@ -74,6 +81,15 @@ public class UI_Control : MonoBehaviour
                 case "p":
                     Speech.setUp("partnerA", "temp");
                     break;
+            }
+        }
+        if (bossText.activeSelf&&bossTimer>=0.1f)
+        {
+            bossTimer += Time.deltaTime;
+            if (bossTimer > 5)
+            {
+                bossText.SetActive(false);
+                bossTimer = 0;
             }
         }
     }
@@ -175,5 +191,12 @@ public class UI_Control : MonoBehaviour
                     break;
             }
         }
+    }
+
+    public void TextOn(string value)
+    {
+        bossText.SetActive(true);
+        bossText.GetComponent<TMPro.TextMeshProUGUI>().text = value;
+        bossTimer = 0.1f;
     }
 }

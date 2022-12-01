@@ -136,6 +136,7 @@ public class FinalBoss : CombatStatus, IDamgeable
             temp = transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().materials;
             temp[1] = mat[0];
             transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().materials = temp;
+            UI_Control.Inst.TextOn("얼음 타입의 경우, 미안합니다 기억이 안납니다");
         }
         else if ((int)Stat.element == (int)ElementType.ICE)
         {
@@ -145,6 +146,7 @@ public class FinalBoss : CombatStatus, IDamgeable
             temp = transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().materials;
             temp[1] = mat[1];
             transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().materials = temp;
+            UI_Control.Inst.TextOn("물 타입의 경우, 멀어지면 물을 쏟습니다.");
         }
         else if ((int)Stat.element == (int)ElementType.WATER)
         {
@@ -154,6 +156,7 @@ public class FinalBoss : CombatStatus, IDamgeable
             temp = transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().materials;
             temp[1] = mat[2];
             transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().materials = temp;
+            UI_Control.Inst.TextOn("전기 타입의 경우, 5번 연속으로 돌진해옵니다.");
         }
         shield.GetComponent<Shield>().Initialize();
         SetBarrier();

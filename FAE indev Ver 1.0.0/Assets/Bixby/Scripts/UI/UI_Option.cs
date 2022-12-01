@@ -62,6 +62,7 @@ public class UI_Option : MonoBehaviour
         UI_Control.Inst.windowSet(this.gameObject);
         Cursor.lockState = CursorLockMode.None;
         UnityEngine.SceneManagement.SceneManager.LoadScene("Title");
+        QuestObject.manager.SetIndex(0);
         Time.timeScale = 1f;
     }
 }

@@ -316,6 +316,10 @@ public class QuestObject : MonoBehaviour
     {
         return JsonData.questIndex;
     }
+    public void SetIndex(int value)
+    {
+        JsonData.questIndex = value;
+    }
     public QuestKind GetQuestKind()
     {
         return currentQuest.questObject[questSubIndex];

@@ -30,15 +30,18 @@ public class Cooking : MonoBehaviour
     void Start()
     {
         isPlayerClose = false;
-        notify = this.transform.GetChild(1).gameObject;
+        notify = this.GetComponent<UnityEngine.UI.Button>() ? null : this.transform.GetChild(1).gameObject;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 camRotate = GameObject.FindGameObjectWithTag("MainCamera").transform.eulerAngles;
-        camRotate += Vector3.right * 90f + Vector3.forward * 180f;
-        notify.transform.rotation = Quaternion.Euler(camRotate);
+        if (notify != null)
+        {
+            Vector3 camRotate = GameObject.FindGameObjectWithTag("MainCamera").transform.eulerAngles;
+            camRotate += Vector3.right * 90f + Vector3.forward * 180f;
+            notify.transform.rotation = Quaternion.Euler(camRotate);
+        }
         //요리 창 띄우기 -> ui쪽이랑 연동 할 때 오브젝트다.
         if (Vector3.Distance(Player.transform.position, transform.position) <= 2.0f)
         {
@@ -48,7 +51,11 @@ public class Cooking : MonoBehaviour
                 inventoryObject.Inst.FieldFKey.SetActive(true);
                 isPlayerClose = true;
             }
-
+            if (isPlayerClose)
+            {
+                var wantedPos = Camera.main.WorldToScreenPoint(this.transform.position);
+                inventoryObject.Inst.FieldFKey.transform.position = wantedPos + Vector3.right * 200f;
+            }
 
             if (Input.GetKeyDown(KeyCode.F))
             {

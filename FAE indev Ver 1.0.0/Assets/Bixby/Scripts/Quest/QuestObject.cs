@@ -205,6 +205,19 @@ public class QuestObject : MonoBehaviour
                 questSubIndex++;
                 isClear = false;
                 SetObjectIndex(0);                  // 변수 초기화
+                if (currentQuest.questObject[questSubIndex] == QuestKind.kill)//중간보스 나오기 전 대화창 위치 수정. 기존의 MissionSet에서 실행할 경우, 2번 나오는 경우가 발생
+                {
+                    switch (currentQuest.objectId[questSubIndex])
+                    {
+                        case 3002:
+                        case 3003:
+                        case 3004:
+                            UI_Control.Inst.Speech.setUp("알파", "(이 앞엔 강한 뭔가 있을 것 같다는 내용)");
+                            break;
+                        default:
+                            break;
+                    }
+                }
                 GameObject.Find("GameManager").GetComponent<SetPositionParticle>().InitializeVariable();    // 파티클 위치 변경
             }
             else
@@ -266,15 +279,12 @@ public class QuestObject : MonoBehaviour
                 {
                     case 3002:
                         missionText = "얼음 보스를 처치하시오";
-                        UI_Control.Inst.Speech.setUp("알파", "(이 앞엔 강한 뭔가 있을 것 같다는 내용)");
                         break;
                     case 3003:
                         missionText = "물 보스를 처치하시오";
-                        UI_Control.Inst.Speech.setUp("알파", "(이 앞엔 강한 뭔가 있을 것 같다는 내용)");
                         break;
                     case 3004:
                         missionText = "전기 보스를 처치하시오";
-                        UI_Control.Inst.Speech.setUp("알파", "(이 앞엔 강한 뭔가 있을 것 같다는 내용)");
                         break;
                     case 3005:
                         missionText = "최종 보스를 처치하시오";

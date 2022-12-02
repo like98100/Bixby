@@ -14,7 +14,8 @@ public class NPC : MonoBehaviour
     Text nameUI;
     GameObject notify;
     Shop shop;
-    //QuestObject quest;
+    SkinnedMeshRenderer mesh;
+    PlayerMesh characterMeshes;
     void Start()
     {
         NpcName = this.gameObject.name;
@@ -32,7 +33,8 @@ public class NPC : MonoBehaviour
         shop = UI_Control.Inst.Shop;
         keyInst = Instantiate(inventoryObject.Inst.getObj("KeyF"), this.gameObject.transform.GetChild(0));
         keyInst.SetActive(false);
-        //quest = GameObject.Find("GameManager").GetComponent<QuestObject>();
+        mesh = this.gameObject.transform.GetChild(this.gameObject.transform.childCount - 1).GetChild(0).GetComponent<SkinnedMeshRenderer>();
+        characterMeshes = GameObject.FindGameObjectWithTag("Player").transform.GetChild(1).GetChild(0).GetComponent<PlayerMesh>();
         switch (NpcName)
         {
             case "shop":
@@ -40,24 +42,24 @@ public class NPC : MonoBehaviour
                 notify.GetComponent<MeshRenderer>().material = speech.NPC_Plane_Marks[2];
                 break;
             case "partnerA":
-                this.gameObject.GetComponent<MeshFilter>().mesh =
-                GameObject.FindGameObjectWithTag("Player").transform.GetChild(1).GetChild(0).GetComponent<PlayerMesh>().CharacterMesh[1];
-                this.gameObject.GetComponent<MeshRenderer>().material =
-                GameObject.FindGameObjectWithTag("Player").transform.GetChild(1).GetChild(0).GetComponent<PlayerMesh>().CharacterMaterial[1];
+                mesh.sharedMesh =
+                characterMeshes.CharacterMesh[1];
+                mesh.material =
+                characterMeshes.CharacterMaterial[1];
                 notify.transform.position += Vector3.up * 1f;
                 break;
             case "partnerB":
-                this.gameObject.GetComponent<MeshFilter>().mesh =
-                GameObject.FindGameObjectWithTag("Player").transform.GetChild(1).GetChild(0).GetComponent<PlayerMesh>().CharacterMesh[2];
-                this.gameObject.GetComponent<MeshRenderer>().material =
-                GameObject.FindGameObjectWithTag("Player").transform.GetChild(1).GetChild(0).GetComponent<PlayerMesh>().CharacterMaterial[2];
+                mesh.sharedMesh =
+                characterMeshes.CharacterMesh[2];
+                mesh.material =
+                characterMeshes.CharacterMaterial[2];
                 notify.transform.position += Vector3.up * 1f;
                 break;
             case "partnerC":
-                this.gameObject.GetComponent<MeshFilter>().mesh =
-                GameObject.FindGameObjectWithTag("Player").transform.GetChild(1).GetChild(0).GetComponent<PlayerMesh>().CharacterMesh[3];
-                this.gameObject.GetComponent<MeshRenderer>().material =
-                GameObject.FindGameObjectWithTag("Player").transform.GetChild(1).GetChild(0).GetComponent<PlayerMesh>().CharacterMaterial[3];
+                mesh.sharedMesh =
+                characterMeshes.CharacterMesh[3];
+                mesh.material =
+                characterMeshes.CharacterMaterial[3];
                 notify.transform.position += Vector3.up * 1f;
                 break;
             default:
@@ -74,7 +76,7 @@ public class NPC : MonoBehaviour
         // Inst F
         if (keyInst.activeSelf)
         {
-            var wantedPos = Camera.main.WorldToScreenPoint(this.transform.position);
+            var wantedPos = Camera.main.WorldToScreenPoint(this.transform.position + Vector3.up * 1.5f);
             keyInst.transform.position = wantedPos + Vector3.right * 200f;
         }
 

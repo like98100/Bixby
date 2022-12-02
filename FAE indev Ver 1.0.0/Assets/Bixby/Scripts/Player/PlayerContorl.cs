@@ -92,39 +92,67 @@ public class PlayerContorl : PlayerStatusControl
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                this.mySkillStartColor = FireSkillStartColor;
-                this.mySkillEndColor = FireSkillEndColor;
-                this.MyElement = ElementType.FIRE;
-                Debug.Log("current element : FIRE");
+                if(QuestObject.manager.GetIndex() < 5 || (QuestObject.manager.GetIndex() == 5 && !QuestObject.manager.GetIsClear()))  // 미개방 상태
+                {
+                    Debug.Log("현재 해당 원소가 개방되지 않았습니다." + QuestObject.manager.GetIndex());
+                }
+                else
+                {
+                    this.mySkillStartColor = FireSkillStartColor;
+                    this.mySkillEndColor = FireSkillEndColor;
+                    this.MyElement = ElementType.FIRE;
+                    Debug.Log("current element : FIRE");
 
-                playerMesh.ChangeClass((int)this.MyElement);            // 메쉬 변경
+                    playerMesh.ChangeClass((int)this.MyElement);            // 메쉬 변경
+                }
             }
             if (Input.GetKeyDown(KeyCode.Alpha2))
             {
-                this.mySkillStartColor = IceSkillStartColor;
-                this.mySkillEndColor = IceSkillEndColor;
-                this.MyElement = ElementType.ICE;
-                Debug.Log("current element : ICE");
+                if (QuestObject.manager.GetIndex() < 10)  // 미개방 상태
+                {
+                    Debug.Log("현재 해당 원소가 개방되지 않았습니다." + QuestObject.manager.GetIndex());
+                }
+                else
+                {
+                    this.mySkillStartColor = IceSkillStartColor;
+                    this.mySkillEndColor = IceSkillEndColor;
+                    this.MyElement = ElementType.ICE;
+                    Debug.Log("current element : ICE");
 
-                playerMesh.ChangeClass((int)this.MyElement);            // 메쉬 변경
+                    playerMesh.ChangeClass((int)this.MyElement);            // 메쉬 변경
+                }
             }
             if (Input.GetKeyDown(KeyCode.Alpha3))
             {
-                this.mySkillStartColor = WaterSkillStartColor;
-                this.mySkillEndColor = WaterSkillEndColor;
-                this.MyElement = ElementType.WATER;
-                Debug.Log("current element : WATER");
+                if (QuestObject.manager.GetIndex() < 14)  // 미개방 상태
+                {
+                    Debug.Log("현재 해당 원소가 개방되지 않았습니다." + QuestObject.manager.GetIndex());
+                }
+                else
+                {
+                    this.mySkillStartColor = WaterSkillStartColor;
+                    this.mySkillEndColor = WaterSkillEndColor;
+                    this.MyElement = ElementType.WATER;
+                    Debug.Log("current element : WATER");
 
-                playerMesh.ChangeClass((int)this.MyElement);            // 메쉬 변경
+                    playerMesh.ChangeClass((int)this.MyElement);            // 메쉬 변경
+                }
             }
             if (Input.GetKeyDown(KeyCode.Alpha4))
             {
-                this.mySkillStartColor = ElectroSkillStartColor;
-                this.mySkillEndColor = ElectroSkillEndColor;
-                this.MyElement = ElementType.ELECTRICITY;
-                Debug.Log("current element : ELECTRICITY");
+                if (QuestObject.manager.GetIndex() < 18)  // 미개방 상태
+                {
+                    Debug.Log("현재 해당 원소가 개방되지 않았습니다." + QuestObject.manager.GetIndex());
+                }
+                else
+                {
+                    this.mySkillStartColor = ElectroSkillStartColor;
+                    this.mySkillEndColor = ElectroSkillEndColor;
+                    this.MyElement = ElementType.ELECTRICITY;
+                    Debug.Log("current element : ELECTRICITY");
 
-                playerMesh.ChangeClass((int)this.MyElement);            // 메쉬 변경
+                    playerMesh.ChangeClass((int)this.MyElement);            // 메쉬 변경
+                }
             }
         }
 

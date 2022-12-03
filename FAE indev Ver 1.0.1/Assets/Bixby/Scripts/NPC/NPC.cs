@@ -7,7 +7,6 @@ public class NPC : MonoBehaviour
     Speech speech;
     string NpcName;
     bool playerClose;
-    GameObject keyInst;
     string talkIndex;
     GameObject nameObj;
     GameObject notify;
@@ -24,8 +23,6 @@ public class NPC : MonoBehaviour
         talkIndex = "0";
         this.gameObject.name = nameObj.GetComponent<TMPro.TextMeshPro>().text = speech.NameChanger(NpcName);
         shop = UI_Control.Inst.Shop;
-        keyInst = Instantiate(inventoryObject.Inst.getObj("KeyF"), this.gameObject.transform.GetChild(0));
-        keyInst.SetActive(false);
         mesh = this.gameObject.transform.GetChild(this.gameObject.transform.childCount - 1).GetChild(0).GetComponent<SkinnedMeshRenderer>();
         characterMeshes = GameObject.FindGameObjectWithTag("Player").transform.GetChild(1).GetChild(0).GetComponent<PlayerMesh>();
         switch (NpcName)
@@ -67,10 +64,10 @@ public class NPC : MonoBehaviour
         npcOnOff();
 
         // Inst F
-        if (keyInst.activeSelf)
+        if (inventoryObject.Inst.FieldFKey.activeSelf && playerClose)
         {
             var wantedPos = Camera.main.WorldToScreenPoint(this.transform.position + Vector3.up * 1.5f);
-            keyInst.transform.position = wantedPos + Vector3.right * 200f;
+            inventoryObject.Inst.FieldFKey.transform.position = wantedPos + Vector3.right * 200f;
         }
 
         // NameTag
@@ -83,14 +80,13 @@ public class NPC : MonoBehaviour
         if (playerClose && Input.GetKeyDown(KeyCode.F) && !speech.Tutorial.ElemeneClearText.gameObject.activeSelf)
         {
             npcInteract();
-            keyInst.SetActive(false);
         }
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player" && !keyInst.activeSelf)
+        if (other.tag == "Player" && !inventoryObject.Inst.FieldFKey.activeSelf)
         {
-            keyInst.SetActive(true);
+            inventoryObject.Inst.FieldFKey.SetActive(true);
             playerClose = true;
         }
     }
@@ -98,7 +94,7 @@ public class NPC : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            keyInst.SetActive(false);
+            inventoryObject.Inst.FieldFKey.SetActive(false);
             playerClose = false;
         }
     }
@@ -153,13 +149,14 @@ public class NPC : MonoBehaviour
         //        nameObj.SetActive(false);
         //    else
         //        nameObj.SetActive(playerClose);
-        //    keyInst.SetActive(false);
+        //    inventoryObject.Inst.FieldFKey.SetActive(false);
         //}
         //if (nameObj.activeSelf)
         //    nameObj.transform.position = NpcName.Contains("partner") ? Camera.main.WorldToScreenPoint(this.transform.position + Vector3.up * 3f) : Camera.main.WorldToScreenPoint(this.transform.position + Vector3.up * 2f);
     }
     void npcInteract()
     {
+        inventoryObject.Inst.FieldFKey.SetActive(false);
         if (NpcName == "shop")
         {
             shop.SetUp();

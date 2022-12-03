@@ -29,6 +29,9 @@ public class Enemy : CombatStatus, IDamgeable
     public bool runChance = true;
     public bool isAttacked = false;
     public int shootCount;
+    public float Time__;
+
+    private Collider[] colliders;
 
     public NavMeshAgent MyAgent;
     public Animator Anim;
@@ -134,17 +137,28 @@ public class Enemy : CombatStatus, IDamgeable
 
     private void findPlayer(float sight)
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, sight, 
-                                                    Mask, QueryTriggerInteraction.Ignore);
+        if (isHitted)
+        {
+            colliders = Physics.OverlapSphere(transform.position, sight*100.0f, 
+                                            Mask, QueryTriggerInteraction.Ignore);
+            isHitted = false;
+        }
+        else
+            colliders = Physics.OverlapSphere(transform.position, sight, 
+                                            Mask, QueryTriggerInteraction.Ignore);
+
+        Time__ += Time.deltaTime;
 
         if(colliders.Length > 0)
         {    
             target = colliders[0].gameObject;
             State = STATE.CHASE;
+            Time__ = 0.0f;
         }
         else
         {
-            State = STATE.PATROL;
+            if (Time__ > 5.0f)
+                State = STATE.PATROL;
             //target = null;
         }
     }
@@ -181,7 +195,6 @@ public class Enemy : CombatStatus, IDamgeable
         if (!isHitted)
         {
             isHitted = true;
-            findPlayer(100.0f);
         }
         
         if (!setShield)
@@ -213,6 +226,7 @@ public class Enemy : CombatStatus, IDamgeable
         if (!isHitted)
         {
             isHitted = true;
+            Time__ = 0.0f;
             findPlayer(100.0f);
         }
         setEnemyElement(enemyElement); // �̷��� EnemyElement�� �ٲ㼭 ���ų� enemyElement�״�� �ᵵ �ɵ�.

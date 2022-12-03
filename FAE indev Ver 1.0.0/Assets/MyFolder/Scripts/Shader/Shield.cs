@@ -88,21 +88,21 @@ public class Shield : ElementControl, IDamgeable
         {
             if (CheckAdventage(enemyElement, transform.GetComponentInParent<Enemy>().Stat.element) < 0)
                 transform.GetComponentInParent<Enemy>().target.GetComponent<PlayerContorl>().TakeHit(20.0f);
-            else
+            else if (CheckAdventage(enemyElement, transform.GetComponentInParent<Enemy>().Stat.element) > 0)
                 transform.GetComponentInParent<Enemy>().TakeHit(10.0f);
         }
         if (transform.parent.tag == "DungeonBoss")
         {
             if (CheckAdventage(enemyElement, transform.GetComponentInParent<DungeonBoss>().Stat.element) < 0)
                 transform.GetComponentInParent<DungeonBoss>().target.GetComponent<PlayerContorl>().TakeHit(20.0f);
-            else
+            else if (CheckAdventage(enemyElement, transform.GetComponentInParent<DungeonBoss>().Stat.element) > 0)
                 transform.GetComponentInParent<DungeonBoss>().TakeHit(10.0f);
         }
         if (transform.parent.tag == "FinalBoss")
         {
             if (CheckAdventage(enemyElement, transform.GetComponentInParent<FinalBoss>().Stat.element) < 0)
                 transform.GetComponentInParent<FinalBoss>().Target.GetComponent<PlayerContorl>().TakeHit(20.0f);
-            else
+            else if (CheckAdventage(enemyElement, transform.GetComponentInParent<FinalBoss>().Stat.element) > 0)
                 transform.GetComponentInParent<FinalBoss>().TakeHit(10.0f);
         }
     }

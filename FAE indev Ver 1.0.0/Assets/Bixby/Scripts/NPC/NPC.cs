@@ -9,9 +9,7 @@ public class NPC : MonoBehaviour
     bool playerClose;
     GameObject keyInst;
     string talkIndex;
-    GameObject canvasObj;
     GameObject nameObj;
-    Text nameUI;
     GameObject notify;
     Shop shop;
     SkinnedMeshRenderer mesh;
@@ -19,17 +17,12 @@ public class NPC : MonoBehaviour
     void Start()
     {
         NpcName = this.gameObject.name;
-        canvasObj = this.transform.GetChild(0).gameObject;
-        nameObj = canvasObj.transform.GetChild(0).gameObject;
+        nameObj = this.gameObject.transform.GetChild(0).gameObject;
         speech = UI_Control.Inst.Speech;
         notify = this.transform.GetChild(1).gameObject;
         playerClose = false;
         talkIndex = "0";
-        canvasObj.SetActive(true);
-        nameUI = nameObj.transform.GetChild(0).GetComponent<Text>();
-        nameUI.text = speech.NameChanger(NpcName);
-        this.gameObject.name = nameUI.text;
-        nameObj.SetActive(playerClose);
+        this.gameObject.name = nameObj.GetComponent<TMPro.TextMeshPro>().text = speech.NameChanger(NpcName);
         shop = UI_Control.Inst.Shop;
         keyInst = Instantiate(inventoryObject.Inst.getObj("KeyF"), this.gameObject.transform.GetChild(0));
         keyInst.SetActive(false);
@@ -81,7 +74,7 @@ public class NPC : MonoBehaviour
         }
 
         // NameTag
-        nameTagSet();
+        //nameTagSet();
 
         // Quest Mark
         markSet();
@@ -99,7 +92,6 @@ public class NPC : MonoBehaviour
         {
             keyInst.SetActive(true);
             playerClose = true;
-            nameObj.SetActive(playerClose);
         }
     }
     private void OnTriggerExit(Collider other)
@@ -108,7 +100,6 @@ public class NPC : MonoBehaviour
         {
             keyInst.SetActive(false);
             playerClose = false;
-            nameObj.SetActive(playerClose);
         }
     }
     public void SetIndex(int value)
@@ -119,8 +110,8 @@ public class NPC : MonoBehaviour
     void markSet()
     {
         Vector3 camRotate = GameObject.FindGameObjectWithTag("MainCamera").transform.eulerAngles;
-        camRotate += Vector3.right * 90f + Vector3.forward * 180f;
-        notify.transform.rotation = Quaternion.Euler(camRotate);
+        notify.transform.rotation = Quaternion.Euler(camRotate + Vector3.right * 90f + Vector3.forward * 180f);
+        nameObj.transform.rotation = Quaternion.Euler(camRotate);//이름태그 각도 조정
         notify.transform.localScale = Vector3.one * 0.15f;
         if (NpcName == "shop")
         {
@@ -156,23 +147,22 @@ public class NPC : MonoBehaviour
     }
     void nameTagSet()
     {
-        if (UI_Control.Inst.OpenedWindow != null)
-        {
-            if (UI_Control.Inst.OpenedWindow.name == "Map")
-                nameObj.SetActive(false);
-            else
-                nameObj.SetActive(playerClose);
-            keyInst.SetActive(false);
-        }
-        if (nameObj.activeSelf)
-            nameObj.transform.position = NpcName.Contains("partner") ? Camera.main.WorldToScreenPoint(this.transform.position + Vector3.up * 3f) : Camera.main.WorldToScreenPoint(this.transform.position + Vector3.up * 2f);
+        //if (UI_Control.Inst.OpenedWindow != null)
+        //{
+        //    if (UI_Control.Inst.OpenedWindow.name == "Map")
+        //        nameObj.SetActive(false);
+        //    else
+        //        nameObj.SetActive(playerClose);
+        //    keyInst.SetActive(false);
+        //}
+        //if (nameObj.activeSelf)
+        //    nameObj.transform.position = NpcName.Contains("partner") ? Camera.main.WorldToScreenPoint(this.transform.position + Vector3.up * 3f) : Camera.main.WorldToScreenPoint(this.transform.position + Vector3.up * 2f);
     }
     void npcInteract()
     {
         if (NpcName == "shop")
         {
             shop.SetUp();
-            nameObj.SetActive(false);
         }
         else
         {

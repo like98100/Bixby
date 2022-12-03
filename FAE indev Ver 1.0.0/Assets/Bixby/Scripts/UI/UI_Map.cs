@@ -107,9 +107,9 @@ public class UI_Map : MonoBehaviour
     }
     public void warp(int i)
     {
-        realPlayer.GetComponent<PlayerContorl>().enabled = false;
+        realPlayer.GetComponent<CharacterController>().enabled = false;
         realPlayer.transform.position = warpPoint[i].position;
-        realPlayer.GetComponent<PlayerContorl>().enabled = true;
+        realPlayer.GetComponent<CharacterController>().enabled = true;
         UI_Control.Inst.windowSet(this.gameObject);
     }
     #endregion

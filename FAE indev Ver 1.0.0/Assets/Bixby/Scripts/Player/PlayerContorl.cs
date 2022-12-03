@@ -922,61 +922,59 @@ public class PlayerContorl : PlayerStatusControl
             this.gameObject.GetComponent<PlayerLineSkill>().ShowAttackEffect((int)this.State, (int)this.MyElement, ProjectileStart);
             this.gameObject.GetComponent<PlayerLineSkill>().ShowHitEffect(hitInfo.point);
             StartCoroutine(shootEffect());
-            if (hitInfo.collider.tag == "Enemy")
+            if (MyElement != ElementType.NONE) // 무속성이 아닐때 상성반응 연산
             {
-                setEnemyElement(hitInfo.collider.GetComponent<Enemy>().Stat.element);
-                hitInfo.collider.GetComponent<Enemy>().TakeElementHit(ChargedAttackDamage, MyElement);
-
-                if (MyElement != ElementType.NONE)
+                if (hitInfo.collider.tag == "Enemy")
                 {
-                    ElementGauge += ElementGaugeChargeAmount; //원소게이지 ++
+                    setEnemyElement(hitInfo.collider.GetComponent<Enemy>().Stat.element);
+                    hitInfo.collider.GetComponent<Enemy>().TakeElementHit(ChargedAttackDamage, MyElement);
                 }
+                else if (hitInfo.collider.tag == "DungeonBoss")
+                {
+                    setEnemyElement(hitInfo.collider.GetComponent<DungeonBoss>().Stat.element);
+                    hitInfo.collider.GetComponent<DungeonBoss>().TakeElementHit(ChargedAttackDamage, MyElement);
+                }
+                else if (hitInfo.collider.tag == "FinalBoss")
+                {
+                    setEnemyElement(hitInfo.collider.GetComponent<FinalBoss>().Stat.element);
+                    hitInfo.collider.GetComponent<FinalBoss>().TakeElementHit(ChargedAttackDamage, MyElement);
+                }
+                else if (hitInfo.collider.tag == "FireBall")
+                {
+                    //setEnemyElement(hitInfo.collider.GetComponent<FireBallBullet>().Stat.element);
+                    hitInfo.collider.GetComponent<FireBallBullet>().TakeElementHit(ChargedAttackDamage, MyElement);
+                }
+                else if (hitInfo.collider.gameObject.tag == "Shield")
+                {
+                    StartCoroutine(hitInfo.collider.GetComponent<Shield>().CreateRipple(hitInfo.point));
+
+                    hitInfo.collider.GetComponent<Shield>().TakeElementHit(ChargedAttackDamage, MyElement);
+                }
+                ElementGauge += ElementGaugeChargeAmount; //원소게이지 ++
                 if (ElementGauge > 100.0f) ElementGauge = 100.0f;
             }
-            else if (hitInfo.collider.tag == "DungeonBoss")
+            else
             {
-                setEnemyElement(hitInfo.collider.GetComponent<DungeonBoss>().Stat.element);
-                hitInfo.collider.GetComponent<DungeonBoss>().TakeElementHit(ChargedAttackDamage, MyElement);
-
-                if (MyElement != ElementType.NONE)
+                if (hitInfo.collider.tag == "Enemy")
                 {
-                    ElementGauge += ElementGaugeChargeAmount; //원소게이지 ++
+                    setEnemyElement(hitInfo.collider.GetComponent<Enemy>().Stat.element);
+                    hitInfo.collider.GetComponent<Enemy>().TakeHit(ChargedAttackDamage);
                 }
-                if (ElementGauge > 100.0f) ElementGauge = 100.0f;
-            }
-            else if (hitInfo.collider.tag == "FinalBoss")
-            {
-                setEnemyElement(hitInfo.collider.GetComponent<FinalBoss>().Stat.element);
-                hitInfo.collider.GetComponent<FinalBoss>().TakeElementHit(ChargedAttackDamage, MyElement);
-
-                if (MyElement != ElementType.NONE)
+                else if (hitInfo.collider.tag == "DungeonBoss")
                 {
-                    ElementGauge += ElementGaugeChargeAmount; //원소게이지 ++
+                    setEnemyElement(hitInfo.collider.GetComponent<DungeonBoss>().Stat.element);
+                    hitInfo.collider.GetComponent<DungeonBoss>().TakeHit(ChargedAttackDamage);
                 }
-                if (ElementGauge > 100.0f) ElementGauge = 100.0f;
-            }
-            else if (hitInfo.collider.tag == "FireBall")
-            {
-                //setEnemyElement(hitInfo.collider.GetComponent<FireBallBullet>().Stat.element);
-                hitInfo.collider.GetComponent<FireBallBullet>().TakeElementHit(ChargedAttackDamage, MyElement);
-
-                if (MyElement != ElementType.NONE)
+                else if (hitInfo.collider.tag == "FinalBoss")
                 {
-                    ElementGauge += ElementGaugeChargeAmount; //원소게이지 ++
+                    setEnemyElement(hitInfo.collider.GetComponent<FinalBoss>().Stat.element);
+                    hitInfo.collider.GetComponent<FinalBoss>().TakeHit(ChargedAttackDamage);
                 }
-                if (ElementGauge > 100.0f) ElementGauge = 100.0f;
-            }
-            else if (hitInfo.collider.gameObject.tag == "Shield")
-            {
-                StartCoroutine(hitInfo.collider.GetComponent<Shield>().CreateRipple(hitInfo.point));
-
-                hitInfo.collider.GetComponent<Shield>().TakeElementHit(ChargedAttackDamage, MyElement);
-
-                if (MyElement != ElementType.NONE)
+                else if (hitInfo.collider.tag == "FireBall")
                 {
-                    ElementGauge += ElementGaugeChargeAmount; //원소게이지 ++
+                    //setEnemyElement(hitInfo.collider.GetComponent<FireBallBullet>().Stat.element);
+                    hitInfo.collider.GetComponent<FireBallBullet>().TakeHit(ChargedAttackDamage);
                 }
-                if (ElementGauge > 100.0f) ElementGauge = 100.0f;                
             }
 
             //퍼즐오브젝트와 상호작용 추가

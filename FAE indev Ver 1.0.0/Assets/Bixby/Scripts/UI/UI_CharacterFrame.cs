@@ -18,16 +18,16 @@ public class UI_CharacterFrame : MonoBehaviour
             switch (avaters.Count)
             {
                 case 1:
-                    item.transform.GetChild(2).gameObject.GetComponent<UnityEngine.UI.Text>().text = "알파";
+                    item.transform.GetChild(2).gameObject.GetComponent<UnityEngine.UI.Text>().text = "1. 알파(불)";
                     break;
                 case 2:
-                    item.transform.GetChild(2).gameObject.GetComponent<UnityEngine.UI.Text>().text = "베타";
+                    item.transform.GetChild(2).gameObject.GetComponent<UnityEngine.UI.Text>().text = "2. 베타(얼음)";
                     break;
                 case 3:
-                    item.transform.GetChild(2).gameObject.GetComponent<UnityEngine.UI.Text>().text = "델타";
+                    item.transform.GetChild(2).gameObject.GetComponent<UnityEngine.UI.Text>().text = "3. 델타(물)";
                     break;
                 case 4:
-                    item.transform.GetChild(2).gameObject.GetComponent<UnityEngine.UI.Text>().text = "감마";
+                    item.transform.GetChild(2).gameObject.GetComponent<UnityEngine.UI.Text>().text = "4. 감마(전기)";
                     break;
                 default:
                     break;

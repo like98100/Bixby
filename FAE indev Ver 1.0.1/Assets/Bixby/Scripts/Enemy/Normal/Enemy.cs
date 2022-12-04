@@ -261,6 +261,7 @@ public class Enemy : CombatStatus, IDamgeable
         if (Stat.hp <= 0.0f)
         {
             MyAgent.isStopped = true;
+            col.enabled = false;
             Anim.SetTrigger("IsDied");
         }        
     }

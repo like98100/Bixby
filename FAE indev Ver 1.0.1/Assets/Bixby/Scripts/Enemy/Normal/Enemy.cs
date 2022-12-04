@@ -211,7 +211,7 @@ public class Enemy : CombatStatus, IDamgeable
         {
             MyAgent.isStopped = true;
             col.enabled = false;
-            MyAgent.enabled = false;
+            //MyAgent.enabled = false;
             Anim.SetTrigger("IsDied");
         }
 

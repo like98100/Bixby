@@ -6,39 +6,38 @@ public class Dissolve : MonoBehaviour
 {
     private ShaderManager shaderManager;
 
-    [SerializeField] private bool isDissolve;
     [SerializeField] private Material dissolve;
-    private Material[] dissolves;
+    private Material[] materials;
     [ColorUsage(true, true)] [SerializeField] private Color color;
     [SerializeField] private float[] scales;
+    private float time;
     void Start()
     {
         shaderManager = this.gameObject.GetComponent<ShaderManager>();
 
+        time = -Mathf.PI * 0.3f;
         CreateMaterial();
-
-        isDissolve = false;
-    }
-
-    void Update()
-    {
-        if (isDissolve == true )
-        {
-            StartCoroutine(Act(this.gameObject));
-        }
     }
 
     public IEnumerator Act(GameObject go)
     {
-        yield return new WaitUntil(() => Mathf.Sin(Time.time) <= -0.9);
+        shaderManager.ChangeMaterials(this.gameObject, materials);
 
-        isDissolve = false;
-        shaderManager.ChangeMaterials(this.gameObject, dissolves);
+        Material[] mats = this.gameObject.GetComponent<Renderer>().materials;
 
-        yield return new WaitUntil(() => Mathf.Sin(Time.time) >= 0.6);
+        while (time < Mathf.PI*0.2f)
+        {
+            yield return null;
+
+            foreach(Material mat in mats)
+                mat.SetFloat("_Value", Mathf.Sin(time));
+            time += Time.deltaTime;
+        }
 
         this.gameObject.SetActive(false);
         Destroy(go);
+
+        yield break;
     }
     private void CreateMaterial()
     {
@@ -53,18 +52,18 @@ public class Dissolve : MonoBehaviour
             color = transform.parent.GetComponent<FinalBoss>().GetMyElementColor();
 
         dissolve.SetColor("_Color", color);
+        dissolve.SetFloat("_Value", Mathf.Sin(time));
 
-        dissolves = new Material[mats.Length];
+        materials = new Material[mats.Length];
         for (int i = 0; i < mats.Length; i++)
         {
-            dissolves[i] = Instantiate(dissolve);
+            materials[i] = Instantiate(dissolve);
 
             //Set Texture
-            dissolves[i].SetTexture("_MainTexture", mats[i].mainTexture);
-            //dissolves[i].color = mats[i].color;
+            materials[i].SetTexture("_MainTexture", mats[i].mainTexture);
 
             //Set Scale
-            dissolves[i].SetFloat("_Scale", scales[i]);
+            materials[i].SetFloat("_Scale", scales[i]);
         }
     }
 }

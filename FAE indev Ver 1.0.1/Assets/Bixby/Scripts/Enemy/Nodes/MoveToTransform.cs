@@ -13,6 +13,8 @@ namespace MBTExample
         public GameObjectReference ObjRef = new GameObjectReference(VarRefMode.DisableConstant);
         public GameObjectReference TargetRef =  new GameObjectReference(VarRefMode.DisableConstant);
         public FloatReference Variable = new FloatReference(VarRefMode.DisableConstant);
+        public IntReference myState = new IntReference(VarRefMode.DisableConstant);
+
         public NavMeshAgent agent;
         public float stopDistance = 2f;
         [Tooltip("How often target position should be updated")]
@@ -44,6 +46,24 @@ namespace MBTExample
                 time = 0;
                 agent.SetDestination(TargetRef.Value.transform.position);
             }
+            
+            if (ObjRef.Value.tag == "Enemy")
+            {
+                if ((myState.Value == 1) || (myState.Value == 3))
+                {
+                    agent.isStopped = true;
+                    return NodeResult.failure;
+                }
+            }
+            else if (ObjRef.Value.tag == "DungeonBoss")
+            {
+                
+            }
+            else if (ObjRef.Value.tag == "FinalBoss")
+            {
+                
+            }
+            
             // Check if path is ready
             if (agent.pathPending)
             {
@@ -61,30 +81,6 @@ namespace MBTExample
                 return NodeResult.running;
             }
 
-            if (ObjRef.Value.tag == "Enemy")
-            {
-                if (ObjRef.Value.GetComponent<Enemy>().Stat.hp <= 0)
-                {
-                    agent.isStopped = true;
-                    return NodeResult.failure;
-                }
-            }
-            else if (ObjRef.Value.tag == "DungeonBoss")
-            {
-                if (ObjRef.Value.GetComponent<DungeonBoss>().Stat.hp <= 0)
-                {   
-                    agent.isStopped = true;
-                    return NodeResult.failure;
-                }
-            }
-            else if (ObjRef.Value.tag == "FinalBoss")
-            {
-                if (ObjRef.Value.GetComponent<FinalBoss>().Stat.hp <= 0 || ExitDist <= Variable.Value)
-                {
-                    agent.isStopped = true;
-                    return NodeResult.failure;
-                }
-            }
             // By default return failure
             return NodeResult.failure;
         }

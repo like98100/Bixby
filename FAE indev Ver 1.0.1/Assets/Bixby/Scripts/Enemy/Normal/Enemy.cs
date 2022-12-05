@@ -29,6 +29,9 @@ public class Enemy : CombatStatus, IDamgeable
     public bool runChance = true;
     public bool isAttacked = false;
     public int shootCount;
+    public float Time__;
+
+    private Collider[] colliders;
 
     public NavMeshAgent MyAgent;
     public Animator Anim;
@@ -66,7 +69,7 @@ public class Enemy : CombatStatus, IDamgeable
         col = GetComponent<BoxCollider>();
 
         UI_EnemyHp.EnemyHps.hpObjects.Add(Instantiate(UI_Control.Inst.EnemyHp.getPrefab(true), GameObject.Find("UI").transform.GetChild(1)));
-        UI_EnemyHp.EnemyHps.ShieldObjects.Add(Instantiate(UI_Control.Inst.EnemyHp.getPrefab(true), GameObject.Find("UI").transform.GetChild(1)));
+        UI_EnemyHp.EnemyHps.ShieldObjects.Add(Instantiate(UI_Control.Inst.EnemyHp.getPrefab(false), GameObject.Find("UI").transform.GetChild(1)));
         UI_EnemyHp.EnemyHps.EnemyObjects.Add(this.gameObject);
 
 
@@ -110,7 +113,7 @@ public class Enemy : CombatStatus, IDamgeable
             State = STATE.CHASE;
         }
 
-        if (setShield)
+        if (setShield && Stat.hp > 0.0f)
         {
             shield.SetActive(true);
             col.enabled = false;
@@ -134,13 +137,29 @@ public class Enemy : CombatStatus, IDamgeable
 
     private void findPlayer(float sight)
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, sight, 
-                                                    Mask, QueryTriggerInteraction.Ignore);
+        if (isHitted)
+        {
+            colliders = Physics.OverlapSphere(transform.position, sight*100.0f, 
+                                            Mask, QueryTriggerInteraction.Ignore);
+            isHitted = false;
+        }
+        else
+            colliders = Physics.OverlapSphere(transform.position, sight, 
+                                            Mask, QueryTriggerInteraction.Ignore);
+
+        Time__ += Time.deltaTime;
 
         if(colliders.Length > 0)
         {    
             target = colliders[0].gameObject;
             State = STATE.CHASE;
+            Time__ = 0.0f;
+        }
+        else
+        {
+            if (Time__ > 5.0f)
+                State = STATE.PATROL;
+            //target = null;
         }
     }
 
@@ -164,10 +183,11 @@ public class Enemy : CombatStatus, IDamgeable
 
     public void RangedAttack()
     {
+        this.Bullet.GetComponent<BulletEne>().ObjRef = target;
         this.Bullet.GetComponent<BulletEne>().myEle = Stat.element;
         this.Bullet.GetComponent<BulletEne>().myDmg = Stat.damage;
         Vector3 myVec = transform.position;
-        //myVec += Vector3.forward*1.5f;
+        myVec += Vector3.up*0.5f;
         Instantiate(this.Bullet, myVec, transform.rotation);
     }
 
@@ -176,6 +196,7 @@ public class Enemy : CombatStatus, IDamgeable
         if (!isHitted)
         {
             isHitted = true;
+            Time__ = 0.0f;
             findPlayer(100.0f);
         }
         
@@ -189,6 +210,8 @@ public class Enemy : CombatStatus, IDamgeable
         if (Stat.hp <= 0.0f)
         {
             MyAgent.isStopped = true;
+            col.enabled = false;
+            //MyAgent.enabled = false;
             Anim.SetTrigger("IsDied");
         }
 
@@ -206,6 +229,7 @@ public class Enemy : CombatStatus, IDamgeable
         if (!isHitted)
         {
             isHitted = true;
+            Time__ = 0.0f;
             findPlayer(100.0f);
         }
         setEnemyElement(enemyElement); // �̷��� EnemyElement�� �ٲ㼭 ���ų� enemyElement�״�� �ᵵ �ɵ�.
@@ -237,6 +261,7 @@ public class Enemy : CombatStatus, IDamgeable
         if (Stat.hp <= 0.0f)
         {
             MyAgent.isStopped = true;
+            col.enabled = false;
             Anim.SetTrigger("IsDied");
         }        
     }

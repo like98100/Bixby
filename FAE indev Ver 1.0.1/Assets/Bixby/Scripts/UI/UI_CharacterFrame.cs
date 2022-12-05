@@ -22,12 +22,14 @@ public class UI_CharacterFrame : MonoBehaviour
                     break;
                 case 2:
                     item.transform.GetChild(2).gameObject.GetComponent<UnityEngine.UI.Text>().text = "2. 베타(얼음)";
+                    item.transform.GetChild(2).gameObject.GetComponent<RectTransform>().sizeDelta += Vector2.right * 20f;
                     break;
                 case 3:
                     item.transform.GetChild(2).gameObject.GetComponent<UnityEngine.UI.Text>().text = "3. 델타(물)";
                     break;
                 case 4:
                     item.transform.GetChild(2).gameObject.GetComponent<UnityEngine.UI.Text>().text = "4. 감마(전기)";
+                    item.transform.GetChild(2).gameObject.GetComponent<RectTransform>().sizeDelta += Vector2.right * 20f;
                     break;
                 default:
                     break;

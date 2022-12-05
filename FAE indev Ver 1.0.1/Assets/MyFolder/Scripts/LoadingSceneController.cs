@@ -35,6 +35,7 @@ public class LoadingSceneController : MonoBehaviour
     
     private void Awake()
     {
+        loadSceneName = "FieldScene";
         if (instance != this)
         {
             Destroy(this.gameObject);
@@ -69,6 +70,23 @@ public class LoadingSceneController : MonoBehaviour
         //    json.OverWriteJsonFile(Application.dataPath, "quests", questStr);                   // OverWrite
         //}
 
+        StartCoroutine(LoadSceneProceess());
+    }
+    public void ReloadScene()
+    {
+        this.gameObject.SetActive(true);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
+        //if(json.FileExist(Application.dataPath, "quests"))                                      // 퀘스트 json 파일이 존재할 때
+        //{
+        //    questJsonData currentQuestData =
+        //        GameObject.Find("GameManager").GetComponent<QuestObject>().GetQuestData();      // 현재 퀘스트 진행상황 변수 저장
+
+        //    string questStr = json.ObjectToJson(currentQuestData);                              // To String
+
+        //    json.OverWriteJsonFile(Application.dataPath, "quests", questStr);                   // OverWrite
+        //}
+        previousSceneName = loadSceneName;
         StartCoroutine(LoadSceneProceess());
     }
 

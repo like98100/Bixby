@@ -77,6 +77,11 @@ public class Animal : MonoBehaviour
             {
                 inventoryObject.Inst.FieldFKey.SetActive(true);
             }
+            if (checkNear && inventoryObject.Inst.FieldFKey)
+            {
+                var wantedPos = Camera.main.WorldToScreenPoint(this.transform.position);
+                inventoryObject.Inst.FieldFKey.transform.position = wantedPos + Vector3.right * 200f;
+            }
         }
         else if (isDead && Vector3.Distance(Player.transform.position, transform.position) > 2.0f && checkNear == true)
         {

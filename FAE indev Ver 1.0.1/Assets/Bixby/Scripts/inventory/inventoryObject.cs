@@ -80,7 +80,7 @@ public class inventoryObject : MonoBehaviour
             itemObjects.Add(temp);
         }//아이템 가시화
         inventoryCanvas.SetActive(false);//시작시 인벤창 닫혀있음
-        FieldFKey = Instantiate(keyF, GameObject.Find("Canvas").transform);
+        FieldFKey = Instantiate(keyF, GameObject.Find("UI").transform.GetChild(1));
         FieldFKey.SetActive(false);
         itemSummary.SetActive(false);
         itemDescription.SetActive(false);

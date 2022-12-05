@@ -29,7 +29,7 @@ namespace MBT
             else    
                 target = TargetObjRef.Value.transform;
             Vector3 dir = target.position - self.position;
-            Vector3 rayVector = new Vector3(self.position.x, self.position.y +1.0f, self.position.z);
+            Vector3 rayVector = new Vector3(self.position.x, self.position.y +1.25f, self.position.z);
             RaycastHit hitInfo;
 
             if (ObjRef.Value.tag == "Enemy")
@@ -39,7 +39,7 @@ namespace MBT
 
                 //(Time_ > UpdateInterval) ||
                 if(((delay > ObjRef.Value.GetComponent<Enemy>().Stat.attackSpeed) && 
-                    Physics.BoxCast(rayVector, self.lossyScale/2, self.forward, out hitInfo, self.rotation, ObjRef.Value.GetComponent<Enemy>().Stat.sight, ObjRef.Value.GetComponent<Enemy>().Mask)))
+                    Physics.BoxCast(rayVector, self.lossyScale/1.25f, self.forward, out hitInfo, self.rotation, ObjRef.Value.GetComponent<Enemy>().Stat.sight, ObjRef.Value.GetComponent<Enemy>().Mask)))
                 {
                     // Reset time and update destination
                     return NodeResult.success;

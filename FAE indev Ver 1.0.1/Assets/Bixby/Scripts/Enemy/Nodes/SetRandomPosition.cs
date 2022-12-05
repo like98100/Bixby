@@ -24,6 +24,7 @@ namespace MBTExample
         {
             GameObject obj = objRef.Value;
             bounds.center = obj.GetComponent<Enemy>().centerPosition;
+            bounds.extents = new Vector3(7, 0, 7);
 
             // Random values per component inside bounds
             blackboardVariable.Value = new Vector3(

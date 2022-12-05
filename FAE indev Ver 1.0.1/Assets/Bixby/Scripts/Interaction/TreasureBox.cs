@@ -44,6 +44,12 @@ public class TreasureBox : MonoBehaviour
 
         //BoxMaterial(); //쉐이더or머테리얼 변경
         BoxOpen(); //상자 열기
+
+        if (checkNear && inventoryObject.Inst.FieldFKey.activeSelf)
+        {
+            var wantedPos = Camera.main.WorldToScreenPoint(this.transform.position);
+            inventoryObject.Inst.FieldFKey.transform.position = wantedPos + Vector3.right * 200f;
+        }
     }
 
     void BoxOpen()

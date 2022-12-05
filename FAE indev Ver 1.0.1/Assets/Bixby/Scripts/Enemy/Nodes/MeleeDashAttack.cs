@@ -58,7 +58,7 @@ namespace MBT
             {
                 if(!ObjRef.Value.GetComponent<Enemy>().isAttacked)
                     return NodeResult.success;
-                if (ObjRef.Value.GetComponent<Enemy>().Stat.hp <= 0)
+                if((int)ObjRef.Value.GetComponent<Enemy>().State == 1 || (int)ObjRef.Value.GetComponent<Enemy>().State == 3)
                     return NodeResult.failure;
                 
                 if (Time_ <= 0.5f)
@@ -81,8 +81,6 @@ namespace MBT
             {
                 if(!ObjRef.Value.GetComponent<DungeonBoss>().isAttacked)
                     return NodeResult.success;
-                if (ObjRef.Value.GetComponent<DungeonBoss>().Stat.hp <= 0)
-                    return NodeResult.failure;
                 
                 if (Time_ <= 1.0f)
                     self.rotation = Quaternion.Lerp(self.rotation, Quaternion.LookRotation(dir),
@@ -104,8 +102,6 @@ namespace MBT
             {
                 if(!ObjRef.Value.GetComponent<FinalBoss>().isAttacked)
                     return NodeResult.success;
-                if (ObjRef.Value.GetComponent<FinalBoss>().Stat.hp <= 0)
-                    return NodeResult.failure;
 
                 if (Time_ <= 1.0f)
                     self.rotation = Quaternion.Lerp(self.rotation, Quaternion.LookRotation(dir),

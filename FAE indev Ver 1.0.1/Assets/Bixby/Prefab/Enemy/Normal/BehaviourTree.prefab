@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedEditorNode: {fileID: 3482472121014430970}
+  selectedEditorNode: {fileID: 5147453314305512548}
   repeatOnFinish: 0
   maxExecutionsPerTick: 1000
   parent: {fileID: 0}
@@ -1565,9 +1565,22 @@ MonoBehaviour:
     blackboard: {fileID: 8528748061431720136}
     key: targetObjReference
     constantValue: {fileID: 0}
+  Variable:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 8528748061431720136}
+    key: enemyToPlayerDist
+    constantValue: 0
+  myState:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 8528748061431720136}
+    key: enemyState
+    constantValue: 0
   agent: {fileID: 0}
   stopDistance: 10
   updateInterval: 1
+  ExitDist: 14.5
 --- !u!114 &8489336665811456943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1712,9 +1725,22 @@ MonoBehaviour:
     blackboard: {fileID: 8528748061431720136}
     key: targetObjReference
     constantValue: {fileID: 0}
+  Variable:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 8528748061431720136}
+    key: enemyToPlayerDist
+    constantValue: 0
+  myState:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 8528748061431720136}
+    key: enemyState
+    constantValue: 0
   agent: {fileID: 0}
   stopDistance: 2
   updateInterval: 1
+  ExitDist: 14.5
 --- !u!114 &2862675146825622503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1812,6 +1838,7 @@ MonoBehaviour:
   Speed: 10
   UpdateInterval: 1
   Time_: 0
+  AnimOnOff: 0
   targetVec: {x: 0, y: 0, z: 0}
 --- !u!114 &8299672091413825365
 MonoBehaviour:
@@ -2026,9 +2053,22 @@ MonoBehaviour:
     blackboard: {fileID: 8528748061431720136}
     key: targetObjReference
     constantValue: {fileID: 0}
+  Variable:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 8528748061431720136}
+    key: enemyToPlayerDist
+    constantValue: 0
+  myState:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 8528748061431720136}
+    key: enemyState
+    constantValue: 0
   agent: {fileID: 0}
   stopDistance: 7
   updateInterval: 1
+  ExitDist: 14.5
 --- !u!114 &2918998057713485641
 MonoBehaviour:
   m_ObjectHideFlags: 0

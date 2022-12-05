@@ -13,6 +13,11 @@ public class BulletEne : ElementControl
     {
         if (isCharged)
             transform.localScale += new Vector3(1.0f, 1.0f, 1.0f);
+
+        Vector3 myVec = ObjRef.transform.position;
+        myVec += Vector3.up*0.5f;
+
+        transform.LookAt(myVec);
     }
     // Update is called once per frame
     void Update()

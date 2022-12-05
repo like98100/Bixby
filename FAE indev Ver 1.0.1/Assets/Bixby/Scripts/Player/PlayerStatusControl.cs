@@ -80,6 +80,7 @@ public class PlayerStatusControl : CombatStatus, IDamgeable
     {
         base.Start();
 
+        Dead = false;
         MyElement = ElementType.NONE;
         EnemyElement = ElementType.NONE;
 
@@ -158,7 +159,8 @@ public class PlayerStatusControl : CombatStatus, IDamgeable
 
     protected virtual void die()
     {
-        Dead = true;
-        GameObject.Destroy(gameObject);
+        this.gameObject.GetComponent<PlayerContorl>().NextState = PlayerContorl.STATE.DEAD;
+        this.gameObject.GetComponent<PlayerContorl>().PrevState = this.gameObject.GetComponent<PlayerContorl>().State;
+        //GameObject.Destroy(gameObject);
     }
 }

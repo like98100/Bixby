@@ -46,7 +46,7 @@ namespace MBT
                     Time_ = 0.0f;
                     return NodeResult.success;
                 }
-                if (((int)ObjRef.Value.GetComponent<Enemy>().State == 3) || 
+                if (((int)ObjRef.Value.GetComponent<Enemy>().State == 1) || ((int)ObjRef.Value.GetComponent<Enemy>().State == 3) ||
                     (ObjRef.Value.GetComponent<Enemy>().Stat.hp <= 0) || 
                     (Variable.Value > ObjRef.Value.GetComponent<Enemy>().Stat.attackRange))
                     return NodeResult.failure;

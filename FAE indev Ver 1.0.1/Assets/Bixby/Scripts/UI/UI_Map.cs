@@ -107,10 +107,13 @@ public class UI_Map : MonoBehaviour
     }
     public void warp(int i)
     {
-        realPlayer.GetComponent<CharacterController>().enabled = false;
-        realPlayer.transform.position = warpPoint[i].position;
-        realPlayer.GetComponent<CharacterController>().enabled = true;
-        UI_Control.Inst.windowSet(this.gameObject);
+        if (warpPoint[i].GetComponent<WarpPoint>().isActive == true)
+        {
+            realPlayer.GetComponent<CharacterController>().enabled = false;
+            realPlayer.transform.position = warpPoint[i].position;
+            realPlayer.GetComponent<CharacterController>().enabled = true;
+            UI_Control.Inst.windowSet(this.gameObject);
+        }
     }
     #endregion
     Vector2 mapLimit(float i)

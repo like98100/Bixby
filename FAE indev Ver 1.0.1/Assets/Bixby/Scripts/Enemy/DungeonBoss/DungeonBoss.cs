@@ -64,7 +64,7 @@ public class DungeonBoss : CombatStatus, IDamgeable
         Skill_1_Obj.transform.GetChild(0).GetComponent<Skill_1>().element = Stat.element;
 
         UI_EnemyHp.EnemyHps.hpObjects.Add(Instantiate(UI_Control.Inst.EnemyHp.getPrefab(true), GameObject.Find("UI").transform.GetChild(1)));
-        UI_EnemyHp.EnemyHps.ShieldObjects.Add(Instantiate(UI_Control.Inst.EnemyHp.getPrefab(true), GameObject.Find("UI").transform.GetChild(1)));
+        UI_EnemyHp.EnemyHps.ShieldObjects.Add(Instantiate(UI_Control.Inst.EnemyHp.getPrefab(false), GameObject.Find("UI").transform.GetChild(1)));
         UI_EnemyHp.EnemyHps.EnemyObjects.Add(this.gameObject);
         UI_EnemyHp.EnemyHps.GaugeOff();
     }

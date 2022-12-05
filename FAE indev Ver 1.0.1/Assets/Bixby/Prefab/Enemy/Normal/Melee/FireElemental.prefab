@@ -519,6 +519,7 @@ MonoBehaviour:
   runChance: 0
   isAttacked: 0
   shootCount: 0
+  Time__: 0
   MyAgent: {fileID: 0}
   Anim: {fileID: 0}
   DealtDamage: 0
@@ -693,6 +694,10 @@ PrefabInstance:
       propertyPath: Agent
       value: 
       objectReference: {fileID: 4155676553942198844}
+    - target: {fileID: 954504927241587014, guid: 68fcf36fbd7e7814dbef78839a64b710, type: 3}
+      propertyPath: rect.y
+      value: 580
+      objectReference: {fileID: 0}
     - target: {fileID: 2798136346318438803, guid: 68fcf36fbd7e7814dbef78839a64b710, type: 3}
       propertyPath: agent
       value: 
@@ -753,6 +758,10 @@ PrefabInstance:
       propertyPath: Agent
       value: 
       objectReference: {fileID: 4155676553942198844}
+    - target: {fileID: 6998471757434033203, guid: 68fcf36fbd7e7814dbef78839a64b710, type: 3}
+      propertyPath: rect.x
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 7462522774545461715, guid: 68fcf36fbd7e7814dbef78839a64b710, type: 3}
       propertyPath: Speed
       value: 20
@@ -804,7 +813,7 @@ PrefabInstance:
     - target: {fileID: 8528748061431720137, guid: 68fcf36fbd7e7814dbef78839a64b710, type: 3}
       propertyPath: selectedEditorNode
       value: 
-      objectReference: {fileID: 2911553033063674528}
+      objectReference: {fileID: 4812320290923842101}
     - target: {fileID: 8528748061431720139, guid: 68fcf36fbd7e7814dbef78839a64b710, type: 3}
       propertyPath: val
       value: 
@@ -887,15 +896,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b2217e4d35c0c94ea02cf2166c17e4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2911553033063674528 stripped
+--- !u!114 &4812320290923842101 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7462522774545461715, guid: 68fcf36fbd7e7814dbef78839a64b710, type: 3}
+  m_CorrespondingSourceObject: {fileID: 954504927241587014, guid: 68fcf36fbd7e7814dbef78839a64b710, type: 3}
   m_PrefabInstance: {fileID: 5762319311988573043}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a5fa3f49e17c904eb1663adddec9af7, type: 3}
+  m_Script: {fileID: 11500000, guid: ba8ec11f74030c041a4d1e11931d70e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &6888529762544902135

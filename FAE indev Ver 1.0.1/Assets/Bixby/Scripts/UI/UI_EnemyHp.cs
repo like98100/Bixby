@@ -47,7 +47,7 @@ public class UI_EnemyHp : MonoBehaviour
                     if (target.State == Enemy.STATE.CHASE && isInScreen(target.gameObject))
                     {
                         gaugeSet(EnemyHps.EnemyObjects[index].tag, true, item);
-                        if (target.isSetShield())
+                        if (target.Stat.barrier != target.Stat.maxBarrier)
                             gaugeSet(EnemyHps.EnemyObjects[index].tag, false, EnemyHps.ShieldObjects[index]);
                     }
                     else
@@ -164,8 +164,11 @@ public class UI_EnemyHp : MonoBehaviour
                         return;
                     }
                 target = isHp ? EnemyHps.EnemyObjects[EnemyHps.hpObjects.IndexOf(item)].GetComponent<Enemy>() : EnemyHps.EnemyObjects[EnemyHps.ShieldObjects.IndexOf(item)].GetComponent<Enemy>();
-                item.SetActive(true);
-                item.transform.position = isHp ? Camera.main.WorldToScreenPoint(target.gameObject.transform.position + Vector3.up * 5f) : Camera.main.WorldToScreenPoint(target.gameObject.transform.position + Vector3.up * 3f);
+                if (isHp)
+                    item.SetActive(true);
+                else
+                    item.SetActive(target.isSetShield());
+                item.transform.position = isHp ? Camera.main.WorldToScreenPoint(target.gameObject.transform.position + Vector3.up * 5f) : Camera.main.WorldToScreenPoint(target.gameObject.transform.position + Vector3.up * 4.5f);
                 item.GetComponent<UnityEngine.UI.Slider>().value = isHp ? target.Stat.hp / target.Stat.maxHp : target.Stat.barrier / target.Stat.maxBarrier;
                 break;
             case "DungeonBoss":
@@ -174,7 +177,7 @@ public class UI_EnemyHp : MonoBehaviour
                     item.SetActive(true);
                 else
                     item.SetActive(targetDungeon.isSetShield());
-                item.transform.position = isHp ? Camera.main.WorldToScreenPoint(targetDungeon.gameObject.transform.position + Vector3.up * 5f) : Camera.main.WorldToScreenPoint(targetDungeon.gameObject.transform.position + Vector3.up * 3f);
+                item.transform.position = isHp ? Camera.main.WorldToScreenPoint(targetDungeon.gameObject.transform.position + Vector3.up * 5f) : Camera.main.WorldToScreenPoint(targetDungeon.gameObject.transform.position + Vector3.up * 4.5f);
                 item.GetComponent<UnityEngine.UI.Slider>().value = isHp ? targetDungeon.Stat.hp / targetDungeon.Stat.maxHp : targetDungeon.Stat.barrier / targetDungeon.Stat.maxBarrier;
                 break;
             case "FinalBoss":

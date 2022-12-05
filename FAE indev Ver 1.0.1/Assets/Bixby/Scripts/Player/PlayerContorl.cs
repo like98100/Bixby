@@ -1047,18 +1047,27 @@ public class PlayerContorl : PlayerStatusControl
             StartCoroutine(shootEffect());
             if (hitInfo.collider.tag == "Enemy")
             {
-                setEnemyElement(hitInfo.collider.GetComponent<Enemy>().Stat.element);
-                hitInfo.collider.GetComponent<Enemy>().TakeElementHit(UltDamage, MyElement);
+                if (!hitInfo.collider.GetComponent<Enemy>().isSetShield())
+                {            
+                    setEnemyElement(hitInfo.collider.GetComponent<Enemy>().Stat.element);
+                    hitInfo.collider.GetComponent<Enemy>().TakeElementHit(UltDamage, MyElement);
+                }
             }
             else if (hitInfo.collider.tag == "DungeonBoss")
             {
-                setEnemyElement(hitInfo.collider.GetComponent<DungeonBoss>().Stat.element);
-                hitInfo.collider.GetComponent<DungeonBoss>().TakeElementHit(UltDamage, MyElement);
+                if (!hitInfo.collider.GetComponent<DungeonBoss>().isSetShield())
+                {   
+                    setEnemyElement(hitInfo.collider.GetComponent<DungeonBoss>().Stat.element);
+                    hitInfo.collider.GetComponent<DungeonBoss>().TakeElementHit(UltDamage, MyElement);
+                }
             }
             else if (hitInfo.collider.tag == "FinalBoss")
             {
-                setEnemyElement(hitInfo.collider.GetComponent<FinalBoss>().Stat.element);
-                hitInfo.collider.GetComponent<FinalBoss>().TakeElementHit(UltDamage, MyElement);
+                if (!hitInfo.collider.GetComponent<FinalBoss>().isSetShield())
+                { 
+                    setEnemyElement(hitInfo.collider.GetComponent<FinalBoss>().Stat.element);
+                    hitInfo.collider.GetComponent<FinalBoss>().TakeElementHit(UltDamage, MyElement);
+                }
             }
         }
         projectileLine.SetPosition(1, rayOrigin + (m_camera.transform.forward * ShootDistance));

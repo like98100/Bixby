@@ -50,13 +50,12 @@ public class inventoryObject : MonoBehaviour
         itemJsonData = json.LoadJsonFile<itemJsonData>(Application.dataPath, "items");//json로드
         Gold = itemJsonData.gold;//골드 값 로드
         goldObj.GetComponent<RectTransform>().sizeDelta = new Vector2(XSize * Cell, 50f);//골드창 크기
-        goldObj.transform.localPosition = new Vector3(0f, -1 * (inventoryObj.GetComponent<RectTransform>().rect.height / 2f + 25f), 0f);//골드창 위치
         goldSet();
         items.items = new List<itemData>();
         foreach (var item in itemJsonData.itemList)
             items.items.Add(item);//itemSO 데이터 추가
-
         inventoryObj.GetComponent<RectTransform>().sizeDelta = new Vector2(XSize * Cell, YSize * Cell);//인벤창 크기
+        goldObj.transform.localPosition = new Vector3(0f, -1 * (inventoryObj.GetComponent<RectTransform>().rect.height / 2f + 25f), 0f);//골드창 위치
         closeBtn.gameObject.transform.position
             = inventoryObj.transform.position
             + Vector3.up * (inventoryObj.GetComponent<RectTransform>().rect.height / 2f + Cell / 2f)

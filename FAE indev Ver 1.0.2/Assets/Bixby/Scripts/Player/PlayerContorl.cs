@@ -419,6 +419,9 @@ public class PlayerContorl : PlayerStatusControl
                         m_camera.GetComponent<CamControl>().isOnAim = false;
                         StaminaUse(DashStaminaAmount);
                         this.isDashed = false;
+
+                        // 사운드 넣기
+                        SoundManage.instance.PlaySFXSound(1, "Player");
                         break;
                     case STATE.RUN:
                         this.MyCurrentSpeed = RunSpeed;
@@ -438,6 +441,9 @@ public class PlayerContorl : PlayerStatusControl
                     case STATE.CHARGE_ATTACK:
                         this.MyCurrentSpeed = Speed;
                         m_camera.GetComponent<CamControl>().isOnAim = true;
+
+                        // 사운드 넣기
+                        SoundManage.instance.PlaySFXSound(4, "Player");
                         break;
                     case STATE.ELEMENT_SKILL:
                         offset.y = 0;
@@ -447,6 +453,8 @@ public class PlayerContorl : PlayerStatusControl
                         offset.y = 0;
                         transform.LookAt(player.transform.position + offset);
                         m_camera.GetComponent<CamControl>().isOnAim = true;
+                        //사운드 넣기
+                        SoundManage.instance.PlaySFXSound(7, "Player");
                         break;
                     case STATE.SWIMMING:
                         this.MyCurrentSpeed = SwimSpeed;
@@ -521,11 +529,17 @@ public class PlayerContorl : PlayerStatusControl
                     {
                         die();
                     }
+
+                    // 수영 사운드 넣기
+                    if(!SoundManage.instance.GetPlayerSFXPlayer().isPlaying)    // 입수 사운드 플레이가 완료되면
+                    SoundManage.instance.PlaySFXSound(11, "Player");
                     break;
                 case STATE.FISHING:
                     //낚시 중에는 아무 행동도 못한다.
                     break;
                 case STATE.DEAD:
+                    // 사운드 넣기
+                    SoundManage.instance.PlaySFXSound(12, "Player");
                     this.isSwimming = false;
                     if (this.gameObject.transform.GetChild(1).GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Death") 
                         && this.gameObject.transform.GetChild(1).GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.95f
@@ -545,6 +559,8 @@ public class PlayerContorl : PlayerStatusControl
         if (other.gameObject.tag == "Water" && !Dead)
         {
             this.isSwimming = true;
+            // 입수 사운드 넣기
+            SoundManage.instance.PlaySFXSound(10, "Player");
         }
     }
     private void OnTriggerExit(Collider other)
@@ -607,6 +623,19 @@ public class PlayerContorl : PlayerStatusControl
             this.transform.rotation = Quaternion.Lerp(this.transform.rotation,
                Quaternion.LookRotation(-(playerRight + playerForward).normalized),
                Time.deltaTime * rotationSpeed);
+
+            // 걷기 사운드 넣기(현재 상태가 RUN이면 달리기, MOVE면 걷기)(현재 재생중인지와 점프 확인할 것)
+            if (this.State == STATE.RUN)
+            {
+                if (SoundManage.instance.GetPlayerSFXPlayer().clip != SoundManage.instance.PlayerSFXClips[2])
+                    SoundManage.instance.PlaySFXSound(2, "Player");
+            }
+            else
+            {
+                if (SoundManage.instance.GetPlayerSFXPlayer().clip != SoundManage.instance.PlayerSFXClips[0] ||
+                    SoundManage.instance.GetPlayerSFXPlayer().isPlaying == false)
+                    SoundManage.instance.PlaySFXSound(0, "Player");
+            }
         }
 
         else if ((Input.GetKey(KeyCode.D)) && (Input.GetKey(KeyCode.W)))
@@ -614,6 +643,19 @@ public class PlayerContorl : PlayerStatusControl
             this.transform.rotation = Quaternion.Lerp(this.transform.rotation,
                Quaternion.LookRotation((playerRight + playerForward).normalized),
                Time.deltaTime * rotationSpeed);
+
+            // 걷기 사운드 넣기(현재 상태가 RUN이면 달리기, MOVE면 걷기)(현재 재생중인지와 점프 확인할 것)
+            if (this.State == STATE.RUN)
+            {
+                if (SoundManage.instance.GetPlayerSFXPlayer().clip != SoundManage.instance.PlayerSFXClips[2])
+                    SoundManage.instance.PlaySFXSound(2, "Player");
+            }
+            else
+            {
+                if (SoundManage.instance.GetPlayerSFXPlayer().clip != SoundManage.instance.PlayerSFXClips[0] ||
+                    SoundManage.instance.GetPlayerSFXPlayer().isPlaying == false)
+                    SoundManage.instance.PlaySFXSound(0, "Player");
+            }
         }
 
         else if((Input.GetKey(KeyCode.A)) && (Input.GetKey(KeyCode.W)))
@@ -621,6 +663,19 @@ public class PlayerContorl : PlayerStatusControl
             this.transform.rotation = Quaternion.Lerp(this.transform.rotation,
                Quaternion.LookRotation(-(playerRight - playerForward).normalized),
                Time.deltaTime * rotationSpeed);
+
+            // 걷기 사운드 넣기(현재 상태가 RUN이면 달리기, MOVE면 걷기)(현재 재생중인지와 점프 확인할 것)
+            if (this.State == STATE.RUN)
+            {
+                if (SoundManage.instance.GetPlayerSFXPlayer().clip != SoundManage.instance.PlayerSFXClips[2])
+                    SoundManage.instance.PlaySFXSound(2, "Player");
+            }
+            else
+            {
+                if (SoundManage.instance.GetPlayerSFXPlayer().clip != SoundManage.instance.PlayerSFXClips[0] ||
+                    SoundManage.instance.GetPlayerSFXPlayer().isPlaying == false)
+                    SoundManage.instance.PlaySFXSound(0, "Player");
+            }
         }
 
         else if((Input.GetKey(KeyCode.D)) && (Input.GetKey(KeyCode.S)))
@@ -628,6 +683,19 @@ public class PlayerContorl : PlayerStatusControl
             this.transform.rotation = Quaternion.Lerp(this.transform.rotation,
                Quaternion.LookRotation(-(-playerRight + playerForward).normalized),
                Time.deltaTime * rotationSpeed);
+
+            // 걷기 사운드 넣기(현재 상태가 RUN이면 달리기, MOVE면 걷기)(현재 재생중인지와 점프 확인할 것)
+            if (this.State == STATE.RUN)
+            {
+                if (SoundManage.instance.GetPlayerSFXPlayer().clip != SoundManage.instance.PlayerSFXClips[2])
+                    SoundManage.instance.PlaySFXSound(2, "Player");
+            }
+            else
+            {
+                if (SoundManage.instance.GetPlayerSFXPlayer().clip != SoundManage.instance.PlayerSFXClips[0] ||
+                    SoundManage.instance.GetPlayerSFXPlayer().isPlaying == false)
+                    SoundManage.instance.PlaySFXSound(0, "Player");
+            }
         }
 
         else if(Input.GetKey(KeyCode.W))
@@ -635,6 +703,19 @@ public class PlayerContorl : PlayerStatusControl
             this.transform.rotation = Quaternion.Lerp(this.transform.rotation,
                 Quaternion.LookRotation(playerForward),
                 Time.deltaTime * rotationSpeed);
+
+            // 걷기 사운드 넣기(현재 상태가 RUN이면 달리기, MOVE면 걷기)(현재 재생중인지와 점프 확인할 것)
+            if (this.State == STATE.RUN)
+            {
+                if (SoundManage.instance.GetPlayerSFXPlayer().clip != SoundManage.instance.PlayerSFXClips[2])
+                    SoundManage.instance.PlaySFXSound(2, "Player");
+            }
+            else
+            {
+                if (SoundManage.instance.GetPlayerSFXPlayer().clip != SoundManage.instance.PlayerSFXClips[0] ||
+                    SoundManage.instance.GetPlayerSFXPlayer().isPlaying == false)
+                    SoundManage.instance.PlaySFXSound(0, "Player");
+            }
         }
 
         else if(Input.GetKey(KeyCode.S))
@@ -642,6 +723,19 @@ public class PlayerContorl : PlayerStatusControl
             this.transform.rotation = Quaternion.Lerp(this.transform.rotation,
                 Quaternion.LookRotation(-playerForward),
                 Time.deltaTime * rotationSpeed);
+
+            // 걷기 사운드 넣기(현재 상태가 RUN이면 달리기, MOVE면 걷기)(현재 재생중인지와 점프 확인할 것)
+            if (this.State == STATE.RUN)
+            {
+                if (SoundManage.instance.GetPlayerSFXPlayer().clip != SoundManage.instance.PlayerSFXClips[2])
+                    SoundManage.instance.PlaySFXSound(2, "Player");
+            }
+            else
+            {
+                if (SoundManage.instance.GetPlayerSFXPlayer().clip != SoundManage.instance.PlayerSFXClips[0] ||
+                    SoundManage.instance.GetPlayerSFXPlayer().isPlaying == false)
+                    SoundManage.instance.PlaySFXSound(0, "Player");
+            }
         }
 
         else if(Input.GetKey(KeyCode.D))
@@ -649,6 +743,19 @@ public class PlayerContorl : PlayerStatusControl
             this.transform.rotation = Quaternion.Lerp(this.transform.rotation,
                 Quaternion.LookRotation(playerRight),
                 Time.deltaTime * rotationSpeed);
+
+            // 걷기 사운드 넣기(현재 상태가 RUN이면 달리기, MOVE면 걷기)(현재 재생중인지와 점프 확인할 것)
+            if (this.State == STATE.RUN)
+            {
+                if (SoundManage.instance.GetPlayerSFXPlayer().clip != SoundManage.instance.PlayerSFXClips[2])
+                    SoundManage.instance.PlaySFXSound(2, "Player");
+            }
+            else
+            {
+                if (SoundManage.instance.GetPlayerSFXPlayer().clip != SoundManage.instance.PlayerSFXClips[0] ||
+                    SoundManage.instance.GetPlayerSFXPlayer().isPlaying == false)
+                    SoundManage.instance.PlaySFXSound(0, "Player");
+            }
         }
 
         else if(Input.GetKey(KeyCode.A))
@@ -656,8 +763,25 @@ public class PlayerContorl : PlayerStatusControl
             this.transform.rotation = Quaternion.Lerp(this.transform.rotation,
                Quaternion.LookRotation(-playerRight),
                Time.deltaTime * rotationSpeed);
-        }
 
+            // 걷기 사운드 넣기(현재 상태가 RUN이면 달리기, MOVE면 걷기)(현재 재생중인지와 점프 확인할 것)
+            if (this.State == STATE.RUN)
+            {
+                if (SoundManage.instance.GetPlayerSFXPlayer().clip != SoundManage.instance.PlayerSFXClips[2])
+                    SoundManage.instance.PlaySFXSound(2, "Player");
+            }
+            else
+            {
+                if (SoundManage.instance.GetPlayerSFXPlayer().clip != SoundManage.instance.PlayerSFXClips[0] ||
+                    SoundManage.instance.GetPlayerSFXPlayer().isPlaying == false)
+                    SoundManage.instance.PlaySFXSound(0, "Player");
+            }
+        }
+        else
+        {
+            SoundManage.instance.GetPlayerSFXPlayer().Pause();
+            Debug.Log("사운드 정지");
+        }
         if (player.isGrounded)
         {
             if ((Input.GetAxis("Vertical") != 0) || (Input.GetAxis("Horizontal") != 0))
@@ -671,6 +795,8 @@ public class PlayerContorl : PlayerStatusControl
             {
                 this.isJumpPressed = true;
                 playerDirection.y = JumpPower;
+                // 점프 사운드 넣기
+                SoundManage.instance.PlaySFXSound(9, "Player");
             }
         }
         else
@@ -904,6 +1030,9 @@ public class PlayerContorl : PlayerStatusControl
                 }
                 break;
         }
+
+        // 사운드 넣기
+        SoundManage.instance.PlaySFXSound(3, "Player");
     }
 
     private void chargedAttack()
@@ -1001,6 +1130,9 @@ public class PlayerContorl : PlayerStatusControl
             this.gameObject.GetComponent<PlayerLineSkill>().ShowAttackEffect((int)this.State, (int)this.MyElement, ProjectileStart);
             StartCoroutine(shootEffect());
         }
+
+        // 사운드 넣기
+        SoundManage.instance.PlaySFXSound(5, "Player");
     }
 
     private void elementSkill()
@@ -1015,6 +1147,10 @@ public class PlayerContorl : PlayerStatusControl
 
         StartCoroutine(skillCoolDownCalc());
         StartCoroutine(fallBack()); //후퇴
+
+        // 사운드 넣기
+        SoundManage.instance.PlaySFXSound(6, "Player");
+
         this.NextState = STATE.MOVE;
     }
 
@@ -1071,6 +1207,9 @@ public class PlayerContorl : PlayerStatusControl
         }
         projectileLine.SetPosition(1, rayOrigin + (m_camera.transform.forward * ShootDistance));
         StartCoroutine(shootEffect());
+
+        // 사운드 넣기
+        SoundManage.instance.PlaySFXSound(8, "Player");
     }
 
     private IEnumerator fallBack()

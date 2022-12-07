@@ -66,7 +66,7 @@ public class QuestObject : MonoBehaviour
         }
 
         currentQuest = JsonData.questList[JsonData.questIndex];
-        MissionSet();
+        if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "Title") MissionSet();
         //tutorialImage = GameObject.Find("TutorialImage");
 
         //아이템 데이터

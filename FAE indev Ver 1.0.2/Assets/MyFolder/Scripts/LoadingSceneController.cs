@@ -115,12 +115,18 @@ public class LoadingSceneController : MonoBehaviour
     {
         if (scene.name == loadSceneName)
         {
-            spawnPlayer = GameObject.FindWithTag("Player").GetComponent<SpawnPlayer>();
-            spawnPlayer.SetPosition(previousSceneName);
+            if(loadSceneName != "Title")
+            {
+                spawnPlayer = GameObject.FindWithTag("Player").GetComponent<SpawnPlayer>();
+                spawnPlayer.SetPosition(previousSceneName);
 
-            StartCoroutine(Fade(false));
+                StartCoroutine(Fade(false));
 
-            QuestObject.manager.MissionSet();           // 신 로딩이 완료되면 미션 텍스트 재설정
+                QuestObject.manager.MissionSet();           // 신 로딩이 완료되면 미션 텍스트 재설정
+            }
+
+            
+            SoundManage.instance.PlayBGMSound(loadSceneName, 0.7f);
 
             SceneManager.sceneLoaded -= OnSceneLoaded;
         }

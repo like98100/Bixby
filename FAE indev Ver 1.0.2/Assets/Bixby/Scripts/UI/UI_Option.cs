@@ -53,7 +53,7 @@ public class UI_Option : MonoBehaviour
     public void TitleSet(bool start)
     {
         if (start)
-            UnityEngine.SceneManagement.SceneManager.LoadScene("FieldScene");
+            LoadingSceneController.Instance.LoadScene("FieldScene");
         else
             Application.Quit();
     }
@@ -61,7 +61,7 @@ public class UI_Option : MonoBehaviour
     {
         UI_Control.Inst.windowSet(this.gameObject);
         Cursor.lockState = CursorLockMode.None;
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Title");
+        LoadingSceneController.Instance.LoadScene("Title");
         QuestObject.manager.QuestInitialize();
         Time.timeScale = 1f;
     }

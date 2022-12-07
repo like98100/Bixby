@@ -107,6 +107,9 @@ public class PlayerStatusControl : CombatStatus, IDamgeable
         Health -= damage * AdditionalDamage;
         UI_Control.Inst.damageSet((damage * AdditionalDamage).ToString(), GameObject.FindGameObjectWithTag("Player"));//대미지 UI 추가 코드
         this.DealtDamage = Mathf.Round(damage * 10) * 0.1f;
+
+        // 피격 사운드 넣기
+        SoundManage.instance.PlaySFXSound(13, "Player");
         if (Health <= 0 && !Dead)
         {
             die();
@@ -139,6 +142,9 @@ public class PlayerStatusControl : CombatStatus, IDamgeable
         Health -= curDamage * AdditionalDamage;
         UI_Control.Inst.damageSet((curDamage * AdditionalDamage).ToString(), GameObject.FindGameObjectWithTag("Player"));//대미지 UI 추가 코드
         this.DealtDamage = Mathf.Round(curDamage * 10) * 0.1f;
+
+        // 피격 사운드 넣기
+        SoundManage.instance.PlaySFXSound(13, "Player");
         if (Health <= 0 && !Dead)
         {
             die();

@@ -361,7 +361,14 @@ public class inventoryObject : MonoBehaviour
                     break;
             }
         if (itemObj.ItemData.isSell)
+        {
             subDescription = Mathf.FloorToInt(itemObj.ItemData.price * 1.5f).ToString();
+            itemDescription.transform.GetChild(3).GetComponent<TMPro.TextMeshProUGUI>().fontSize = 42f;
+        }
+        else
+        {
+            itemDescription.transform.GetChild(3).GetComponent<TMPro.TextMeshProUGUI>().fontSize = 32f;
+        }
         itemDescription.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = description;
         itemDescription.transform.GetChild(3).GetComponent<TMPro.TextMeshProUGUI>().text = subDescription;
         #endregion

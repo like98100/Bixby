@@ -81,7 +81,7 @@ public class Speech : MonoBehaviour
                     {
                         case QuestKind.kill:
                             break;
-                        case QuestKind.cook://해당 퀘스트 중 마지막 퀘스트가 아이템 채집 퀘스트의 경우(과일주스 가져오기)
+                        case QuestKind.cook://해당 퀘스트 중 마지막 퀘스트가 아이템 채집 퀘스트의 경우(토마토 주스 가져오기)
                             foreach (var item in inventoryObject.Inst.itemObjects)
                             {
                                 if (item.GetComponent<itemObject>().ItemData.itemID == QuestObject.manager.GetObjectId())
@@ -110,7 +110,7 @@ public class Speech : MonoBehaviour
             }
             switch (QuestObject.manager.GetIndex())
             {
-                case 3:
+                case 1:
                     Tutorial.TutoImageSet(0);
                     break;
                 case 10:

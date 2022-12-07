@@ -10,7 +10,14 @@ public class PurplePotal : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            LoadingSceneController.Instance.LoadScene("ElectricDungeon");
+            if (QuestObject.manager.GetIndex() > 14)
+            {
+                LoadingSceneController.Instance.LoadScene("ElectricDungeon");
+            }
+            else
+            {
+                UI_Control.Inst.Speech.Tutorial.ElementGetText(4); //준비가 되지 않았다는 시스템 메시지 출력.
+            }
         }
     }
 }

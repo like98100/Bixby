@@ -93,7 +93,7 @@ MonoBehaviour:
   FireRate: 0.5
   AdditionalDamage: 1
   SpeedMultiply: 1
-  MyStartingHealth: 500
+  MyStartingHealth: 100
   Health: 0
   MyStartingStamina: 100
   Stamina: 0
@@ -106,7 +106,7 @@ MonoBehaviour:
   DealtDamage: 0
   DashStaminaAmount: 10
   RunStaminaAmount: 5
-  SwimStaminaAmount: 10
+  SwimStaminaAmount: 5
   ChargeAttackStaminaAmount: 5
   DashDistance: 5
   Speed: 7

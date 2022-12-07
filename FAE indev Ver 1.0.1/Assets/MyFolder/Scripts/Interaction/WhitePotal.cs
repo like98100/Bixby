@@ -10,7 +10,14 @@ public class WhitePotal : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            LoadingSceneController.Instance.LoadScene("IceDungeon");
+            if (QuestObject.manager.GetIndex() > 6)
+            {
+                LoadingSceneController.Instance.LoadScene("IceDungeon");
+            }
+            else
+            {
+                UI_Control.Inst.Speech.Tutorial.ElementGetText(4); //준비가 되지 않았다는 시스템 메시지 출력.
+            }
         }
     }
 }

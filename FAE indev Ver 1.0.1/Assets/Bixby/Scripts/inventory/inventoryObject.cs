@@ -288,7 +288,7 @@ public class inventoryObject : MonoBehaviour
 
     public void goldSet()
     {
-        goldObj.transform.GetChild(0).GetComponent<Text>().text = "G " + Gold.ToString();//골드 값 적용
+        goldObj.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = "G " + Gold.ToString();//골드 값 적용
     }
 
     #region 아이템 마우스 조작
@@ -296,7 +296,7 @@ public class inventoryObject : MonoBehaviour
     {
         itemSummary.SetActive(true);
         itemSummary.transform.SetAsLastSibling();
-        itemSummary.transform.GetChild(0).GetComponent<Text>().text = itemObj.ItemData.itemName;
+        itemSummary.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = itemObj.ItemData.itemName;
     }
 
     public void itemExit()//마우스가 아이템에서 나갔을 때
@@ -313,9 +313,15 @@ public class inventoryObject : MonoBehaviour
     {
         #region 설명
         itemDescription.SetActive(true);
-        itemDescription.transform.GetChild(0).GetComponent<Text>().text = itemObj.ItemData.itemName;
+        itemDescription.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = itemObj.ItemData.itemName;
+        itemDescription.transform.GetChild(2).GetComponent<Image>().sprite = itemObj.gameObject.transform.GetChild(1).GetComponent<Image>().sprite;
+        if (itemObj.ItemData.itemID == 2001)
+            itemDescription.transform.GetChild(2).GetComponent<RectTransform>().sizeDelta = new Vector2(50f, 100f);
+        else
+            itemDescription.transform.GetChild(2).GetComponent<RectTransform>().sizeDelta = Vector2.one * 100f;
         bool isFood = false;
         string description = "";
+        string subDescription = "";
         foreach (var item in itemObj.ItemData.tag)
         {
             if (item == "food")
@@ -327,8 +333,25 @@ public class inventoryObject : MonoBehaviour
         if (isFood)
             switch (itemObj.ItemData.itemID)
             {
-                case 3:
-                    description = "스태미나가 회복될 것 같다";
+                case 1000:
+                case 1001:
+                case 1002:
+                case 1003:
+                case 1004:
+                    description = "체력을 10 회복한다.";
+                    subDescription = "-다른 재료와 요리해서 섭취하면 효과가 증대된다.";
+                    break;
+                case 2001:
+                    description = "스태미나를 50 회복한다.";
+                    break;
+                case 2002:
+                    description = "체력을 40 회복한다.";
+                    break;
+                case 2003:
+                    description = "체력을 50 회복한다.";
+                    break;
+                case 2004:
+                    description = "체력을 60 회복한다.";
                     break;
             }
         else
@@ -339,7 +362,8 @@ public class inventoryObject : MonoBehaviour
             }
         if (itemObj.ItemData.isSell)
             description = description + "\n" + Mathf.FloorToInt(itemObj.ItemData.price * 1.5f);
-        itemDescription.transform.GetChild(1).GetComponent<Text>().text = description;
+        itemDescription.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = description;
+        itemDescription.transform.GetChild(3).GetComponent<TMPro.TextMeshProUGUI>().text = subDescription;
         #endregion
     }
 
@@ -358,19 +382,30 @@ public class inventoryObject : MonoBehaviour
             {
                 switch (itemObj.ItemData.itemID)
                 {//id에 따라 food 효과 조정
-                    case 3:
-                        playerRecovery(10, false);
-                        break;
-                    case 2001:
+                    case 1000:
+                    case 1001:
+                    case 1002:
+                    case 1003:
+                    case 1004:
                         playerRecovery(10, true);
                         break;
+                    case 2001:
+                        playerRecovery(50, false);
+                        break;
                     case 2002:
-                        playerRecovery(20, true);
+                        playerRecovery(40, true);
+                        break;
+                    case 2003:
+                        playerRecovery(50, true);
+                        break;
+                    case 2004:
+                        playerRecovery(60, true);
                         break;
                     default:
                         break;
                 }
                 throwItem(itemObj.gameObject, false);
+                itemDescription.SetActive(false);
             }
         }
     }
@@ -401,4 +436,13 @@ public class inventoryObject : MonoBehaviour
         }
     }
     #endregion
+    public void Initialize()
+    {
+        itemJsonData temp = new itemJsonData();
+        temp.itemList = new List<itemData>();
+        goldSet();
+        temp.gold = this.Gold;
+        string tempStr = json.ObjectToJson(temp);
+        json.CreateJsonFile(Application.dataPath, "items", tempStr);
+    }
 }

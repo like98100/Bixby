@@ -22,6 +22,7 @@ public class AnimalField : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        this.transform.position += new Vector3(0, 30.0f, 0);
         for (int i = 0; i < animalCount; i++)
         {
             GameObject test = Instantiate(deer, Return_RandomPosition(), Quaternion.identity);

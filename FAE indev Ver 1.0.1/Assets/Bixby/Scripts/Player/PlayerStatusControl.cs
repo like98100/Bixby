@@ -24,7 +24,7 @@ public class PlayerStatusControl : CombatStatus, IDamgeable
 
     public float DashStaminaAmount = 20.0f;
     public float RunStaminaAmount = 10.0f;
-    public float SwimStaminaAmount = 10.0f;
+    public float SwimStaminaAmount = 5.0f;
     public float ChargeAttackStaminaAmount = 10.0f;
 
     protected bool isDashed;
@@ -53,49 +53,60 @@ public class PlayerStatusControl : CombatStatus, IDamgeable
 
     protected IEnumerator skillCoolDownCalc()
     {
-        RemainTimeForSkill = SkillCoolDown;
-        isSkillCoolDown = true;
+        this.RemainTimeForSkill = SkillCoolDown;
+        this.isSkillCoolDown = true;
         while(RemainTimeForSkill > 0)
         {
             RemainTimeForSkill--;
             yield return new WaitForSeconds(1.0f);
         }
-        RemainTimeForSkill = 0;
-        isSkillCoolDown = false;
+        this.RemainTimeForSkill = 0;
+        this.isSkillCoolDown = false;
     }
     protected IEnumerator ultSkillCoolDownCalc()
     {
-        RemainTimeForUltSkill = UltimateSkillCoolDown;
-        isUltimateSkillCoolDown = true;
+        this.RemainTimeForUltSkill = UltimateSkillCoolDown;
+        this.isUltimateSkillCoolDown = true;
         while (RemainTimeForUltSkill > 0)
         {
             RemainTimeForUltSkill--;
             yield return new WaitForSeconds(1.0f);
         }
-        RemainTimeForUltSkill = 0;
-        isUltimateSkillCoolDown = false;
+        this.RemainTimeForUltSkill = 0;
+        this.isUltimateSkillCoolDown = false;
     }
 
     protected override void Start()
     {
         base.Start();
+        this.Dead = false;
 
-        Dead = false;
-        MyElement = ElementType.NONE;
-        EnemyElement = ElementType.NONE;
+        if (QuestObject.manager.GetIndex() < 5 
+            || (QuestObject.manager.GetIndex() == 5 && !QuestObject.manager.GetIsClear()))  // 미개방 상태
+        {
+            this.MyElement = ElementType.NONE;
+        }
+        else
+        {
+            this.mySkillStartColor = FireSkillStartColor;
+            this.mySkillEndColor = FireSkillEndColor;
+            this.MyElement = ElementType.FIRE;
+        }
 
-        Health = MyStartingHealth;
-        Stamina = MyStartingStamina;
-        MyCurrentSpeed = Speed;
-        isDashed = false;
+        this.EnemyElement = ElementType.NONE;
+
+        this.Health = MyStartingHealth;
+        this.Stamina = MyStartingStamina;
+        this.MyCurrentSpeed = Speed;
+        this.isDashed = false;
     }
 
     public virtual void TakeHit(float damage)
     {
-        isHitted = true;
+        this.isHitted = true;
         Health -= damage * AdditionalDamage;
         UI_Control.Inst.damageSet((damage * AdditionalDamage).ToString(), GameObject.FindGameObjectWithTag("Player"));//대미지 UI 추가 코드
-        DealtDamage = Mathf.Round(damage * 10) * 0.1f;
+        this.DealtDamage = Mathf.Round(damage * 10) * 0.1f;
         if (Health <= 0 && !Dead)
         {
             die();
@@ -104,7 +115,7 @@ public class PlayerStatusControl : CombatStatus, IDamgeable
 
     public virtual void TakeElementHit(float damage, ElementRule.ElementType enemyElement) //나중에 삭제될 가능성 있음.
     {
-        isHitted = true;
+        this.isHitted = true;
         setEnemyElement(enemyElement); // 이렇게 EnemyElement로 바꿔서 쓰거나 enemyElement그대로 써도 될듯.
         float curDamage = attackedOnNormal(damage);
 
@@ -127,7 +138,7 @@ public class PlayerStatusControl : CombatStatus, IDamgeable
 
         Health -= curDamage * AdditionalDamage;
         UI_Control.Inst.damageSet((curDamage * AdditionalDamage).ToString(), GameObject.FindGameObjectWithTag("Player"));//대미지 UI 추가 코드
-        DealtDamage = Mathf.Round(curDamage * 10) * 0.1f;
+        this.DealtDamage = Mathf.Round(curDamage * 10) * 0.1f;
         if (Health <= 0 && !Dead)
         {
             die();
@@ -153,7 +164,7 @@ public class PlayerStatusControl : CombatStatus, IDamgeable
 
         if(Stamina > MyStartingStamina)
         {
-            Stamina = MyStartingStamina;
+            this.Stamina = MyStartingStamina;
         }
     }
 

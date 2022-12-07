@@ -117,6 +117,12 @@ public class UI_Control : MonoBehaviour
                 case "Map":
                     Map.GetComponent<UI_Map>().MapSetUp();
                     break;// 열 때 맵 위치를 플레이어 중점으로 할 것
+                case "GameObject":
+                    if (window.transform.parent.name == "COOK")
+                    {
+                        window.transform.GetChild(window.transform.childCount - 1).GetComponent<CookingGage>().CookInitialize();
+                    }
+                    break;
             }
             Cursor.lockState = CursorLockMode.None;
             aimPoint.SetActive(false);

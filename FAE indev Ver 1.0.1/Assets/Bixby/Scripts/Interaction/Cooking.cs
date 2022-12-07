@@ -61,17 +61,6 @@ public class Cooking : MonoBehaviour
             {
                 UI_Control.Inst.windowSet(cookPanel);
                 inventoryObject.Inst.FieldFKey.SetActive(false);
-                ////UI창이 켜졌을때
-                //if (cookPanel.gameObject.activeSelf == true)
-                //{
-                //    cookPanel.gameObject.SetActive(false);
-                //}
-                //else
-                //{
-                //    cookPanel.gameObject.SetActive(true);
-                //    Destroy(inventoryObject.Inst.FieldFKey);
-                //    inventoryObject.Inst.FieldFKey = null;
-                //}
             }
         }
         else if(isPlayerClose)
@@ -90,7 +79,7 @@ public class Cooking : MonoBehaviour
 
         if (myNum == 1)
         {
-            num.text = "과일주스";
+            num.text = "토마토 주스";
         }
         else if (myNum == 2)
         {

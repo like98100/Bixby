@@ -35,6 +35,7 @@ public class QuestObject : MonoBehaviour
 
     // Start is called before the first frame update
     //public List<Material> NPC_Plane_Marks;//NPC 퀘스트 마크 추가
+    List<itemData> items;
     void Start()
     {
         if (json.FileExist(Application.dataPath, "quests"))                                      // Quest 파일이 존재할 시
@@ -67,12 +68,26 @@ public class QuestObject : MonoBehaviour
         currentQuest = JsonData.questList[JsonData.questIndex];
         MissionSet();
         //tutorialImage = GameObject.Find("TutorialImage");
+
+        //아이템 데이터
+        items = new List<itemData>();
+        itemJsonData tempJson = json.LoadJsonFile<itemJsonData>(Application.dataPath, "Harvest");
+        foreach (var item in tempJson.itemList)
+        {
+            items.Add(item);
+        }
+        tempJson = json.LoadJsonFile<itemJsonData>(Application.dataPath, "cook");//json로드
+        foreach (var item in tempJson.itemList)
+        {
+            items.Add(item);
+        }
     }
-    int tmp;//인덱스 확인용 임시 변수
+    int questIndex; //인덱스 확인용 변수
+
     // Update is called once per frame
     void Update()
     {
-        tmp = JsonData.questIndex;//인덱스 확인용 임시 변수
+        questIndex = JsonData.questIndex;//인덱스 확인용 임시 변수
         //if (JsonData.questIndex == 0 && Input.anyKeyDown)
         //{
         //    tutorialImage.SetActive(false);
@@ -297,17 +312,14 @@ public class QuestObject : MonoBehaviour
                 missionText = "적을" + questPurpose + "마리 사냥하기" + questProgress;
                 break;
             case QuestKind.cook:
-                switch (currentQuest.objectId[questSubIndex])//if문 switch문으로 변경
-                {//이후 json에서 퀘스트 관련 아이템 리스트를 제작하여 해당 id에 맞는 이름이 나오도록 수정 예정
-                    case 1000:
-                        missionText = "과일을";
+                missionText = "데이터에 없는 아이템을";
+                foreach (var item in items)
+                {
+                    if (item.itemID == currentQuest.objectId[questSubIndex])
+                    {
+                        missionText = item.itemName + "을(를)";
                         break;
-                    case 2001:
-                        missionText = "과일주스를";
-                        break;
-                    default:
-                        missionText = "현재 등록되어 있지 않은 아이템을";
-                        break;
+                    }
                 }
                 missionText += questPurpose + "개 얻거나 만들기" + questProgress;
                 break;
@@ -324,11 +336,16 @@ public class QuestObject : MonoBehaviour
     }
     public int GetIndex()
     {
-        return JsonData.questIndex;
+        if (JsonData == null) return 0;
+        else return JsonData.questIndex;
     }
-    public void SetIndex(int value)
+    public void QuestInitialize()
     {
-        JsonData.questIndex = value;
+        JsonData.questIndex = 0;
+        currentQuest = JsonData.questList[JsonData.questIndex];
+        objectIndex = 0;
+        questSubIndex = 0;
+        inventoryObject.Inst.Initialize();
     }
     public QuestKind GetQuestKind()
     {

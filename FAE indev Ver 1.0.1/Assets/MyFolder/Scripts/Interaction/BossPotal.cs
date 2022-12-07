@@ -9,7 +9,14 @@ public class BossPotal : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            LoadingSceneController.Instance.LoadScene("BossDungeon");
+            if (QuestObject.manager.GetIndex() > 18)
+            {
+                LoadingSceneController.Instance.LoadScene("BossDungeon");
+            }
+            else
+            {
+                UI_Control.Inst.Speech.Tutorial.ElementGetText(4); //준비가 되지 않았다는 시스템 메시지 출력.
+            }
         }
     }
 }

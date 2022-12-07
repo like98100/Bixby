@@ -10,7 +10,14 @@ public class RedPotal : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            LoadingSceneController.Instance.LoadScene("FireDungeon");
+            if (QuestObject.manager.GetIndex() > 4)
+            {
+                LoadingSceneController.Instance.LoadScene("FireDungeon");
+            }
+            else
+            {
+                UI_Control.Inst.Speech.Tutorial.ElementGetText(4); //준비가 되지 않았다는 시스템 메시지 출력.
+            }
         }
     }
 }

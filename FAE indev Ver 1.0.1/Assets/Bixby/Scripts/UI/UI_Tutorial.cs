@@ -56,10 +56,13 @@ public class UI_Tutorial : MonoBehaviour
                 ElemeneClearText.gameObject.SetActive(false);
                 canvas.SetActive(false);
                 time = 0;
-                if (QuestObject.manager.GetIndex() == 5)
-                    TutoImageSet(1);
-                else if(QuestObject.manager.GetIndex() == 10)
-                    TutoImageSet(2);
+                if (ElemeneClearText.fontSize == 100)
+                {
+                    if (QuestObject.manager.GetIndex() == 5)
+                        TutoImageSet(1);
+                    else if (QuestObject.manager.GetIndex() == 10)
+                        TutoImageSet(2);
+                }
             }
         }
         if (QuestObject.manager.GetIndex() == 5 && QuestObject.manager.GetIsClear()&&!didText)
@@ -116,24 +119,34 @@ public class UI_Tutorial : MonoBehaviour
             case 0:
                 ElemeneClearText.text = "<<불>>원소 힘 개방";
                 ElemeneClearText.color = ElementControl.FireSkillStartColor;
+                ElemeneClearText.fontSize = 100f;
+                didText = true;
                 break;
             case 1:
                 ElemeneClearText.text = "<<얼음>>원소 힘 개방";
                 ElemeneClearText.color = ElementControl.IceSkillStartColor;
+                ElemeneClearText.fontSize = 100f;
                 break;
             case 2:
                 ElemeneClearText.text = "<<물>>원소 힘 개방";
                 ElemeneClearText.color = ElementControl.WaterSkillStartColor;
+                ElemeneClearText.fontSize = 100f;
                 break;
             case 3:
                 ElemeneClearText.text = "<<전기>>원소 힘 개방";
                 ElemeneClearText.color = ElementControl.ElectroSkillStartColor;
+                ElemeneClearText.fontSize = 100f;
+                break;
+            case 4:
+                ElemeneClearText.text = "더이상 나아가는건 위험할 것 같다. 돌아가자.";
+                ElemeneClearText.color = Color.black;
+                ElemeneClearText.fontSize = 50f;
                 break;
             default:
-                ElemeneClearText.text = "<<정의되지않은>>원소 힘 개방";
+                ElemeneClearText.text = "정해지지 않은 텍스트입니다";
                 ElemeneClearText.color = Color.black;
+                ElemeneClearText.fontSize = 100f;
                 break;
         }
-        didText = true;
     }
 }

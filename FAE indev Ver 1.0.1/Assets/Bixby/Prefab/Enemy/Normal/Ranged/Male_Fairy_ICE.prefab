@@ -1083,8 +1083,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6862794cfa09a543a90efd422652bf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MyElement: 0
-  EnemyElement: 0
+  MyElement: 1
+  EnemyElement: -1
   ExplosionObj: {fileID: 1481134630116024679, guid: 69e99c5333091074b90dac5252d2acd9, type: 3}
   TransmissionObj: {fileID: 8389957880746753291, guid: 1a891c56444c98145b0268375bb2a6ec, type: 3}
   IsFusion: 0
@@ -1104,7 +1104,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   target: {fileID: 0}
-  Bullet: {fileID: 7221824908568048874, guid: cc518b0799f61a34facab1178cb6074e, type: 3}
+  Bullet: {fileID: 2454144495095184203, guid: 923b8a8290d48e946917d2cd2664dce8, type: 3}
   centerPosition: {x: 0, y: 0, z: 0}
   isHitted: 0
   runChance: 0
@@ -1260,7 +1260,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: eca2cc4ce9e25e143ae0f8424e8cd2ee, type: 2}
+  - {fileID: 2100000, guid: b58c471c32c97fa4993cdd7d03a90853, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1342,7 +1342,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4aa14fd0b2ddba4087ae987ccc0c177, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDissolve: 0
   dissolve: {fileID: 2100000, guid: fd481701278c4a84e89a4eb05e94b2d5, type: 2}
   color: {r: 0, g: 0, b: 0, a: 0}
   scales:

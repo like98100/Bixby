@@ -118,8 +118,7 @@ public class NPC : MonoBehaviour
                 notify.transform.localScale = Vector3.one * 0.3f;
             return;
         }
-        if (NpcName != QuestObject.manager.GetNPCName()
-            || QuestObject.manager.GetIndex() > 19)
+        if (NpcName != QuestObject.manager.GetNPCName())
         {
             notify.SetActive(false);
         }
@@ -166,6 +165,7 @@ public class NPC : MonoBehaviour
             talkIndex = QuestObject.manager.GetIsClear() ?
                     QuestObject.manager.GetIndex().ToString() + "o" :
                     QuestObject.manager.GetIndex().ToString() + "x";    //퀘스트에 따라 인덱스 조정
+            print(NpcName + talkIndex);
             speech.setUp(NpcName, NpcName + talkIndex);
         }
     }

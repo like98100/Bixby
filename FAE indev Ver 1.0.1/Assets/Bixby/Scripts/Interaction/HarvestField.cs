@@ -48,6 +48,7 @@ public class HarvestField : MonoBehaviour
 
     private void Start()
     {
+        this.transform.position += new Vector3(0, 30.0f, 0);
         for (int i = 0; i < harvestCount; i++)
         {
             GameObject instantHarvest = Instantiate(harvestObj, Return_RandomPosition(), Quaternion.identity);

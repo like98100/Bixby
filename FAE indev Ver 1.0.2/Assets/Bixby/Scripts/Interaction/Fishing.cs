@@ -62,7 +62,7 @@ public class Fishing : MonoBehaviour
         }
         Fishing_Start();
 
-        if (Input.GetKeyDown(KeyCode.Space) && start && inputF && endFishing)
+        if (start && inputF && endFishing)
         {
             initialization();
         }
@@ -101,7 +101,7 @@ public class Fishing : MonoBehaviour
     //낚시 F키 띄우기 함수
     void UI_F()
     {
-        if (Vector3.Distance(Player.transform.position, transform.position) <= 2.0f && !start && !inputF)
+        if (Vector3.Distance(Player.transform.position, transform.position) <= 3.0f && !start && !inputF)
         {
             //f키 생성
             if (!inventoryObject.Inst.FieldFKey.activeSelf)
@@ -110,7 +110,7 @@ public class Fishing : MonoBehaviour
                 isPlayerClose = true;
             }
         }
-        else if (Vector3.Distance(Player.transform.position, transform.position) > 2.0f || start || inputF)
+        else if (Vector3.Distance(Player.transform.position, transform.position) > 3.0f || start || inputF)
         {
             //f키 제거
             inventoryObject.Inst.FieldFKey.SetActive(false);
@@ -121,7 +121,7 @@ public class Fishing : MonoBehaviour
     //낚시 함수
     void Fishing_Start()
     {
-        if (Vector3.Distance(Player.transform.position, transform.position) <= 2.0f && !start && !inputF)
+        if (Vector3.Distance(Player.transform.position, transform.position) <= 3.0f && !start && !inputF)
         {
             if (Input.GetKeyDown(KeyCode.F))
             {

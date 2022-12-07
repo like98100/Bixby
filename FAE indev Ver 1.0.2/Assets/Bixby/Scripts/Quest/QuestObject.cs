@@ -66,7 +66,7 @@ public class QuestObject : MonoBehaviour
         }
 
         currentQuest = JsonData.questList[JsonData.questIndex];
-        MissionSet();
+        if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "Title") MissionSet();
         //tutorialImage = GameObject.Find("TutorialImage");
 
         //아이템 데이터
@@ -217,6 +217,23 @@ public class QuestObject : MonoBehaviour
         {
             if(questSubIndex != currentQuest.objectId.Count - 1)     // 서브 퀘스트가 마지막이 아닐 때
             {
+                if (JsonData.questIndex == 1)
+                {
+                    switch (questSubIndex)
+                    {
+                        case 2:
+                            GameObject.Find("Tutorial").GetComponent<UI_Tutorial>().TutoImageSet(0);//전투 튜토리얼
+                            break;
+                        case 3:
+                            GameObject.Find("Tutorial").GetComponent<UI_Tutorial>().TutoImageSet(4);//낚시 튜토리얼
+                            break;
+                        case 4:
+                            GameObject.Find("Tutorial").GetComponent<UI_Tutorial>().TutoImageSet(5);//요리 튜토리얼
+                            break;
+                        default:
+                            break;
+                    }
+                }
                 questSubIndex++;
                 isClear = false;
                 SetObjectIndex(0);                  // 변수 초기화

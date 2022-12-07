@@ -29,7 +29,7 @@ public class Etrigger : MonoBehaviour
     public void TriggerState()
     {
         //현재원소와 맞춰야할 원소가 같을 때
-        if (element == nowElement)
+        if (element == nowElement && !state)
         {
             switch (element)
             {

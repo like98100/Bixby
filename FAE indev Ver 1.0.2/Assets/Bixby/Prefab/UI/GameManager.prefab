@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8289247831150729133}
   - component: {fileID: 8289247831150729138}
   - component: {fileID: 7497576417891881611}
+  - component: {fileID: 25288595}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -70,3 +71,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActive: 
+--- !u!114 &25288595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8289247831150729139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e300abb9c3e79ad46b086746c0602230, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BGMClips:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  PlayerSFXClips:
+  - {fileID: 8300000, guid: b1a35458e53877745a0fdec936147d6c, type: 3}
+  - {fileID: 8300000, guid: a6302f0a4ea9f704f8b077596e2f507e, type: 3}
+  - {fileID: 8300000, guid: b37223885dc5acc4ca6b854d7a09995f, type: 3}
+  - {fileID: 8300000, guid: f83c564e78ee9e441b9aab53dd4459e3, type: 3}
+  - {fileID: 8300000, guid: 5a2eba604d7272c41bbcd8d63fa41b06, type: 3}
+  - {fileID: 8300000, guid: ec15ad823250c6148b13c4f3a3ed2ee4, type: 3}
+  - {fileID: 8300000, guid: 39efd8ae505628f41b97daa2c7d919d8, type: 3}
+  - {fileID: 8300000, guid: 697399221549a624eaf8279996404032, type: 3}
+  - {fileID: 8300000, guid: cb0a52198b20b3043988a7b15283e3d9, type: 3}
+  - {fileID: 8300000, guid: 473eaa5fdc06bce46bf57053a87755e1, type: 3}
+  PlayerLoopSFXClips:
+  - {fileID: 8300000, guid: 7982469e4f9fc33418ae8c8bac009e90, type: 3}
+  - {fileID: 8300000, guid: 7f2185cef22411649b463c178f5e4f98, type: 3}
+  - {fileID: 8300000, guid: 827c75e67d49391489c264a5a6b809ea, type: 3}
+  SystemSFXClips: []

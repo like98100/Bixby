@@ -39,7 +39,7 @@ public class Connect : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -56,50 +56,46 @@ public class Connect : MonoBehaviour
         //공격을 받으면
         if (HitNormal != new Vector3(0, 0, 0))
         {
-            if (HitNormal.x == -1)
+            if (Mathf.Round(HitNormal.x) == -1)
             {
                 //상태 변경
                 nor = NORMAL.X_minus;
                 Debug.Log("X-");
-                HitNormal = new Vector3(0, 0, 0);
             }
-            else if (HitNormal.x == 1)
+            else if (Mathf.Round(HitNormal.x) == 1)
             {
                 //상태 변경
                 nor = NORMAL.X_plus;
                 Debug.Log("X+");
-                HitNormal = new Vector3(0, 0, 0);
             }
-            else if (HitNormal.y == -1)
+            else if (Mathf.Round(HitNormal.y) == -1)
             {
                 //상태 변경
                 nor = NORMAL.Y_minus;
                 Debug.Log("Y-");
-                HitNormal = new Vector3(0, 0, 0);
             }
-            else if (HitNormal.y == 1)
+            else if (Mathf.Round(HitNormal.y) == 1)
             {
                 //상태 변경
                 nor = NORMAL.Y_plus;
                 Debug.Log("Y-");
-                HitNormal = new Vector3(0, 0, 0);
             }
-            else if (HitNormal.z == -1)
+            else if (Mathf.Round(HitNormal.z) == -1)
             {
                 //상태 변경
                 nor = NORMAL.Z_minus;
                 Debug.Log("Z-");
-                HitNormal = new Vector3(0, 0, 0);
             }
-            else if (HitNormal.z == 1)
+            else if (Mathf.Round(HitNormal.z) == 1)
             {
                 //상태 변경
                 nor = NORMAL.Z_plus;
                 Debug.Log("Z-");
-                HitNormal = new Vector3(0, 0, 0);
             }
             else
             {
+                //상태 변경
+                nor = NORMAL.NONE;
                 Debug.Log("오류");
             }
         }
@@ -156,6 +152,8 @@ public class Connect : MonoBehaviour
 
     void stateCheck()
     {
+        if (state)
+            return;
         for (int i = 0; i < otherConnect.Length; i++)
         {
             float distance = (otherConnect[i].transform.position - transform.position).magnitude;
@@ -184,7 +182,7 @@ public class Connect : MonoBehaviour
             if (n == NORMAL.X_minus)
             {
                 Vector3 currentPosition = transform.position;
-                Vector3 targetPosition = currentPosition + Vector3.right;
+                Vector3 targetPosition = currentPosition - HitNormal;
 
                 while (elapsedTime < blockMoveTime)
                 {
@@ -199,7 +197,7 @@ public class Connect : MonoBehaviour
             else if (n == NORMAL.X_plus)
             {
                 Vector3 currentPosition = transform.position;
-                Vector3 targetPosition = currentPosition + Vector3.left;
+                Vector3 targetPosition = currentPosition - HitNormal;
 
                 while (elapsedTime < blockMoveTime)
                 {
@@ -222,7 +220,7 @@ public class Connect : MonoBehaviour
             else if (n == NORMAL.Z_minus)
             {
                 Vector3 currentPosition = transform.position;
-                Vector3 targetPosition = currentPosition + Vector3.forward;
+                Vector3 targetPosition = currentPosition - HitNormal;
 
                 while (elapsedTime < blockMoveTime)
                 {
@@ -237,7 +235,7 @@ public class Connect : MonoBehaviour
             else if (n == NORMAL.Z_plus)
             {
                 Vector3 currentPosition = transform.position;
-                Vector3 targetPosition = currentPosition + Vector3.back;
+                Vector3 targetPosition = currentPosition - HitNormal;
 
                 while (elapsedTime < blockMoveTime)
                 {
@@ -249,6 +247,8 @@ public class Connect : MonoBehaviour
 
                 moveTriger = false;
             }
+
+            HitNormal = new Vector3(0, 0, 0);
         }
     }
     public void GetP(Vector3 hitPiont, Vector3 hitNormal)

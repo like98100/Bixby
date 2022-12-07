@@ -47,7 +47,14 @@ public class UI_Gauge : MonoBehaviour
         staminaObj.transform.localScale = cameraControl.step == CamControl.STATE.AIM ? Vector3.one : new Vector3(0.7f, 1, 1);
         attackCharge.gameObject.SetActive(playerControl.State == PlayerContorl.STATE.ATTACK && cameraControl.step == CamControl.STATE.AIM);
         if (attackCharge.gameObject.activeSelf)
+        {
+            // 사운드 넣기
+            if (attackCharge.value == 0 && playerControl.State != PlayerContorl.STATE.CHARGE_ATTACK) SoundManage.instance.PlaySFXSound(2, "Player");
+
             attackCharge.value = playerControl.StateTimer / playerControl.SwitchToChargeTime;
+        }
+        else attackCharge.value = 0;
+
         timeTack += Time.deltaTime;
         hp.value = playerControl.Health / playerControl.MyStartingHealth;
         stamina.value = playerControl.Stamina / playerControl.MyStartingStamina;

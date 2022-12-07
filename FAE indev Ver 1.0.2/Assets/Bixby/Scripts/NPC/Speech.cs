@@ -7,11 +7,11 @@ public class Speech : MonoBehaviour
     private void Awake()
     {
         speechWindow = GameObject.Find("Speech");
-        talker = speechWindow.transform.GetChild(1).GetComponent<Text>();
-        speech = speechWindow.transform.GetChild(0).GetComponent<Text>();
+        talker = speechWindow.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>();
+        speech = speechWindow.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>();
     }
-    Text talker;//대화상대
-    Text speech;//대화내용
+    TMPro.TextMeshProUGUI talker;//대화상대
+    TMPro.TextMeshProUGUI speech;//대화내용
     List<string> speechList;//대화내용 리스트
     int speechIndex;//리스트중 현재 대화내용의 순서
     GameObject speechWindow;//대화창
@@ -111,7 +111,7 @@ public class Speech : MonoBehaviour
             switch (QuestObject.manager.GetIndex())
             {
                 case 1:
-                    Tutorial.TutoImageSet(0);
+                    Tutorial.TutoImageSet(3);//수렵 채집 튜토리얼
                     break;
                 case 10:
                     Tutorial.ElementGetText(1);
@@ -133,17 +133,19 @@ public class Speech : MonoBehaviour
     {
         switch (name)//이름표 조정
         {
-            case "베타":
             case "partnerA":
                 return "베타";
             case "partnerB":
-            case "델타":
                 return "델타";
             case "partnerC":
-            case "감마":
                 return "감마";
-            case "알파":
             case "shop":
+                return "상점";
+            case "알파":
+            case "베타":
+            case "델타":
+            case "감마":
+            case "상점":
                 return name;
             default:
                 return "지도자";

@@ -54,7 +54,7 @@ public class inventoryObject : MonoBehaviour
         items.items = new List<itemData>();
         foreach (var item in itemJsonData.itemList)
             items.items.Add(item);//itemSO 데이터 추가
-        inventoryObj.GetComponent<RectTransform>().sizeDelta = new Vector2(XSize * Cell, YSize * Cell);//인벤창 크기
+        inventoryObj.GetComponent<RectTransform>().sizeDelta = new Vector2(XSize * Cell + 50f, YSize * Cell + 75f);//인벤창 크기
         goldObj.transform.localPosition = new Vector3(0f, -1 * (inventoryObj.GetComponent<RectTransform>().rect.height / 2f + 25f), 0f);//골드창 위치
         closeBtn.gameObject.transform.position
             = inventoryObj.transform.position
@@ -361,7 +361,14 @@ public class inventoryObject : MonoBehaviour
                     break;
             }
         if (itemObj.ItemData.isSell)
-            subDescription = Mathf.FloorToInt(itemObj.ItemData.price * 1.5f).ToString();
+        {
+            subDescription = "G " + Mathf.FloorToInt(itemObj.ItemData.price * 1.5f).ToString();
+            itemDescription.transform.GetChild(3).GetComponent<TMPro.TextMeshProUGUI>().fontSize = 42f;
+        }
+        else
+        {
+            itemDescription.transform.GetChild(3).GetComponent<TMPro.TextMeshProUGUI>().fontSize = 32f;
+        }
         itemDescription.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = description;
         itemDescription.transform.GetChild(3).GetComponent<TMPro.TextMeshProUGUI>().text = subDescription;
         #endregion

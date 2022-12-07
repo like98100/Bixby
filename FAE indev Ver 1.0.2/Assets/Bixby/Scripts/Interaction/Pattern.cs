@@ -55,42 +55,42 @@ public class Pattern : MonoBehaviour
         //공격을 받으면
         if (HitNormal != new Vector3(0,0,0))
         {
-            if (HitNormal.x == -1)
+            if (Mathf.Round(HitNormal.x) == -1)
             {
                 //상태 변경
                 nor = NORMAL.X_minus;
                 Debug.Log("X-");
                 HitNormal = new Vector3(0, 0, 0);
             }
-            else if (HitNormal.x == 1)
+            else if (Mathf.Round(HitNormal.x) == 1)
             {
                 //상태 변경
                 nor = NORMAL.X_plus;
                 Debug.Log("X+");
                 HitNormal = new Vector3(0, 0, 0);
             }
-            else if (HitNormal.y == -1)
+            else if (Mathf.Round(HitNormal.y) == -1)
             {
                 //상태 변경
                 nor = NORMAL.Y_minus;
                 Debug.Log("Y-");
                 HitNormal = new Vector3(0, 0, 0);
             }
-            else if (HitNormal.y == 1)
+            else if (Mathf.Round(HitNormal.y) == 1)
             {
                 //상태 변경
                 nor = NORMAL.Y_plus;
                 Debug.Log("Y-");
                 HitNormal = new Vector3(0, 0, 0);
             }
-            else if (HitNormal.z == -1)
+            else if (Mathf.Round(HitNormal.z) == -1)
             {
                 //상태 변경
                 nor = NORMAL.Z_minus;
                 Debug.Log("Z-");
                 HitNormal = new Vector3(0, 0, 0);
             }
-            else if (HitNormal.z == 1)
+            else if (Mathf.Round(HitNormal.z) == 1)
             {
                 //상태 변경
                 nor = NORMAL.Z_plus;

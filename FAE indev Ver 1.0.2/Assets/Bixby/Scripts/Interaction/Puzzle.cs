@@ -16,6 +16,8 @@ public class Puzzle : MonoBehaviour
 
     public GameObject treasureBox; //보물상자
 
+    bool isAct;
+
     private void Awake()
     {
         puzzleState = false;
@@ -24,12 +26,14 @@ public class Puzzle : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        isAct = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (isAct)
+            return;
         switch (puzzleType)
         {
             case 0:
@@ -62,6 +66,12 @@ public class Puzzle : MonoBehaviour
     {
         if (puzzleState == true)
         {
+            for (int i = 1; i < this.transform.childCount; i++)
+            {
+                //this.transform.GetChild(i).GetComponent<Dissolve>().CreateMaterial();
+                StartCoroutine(this.transform.GetChild(i).GetComponent<Dissolve>().Act(this.transform.GetChild(i).gameObject));
+            }
+            isAct = true;
             //원소 불 붙이기 일때
             if (type == 1)
             {

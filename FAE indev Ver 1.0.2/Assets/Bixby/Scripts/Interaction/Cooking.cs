@@ -85,5 +85,13 @@ public class Cooking : MonoBehaviour
         {
             num.text = "具盲磷";
         }
+        else if (myNum == 3)
+        {
+            num.text = "备款 积急";
+        }
+        else if (myNum == 4)
+        {
+            num.text = "备款 绊扁";
+        }
     }
 }

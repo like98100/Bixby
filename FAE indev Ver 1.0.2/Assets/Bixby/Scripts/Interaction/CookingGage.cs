@@ -53,6 +53,8 @@ public class CookingGage : MonoBehaviour
         material_2 = food.transform.GetChild(3).gameObject;
         CookInitialize();
         cookingWindow.transform.parent.gameObject.SetActive(false);
+        Button closeBtn = this.transform.parent.GetChild(4).GetComponent<Button>();
+        closeBtn.onClick.AddListener(() => UI_Control.Inst.windowSet(this.gameObject.transform.parent.gameObject));
     }
 
     //아이템 데이터
@@ -213,14 +215,35 @@ public class CookingGage : MonoBehaviour
             //요리 재료 제거
             inventoryObject.Inst.throwItem(inventoryObject.Inst.itemObjects[GreenIndex[0]], false);
             inventoryObject.Inst.throwItem(inventoryObject.Inst.itemObjects[RiceIndex[0]], false);
-            //for (int i = 0; i < 1; i++)
-            //{
-            //    inventoryObject.Inst.throwItem(inventoryObject.Inst.itemObjects[GreenIndex[i]], false);
-            //}
-            //for (int i = 0; i < 1; i++)
-            //{
-            //    inventoryObject.Inst.throwItem(inventoryObject.Inst.itemObjects[RiceIndex[i]], false);
-            //}
+        }
+        else if (num.text == "구운 생선" && FishIndex.Count >= 2)
+        {
+            foreach (var item in itemJsonData.itemList)
+            {
+                if (item.itemID == 2003)
+                {
+                    cookData = item;
+                }
+            }
+            //요리 재료 제거
+            for (int i = 1; i > -1; i--)
+            {
+                inventoryObject.Inst.throwItem(inventoryObject.Inst.itemObjects[FishIndex[i]], false);
+            }
+        }else if (num.text == "구운 고기" && MeatIndex.Count >= 2)
+        {
+            foreach (var item in itemJsonData.itemList)
+            {
+                if (item.itemID == 2004)
+                {
+                    cookData = item;
+                }
+            }
+            //요리 재료 제거
+            for (int i = 1; i > -1; i--)
+            {
+                inventoryObject.Inst.throwItem(inventoryObject.Inst.itemObjects[MeatIndex[i]], false);
+            }
         }
         else
         {
@@ -289,6 +312,22 @@ public class CookingGage : MonoBehaviour
                 material_2.transform.GetChild(0).GetComponent<Text>().text = "쌀";
                 material_1.transform.GetChild(1).GetComponent<Image>().sprite = tempItem.GetSprites()[1];
                 material_2.transform.GetChild(1).GetComponent<Image>().sprite = tempItem.GetSprites()[2];
+                break;
+            case 2003:
+                material_1.transform.GetChild(0).GetComponent<Text>().text
+                = material_2.transform.GetChild(0).GetComponent<Text>().text
+                = "생선";
+                material_1.transform.GetChild(1).GetComponent<Image>().sprite
+                = material_2.transform.GetChild(1).GetComponent<Image>().sprite
+                = tempItem.GetSprites()[3];
+                break;
+            case 2004:
+                material_1.transform.GetChild(0).GetComponent<Text>().text
+                = material_2.transform.GetChild(0).GetComponent<Text>().text
+                = "짐승고기";
+                material_1.transform.GetChild(1).GetComponent<Image>().sprite
+                = material_2.transform.GetChild(1).GetComponent<Image>().sprite
+                = tempItem.GetSprites()[4];
                 break;
             default:
                 break;

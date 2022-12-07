@@ -12,8 +12,8 @@ public class UI_Option : MonoBehaviour
             cameraControl = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CamControl>();
             mouseSenseSliderX = this.transform.GetChild(0).GetComponent<Slider>();
             mouseSenseSliderY = this.transform.GetChild(1).GetComponent<Slider>();
-            mouseSenseTextX = this.transform.GetChild(3).GetComponent<Text>();
-            mouseSenseTextY = this.transform.GetChild(4).GetComponent<Text>();
+            mouseSenseTextX = this.transform.GetChild(3).GetComponent<TMPro.TextMeshProUGUI>();
+            mouseSenseTextY = this.transform.GetChild(4).GetComponent<TMPro.TextMeshProUGUI>();
             Button closeBtn = this.transform.GetChild(2).GetComponent<Button>();
             closeBtn.onClick.AddListener(() => UI_Control.Inst.windowSet(this.gameObject));
         }
@@ -21,8 +21,8 @@ public class UI_Option : MonoBehaviour
     CamControl cameraControl;
     Slider mouseSenseSliderX;
     Slider mouseSenseSliderY;
-    Text mouseSenseTextX;
-    Text mouseSenseTextY;
+    TMPro.TextMeshProUGUI mouseSenseTextX;
+    TMPro.TextMeshProUGUI mouseSenseTextY;
     float mouseSenseX;
     float mouseSenseY;
     public void Set()

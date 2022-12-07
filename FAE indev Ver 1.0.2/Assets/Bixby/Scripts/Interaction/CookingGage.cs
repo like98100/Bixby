@@ -31,6 +31,11 @@ public class CookingGage : MonoBehaviour
 
     itemJsonData itemJsonData;//json데이터
 
+    GameObject food;
+    GameObject material_1;
+    GameObject material_2;
+    itemObject tempItem;
+
     private void Awake()
     {
         itemJsonData = json.LoadJsonFile<itemJsonData>(Application.dataPath, "cook");//json로드
@@ -42,9 +47,12 @@ public class CookingGage : MonoBehaviour
     void Start()
     {
         dtime = Time.deltaTime;
-        cookingWindow.SetActive(false);
-        //cookingWindow = this.transform.parent.GetChild(2).gameObject;
-        //buttonWindow = this.transform.parent.GetChild(1).gameObject;
+        tempItem = Instantiate(inventoryObject.Inst.getObj("itemPrefab"), Vector3.one * -999f, Quaternion.identity).GetComponent<itemObject>();
+        food = num.gameObject.transform.parent.gameObject;
+        material_1 = food.transform.GetChild(2).gameObject;
+        material_2 = food.transform.GetChild(3).gameObject;
+        CookInitialize();
+        cookingWindow.transform.parent.gameObject.SetActive(false);
     }
 
     //아이템 데이터
@@ -103,7 +111,7 @@ public class CookingGage : MonoBehaviour
                 //실패요리
                 foreach (var item in itemJsonData.itemList)
                 {
-                    if (item.itemID == 2003)
+                    if (item.itemID == 2000)
                     {
                         cookData = item;
                     }
@@ -136,6 +144,8 @@ public class CookingGage : MonoBehaviour
         List<int> FruitIndex = new List<int>();
         List<int> GreenIndex = new List<int>();
         List<int> RiceIndex = new List<int>();
+        List<int> FishIndex = new List<int>();
+        List<int> MeatIndex = new List<int>();
         foreach (var item in inventoryObject.Inst.items.items)
         {
             if (item.tag.Length != 2)
@@ -155,6 +165,12 @@ public class CookingGage : MonoBehaviour
                     case 1002:
                         RiceIndex.Add(inventoryObject.Inst.items.items.IndexOf(item));
                         break;
+                    case 1003:
+                        FishIndex.Add(inventoryObject.Inst.items.items.IndexOf(item));
+                        break;
+                    case 1004:
+                        MeatIndex.Add(inventoryObject.Inst.items.items.IndexOf(item));
+                        break;
                     default:
                         break;
                 }
@@ -169,7 +185,7 @@ public class CookingGage : MonoBehaviour
 
         cookData.itemName = num.text;
 
-        if (num.text == "과일주스" && FruitIndex.Count >= 2)
+        if (num.text == "토마토 주스" && FruitIndex.Count >= 2)
         {
             foreach (var item in itemJsonData.itemList)
             {
@@ -236,5 +252,54 @@ public class CookingGage : MonoBehaviour
         }
         //요리시작
         start = true;
+    }
+
+    public void InitializeImage()
+    {
+        food.SetActive(true);
+        int itemId = -1;
+        foreach (var item in itemJsonData.itemList)
+        {
+            if (item.itemName == num.text)
+            {
+                itemId = item.itemID;
+                break;
+            }
+        }
+        if (itemId >= 1000 && itemId < 2000)
+            food.transform.GetChild(1).GetComponent<Image>().sprite = tempItem.GetSprites()[itemId - 1000];
+        else if (itemId > 2000 && itemId < 3000)
+            food.transform.GetChild(1).GetComponent<Image>().sprite = tempItem.GetSprites()[itemId - 2000 + 4];
+        if (itemId == 2001)
+            food.transform.GetChild(1).GetComponent<RectTransform>().sizeDelta = new Vector2(100f, 200f);
+        else
+            food.transform.GetChild(1).GetComponent<RectTransform>().sizeDelta = Vector2.one * 200f;
+        switch (itemId)
+        {
+            case 2001:
+                material_1.transform.GetChild(0).GetComponent<Text>().text
+                = material_2.transform.GetChild(0).GetComponent<Text>().text
+                = "토마토";
+                material_1.transform.GetChild(1).GetComponent<Image>().sprite
+                = material_2.transform.GetChild(1).GetComponent<Image>().sprite 
+                = tempItem.GetSprites()[0];
+                break;
+            case 2002:
+                material_1.transform.GetChild(0).GetComponent<Text>().text = "양파";
+                material_2.transform.GetChild(0).GetComponent<Text>().text = "쌀";
+                material_1.transform.GetChild(1).GetComponent<Image>().sprite = tempItem.GetSprites()[1];
+                material_2.transform.GetChild(1).GetComponent<Image>().sprite = tempItem.GetSprites()[2];
+                break;
+            default:
+                break;
+        }
+        success_fail.text = "";
+    }
+    public void CookInitialize()
+    {
+        num.text = "-";
+        success_fail.text = "-";
+        food.SetActive(false);
+        cookingWindow.SetActive(false);
     }
 }

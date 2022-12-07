@@ -5,14 +5,14 @@ using UnityEngine.UI;
 public class UI_Cooltime : MonoBehaviour
 {
     Image coolTimeImage;
-    Text coolTimeCount;
+    TMPro.TextMeshProUGUI coolTimeCount;
     Image elementGauge;
     private PlayerContorl playerControl;
     [SerializeField] bool isUlt;
     void Start()
     {
         coolTimeImage = this.transform.GetChild(0).GetComponent<Image>();
-        coolTimeCount = this.transform.GetChild(1).GetComponent<Text>();
+        coolTimeCount = this.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>();
         playerControl = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerContorl>();
         maxCoolTime = isUlt ? playerControl.UltimateSkillCoolDown : playerControl.SkillCoolDown;
         if (isUlt)

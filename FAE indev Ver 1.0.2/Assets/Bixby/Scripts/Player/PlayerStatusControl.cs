@@ -109,7 +109,7 @@ public class PlayerStatusControl : CombatStatus, IDamgeable
         this.DealtDamage = Mathf.Round(damage * 10) * 0.1f;
 
         // 피격 사운드 넣기
-        SoundManage.instance.PlaySFXSound(13, "Player");
+        SoundManage.instance.PlaySFXSound(9, "Player");
         if (Health <= 0 && !Dead)
         {
             die();
@@ -144,7 +144,7 @@ public class PlayerStatusControl : CombatStatus, IDamgeable
         this.DealtDamage = Mathf.Round(curDamage * 10) * 0.1f;
 
         // 피격 사운드 넣기
-        SoundManage.instance.PlaySFXSound(13, "Player");
+        SoundManage.instance.PlaySFXSound(9, "Player");
         if (Health <= 0 && !Dead)
         {
             die();

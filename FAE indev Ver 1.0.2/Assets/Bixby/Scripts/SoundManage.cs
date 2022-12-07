@@ -22,28 +22,33 @@ public class SoundManage : MonoBehaviour
 
         bgmPlayer = gameObject.AddComponent<AudioSource>();
         charSfxPlayer = gameObject.AddComponent<AudioSource>();
+        charLoopSfxPlayer = gameObject.AddComponent<AudioSource>();
         systemSfxPlayer = gameObject.AddComponent<AudioSource>();
     }
 
     public AudioClip[] BGMClips = new AudioClip[7];   // Title, Field, FireD, IceD, WaterD, ElecD, BossD
     public AudioClip[] PlayerSFXClips;
+    public AudioClip[] PlayerLoopSFXClips;
     public AudioClip[] SystemSFXClips;
 
     AudioSource bgmPlayer;
     AudioSource charSfxPlayer;
+    AudioSource charLoopSfxPlayer;
     AudioSource systemSfxPlayer;
 
+    int curLoopIdx;
     // Start is called before the first frame update
     void Start()
     {
         PlayBGMSound(SceneManager.GetActiveScene().name, 0.7f); // 배경음악 실행
+        curLoopIdx = -1;
     }
 
     // Update is called once per frame
-    //void Update()
-    //{
-        
-    //}
+    void Update()
+    {
+
+    }
 
     public void PlayBGMSound(string fieldName, float volume = 1f)
     {
@@ -99,28 +104,27 @@ public class SoundManage : MonoBehaviour
         switch(flag)
         {
             case "Player":
+                //if (charSfxPlayer.isPlaying) break;          // 사운드가 재생중이면 패스(하던건 다 출력하고 실행하기)
+                charSfxPlayer.volume = volume;
+                charSfxPlayer.loop = false;
+                //charSfxPlayer.PlayOneShot(PlayerSFXClips[sfxIdx]);
 
-                if (sfxIdx == 0 || sfxIdx == 2 || sfxIdx == 11)      // 걷거나 뛰거나 수영중일 때
-                {
-                    if (charSfxPlayer.clip == PlayerSFXClips[1]   // 대시 중이고
-                            && charSfxPlayer.isPlaying) return;   // 사운드가 재생중이면 패스
-                    charSfxPlayer.volume = volume;
-                    charSfxPlayer.loop = true;
-                    charSfxPlayer.clip = PlayerSFXClips[sfxIdx];
-                    charSfxPlayer.Play();
-                }
-                else
-                {
-                    if ((charSfxPlayer.clip != PlayerSFXClips[0] || charSfxPlayer.clip != PlayerSFXClips[2])    // 걷거나 달리는 상태가 아니고
-                        && charSfxPlayer.isPlaying) return;                                                     // 사운드가 재생중이면 패스
-                    charSfxPlayer.volume = volume;
-                    charSfxPlayer.loop = false;
-                    charSfxPlayer.PlayOneShot(PlayerSFXClips[sfxIdx]);
-                }
+                charSfxPlayer.clip = PlayerSFXClips[sfxIdx];
+                charSfxPlayer.Play();
+                break;
+            case "PlayerLoop":
+                if (sfxIdx == curLoopIdx && charLoopSfxPlayer.isPlaying) break;            // 반복 출력 제거
+
+                charLoopSfxPlayer.volume = volume;
+                charLoopSfxPlayer.loop = true;
+                charLoopSfxPlayer.clip = PlayerLoopSFXClips[sfxIdx];
+                charLoopSfxPlayer.Play();
+
+                curLoopIdx = sfxIdx;
                 break;
             case "System":
                 systemSfxPlayer.volume = volume;
-
+                systemSfxPlayer.loop = false;
                 systemSfxPlayer.PlayOneShot(SystemSFXClips[sfxIdx]);
                 break;
             default:
@@ -130,8 +134,8 @@ public class SoundManage : MonoBehaviour
         Debug.Log(flag + "의 " + sfxIdx + " 사운드 출력");
     }
 
-    public AudioSource GetPlayerSFXPlayer()
+    public AudioSource GetPlayerLoopSFXPlayer()
     {
-        return charSfxPlayer;
+        return charLoopSfxPlayer;
     }
 }

@@ -294,7 +294,7 @@ public class inventoryObject : MonoBehaviour
     #region 아이템 마우스 조작
     public void itemHover(itemObject itemObj)//아이템에 마우스 올렸을 때
     {
-        itemSummary.SetActive(true);
+        itemSummary.SetActive(true && !itemObj.ItemData.isSell);
         itemSummary.transform.SetAsLastSibling();
         itemSummary.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = itemObj.ItemData.itemName;
     }
@@ -361,7 +361,7 @@ public class inventoryObject : MonoBehaviour
                     break;
             }
         if (itemObj.ItemData.isSell)
-            description = description + "\n" + Mathf.FloorToInt(itemObj.ItemData.price * 1.5f);
+            subDescription = Mathf.FloorToInt(itemObj.ItemData.price * 1.5f).ToString();
         itemDescription.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = description;
         itemDescription.transform.GetChild(3).GetComponent<TMPro.TextMeshProUGUI>().text = subDescription;
         #endregion

@@ -6,10 +6,10 @@
       "itemName": "실패한 요리",
       "Left": -1.0,
       "Up": -1.0,
-      "xSize": 2.0,
-      "ySize": 3.0,
+      "xSize": 3.0,
+      "ySize": 2.0,
       "isEquip": false,
-      "price": 2,
+      "price": 0,
       "isSell": false
     },
     {
@@ -21,7 +21,7 @@
       "xSize": 1.0,
       "ySize": 2.0,
       "isEquip": false,
-      "price": 2,
+      "price": 1500,
       "isSell": false
     },
     {
@@ -33,7 +33,7 @@
       "xSize": 2.0,
       "ySize": 2.0,
       "isEquip": false,
-      "price": 2,
+      "price": 500,
       "isSell": false
     },
     {
@@ -45,7 +45,7 @@
       "xSize": 2.0,
       "ySize": 2.0,
       "isEquip": false,
-      "price": 2,
+      "price": 1000,
       "isSell": false
     },
     {
@@ -57,7 +57,7 @@
       "xSize": 2.0,
       "ySize": 2.0,
       "isEquip": false,
-      "price": 2,
+      "price": 1500,
       "isSell": false
     }
   ]

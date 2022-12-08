@@ -141,7 +141,7 @@ public class SoundManage : MonoBehaviour
                 break;
         }
 
-        Debug.Log(flag + "의 " + sfxIdx + " 사운드 출력");
+        //Debug.Log(flag + "의 " + sfxIdx + " 사운드 출력");
     }
 
     public AudioSource GetPlayerLoopSFXPlayer()

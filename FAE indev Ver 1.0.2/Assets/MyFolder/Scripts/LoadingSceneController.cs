@@ -32,7 +32,7 @@ public class LoadingSceneController : MonoBehaviour
             return instance;
         }
     }
-    
+
     private void Awake()
     {
         loadSceneName = "FieldScene";
@@ -115,13 +115,16 @@ public class LoadingSceneController : MonoBehaviour
     {
         if (scene.name == loadSceneName)
         {
-            if(loadSceneName != "Title")
+            if (loadSceneName == "FieldScene")
             {
                 spawnPlayer = GameObject.FindWithTag("Player").GetComponent<SpawnPlayer>();
                 spawnPlayer.SetPosition(previousSceneName);
-
-                StartCoroutine(Fade(false));
-
+            }
+            StartCoroutine(Fade(false));
+            if (loadSceneName != "Title")
+            {
+                if (loadSceneName != "FieldScene")
+                    QuestObject.manager.DungeonQuestInit();//죽으면 퀘스트 초기화
                 QuestObject.manager.MissionSet();           // 신 로딩이 완료되면 미션 텍스트 재설정
             }
 

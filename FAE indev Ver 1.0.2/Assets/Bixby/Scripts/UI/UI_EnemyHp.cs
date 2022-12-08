@@ -40,6 +40,13 @@ public class UI_EnemyHp : MonoBehaviour
         foreach (var item in EnemyHps.hpObjects)
         {
             int index = EnemyHps.hpObjects.IndexOf(item);
+
+            if (GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerContorl>().State == PlayerContorl.STATE.DEAD)
+            {
+                item.SetActive(false);
+                continue;
+            }
+
             switch (EnemyHps.EnemyObjects[index].tag)
             {
                 case "Enemy":

@@ -119,7 +119,9 @@ public class PlayerAnimation : MonoBehaviour
                 break;
         }
 
-        if(!modelContorl.GetIsGrounded() || UI_Control.Inst.OpenedWindow != null) SoundManage.instance.GetPlayerLoopSFXPlayer().Pause();  // 사운드 정지
+        if(!modelContorl.GetIsGrounded() || UI_Control.Inst.OpenedWindow != null ||       // 공중에 뜬 상태거나 ui가 활성화되어 있거나
+            modelContorl.State == PlayerContorl.STATE.DEAD)                                 // 죽은 상태일 때
+            SoundManage.instance.GetPlayerLoopSFXPlayer().Pause();  // 사운드 정지
     }
 
     void initializeAnimParameter()        // 애니메이션 패러미터 초기화 함수

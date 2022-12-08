@@ -39,9 +39,15 @@ public class Animal : MonoBehaviour
     protected GameObject Player;
     itemJsonData itemJsonData;//json데이터
 
+    public AudioClip deerClip; //사슴 오디오클립
+    public AudioClip hitClip; //사슴 피격 오디오클립
+    AudioSource audioSource;
+
     private void Awake()
     {
         itemJsonData = json.LoadJsonFile<itemJsonData>(Application.dataPath, "Harvest");//json로드
+
+        this.audioSource = this.GetComponent<AudioSource>();
     }
 
     // Start is called before the first frame update
@@ -52,6 +58,14 @@ public class Animal : MonoBehaviour
         currentTime = waitTime;   // 대기 시작
         isAction = true;   // 대기도 행동
         spawnPosition = this.transform.position; //현재 위치를 저장 이거 바꿔야한다.
+        animalData = new itemData();
+        foreach (var item in itemJsonData.itemList)
+        {
+            if (item.itemID == 1004)
+            {
+                animalData = item;
+            }
+        }
     }
 
     //가까이 있는지 체크하는 변수
@@ -91,22 +105,16 @@ public class Animal : MonoBehaviour
             checkNear = false;
         }
 
-        if (checkNear && Input.GetKeyDown(KeyCode.F))
+        if (checkNear && Input.GetKeyDown(KeyCode.F))       // 수렵
         {
-            //아이템 획득
-            animalData = new itemData();
-            //아이템 지정 스크립트
-            animalData.itemID = 2005; animalData.tag = new string[] { "food", "harvest" }; animalData.itemName = "동물고기";
-            animalData.Left = -1; animalData.Up = -1; animalData.xSize = 1; animalData.ySize = 1;
-            animalData.isEquip = false; animalData.isSell = false;
-            animalData.price = 2; //나중에 가격 변경
-
             Vector2 tempPos;
             tempPos = inventoryObject.Inst.emptyCell(animalData.xSize, animalData.ySize);
             inventoryObject.Inst.itemGet(animalData.xSize, animalData.ySize, tempPos.x, tempPos.y, animalData);
 
             //인벤토리 추가 및 제이슨 저장
             inventoryObject.Inst.jsonSave();
+
+            SoundManage.instance.PlaySFXSound(1, "System");
 
             //동물 제거
             //Destroy(gameObject);
@@ -209,6 +217,11 @@ public class Animal : MonoBehaviour
         {
             hp -= _dmg;
 
+            if (animalName == "Deer")
+            {
+                audioSource.PlayOneShot(hitClip);
+            }
+
             if (hp <= 0)
             {
                 Dead();
@@ -230,6 +243,11 @@ public class Animal : MonoBehaviour
         isDead = true;
 
         anim.SetTrigger("Dead");
+
+        if (animalName == "Deer")
+        {
+            audioSource.PlayOneShot(deerClip);
+        }
 
         //초기화하고 오브젝트 끄기
         //아이템 획득

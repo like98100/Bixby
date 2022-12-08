@@ -13,6 +13,7 @@ public class itemObject : MonoBehaviour
     bool isEquip;
     GameObject equip;
     public itemData ItemData;
+    [SerializeField] Sprite[] sprites;
     public void Setup(float sizeX, float sizeY, float posX, float posY, bool isEquip, Vector3 zero, itemData itemData)
     {
         this.zeroPos = zero;
@@ -31,27 +32,18 @@ public class itemObject : MonoBehaviour
         equip.SetActive(isEquip);
 
         this.ItemData = itemData;
-        Color imageColor = new Color();
-        switch (this.ItemData.itemID)
-        {
-            case 0:
-                 imageColor = Color.red;
-                break;
-            case 1:
-                imageColor = Color.green;
-                break;
-            case 2:
-                imageColor = Color.blue;
-                break;
-            case 3:
-                imageColor = Color.yellow;
-                break;
-            default:
-                imageColor = Color.black;
-                break;
-        }
-        imageColor.a = 0.5f;
-        this.gameObject.GetComponent<Image>().color = imageColor;
+
+        Image itemImage = this.gameObject.transform.GetChild(1).GetComponent<Image>();
+        Color bgColor = this.gameObject.GetComponent<Image>().color;
+        bgColor.a = 0.5f;
+        this.gameObject.GetComponent<Image>().color = bgColor;
+        itemImage.gameObject.GetComponent<RectTransform>().sizeDelta = this.size;
+        if (this.ItemData.itemID >= 1000 && this.ItemData.itemID < 2000)
+            itemImage.sprite = sprites[this.ItemData.itemID - 1000];
+        else if (this.ItemData.itemID > 2000 && this.ItemData.itemID < 3000)
+            itemImage.sprite = sprites[this.ItemData.itemID - 2000 + 4];
+        else
+            itemImage.color = Color.black;
     }
     #region 이벤트트리거
     public void Drag()
@@ -110,6 +102,7 @@ public class itemObject : MonoBehaviour
                 //알림창 만들면 else에서 칸 부족하다고 알릴 것
             }
             inventoryObject.Inst.setItemPos(this.gameObject, OriginPos);
+            SoundManage.instance.PlaySFXSound(8, "System"); // 구매 사운드
             return;
         }
         #endregion
@@ -132,6 +125,8 @@ public class itemObject : MonoBehaviour
                 inventoryObject.Inst.Gold += this.ItemData.price;
                 inventoryObject.Inst.throwItem(this.gameObject, false);
                 inventoryObject.Inst.goldSet();
+
+                SoundManage.instance.PlaySFXSound(9, "System"); // 판매 사운드
             }
             else
             {
@@ -194,5 +189,10 @@ public class itemObject : MonoBehaviour
     {
         isEquip = !isEquip;
         equip.SetActive(isEquip);
+    }
+
+    public Sprite[] GetSprites()
+    {
+        return sprites;
     }
 }

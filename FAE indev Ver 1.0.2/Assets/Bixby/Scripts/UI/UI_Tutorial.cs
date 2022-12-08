@@ -12,6 +12,8 @@ public class UI_Tutorial : MonoBehaviour
     float time;
     bool didText;
     bool didTutorial;
+    bool aValue;
+    [SerializeField] Material[] fontMaterials;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +25,7 @@ public class UI_Tutorial : MonoBehaviour
         time = 0;
         didText = false;
         didTutorial = false;
+        aValue = false;
         foreach (Transform item in canvas.transform)
         {
             if (item.gameObject.GetComponent<TMPro.TextMeshProUGUI>())
@@ -45,33 +48,40 @@ public class UI_Tutorial : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (ElemeneClearText.gameObject.activeSelf)
+        if (ElemeneClearText.gameObject.activeSelf)//텍스트 나온 후 튜토리얼 이미지가 나오는 경우
         {
             time += Time.deltaTime;
             Color temp = ElemeneClearText.color;
-            temp.a = (3f - time) / 3f;
+            temp.a = aValue ? time / 1f : (3f - time) / 3f;
+            if (aValue && temp.a >= 1)
+            {
+                aValue = false;
+                time = 0;
+            }
             ElemeneClearText.color = temp;
-            if (temp.a < 0.1f)
+            if (temp.a < 0.1f && !aValue)
             {
                 ElemeneClearText.gameObject.SetActive(false);
                 canvas.SetActive(false);
                 time = 0;
                 if (ElemeneClearText.fontSize == 100)
                 {
-                    if (QuestObject.manager.GetIndex() == 5)
-                        TutoImageSet(1);
-                    else if (QuestObject.manager.GetIndex() == 10)
-                        TutoImageSet(2);
+                    if (ElemeneClearText.text.Contains("사망"))
+                        LoadingSceneController.Instance.ReloadScene();
+                    else if (QuestObject.manager.GetIndex() == 5)//불 원소 해방 후
+                        TutoImageSet(1);//원소 공격 튜토리얼
+                    else if (QuestObject.manager.GetIndex() == 10)//얼음 원소 해방 후
+                        TutoImageSet(2);//동료 전환 튜토리얼
                 }
             }
         }
-        if (QuestObject.manager.GetIndex() == 5 && QuestObject.manager.GetIsClear()&&!didText)
+        if (QuestObject.manager.GetIndex() == 5 && QuestObject.manager.GetIsClear()&&!didText)//불 던전 퀘스트 클리어 후, 텍스트가 나온 적 없다면
         {
-            ElementGetText(0);
+            ElementGetText(0);//불 원소 해방 텍스트
         }
     }
 
-    public void TutoImageSet(int index)//0:전투튜토리얼, 1:상성튜토리얼, 2:아바타변경튜토리얼
+    public void TutoImageSet(int index)//0:전투 튜토리얼, 1:상성 튜토리얼, 2:아바타 변경 튜토리얼, 3:채집사냥 튜토리얼, 4:낚시 튜토리얼, 5:요리 튜토리얼
     {
         if (index == 0 && didTutorial)
             return;
@@ -112,8 +122,10 @@ public class UI_Tutorial : MonoBehaviour
 
     public void ElementGetText(int index)
     {
+        aValue = true;
         canvas.SetActive(true);
         ElemeneClearText.gameObject.SetActive(true);
+        ElemeneClearText.fontMaterial = fontMaterials[0];
         switch (index)
         {
             case 0:
@@ -142,11 +154,28 @@ public class UI_Tutorial : MonoBehaviour
                 ElemeneClearText.color = Color.black;
                 ElemeneClearText.fontSize = 50f;
                 break;
+            case 5:
+                ElemeneClearText.text = "사망하였습니다";
+                ElemeneClearText.color = new Color(0.65f, 0.28f, 0.23f);
+                ElemeneClearText.fontSize = 100f;
+                ElemeneClearText.fontMaterial = fontMaterials[1];
+                SoundManage.instance.PlaySFXSound(19, "System"); // 사망 사운드
+                break;
+            case 6:
+                ElemeneClearText.text = "성공하였습니다";
+                ElemeneClearText.color = new Color(1f, 1f, 0.5f);
+                ElemeneClearText.fontSize = 100f;
+                ElemeneClearText.fontMaterial = fontMaterials[1];
+                SoundManage.instance.PlaySFXSound(18, "System"); // 성공 사운드
+                break;
             default:
                 ElemeneClearText.text = "정해지지 않은 텍스트입니다";
                 ElemeneClearText.color = Color.black;
                 ElemeneClearText.fontSize = 100f;
                 break;
         }
+
+        if (index < 4)   // 4개 원소 출력 시
+            SoundManage.instance.PlaySFXSound(10, "System"); // 원소 획득 사운드
     }
 }

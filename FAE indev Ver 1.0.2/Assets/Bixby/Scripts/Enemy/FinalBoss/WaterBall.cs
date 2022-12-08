@@ -8,10 +8,12 @@ public class WaterBall : ElementControl
     public LayerMask mask;
     RaycastHit hit;
 
+    private AudioSource myAudio;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        myAudio = gameObject.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -19,13 +21,17 @@ public class WaterBall : ElementControl
     {
         Water.transform.localScale = new Vector3(this.transform.localScale.x, 0.1f, 
                                                 this.transform.localScale.z);
+
         if (Physics.Raycast(gameObject.transform.position, Vector3.down, 
             out hit, 1.0f, mask))
         {
             Instantiate(Water, new Vector3(transform.position.x, 0.7f, transform.position.z),
                         transform.rotation);
+            
             Destroy(gameObject);
         }
+
+        myAudio.volume -= Time.deltaTime * 0.03f;
     }
 
     private void OnTriggerEnter(Collider other)

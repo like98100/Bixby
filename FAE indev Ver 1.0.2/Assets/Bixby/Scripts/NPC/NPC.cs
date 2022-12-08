@@ -77,7 +77,9 @@ public class NPC : MonoBehaviour
         markSet();
 
         // F Active
-        if (playerClose && Input.GetKeyDown(KeyCode.F) && !speech.Tutorial.ElemeneClearText.gameObject.activeSelf)
+        if (playerClose && Input.GetKeyDown(KeyCode.F)
+            && !speech.Tutorial.ElemeneClearText.gameObject.activeSelf
+            && UI_Control.Inst.OpenedWindow == null)
         {
             npcInteract();
         }
@@ -98,11 +100,10 @@ public class NPC : MonoBehaviour
             playerClose = false;
         }
     }
-    public void SetIndex(int value)
+    public string GetIndex()
     {
-        talkIndex = value.ToString();
+        return talkIndex;
     }
-
     void markSet()
     {
         Vector3 camRotate = GameObject.FindGameObjectWithTag("MainCamera").transform.eulerAngles;
@@ -110,15 +111,8 @@ public class NPC : MonoBehaviour
         nameObj.transform.rotation = Quaternion.Euler(camRotate);//이름태그 각도 조정
         notify.transform.localScale = Vector3.one * 0.15f;
         if (NpcName == "shop")
-        {
-            float dist = Vector3.Distance(GameObject.FindGameObjectWithTag("Player").transform.position, this.gameObject.transform.position);
-            if (dist > 15)
-                notify.transform.localScale = Vector3.one * 0.45f;
-            else if (dist>10)
-                notify.transform.localScale = Vector3.one * 0.3f;
             return;
-        }
-        if (NpcName != QuestObject.manager.GetNPCName())
+        if (NpcName != QuestObject.manager.GetNPCName() || QuestObject.manager.GetIndex() >= 22)
         {
             notify.SetActive(false);
         }
@@ -140,19 +134,7 @@ public class NPC : MonoBehaviour
                 notify.SetActive(false);
         }
     }
-    void nameTagSet()
-    {
-        //if (UI_Control.Inst.OpenedWindow != null)
-        //{
-        //    if (UI_Control.Inst.OpenedWindow.name == "Map")
-        //        nameObj.SetActive(false);
-        //    else
-        //        nameObj.SetActive(playerClose);
-        //    inventoryObject.Inst.FieldFKey.SetActive(false);
-        //}
-        //if (nameObj.activeSelf)
-        //    nameObj.transform.position = NpcName.Contains("partner") ? Camera.main.WorldToScreenPoint(this.transform.position + Vector3.up * 3f) : Camera.main.WorldToScreenPoint(this.transform.position + Vector3.up * 2f);
-    }
+
     void npcInteract()
     {
         inventoryObject.Inst.FieldFKey.SetActive(false);

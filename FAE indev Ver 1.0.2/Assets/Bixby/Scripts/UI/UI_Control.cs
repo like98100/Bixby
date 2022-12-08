@@ -51,7 +51,10 @@ public class UI_Control : MonoBehaviour
         if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "BossDungeon")
             bossText.SetActive(false);
         else
-            TextOn("불 타입의 경우, 불 덩어리를 쏩니다.\n물 속성 차지 공격으로 꺼버립시다.");
+        {
+            TextOn("불 타입의 경우, 불 덩어리를 쏩니다.\n물 속성 공격으로 끌 수 있습니다.");
+            SoundManage.instance.PlaySFXSound(11, "System"); // 보스 힌트 사운드
+        }
         bossTimer = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "BossDungeon" ? 0 : 0.1f;
     }
 
@@ -117,10 +120,16 @@ public class UI_Control : MonoBehaviour
                 case "Map":
                     Map.GetComponent<UI_Map>().MapSetUp();
                     break;// 열 때 맵 위치를 플레이어 중점으로 할 것
+                case "GameObject":
+                    if (window.transform.parent.name == "COOK")
+                        window.transform.GetChild(window.transform.childCount - 2).GetComponent<CookingGage>().CookInitialize();
+                    break;
             }
             Cursor.lockState = CursorLockMode.None;
             aimPoint.SetActive(false);
             Time.timeScale = 0f;
+
+            if(window.name != "Speech") SoundManage.instance.PlaySFXSound(2, "System"); // 대화창을 제외한 UI 활성화 사운드
         }
         else
         {
@@ -149,6 +158,8 @@ public class UI_Control : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             aimPoint.SetActive(true);
             Time.timeScale = 1f;
+
+            if (window.name != "Speech") SoundManage.instance.PlaySFXSound(3, "System"); // 대화창을 제외한 UI 비활성화 사운드
         }
     }
     public bool windowClose()//그냥 창 닫기

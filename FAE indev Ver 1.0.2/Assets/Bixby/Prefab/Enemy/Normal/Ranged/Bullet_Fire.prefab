@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4585082505942435825}
   - component: {fileID: 1653399627717053964}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -151,7 +151,7 @@ GameObject:
   - component: {fileID: 6424975337526668027}
   - component: {fileID: 544635702436627819}
   - component: {fileID: 517949407160485811}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Bullet_Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -260,4 +260,4 @@ MonoBehaviour:
   ObjRef: {fileID: 0}
   isCharged: 0
   myEle: 0
-  myDmg: 0
+  myDmg: 15

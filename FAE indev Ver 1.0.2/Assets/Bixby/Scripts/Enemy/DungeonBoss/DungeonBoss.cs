@@ -24,6 +24,13 @@ public class DungeonBoss : CombatStatus, IDamgeable
     public Animator Anim;
     private Rigidbody rigid;
     private BoxCollider col;
+    private AudioSource myAudio;
+
+    public AudioClip NormalAttackSound;
+    public AudioClip DashAttackSound;
+    public AudioClip SkillSound;
+    public AudioClip ShieldBreakSound;
+    public AudioClip DeathSound;
 
     public float DealtDamage;
     public bool isAttacked;
@@ -34,6 +41,8 @@ public class DungeonBoss : CombatStatus, IDamgeable
 
     private Shield shield;
     [SerializeField] private bool setShield;
+
+    public GameObject DropItem;
 
     // Start is called before the first frame update
     void Start()
@@ -54,6 +63,7 @@ public class DungeonBoss : CombatStatus, IDamgeable
         Anim = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody>();
         col = GetComponent<BoxCollider>();
+        myAudio = GetComponent<AudioSource>();
         
         //UI_EnemyHp.EnemyHps.hpObjects.Add(Instantiate(UI_Control.Inst.EnemyHp.getPrefab(true), GameObject.Find("UI").transform.GetChild(1)));
         //UI_EnemyHp.EnemyHps.enemies.Add(this);
@@ -61,12 +71,14 @@ public class DungeonBoss : CombatStatus, IDamgeable
         shield = this.gameObject.transform.Find("Shield").GetComponent<Shield>();
         setShield = false;
 
-        Skill_1_Obj.transform.GetChild(0).GetComponent<Skill_1>().element = Stat.element;
+        this.Skill_1_Obj.transform.GetChild(0).GetComponent<Skill_1>().element = Stat.element;
 
-        UI_EnemyHp.EnemyHps.hpObjects.Add(Instantiate(UI_Control.Inst.EnemyHp.getPrefab(true), GameObject.Find("UI").transform.GetChild(1)));
-        UI_EnemyHp.EnemyHps.ShieldObjects.Add(Instantiate(UI_Control.Inst.EnemyHp.getPrefab(false), GameObject.Find("UI").transform.GetChild(1)));
+        UI_EnemyHp.EnemyHps.hpObjects.Add(Instantiate(UI_Control.Inst.EnemyHp.getPrefab(true), GameObject.Find("UI").transform.GetChild(1).GetChild(0)));
+        UI_EnemyHp.EnemyHps.ShieldObjects.Add(Instantiate(UI_Control.Inst.EnemyHp.getPrefab(false), GameObject.Find("UI").transform.GetChild(1).GetChild(0)));
         UI_EnemyHp.EnemyHps.EnemyObjects.Add(this.gameObject);
         UI_EnemyHp.EnemyHps.GaugeOff();
+
+        DropItem.transform.GetChild(0).GetComponent<TreasureBox>().boxState = true;
     }
 
     void FixedUpdate()
@@ -104,6 +116,7 @@ public class DungeonBoss : CombatStatus, IDamgeable
     {
         StartCoroutine(this.transform.Find("Cube_001").GetComponent<Dissolve>().Act(this.gameObject));
         //Destroy(gameObject);
+        Instantiate(DropItem, transform.position, transform.rotation);
     }
 
     private void findPlayer(float sight)
@@ -130,11 +143,15 @@ public class DungeonBoss : CombatStatus, IDamgeable
         if (Stat.hp <= 0.0f)
         {
             MyAgent.isStopped = true;
+            col.enabled = false;
+            PlayDeathSound();
             Anim.SetTrigger("isDied");
         }
 
         if (Stat.barrier <= 0.0f)
         {
+            if (setShield)
+                PlayShielBreakSound();
             setShield = false;
             shield.SetActive(false);
             col.enabled = true;
@@ -173,6 +190,8 @@ public class DungeonBoss : CombatStatus, IDamgeable
         if (Stat.hp <= 0.0f)
         {
             MyAgent.isStopped = true;
+            col.enabled = false;
+            PlayDeathSound();
             Anim.SetTrigger("isDied");
         }
     }
@@ -196,7 +215,7 @@ public class DungeonBoss : CombatStatus, IDamgeable
 
     public void DashAttackAreaCheck()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, Stat.attackRange*1.5f, 
+        Collider[] colliders = Physics.OverlapSphere(transform.position, Stat.attackRange*1.25f, 
                                                     Mask, QueryTriggerInteraction.Ignore);
 
         if (colliders.Length > 0)
@@ -229,5 +248,35 @@ public class DungeonBoss : CombatStatus, IDamgeable
     public bool isSetShield()
     {
         return setShield;
+    }
+
+    public void PlayNormalAttackSound()
+    {
+        myAudio.clip = NormalAttackSound;
+        myAudio.Play();
+    }
+
+    public void PlayDashAttackSound()
+    {
+        myAudio.clip = DashAttackSound;
+        myAudio.Play();
+    }
+
+    public void PlaySkillSound()
+    {
+        myAudio.clip = SkillSound;
+        myAudio.Play();
+    }
+
+    public void PlayShielBreakSound()
+    {
+        myAudio.clip = ShieldBreakSound;
+        myAudio.Play();
+    }
+
+    public void PlayDeathSound()
+    {
+        myAudio.clip = DeathSound;
+        myAudio.Play();
     }
 }

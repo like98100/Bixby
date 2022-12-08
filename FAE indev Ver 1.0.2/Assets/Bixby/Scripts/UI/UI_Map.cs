@@ -75,6 +75,7 @@ public class UI_Map : MonoBehaviour
         Vector3 mapPos = new Vector3(Screen.width / 2 - mapPlayer.transform.position.x, Screen.height / 2 - mapPlayer.transform.position.y, 0);
         this.gameObject.transform.position += mapPos;
         mapLimitSet(this.gameObject.transform.localPosition);
+        print(tempPos(new Vector3(136.669998f, 6.55000019f, -92.8600006f)));
     }
     void Update()
     {
@@ -113,6 +114,8 @@ public class UI_Map : MonoBehaviour
             realPlayer.transform.position = warpPoint[i].position;
             realPlayer.GetComponent<CharacterController>().enabled = true;
             UI_Control.Inst.windowSet(this.gameObject);
+
+            SoundManage.instance.PlaySFXSound(16, "System"); // 워프 사운드
         }
     }
     #endregion

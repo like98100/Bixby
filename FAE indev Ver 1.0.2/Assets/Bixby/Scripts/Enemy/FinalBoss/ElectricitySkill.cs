@@ -71,6 +71,7 @@ namespace MBT
                 {
                     ObjRef.Value.GetComponent<FinalBoss>().Anim.SetFloat("AnimSpeed", (Speed / (dist.Value+11.1f))*1.1f);
                     ObjRef.Value.GetComponent<FinalBoss>().Anim.SetTrigger("Electricity");
+                    ObjRef.Value.GetComponent<FinalBoss>().ElecSkillEffect.Play();
                     AnimOnOff = true;
                 }
 
@@ -88,6 +89,8 @@ namespace MBT
             ObjRef.Value.GetComponent<FinalBoss>().SkillCooldown = 10.0f;
             ObjRef.Value.GetComponent<FinalBoss>().elecAttack = false;
             ObjRef.Value.GetComponent<FinalBoss>().isHitted = false;
+            
+            ObjRef.Value.GetComponent<FinalBoss>().ElecSkillEffect.Stop();
         }
     }
 

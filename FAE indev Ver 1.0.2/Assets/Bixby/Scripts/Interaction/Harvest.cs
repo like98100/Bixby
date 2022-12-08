@@ -83,7 +83,7 @@ public class Harvest : MonoBehaviour
             var wantedPos = Camera.main.WorldToScreenPoint(this.transform.position);
             inventoryObject.Inst.FieldFKey.transform.position = wantedPos + Vector3.right * 200f;
         }
-        if (Input.GetKeyDown(KeyCode.F) && isPlayerClose)
+        if (Input.GetKeyDown(KeyCode.F) && isPlayerClose)       // 채집
         {
             Vector2 tempPos;
             //빈 공간 찾기
@@ -93,6 +93,8 @@ public class Harvest : MonoBehaviour
             //인벤토리 추가 및 제이슨 저장
             inventoryObject.Inst.jsonSave();
             inventoryObject.Inst.FieldFKey.SetActive(false);
+
+            SoundManage.instance.PlaySFXSound(1,"System");
 
             isPlayerClose = false;
             this.gameObject.SetActive(false);

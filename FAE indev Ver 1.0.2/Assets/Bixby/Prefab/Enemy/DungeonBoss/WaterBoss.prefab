@@ -259,6 +259,7 @@ GameObject:
   - component: {fileID: 5268872796218795930}
   - component: {fileID: 4008390960909993350}
   - component: {fileID: 5021726987267542005}
+  - component: {fileID: 751493663356928881}
   - component: {fileID: 894378938008410783}
   m_Layer: 0
   m_Name: WaterBoss
@@ -355,6 +356,102 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!82 &751493663356928881
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6188819068447925956}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 0.5
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.5
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &894378938008410783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -387,13 +484,19 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   target: {fileID: 0}
-  Skill_1_Obj: {fileID: 25369382013007618, guid: e1f4fce62c9a9144ead8f1f0f69d8876, type: 3}
+  Skill_1_Obj: {fileID: 25369382013007618, guid: a143f7cee661ad54aa47f92672f18a32, type: 3}
   MyAgent: {fileID: 0}
   Anim: {fileID: 0}
+  NormalAttackSound: {fileID: 8300000, guid: ec083050561279c4bb5cca93a08f0206, type: 3}
+  DashAttackSound: {fileID: 8300000, guid: cc0ea7642f12a7144917369562430e82, type: 3}
+  SkillSound: {fileID: 8300000, guid: 106d659976330ee42963b7b6a3dce92d, type: 3}
+  ShieldBreakSound: {fileID: 8300000, guid: 09917eaa713c91e4f8cfc7215c5fb1f5, type: 3}
+  DeathSound: {fileID: 8300000, guid: 7a1bf32581e5f2e479ba3d719ff2af58, type: 3}
   DealtDamage: 0
   isAttacked: 0
   SkillCooldown: 0
   setShield: 0
+  DropItem: {fileID: 7119032763497506224, guid: 55c28f46bdef76f44b2722f412c55783, type: 3}
 --- !u!1 &6188819068447925958
 GameObject:
   m_ObjectHideFlags: 0
@@ -523,7 +626,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4aa14fd0b2ddba4087ae987ccc0c177, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDissolve: 0
   dissolve: {fileID: 2100000, guid: fd481701278c4a84e89a4eb05e94b2d5, type: 2}
   color: {r: 0, g: 0, b: 0, a: 0}
   scales:

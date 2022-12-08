@@ -74,6 +74,7 @@ public class PlayerAnimation : MonoBehaviour
 
             case PlayerContorl.STATE.SWIMMING:                          // 수영 상태
                 animator.SetBool("isSwimming", true);                   // 수영 애니메이션 실행
+                SoundManage.instance.PlaySFXSound(2, "PlayerLoop");     // 수영 사운드 출력
                 break;
 
             case PlayerContorl.STATE.ATTACK:                            // 약 공격 상태
@@ -117,6 +118,10 @@ public class PlayerAnimation : MonoBehaviour
                 moveCheck();
                 break;
         }
+
+        if(!modelContorl.GetIsGrounded() || UI_Control.Inst.OpenedWindow != null ||       // 공중에 뜬 상태거나 ui가 활성화되어 있거나
+            modelContorl.State == PlayerContorl.STATE.DEAD)                                 // 죽은 상태일 때
+            SoundManage.instance.GetPlayerLoopSFXPlayer().Pause();  // 사운드 정지
     }
 
     void initializeAnimParameter()        // 애니메이션 패러미터 초기화 함수
@@ -144,8 +149,17 @@ public class PlayerAnimation : MonoBehaviour
         || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))  // WASD 입력이 발생할 때
         {
             animator.SetBool("isRun", true);                    // 이동 애니메이션 실행
+            if(animator.GetFloat("MoveSpeed") == 1.0f)              // 달리기 상태가 아닐 때
+            {
+                if (modelContorl.State != PlayerContorl.STATE.SWIMMING) // 수영 상태가 아니라면
+                    SoundManage.instance.PlaySFXSound(0, "PlayerLoop"); // 걷기 사운드 출력
+            }
         }
-        else animator.SetBool("isRun", false);                  // 이동 애니메이션 정지
+        else
+        {
+            animator.SetBool("isRun", false);                  // 이동 애니메이션 정지
+            SoundManage.instance.GetPlayerLoopSFXPlayer().Pause();  // 사운드 정지
+        }
 
         if (animator.GetCurrentAnimatorStateInfo(1).IsName("Aim"))   // 현재 조준 상태일 때
             animator.SetLayerWeight(1, 0.6f);                   // 가중치 감소
@@ -156,7 +170,6 @@ public class PlayerAnimation : MonoBehaviour
     {
         if (!modelContorl.GetIsGrounded() && !animator.GetCurrentAnimatorStateInfo(0).IsName("Landing") && // 공중에 뜬 상태이며 착지 상태가 아니고
             !animator.GetCurrentAnimatorStateInfo(2).IsName("Ultimate"))                                   // 궁극기 애니메이션이 실행되지 않는 상태일 때(발사 선후 애니메이션 삭제를 막기 위해 상태 조건과 나눠서 처리)
-
         {
             animator.SetBool("isCombat", true);
             animator.SetBool("isJump", true);   // Jump 애니메이션 실행
@@ -209,7 +222,10 @@ public class PlayerAnimation : MonoBehaviour
     void runSpeedCheck()
     {
         if(modelContorl.State == PlayerContorl.STATE.RUN)           // 달리기 상태일 때
+        {
             animator.SetFloat("MoveSpeed", 1.7f);                   // 재생속도 1.3로 설정
+            SoundManage.instance.PlaySFXSound(1, "PlayerLoop");     // 달리기 사운드 출력
+        }
         else                                                        // 달리기 상태가 아닐 때
             animator.SetFloat("MoveSpeed", 1.0f);                   // 재생 속도 1.0으로 설정
     }

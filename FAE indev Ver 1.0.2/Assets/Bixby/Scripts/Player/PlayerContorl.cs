@@ -419,6 +419,9 @@ public class PlayerContorl : PlayerStatusControl
                         m_camera.GetComponent<CamControl>().isOnAim = false;
                         StaminaUse(DashStaminaAmount);
                         this.isDashed = false;
+
+                        // 사운드 넣기
+                        SoundManage.instance.PlaySFXSound(0, "Player");
                         break;
                     case STATE.RUN:
                         this.MyCurrentSpeed = RunSpeed;
@@ -438,6 +441,9 @@ public class PlayerContorl : PlayerStatusControl
                     case STATE.CHARGE_ATTACK:
                         this.MyCurrentSpeed = Speed;
                         m_camera.GetComponent<CamControl>().isOnAim = true;
+
+                        //// 사운드 넣기
+                        //SoundManage.instance.PlaySFXSound(2, "Player");
                         break;
                     case STATE.ELEMENT_SKILL:
                         offset.y = 0;
@@ -447,6 +453,8 @@ public class PlayerContorl : PlayerStatusControl
                         offset.y = 0;
                         transform.LookAt(player.transform.position + offset);
                         m_camera.GetComponent<CamControl>().isOnAim = true;
+                        //사운드 넣기
+                        SoundManage.instance.PlaySFXSound(5, "Player");
                         break;
                     case STATE.SWIMMING:
                         this.MyCurrentSpeed = SwimSpeed;
@@ -456,7 +464,6 @@ public class PlayerContorl : PlayerStatusControl
                         m_camera.GetComponent<CamControl>().isOnAim = true;
                         break;
                     case STATE.DEAD:
-
                         break;
                 }
                 this.StateTimer = 0.0f;
@@ -521,6 +528,10 @@ public class PlayerContorl : PlayerStatusControl
                     {
                         die();
                     }
+
+                    // 수영 사운드 넣기
+                    //if(!SoundManage.instance.GetPlayerLoopSFXPlayer().isPlaying)    // 입수 사운드 플레이가 완료되면
+                    //SoundManage.instance.PlaySFXSound(2, "PlayerLoop");
                     break;
                 case STATE.FISHING:
                     //낚시 중에는 아무 행동도 못한다.
@@ -532,12 +543,15 @@ public class PlayerContorl : PlayerStatusControl
                         && !Dead)
                     {
                         this.Dead = true;
-                        LoadingSceneController.Instance.ReloadScene();
+                        //LoadingSceneController.Instance.ReloadScene();
+                        UI_Control.Inst.Speech.Tutorial.ElementGetText(5);
                     }
                     playerDirection.y -= GravityForce * Time.deltaTime;
                     break;
             }
         }
+
+        
     }
 
     private void OnTriggerEnter(Collider other)
@@ -545,6 +559,8 @@ public class PlayerContorl : PlayerStatusControl
         if (other.gameObject.tag == "Water" && !Dead)
         {
             this.isSwimming = true;
+            // 입수 사운드 넣기
+            SoundManage.instance.PlaySFXSound(8, "Player");
         }
     }
     private void OnTriggerExit(Collider other)
@@ -671,6 +687,8 @@ public class PlayerContorl : PlayerStatusControl
             {
                 this.isJumpPressed = true;
                 playerDirection.y = JumpPower;
+                // 점프 사운드 넣기
+                SoundManage.instance.PlaySFXSound(7, "Player");
             }
         }
         else
@@ -904,6 +922,9 @@ public class PlayerContorl : PlayerStatusControl
                 }
                 break;
         }
+
+        // 사운드 넣기
+        SoundManage.instance.PlaySFXSound(1, "Player");
     }
 
     private void chargedAttack()
@@ -1001,6 +1022,9 @@ public class PlayerContorl : PlayerStatusControl
             this.gameObject.GetComponent<PlayerLineSkill>().ShowAttackEffect((int)this.State, (int)this.MyElement, ProjectileStart);
             StartCoroutine(shootEffect());
         }
+
+        // 사운드 넣기
+        SoundManage.instance.PlaySFXSound(3, "Player");
     }
 
     private void elementSkill()
@@ -1015,6 +1039,10 @@ public class PlayerContorl : PlayerStatusControl
 
         StartCoroutine(skillCoolDownCalc());
         StartCoroutine(fallBack()); //후퇴
+
+        // 사운드 넣기
+        SoundManage.instance.PlaySFXSound(4, "Player");
+
         this.NextState = STATE.MOVE;
     }
 
@@ -1071,6 +1099,9 @@ public class PlayerContorl : PlayerStatusControl
         }
         projectileLine.SetPosition(1, rayOrigin + (m_camera.transform.forward * ShootDistance));
         StartCoroutine(shootEffect());
+
+        // 사운드 넣기
+        SoundManage.instance.PlaySFXSound(6, "Player");
     }
 
     private IEnumerator fallBack()

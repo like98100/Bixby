@@ -18,17 +18,17 @@ public class UI_CharacterFrame : MonoBehaviour
             switch (avaters.Count)
             {
                 case 1:
-                    item.transform.GetChild(2).gameObject.GetComponent<UnityEngine.UI.Text>().text = "1. 알파(불)";
+                    item.transform.GetChild(2).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "1. 알파(불)";
                     break;
                 case 2:
-                    item.transform.GetChild(2).gameObject.GetComponent<UnityEngine.UI.Text>().text = "2. 베타(얼음)";
+                    item.transform.GetChild(2).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "2. 베타(얼음)";
                     item.transform.GetChild(2).gameObject.GetComponent<RectTransform>().sizeDelta += Vector2.right * 20f;
                     break;
                 case 3:
-                    item.transform.GetChild(2).gameObject.GetComponent<UnityEngine.UI.Text>().text = "3. 델타(물)";
+                    item.transform.GetChild(2).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "3. 델타(물)";
                     break;
                 case 4:
-                    item.transform.GetChild(2).gameObject.GetComponent<UnityEngine.UI.Text>().text = "4. 감마(전기)";
+                    item.transform.GetChild(2).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "4. 감마(전기)";
                     item.transform.GetChild(2).gameObject.GetComponent<RectTransform>().sizeDelta += Vector2.right * 20f;
                     break;
                 default:
@@ -68,7 +68,7 @@ public class UI_CharacterFrame : MonoBehaviour
         foreach (var item in avaters)
         {
             UnityEngine.UI.Image avatarImage = item.transform.GetChild(1).GetComponent<UnityEngine.UI.Image>();
-            UnityEngine.UI.Text avatarText = item.transform.GetChild(2).GetComponent<UnityEngine.UI.Text>();
+            TMPro.TextMeshProUGUI avatarText = item.transform.GetChild(2).GetComponent<TMPro.TextMeshProUGUI>();
             if (avaters.IndexOf(item) == ((int)playerContorl.MyElement))
                 item.GetComponent<UnityEngine.UI.Image>().color = avatarImage.color = avatarText.color = Color.white;
             else

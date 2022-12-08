@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedEditorNode: {fileID: 5147453314305512548}
+  selectedEditorNode: {fileID: 7462522774545461715}
   repeatOnFinish: 0
   maxExecutionsPerTick: 1000
   parent: {fileID: 0}
@@ -1835,7 +1835,7 @@ MonoBehaviour:
     blackboard: {fileID: 8528748061431720136}
     key: enemyToPlayerDist
     constantValue: 0
-  Speed: 10
+  Speed: 20
   UpdateInterval: 1
   Time_: 0
   AnimOnOff: 0
@@ -1958,7 +1958,7 @@ MonoBehaviour:
     mode: 0
     blackboard: {fileID: 0}
     key: 
-    constantValue: 7
+    constantValue: 15
   intReference2:
     useConstant: 1
     mode: 0
@@ -2010,7 +2010,7 @@ MonoBehaviour:
     mode: 0
     blackboard: {fileID: 0}
     key: 
-    constantValue: 7
+    constantValue: 15
   intReference2:
     useConstant: 1
     mode: 0
@@ -2066,9 +2066,9 @@ MonoBehaviour:
     key: enemyState
     constantValue: 0
   agent: {fileID: 0}
-  stopDistance: 7
+  stopDistance: 15
   updateInterval: 1
-  ExitDist: 14.5
+  ExitDist: 15
 --- !u!114 &2918998057713485641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2147,8 +2147,8 @@ MonoBehaviour:
   title: Look Target
   rect:
     serializedVersion: 2
-    x: 1278
-    y: 1088
+    x: 1320
+    y: 1045
     width: 160
     height: 45
   parent: {fileID: 2918998057713485641}

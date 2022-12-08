@@ -10,19 +10,27 @@ public class UI_Option : MonoBehaviour
         if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "Title")
         {
             cameraControl = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CamControl>();
-            mouseSenseSliderX = this.transform.GetChild(0).GetComponent<Slider>();
-            mouseSenseSliderY = this.transform.GetChild(1).GetComponent<Slider>();
-            mouseSenseTextX = this.transform.GetChild(3).GetComponent<Text>();
-            mouseSenseTextY = this.transform.GetChild(4).GetComponent<Text>();
-            Button closeBtn = this.transform.GetChild(2).GetComponent<Button>();
+            mouseSenseSliderX = this.transform.GetChild(0).GetChild(0).GetComponent<Slider>();
+            mouseSenseSliderY = this.transform.GetChild(0).GetChild(1).GetComponent<Slider>();
+            mouseSenseTextX = this.transform.GetChild(0).GetChild(2).GetComponent<TMPro.TextMeshProUGUI>();
+            mouseSenseTextY = this.transform.GetChild(0).GetChild(3).GetComponent<TMPro.TextMeshProUGUI>();
+            BGMSlider = this.transform.GetChild(1).GetChild(0).GetComponent<Slider>();
+            SFXSlider = this.transform.GetChild(1).GetChild(1).GetComponent<Slider>();
+            BGMText = this.transform.GetChild(1).GetChild(2).GetComponent<TMPro.TextMeshProUGUI>();
+            SFXText = this.transform.GetChild(1).GetChild(3).GetComponent<TMPro.TextMeshProUGUI>();
+            Button closeBtn = this.transform.GetChild(this.transform.childCount - 1).GetComponent<Button>();
             closeBtn.onClick.AddListener(() => UI_Control.Inst.windowSet(this.gameObject));
         }
     }
     CamControl cameraControl;
     Slider mouseSenseSliderX;
     Slider mouseSenseSliderY;
-    Text mouseSenseTextX;
-    Text mouseSenseTextY;
+    TMPro.TextMeshProUGUI mouseSenseTextX;
+    TMPro.TextMeshProUGUI mouseSenseTextY;
+    Slider BGMSlider;
+    Slider SFXSlider;
+    TMPro.TextMeshProUGUI BGMText;
+    TMPro.TextMeshProUGUI SFXText;
     float mouseSenseX;
     float mouseSenseY;
     public void Set()
@@ -31,6 +39,10 @@ public class UI_Option : MonoBehaviour
         mouseSenseSliderY.value = 0.2f;
         mouseSenseX = mouseSenseSliderX.value * 99 + 1f;
         mouseSenseY = mouseSenseSliderY.value * 99 + 1f;
+        BGMSlider.value = SoundManage.instance.GetVolume(true);
+        SoundManage.instance.SetVolume(true, BGMSlider.value);
+        SFXSlider.value = SoundManage.instance.GetVolume(false);
+        SoundManage.instance.SetVolume(false, SFXSlider.value);
         this.gameObject.SetActive(false);
     }
 
@@ -42,6 +54,10 @@ public class UI_Option : MonoBehaviour
             mouseSenseY = mouseSenseSliderY.value * 99 + 1f;
             mouseSenseTextX.text = Mathf.FloorToInt(mouseSenseX).ToString();
             mouseSenseTextY.text = Mathf.FloorToInt(mouseSenseY).ToString();
+            BGMText.text = Mathf.FloorToInt(BGMSlider.value * 99 + 1).ToString();
+            SFXText.text = Mathf.FloorToInt(SFXSlider.value * 99 + 1).ToString();
+            SoundManage.instance.SetVolume(true, BGMSlider.value);
+            SoundManage.instance.SetVolume(false, SFXSlider.value);
         }
     }
     public void senseSet(bool isStop)
@@ -53,15 +69,21 @@ public class UI_Option : MonoBehaviour
     public void TitleSet(bool start)
     {
         if (start)
-            UnityEngine.SceneManagement.SceneManager.LoadScene("FieldScene");
+            LoadingSceneController.Instance.LoadScene("FieldScene");
         else
             Application.Quit();
     }
     public void toTitle()
     {
+        for (int i = 0; i < WarpObject.instance.isActive.Length; i++)
+        {
+            WarpObject.instance.isActive[i] = false;
+        }
         UI_Control.Inst.windowSet(this.gameObject);
         Cursor.lockState = CursorLockMode.None;
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Title");
+        SoundManage.instance.SetVolume(true, 0.2f);
+        SoundManage.instance.SetVolume(false, 0.5f);
+        LoadingSceneController.Instance.LoadScene("Title");
         QuestObject.manager.QuestInitialize();
         Time.timeScale = 1f;
     }

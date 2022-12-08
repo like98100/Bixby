@@ -31,6 +31,8 @@ public class Fishing : MonoBehaviour
     protected GameObject Player; //플레이어 오브젝트
     itemJsonData itemJsonData;//json데이터
 
+    bool isPlayerClose;
+
     private void Awake()
     {
         itemJsonData = json.LoadJsonFile<itemJsonData>(Application.dataPath, "Harvest");//json로드
@@ -40,6 +42,7 @@ public class Fishing : MonoBehaviour
         minSlider.gameObject.SetActive(false);
         maxSlider.gameObject.SetActive(false);
         fishingText.gameObject.SetActive(false);
+        isPlayerClose = false;
     }
 
     // Start is called before the first frame update
@@ -52,9 +55,14 @@ public class Fishing : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isPlayerClose && inventoryObject.Inst.FieldFKey.activeSelf)
+        {
+            var wantedPos = Camera.main.WorldToScreenPoint(this.transform.position);
+            inventoryObject.Inst.FieldFKey.transform.position = wantedPos + Vector3.right * 200f;
+        }
         Fishing_Start();
 
-        if (Input.GetKeyDown(KeyCode.Space) && start && inputF && endFishing)
+        if (start && inputF && endFishing)
         {
             initialization();
         }
@@ -93,25 +101,27 @@ public class Fishing : MonoBehaviour
     //낚시 F키 띄우기 함수
     void UI_F()
     {
-        if (Vector3.Distance(Player.transform.position, transform.position) <= 2.0f && !start && !inputF)
+        if (Vector3.Distance(Player.transform.position, transform.position) <= 3.0f && !start && !inputF)
         {
             //f키 생성
             if (!inventoryObject.Inst.FieldFKey.activeSelf)
             {
                 inventoryObject.Inst.FieldFKey.SetActive(true);
+                isPlayerClose = true;
             }
         }
-        else if (Vector3.Distance(Player.transform.position, transform.position) > 2.0f || start || inputF)
+        else if (Vector3.Distance(Player.transform.position, transform.position) > 3.0f || start || inputF)
         {
             //f키 제거
             inventoryObject.Inst.FieldFKey.SetActive(false);
+            isPlayerClose = false;
         }
     }
 
     //낚시 함수
     void Fishing_Start()
     {
-        if (Vector3.Distance(Player.transform.position, transform.position) <= 2.0f && !start && !inputF)
+        if (Vector3.Distance(Player.transform.position, transform.position) <= 3.0f && !start && !inputF)
         {
             if (Input.GetKeyDown(KeyCode.F))
             {
@@ -125,6 +135,7 @@ public class Fishing : MonoBehaviour
                 fishingText.gameObject.SetActive(true);
 
 
+                SoundManage.instance.PlaySFXSound(5, "System"); // 낚시 사운드
 
                 StartCoroutine(Check_Start());
 
@@ -184,6 +195,7 @@ public class Fishing : MonoBehaviour
             fishingText.text = "success";
 
             fishData = new itemData();
+            SoundManage.instance.PlaySFXSound(6, "System"); // 성공 사운드
 
             foreach (var item in itemJsonData.itemList)
             {
@@ -203,6 +215,7 @@ public class Fishing : MonoBehaviour
         else
         {
             fishingText.text = "fail";
+            SoundManage.instance.PlaySFXSound(7, "System"); // 실패 사운드
         }
         endFishing = true; //끝났다고 알려주기
 

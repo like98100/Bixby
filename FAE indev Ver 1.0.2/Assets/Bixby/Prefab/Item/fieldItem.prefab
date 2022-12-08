@@ -124,7 +124,15 @@ MonoBehaviour:
   - {fileID: 4300000, guid: b7cf12fb849f2ce4592a36e9c9c8d4f9, type: 3}
   - {fileID: 4300000, guid: 0f50786d35eebcf44805f9d5fb326c11, type: 3}
   - {fileID: 4300000, guid: fc007040ddf56d841ad2083f918a0924, type: 3}
-  foodMaterial: {fileID: 2100000, guid: 382e2b1b7fbf94945963320a17603c7c, type: 2}
+  - {fileID: -3397297858778562299, guid: a9b2fe35a167c904693b59a94f5d74c8, type: 3}
+  - {fileID: -3644975171383713234, guid: 3d67b34b3f03a1a46917d0afe3b6eef0, type: 3}
+  - {fileID: 6926122533452352200, guid: 1b1f25b6ff8d25a4f8a6f4ba7363f755, type: 3}
+  - {fileID: -7841444751630121341, guid: cffb8a2c466fd914ba032f71bee9c81d, type: 3}
+  - {fileID: -4331796636762196448, guid: 3e17c9b798a1ba24ba65181584d06ceb, type: 3}
+  - {fileID: -7241366151399822252, guid: c4a3d4e77dd5fb345b4d5f6e97b15cac, type: 3}
+  foodMaterial:
+  - {fileID: 2100000, guid: 382e2b1b7fbf94945963320a17603c7c, type: 2}
+  - {fileID: 2100000, guid: 30c5e465dc21c534bada8d020bae91f4, type: 2}
 --- !u!54 &6224425477016242976
 Rigidbody:
   m_ObjectHideFlags: 0

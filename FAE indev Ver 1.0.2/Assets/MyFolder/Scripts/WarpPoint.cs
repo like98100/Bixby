@@ -87,6 +87,7 @@ public class WarpPoint : MonoBehaviour
             if (Input.GetKey(KeyCode.F))
             {
                 SetActive(true);
+                SoundManage.instance.PlaySFXSound(15, "System"); // 워프 활성화 사운드
                 inventoryObject.Inst.FieldFKey.SetActive(false);
 
                 yield break;

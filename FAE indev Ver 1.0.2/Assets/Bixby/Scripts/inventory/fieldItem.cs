@@ -8,7 +8,7 @@ public class fieldItem : MonoBehaviour
     float angle;
     bool isPlayerClose;
     [SerializeField] List<Mesh> foodMesh;
-    [SerializeField] Material foodMaterial;
+    [SerializeField] List<Material> foodMaterial;
     MeshFilter meshFilter;
     MeshRenderer meshRenderer;
     void Start()
@@ -22,36 +22,41 @@ public class fieldItem : MonoBehaviour
         angle = 0f;
         meshFilter = this.gameObject.GetComponent<MeshFilter>();
         meshRenderer = this.gameObject.GetComponent<MeshRenderer>();
-        this.transform.localScale = new Vector3(ItemData.xSize, ItemData.ySize, 1f);
         Vector3 tempPos = this.transform.position;
         tempPos += Vector3.up * 0.5f;
         //tempPos.y = itemData.ySize / 2f;
         this.transform.position = tempPos;
+        if (this.ItemData.itemID >= 1000 && this.ItemData.itemID < 2000)
+            meshFilter.mesh = foodMesh[this.ItemData.itemID - 1000];
+        else if (this.ItemData.itemID > 2000 && this.ItemData.itemID < 3000)
+            meshFilter.mesh = foodMesh[this.ItemData.itemID - 2000 + 4];
+        else
+            this.transform.localScale = new Vector3(ItemData.xSize, ItemData.ySize, 1f);
         switch (ItemData.itemID)
         {
             case 1000:
-                meshFilter.mesh = foodMesh[0];
-                this.transform.localScale = Vector3.one * 5f;
+                meshRenderer.material = foodMaterial[0];
+                this.transform.localScale = Vector3.one * 4f;
                 break;
             case 1001:
-                meshFilter.mesh = foodMesh[1];
-                this.transform.localScale = Vector3.one * 2f;
+                meshRenderer.material = foodMaterial[0];
+                this.transform.localScale = Vector3.one * 4f;
                 break;
             case 1002:
-                meshFilter.mesh = foodMesh[2];
-                this.transform.localScale = Vector3.one * 2.5f;
+                meshRenderer.material = foodMaterial[0];
+                this.transform.localScale = Vector3.one * 2f;
+                break;
+            case 1003:
+            case 1004:
+            case 2001:
+            case 2002:
+            case 2003:
+            case 2004:
+                meshRenderer.material = foodMaterial[1];
                 break;
             default:
                 this.transform.localScale = new Vector3(ItemData.xSize / 4f, ItemData.ySize / 4f, 1 / 4f);
                 break;
-        }
-        foreach (var item in ItemData.tag)
-        {
-            if (item == "harvest")
-            {
-                meshRenderer.material = foodMaterial;
-                break;
-            }
         }
     }
     // Update is called once per frame

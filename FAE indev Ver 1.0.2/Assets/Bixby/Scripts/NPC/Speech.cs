@@ -7,11 +7,11 @@ public class Speech : MonoBehaviour
     private void Awake()
     {
         speechWindow = GameObject.Find("Speech");
-        talker = speechWindow.transform.GetChild(1).GetComponent<Text>();
-        speech = speechWindow.transform.GetChild(0).GetComponent<Text>();
+        talker = speechWindow.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>();
+        speech = speechWindow.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>();
     }
-    Text talker;//대화상대
-    Text speech;//대화내용
+    TMPro.TextMeshProUGUI talker;//대화상대
+    TMPro.TextMeshProUGUI speech;//대화내용
     List<string> speechList;//대화내용 리스트
     int speechIndex;//리스트중 현재 대화내용의 순서
     GameObject speechWindow;//대화창
@@ -26,7 +26,7 @@ public class Speech : MonoBehaviour
         Button nextSpeech = speechWindow.transform.GetChild(2).GetComponent<Button>();
         nextSpeech.onClick.AddListener(() => speechNext());
         //quest = GameObject.Find("GameManager").GetComponent<QuestObject>();
-        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "FieldScene")
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "Title")
             Tutorial = GameObject.Find("Tutorial").GetComponent<UI_Tutorial>();
         isExist = false;
     }
@@ -41,7 +41,18 @@ public class Speech : MonoBehaviour
                 speechJsonData = json.LoadJsonFile<speechJsonData>(Application.dataPath, content);//로드해옴
             else
             {
-                speechJsonData = json.LoadJsonFile<speechJsonData>(Application.dataPath, name + "Temp");//비 퀘스트 대화 스크립트 로드
+                string temp = "";
+                for (int i = 0; i < content.Length; i++)
+                {
+                    if (i == content.Length - 1)
+                        temp += "x";
+                    else
+                        temp += content[i];
+                }
+                if (json.FileExist(Application.dataPath, temp))
+                    speechJsonData = json.LoadJsonFile<speechJsonData>(Application.dataPath, temp);//로드해옴
+                else
+                    speechJsonData = json.LoadJsonFile<speechJsonData>(Application.dataPath, name + "Temp");//비 퀘스트 대화 스크립트 로드
             }
             foreach (var item in speechJsonData.speechDatas)//로드한 json데이터의 speechDatas의 내용을
             {
@@ -81,7 +92,7 @@ public class Speech : MonoBehaviour
                     {
                         case QuestKind.kill:
                             break;
-                        case QuestKind.cook://해당 퀘스트 중 마지막 퀘스트가 아이템 채집 퀘스트의 경우(과일주스 가져오기)
+                        case QuestKind.cook://해당 퀘스트 중 마지막 퀘스트가 아이템 채집 퀘스트의 경우(토마토 주스 가져오기)
                             foreach (var item in inventoryObject.Inst.itemObjects)
                             {
                                 if (item.GetComponent<itemObject>().ItemData.itemID == QuestObject.manager.GetObjectId())
@@ -110,8 +121,9 @@ public class Speech : MonoBehaviour
             }
             switch (QuestObject.manager.GetIndex())
             {
-                case 3:
-                    Tutorial.TutoImageSet(0);
+                case 1:
+                    if (GameObject.Find(this.talker.text).GetComponent<NPC>().GetIndex() == "0x")
+                        Tutorial.TutoImageSet(3);//수렵 채집 튜토리얼
                     break;
                 case 10:
                     Tutorial.ElementGetText(1);
@@ -121,6 +133,10 @@ public class Speech : MonoBehaviour
                     break;
                 case 18:
                     Tutorial.ElementGetText(3);
+                    break;
+                case 21:
+                    QuestObject.manager.SetNextQuest();
+                    UI_Control.Inst.Speech.Tutorial.ElementGetText(6);
                     break;
                 default:
                     break;
@@ -133,17 +149,19 @@ public class Speech : MonoBehaviour
     {
         switch (name)//이름표 조정
         {
-            case "베타":
             case "partnerA":
                 return "베타";
             case "partnerB":
-            case "델타":
                 return "델타";
             case "partnerC":
-            case "감마":
                 return "감마";
-            case "알파":
             case "shop":
+                return "상점";
+            case "알파":
+            case "베타":
+            case "델타":
+            case "감마":
+            case "상점":
                 return name;
             default:
                 return "지도자";

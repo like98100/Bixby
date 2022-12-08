@@ -9,6 +9,8 @@ public class BulletEne : ElementControl
     public ElementType myEle;
     public float myDmg;
 
+    public float Time_;
+
     void Start()
     {
         if (isCharged)
@@ -17,13 +19,19 @@ public class BulletEne : ElementControl
         Vector3 myVec = ObjRef.transform.position;
         myVec += Vector3.up*0.5f;
 
+        Time_ = 0.0f;
+
         transform.LookAt(myVec);
     }
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
+        transform.Translate(Vector3.forward * 0.2f);
 
-        transform.Translate(Vector3.forward * 0.05f);
+        Time_ += Time.deltaTime;
+
+        if (Time_ > 5.0f)
+            Destroy(this.gameObject);
     }
 
     private void OnTriggerEnter(Collider other)

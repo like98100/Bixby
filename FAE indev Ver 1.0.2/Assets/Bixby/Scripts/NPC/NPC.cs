@@ -98,9 +98,9 @@ public class NPC : MonoBehaviour
             playerClose = false;
         }
     }
-    public void SetIndex(int value)
+    public string GetIndex()
     {
-        talkIndex = value.ToString();
+        return talkIndex;
     }
 
     void markSet()
@@ -133,19 +133,19 @@ public class NPC : MonoBehaviour
                 notify.SetActive(false);
         }
     }
-    void nameTagSet()
-    {
-        //if (UI_Control.Inst.OpenedWindow != null)
-        //{
-        //    if (UI_Control.Inst.OpenedWindow.name == "Map")
-        //        nameObj.SetActive(false);
-        //    else
-        //        nameObj.SetActive(playerClose);
-        //    inventoryObject.Inst.FieldFKey.SetActive(false);
-        //}
-        //if (nameObj.activeSelf)
-        //    nameObj.transform.position = NpcName.Contains("partner") ? Camera.main.WorldToScreenPoint(this.transform.position + Vector3.up * 3f) : Camera.main.WorldToScreenPoint(this.transform.position + Vector3.up * 2f);
-    }
+    //void nameTagSet()
+    //{
+    //    if (UI_Control.Inst.OpenedWindow != null)
+    //    {
+    //        if (UI_Control.Inst.OpenedWindow.name == "Map")
+    //            nameObj.SetActive(false);
+    //        else
+    //            nameObj.SetActive(playerClose);
+    //        inventoryObject.Inst.FieldFKey.SetActive(false);
+    //    }
+    //    if (nameObj.activeSelf)
+    //        nameObj.transform.position = NpcName.Contains("partner") ? Camera.main.WorldToScreenPoint(this.transform.position + Vector3.up * 3f) : Camera.main.WorldToScreenPoint(this.transform.position + Vector3.up * 2f);
+    //}
     void npcInteract()
     {
         inventoryObject.Inst.FieldFKey.SetActive(false);

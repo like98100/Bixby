@@ -296,7 +296,7 @@ public class inventoryObject : MonoBehaviour
     {
         itemSummary.SetActive(true && !itemObj.ItemData.isSell);
         itemSummary.transform.SetAsLastSibling();
-        itemSummary.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = itemObj.ItemData.itemName;
+        itemSummary.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = itemObj.ItemData.itemName + "\n ";
     }
 
     public void itemExit()//마우스가 아이템에서 나갔을 때
@@ -364,10 +364,15 @@ public class inventoryObject : MonoBehaviour
         {
             subDescription = "G " + Mathf.FloorToInt(itemObj.ItemData.price * 1.5f).ToString();
             itemDescription.transform.GetChild(3).GetComponent<TMPro.TextMeshProUGUI>().fontSize = 42f;
+            itemDescription.transform.GetChild(3).GetComponent<TMPro.TextMeshProUGUI>().color = new Color(1f, 0.7f, 0f);
+            itemDescription.transform.GetChild(3).GetComponent<TMPro.TextMeshProUGUI>().fontMaterial = goldObj.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().fontMaterial;
         }
         else
         {
-            itemDescription.transform.GetChild(3).GetComponent<TMPro.TextMeshProUGUI>().fontSize = 32f;
+            itemDescription.transform.GetChild(3).GetComponent<TMPro.TextMeshProUGUI>().fontSize = 20f;
+            itemDescription.transform.GetChild(3).GetComponent<TMPro.TextMeshProUGUI>().color = Color.black;
+            itemDescription.transform.GetChild(3).GetComponent<TMPro.TextMeshProUGUI>().fontMaterial
+            = itemDescription.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().fontMaterial;
         }
         itemDescription.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = description;
         itemDescription.transform.GetChild(3).GetComponent<TMPro.TextMeshProUGUI>().text = subDescription;

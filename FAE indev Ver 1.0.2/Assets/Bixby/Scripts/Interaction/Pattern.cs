@@ -7,6 +7,7 @@ public class Pattern : MonoBehaviour
     //private RaycastHit hit;
     public Vector3 HitPoint;
     public Vector3 HitNormal;
+    public Vector3 PatternNormal;
 
     public NORMAL nor = NORMAL.NONE;
 
@@ -26,9 +27,15 @@ public class Pattern : MonoBehaviour
     public float yEuler; //y회전값
 
     // Start is called before the first frame update
-    void Start()
+
+    private void Awake()
     {
 
+    }
+
+    void Start()
+    {
+        
     }
 
     // Update is called once per frame
@@ -36,71 +43,60 @@ public class Pattern : MonoBehaviour
     {
         rotationPattern();
 
-        yEuler = round90(transform.rotation.eulerAngles.y);
+        yEuler = round90(transform.localRotation.eulerAngles.y);
 
-        //여기에 패턴을 맞췄는지 판단여부 체크
-        if (yEuler - isYRot == 360.0f)
+        if (yEuler == 270 || yEuler == -90)
         {
             state = true;
         }
-        else if (yEuler - isYRot != 360.0f)
-        {
-            //Debug.Log(transform.rotation.y);
+        else
             state = false;
-        }
     }
 
     void rotationPattern()
     {
+        PatternNormal = Quaternion.AngleAxis(transform.parent.eulerAngles.y, -Vector3.up) * HitNormal;
+
         //공격을 받으면
         if (HitNormal != new Vector3(0,0,0))
         {
-            if (Mathf.Round(HitNormal.x) == -1)
+            if (Mathf.Round(PatternNormal.x) == -1)
             {
                 //상태 변경
                 nor = NORMAL.X_minus;
-                Debug.Log("X-");
-                HitNormal = new Vector3(0, 0, 0);
             }
-            else if (Mathf.Round(HitNormal.x) == 1)
+            else if (Mathf.Round(PatternNormal.x) == 1)
+
             {
                 //상태 변경
                 nor = NORMAL.X_plus;
-                Debug.Log("X+");
-                HitNormal = new Vector3(0, 0, 0);
             }
-            else if (Mathf.Round(HitNormal.y) == -1)
+            else if (Mathf.Round(PatternNormal.y) == -1)
             {
                 //상태 변경
                 nor = NORMAL.Y_minus;
-                Debug.Log("Y-");
-                HitNormal = new Vector3(0, 0, 0);
             }
-            else if (Mathf.Round(HitNormal.y) == 1)
+            else if (Mathf.Round(PatternNormal.y) == 1)
             {
                 //상태 변경
                 nor = NORMAL.Y_plus;
-                Debug.Log("Y-");
-                HitNormal = new Vector3(0, 0, 0);
             }
-            else if (Mathf.Round(HitNormal.z) == -1)
+            else if (Mathf.Round(PatternNormal.z) == -1)               
             {
                 //상태 변경
                 nor = NORMAL.Z_minus;
-                Debug.Log("Z-");
-                HitNormal = new Vector3(0, 0, 0);
             }
-            else if (Mathf.Round(HitNormal.z) == 1)
+            else if (Mathf.Round(PatternNormal.z) == 1)
             {
                 //상태 변경
                 nor = NORMAL.Z_plus;
-                Debug.Log("Z-");
-                HitNormal = new Vector3(0, 0, 0);
             }
             else
             {
-                Debug.Log("오류");
+                nor = NORMAL.NONE;
             }
+
+            HitNormal = new Vector3(0, 0, 0);
         }
 
         switch (nor)
@@ -139,12 +135,14 @@ public class Pattern : MonoBehaviour
                 break;
             case NORMAL.Z_minus:
                 //회전
+                
                 //노말벡터 초기화
                 //상태 초기화
                 nor = NORMAL.NONE;
                 break;
             case NORMAL.Z_plus:
                 //회전
+               
                 //노말벡터 초기화
                 //상태 초기화
                 nor = NORMAL.NONE;
@@ -182,15 +180,15 @@ public class Pattern : MonoBehaviour
 
             float elapsedTime = 0.0f;
 
-            Quaternion currentRotation = this.transform.rotation;
-            Vector3 targetEulerAngles = this.transform.rotation.eulerAngles;
+            Quaternion currentRotation = this.transform.localRotation;
+            Vector3 targetEulerAngles = this.transform.localRotation.eulerAngles;
             targetEulerAngles.y += (88.0f) * wise.y;
 
             Quaternion targetRotation = Quaternion.Euler(targetEulerAngles);
 
             while (elapsedTime < rotateTime)
             {
-                transform.rotation
+                transform.localRotation
                     = Quaternion.Euler(Vector3.Lerp(
                         currentRotation.eulerAngles, targetRotation.eulerAngles, elapsedTime / rotateTime)
                     );
@@ -200,7 +198,7 @@ public class Pattern : MonoBehaviour
             }
 
             targetEulerAngles.y = round90(targetEulerAngles.y);
-            this.transform.rotation = Quaternion.Euler(targetEulerAngles);
+            this.transform.localRotation = Quaternion.Euler(targetEulerAngles);
 
             rotating = false;
         }
@@ -213,15 +211,15 @@ public class Pattern : MonoBehaviour
 
             float elapsedTime = 0.0f;
 
-            Quaternion currentRotation = this.transform.rotation;
-            Vector3 targetEulerAngles = this.transform.rotation.eulerAngles;
+            Quaternion currentRotation = this.transform.localRotation;
+            Vector3 targetEulerAngles = this.transform.localRotation.eulerAngles;
             targetEulerAngles.y += (88.0f) * -wise.y;
 
             Quaternion targetRotation = Quaternion.Euler(targetEulerAngles);
 
             while (elapsedTime < rotateTime)
             {
-                transform.rotation
+                transform.localRotation
                     = Quaternion.Euler(Vector3.Lerp(
                         currentRotation.eulerAngles, targetRotation.eulerAngles, elapsedTime / rotateTime)
                     );
@@ -231,7 +229,7 @@ public class Pattern : MonoBehaviour
             }
 
             targetEulerAngles.y = round90(targetEulerAngles.y);
-            this.transform.rotation = Quaternion.Euler(targetEulerAngles);
+            this.transform.localRotation = Quaternion.Euler(targetEulerAngles);
 
             rotating = false;
         }

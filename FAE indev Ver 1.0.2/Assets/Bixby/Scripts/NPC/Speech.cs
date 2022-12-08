@@ -111,7 +111,8 @@ public class Speech : MonoBehaviour
             switch (QuestObject.manager.GetIndex())
             {
                 case 1:
-                    Tutorial.TutoImageSet(3);//¼ö·Æ Ã¤Áý Æ©Åä¸®¾ó
+                    if (GameObject.Find(this.talker.text).GetComponent<NPC>().GetIndex() == "0x")
+                        Tutorial.TutoImageSet(3);//¼ö·Æ Ã¤Áý Æ©Åä¸®¾ó
                     break;
                 case 10:
                     Tutorial.ElementGetText(1);

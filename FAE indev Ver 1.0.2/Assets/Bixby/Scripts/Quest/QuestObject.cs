@@ -362,10 +362,16 @@ public class QuestObject : MonoBehaviour
         currentQuest = JsonData.questList[JsonData.questIndex];
         objectIndex = 0;
         questSubIndex = 0;
+        SetIsClear(false);
         inventoryObject.Inst.Initialize();
     }
     public QuestKind GetQuestKind()
     {
         return currentQuest.questObject[questSubIndex];
+    }
+    public void DungeonQuestInit()
+    {
+        questSubIndex = 1;
+        SetObjectIndex(0);
     }
 }

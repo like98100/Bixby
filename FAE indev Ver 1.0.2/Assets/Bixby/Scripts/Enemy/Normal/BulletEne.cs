@@ -20,10 +20,9 @@ public class BulletEne : ElementControl
         transform.LookAt(myVec);
     }
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-
-        transform.Translate(Vector3.forward * 0.05f);
+        transform.Translate(Vector3.forward * 0.2f);
     }
 
     private void OnTriggerEnter(Collider other)

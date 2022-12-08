@@ -43,8 +43,8 @@ public class SoundManage : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        BGMVolume = 0.7f;
-        SFXVolume = 1f;
+        BGMVolume = 0.2f;
+        SFXVolume = 0.5f;
         PlayBGMSound(SceneManager.GetActiveScene().name);//, 0.7f); // 배경음악 실행
         curLoopIdx = -1;
     }

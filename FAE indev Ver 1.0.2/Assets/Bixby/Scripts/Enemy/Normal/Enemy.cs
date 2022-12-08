@@ -37,6 +37,13 @@ public class Enemy : CombatStatus, IDamgeable
     public Animator Anim;
     private Rigidbody rigid;
     private BoxCollider col;
+    private AudioSource myAudio;
+
+    public AudioClip MeleeAttackSound;
+    public AudioClip RangedAttackSound;
+    public AudioClip ShieldBreakSound;
+    public AudioClip DeathSound;
+    public AudioClip RangedDeathSound;
 
     public float DealtDamage;
 
@@ -67,9 +74,10 @@ public class Enemy : CombatStatus, IDamgeable
         Anim = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody>();
         col = GetComponent<BoxCollider>();
+        myAudio = GetComponent<AudioSource>();
 
-        UI_EnemyHp.EnemyHps.hpObjects.Add(Instantiate(UI_Control.Inst.EnemyHp.getPrefab(true), GameObject.Find("UI").transform.GetChild(1)));
-        UI_EnemyHp.EnemyHps.ShieldObjects.Add(Instantiate(UI_Control.Inst.EnemyHp.getPrefab(false), GameObject.Find("UI").transform.GetChild(1)));
+        UI_EnemyHp.EnemyHps.hpObjects.Add(Instantiate(UI_Control.Inst.EnemyHp.getPrefab(true), GameObject.Find("UI").transform.GetChild(1).GetChild(0)));
+        UI_EnemyHp.EnemyHps.ShieldObjects.Add(Instantiate(UI_Control.Inst.EnemyHp.getPrefab(false), GameObject.Find("UI").transform.GetChild(1).GetChild(0)));
         UI_EnemyHp.EnemyHps.EnemyObjects.Add(this.gameObject);
 
 
@@ -211,12 +219,14 @@ public class Enemy : CombatStatus, IDamgeable
         {
             MyAgent.isStopped = true;
             col.enabled = false;
-            //MyAgent.enabled = false;
+            PlayDeathSound();
             Anim.SetTrigger("IsDied");
         }
 
         if (Stat.barrier <= 0.0f)
         {
+            if (setShield)
+                PlayShielBreakSound();
             setShield = false;
             shield.SetActive(false);
             col.enabled = true;
@@ -262,6 +272,7 @@ public class Enemy : CombatStatus, IDamgeable
         {
             MyAgent.isStopped = true;
             col.enabled = false;
+            PlayDeathSound();
             Anim.SetTrigger("IsDied");
         }        
     }
@@ -317,6 +328,32 @@ public class Enemy : CombatStatus, IDamgeable
     public bool isSetShield()
     {
         return setShield;
+    }
+
+    public void PlayAttackSound()
+    {
+        if (Stat.type == EnemyType.Melee)
+            myAudio.clip = MeleeAttackSound;
+        else if (Stat.type == EnemyType.Ranged)
+            myAudio.clip = RangedAttackSound;
+
+        myAudio.Play();
+    }
+
+    public void PlayShielBreakSound()
+    {
+        myAudio.clip = ShieldBreakSound;
+        myAudio.Play();
+    }
+
+    public void PlayDeathSound()
+    {
+        if (Stat.type == EnemyType.Melee)
+            myAudio.clip = DeathSound;
+        else if (Stat.type == EnemyType.Ranged)
+            myAudio.clip = RangedDeathSound;
+
+        myAudio.Play();
     }
 
 }

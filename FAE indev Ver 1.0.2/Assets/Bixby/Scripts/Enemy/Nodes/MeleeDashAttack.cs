@@ -68,13 +68,13 @@ namespace MBT
                 {
                     if (!AnimOnOff)
                     {
-                        ObjRef.Value.GetComponent<Enemy>().Anim.SetFloat("AnimSpeed", (Speed/2 / Variable.Value) * 1.25f);
+                        ObjRef.Value.GetComponent<Enemy>().Anim.SetFloat("AnimSpeed", (Speed/2 / Variable.Value) * 1.15f);
                         ObjRef.Value.GetComponent<Enemy>().Anim.SetTrigger("IsDash");
                         AnimOnOff = true;
                     }
                     ObjRef.Value.transform.position = Vector3.MoveTowards(transform.position,
                                                                         targetVec,
-                                                                        Speed/2 * Time.deltaTime);
+                                                                        Speed/1.75f * Time.deltaTime);
                 }
             }
             else if (ObjRef.Value.tag == "DungeonBoss")
@@ -126,11 +126,19 @@ namespace MBT
         public override void OnExit()
         {
             if (ObjRef.Value.tag == "Enemy")
+            {
                 ObjRef.Value.GetComponent<Enemy>().Anim.SetFloat("AnimSpeed", 1.0f);
+                ObjRef.Value.GetComponent<Enemy>().EndAttack();
+            }
             else if (ObjRef.Value.tag == "DungeonBoss")
+            {
                 ObjRef.Value.GetComponent<DungeonBoss>().Anim.SetFloat("AnimSpeed", 1.0f);
+            }
             else if (ObjRef.Value.tag == "FinalBoss")
+            {
                 ObjRef.Value.GetComponent<FinalBoss>().Anim.SetFloat("AnimSpeed", 1.0f);
+            }
+
             Time_ = 0.0f;
         }
             

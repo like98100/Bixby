@@ -39,8 +39,10 @@ public class UI_Option : MonoBehaviour
         mouseSenseSliderY.value = 0.2f;
         mouseSenseX = mouseSenseSliderX.value * 99 + 1f;
         mouseSenseY = mouseSenseSliderY.value * 99 + 1f;
-        BGMSlider.value = 0.7f;
-        SFXSlider.value = 1f;
+        BGMSlider.value = SoundManage.instance.GetVolume(true);
+        SoundManage.instance.SetVolume(true, BGMSlider.value);
+        SFXSlider.value = SoundManage.instance.GetVolume(false);
+        SoundManage.instance.SetVolume(false, SFXSlider.value);
         this.gameObject.SetActive(false);
     }
 
@@ -54,14 +56,14 @@ public class UI_Option : MonoBehaviour
             mouseSenseTextY.text = Mathf.FloorToInt(mouseSenseY).ToString();
             BGMText.text = Mathf.FloorToInt(BGMSlider.value * 99 + 1).ToString();
             SFXText.text = Mathf.FloorToInt(SFXSlider.value * 99 + 1).ToString();
+            SoundManage.instance.SetVolume(true, BGMSlider.value);
+            SoundManage.instance.SetVolume(false, SFXSlider.value);
         }
     }
     public void senseSet(bool isStop)
     {
         cameraControl.mouseSenseX = isStop ? 0 : mouseSenseX * 0.05f;
         cameraControl.mouseSenseY = isStop ? 0 : mouseSenseY * 0.05f;
-        //SoundManage.instance.SetVolume(true, isStop ? 0 : BGMSlider.value);
-        //SoundManage.instance.SetVolume(false, isStop ? 0 : SFXSlider.value);
     }
 
     public void TitleSet(bool start)
@@ -75,6 +77,8 @@ public class UI_Option : MonoBehaviour
     {
         UI_Control.Inst.windowSet(this.gameObject);
         Cursor.lockState = CursorLockMode.None;
+        SoundManage.instance.SetVolume(true, 0.2f);
+        SoundManage.instance.SetVolume(false, 0.5f);
         LoadingSceneController.Instance.LoadScene("Title");
         QuestObject.manager.QuestInitialize();
         Time.timeScale = 1f;

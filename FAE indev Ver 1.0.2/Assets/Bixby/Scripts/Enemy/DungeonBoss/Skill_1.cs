@@ -8,6 +8,8 @@ public class Skill_1 : ElementControl
 
     public ElementType element;
 
+    public Material[] mat;
+
     private CapsuleCollider col;
 
     // Start is called before the first frame update
@@ -15,20 +17,42 @@ public class Skill_1 : ElementControl
     {
         Time_ = 0.0f;
         col = gameObject.GetComponent<CapsuleCollider>();
+
+        Material[] temp;
+
+        if ((int)element == (int)ElementType.ICE)
+        {
+            temp = gameObject.GetComponent<MeshRenderer>().materials;
+            temp[0] = mat[0];
+            gameObject.GetComponent<MeshRenderer>().materials = temp;
+        }
+        else if ((int)element == (int)ElementType.WATER)
+        {
+            temp = gameObject.GetComponent<MeshRenderer>().materials;
+            temp[0] = mat[1];
+            gameObject.GetComponent<MeshRenderer>().materials = temp;
+        }
+        else if ((int)element == (int)ElementType.ELECTRICITY)
+        {
+            temp = gameObject.GetComponent<MeshRenderer>().materials;
+            temp[0] = mat[2];
+            gameObject.GetComponent<MeshRenderer>().materials = temp;
+        }
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         Time_ += Time.deltaTime;
 
-        if (Time_ >= 2.0f && Time_ <= 3.5f)
+        if (Time_ >= 0.75f)
         {
             col.enabled = true;
-            transform.localScale += Vector3.up * 2.0f * Time.deltaTime * 5.0f;
+            transform.localScale += Vector3.up * 2.5f * Time.deltaTime * 5.0f;
         }
-        else if (Time_ > 3.5f)
-            Destroy(transform.parent.gameObject);
+        
+        if (Time_ >= 2.5f)
+            Destroy(this.transform.parent.gameObject);
     }
 
     private void OnTriggerEnter(Collider other)

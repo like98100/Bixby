@@ -52,6 +52,7 @@ namespace MBTExample
                 if ((myState.Value == 1) || (myState.Value == 3))
                 {
                     agent.isStopped = true;
+                    agent.velocity = Vector3.zero;
                     return NodeResult.failure;
                 }
             }
@@ -73,6 +74,7 @@ namespace MBTExample
             if (agent.remainingDistance < stopDistance)
             {
                 agent.isStopped = true;
+                agent.velocity = Vector3.zero;
                 return NodeResult.success;
             }
             // Check if there is any path (if not pending, it should be set)
@@ -82,6 +84,7 @@ namespace MBTExample
             }
 
             // By default return failure
+            agent.velocity = Vector3.zero;
             return NodeResult.failure;
         }
 

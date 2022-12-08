@@ -71,5 +71,40 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 946be1c5fb501d44aa8f02b7cf55f5c8, type: 2}
+    - target: {fileID: 6962409341972586733, guid: 5ffe5e977a3397e4584c9fb2d861a601, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5ffe5e977a3397e4584c9fb2d861a601, type: 3}
+--- !u!1 &3921422290248759298 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4880440153155513268, guid: 5ffe5e977a3397e4584c9fb2d861a601, type: 3}
+  m_PrefabInstance: {fileID: 8489706126222316470}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &3700878294055760186
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3921422290248759298}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3, y: 0.05, z: 3}
+  m_Center: {x: 0, y: 0.01, z: 0}
+--- !u!114 &9051896146677635263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3921422290248759298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b665628c836a5246a2fbfd9840e6380, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DealtDamage: 5

@@ -102,7 +102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedEditorNode: {fileID: 8060571346331385187}
+  selectedEditorNode: {fileID: 0}
   repeatOnFinish: 0
   maxExecutionsPerTick: 1000
   parent: {fileID: 0}
@@ -943,7 +943,7 @@ MonoBehaviour:
     mode: 0
     blackboard: {fileID: 0}
     key: 
-    constantValue: 4
+    constantValue: 3
   intReference2:
     useConstant: 1
     mode: 0
@@ -1103,7 +1103,7 @@ MonoBehaviour:
     mode: 0
     blackboard: {fileID: 0}
     key: 
-    constantValue: 3.5
+    constantValue: 3
   intReference2:
     useConstant: 1
     mode: 0
@@ -1152,10 +1152,16 @@ MonoBehaviour:
     blackboard: {fileID: 0}
     key: 
     constantValue: 0
+  myState:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 0
   agent: {fileID: 0}
-  stopDistance: 4
+  stopDistance: 3
   updateInterval: 1
-  ExitDist: 14.5
+  ExitDist: 3
 --- !u!114 &8498120066744306429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1390,8 +1396,8 @@ MonoBehaviour:
   title: DungeonBoss Skill 1
   rect:
     serializedVersion: 2
-    x: 364
-    y: 961
+    x: 420
+    y: 960
     width: 160
     height: 45
   parent: {fileID: 5899481476173356783}

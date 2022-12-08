@@ -192,7 +192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25af8627659c6949b60949c3aa8d91d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedEditorNode: {fileID: 0}
+  selectedEditorNode: {fileID: 8557978793152940417}
   repeatOnFinish: 0
   maxExecutionsPerTick: 1000
   parent: {fileID: 0}
@@ -861,7 +861,7 @@ MonoBehaviour:
     mode: 0
     blackboard: {fileID: 0}
     key: 
-    constantValue: 250
+    constantValue: 500
   intReference2:
     useConstant: 1
     mode: 0
@@ -1175,6 +1175,12 @@ MonoBehaviour:
     mode: 1
     blackboard: {fileID: 1107375551665464079}
     key: enemyToPlayerDist
+    constantValue: 0
+  myState:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 0}
+    key: 
     constantValue: 0
   agent: {fileID: 1601261783880769920}
   stopDistance: 3.5
@@ -1689,7 +1695,7 @@ MonoBehaviour:
     mode: 0
     blackboard: {fileID: 0}
     key: 
-    constantValue: 375
+    constantValue: 750
   intReference2:
     useConstant: 1
     mode: 0
@@ -2111,6 +2117,12 @@ MonoBehaviour:
     mode: 1
     blackboard: {fileID: 1107375551665464079}
     key: enemyToPlayerDist
+    constantValue: 0
+  myState:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 0}
+    key: 
     constantValue: 0
   agent: {fileID: 1601261783880769920}
   stopDistance: 5
@@ -2553,7 +2565,7 @@ MonoBehaviour:
     mode: 0
     blackboard: {fileID: 0}
     key: 
-    constantValue: 125
+    constantValue: 250
   intReference2:
     useConstant: 1
     mode: 0
@@ -3073,6 +3085,12 @@ MonoBehaviour:
     mode: 1
     blackboard: {fileID: 1107375551665464079}
     key: enemyToPlayerDist
+    constantValue: 0
+  myState:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 0}
+    key: 
     constantValue: 0
   agent: {fileID: 1601261783880769920}
   stopDistance: 3.5
@@ -3698,6 +3716,12 @@ MonoBehaviour:
     blackboard: {fileID: 1107375551665464079}
     key: enemyToPlayerDist
     constantValue: 0
+  myState:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 0
   agent: {fileID: 1601261783880769920}
   stopDistance: 3.5
   updateInterval: 1
@@ -4037,7 +4061,7 @@ MonoBehaviour:
     mode: 0
     blackboard: {fileID: 0}
     key: 
-    constantValue: 375
+    constantValue: 750
   intReference2:
     useConstant: 1
     mode: 0
@@ -4119,7 +4143,7 @@ MonoBehaviour:
     mode: 0
     blackboard: {fileID: 0}
     key: 
-    constantValue: 250
+    constantValue: 500
   intReference2:
     useConstant: 1
     mode: 0
@@ -4201,7 +4225,7 @@ MonoBehaviour:
     mode: 0
     blackboard: {fileID: 0}
     key: 
-    constantValue: 125
+    constantValue: 250
   intReference2:
     useConstant: 1
     mode: 0
@@ -4305,7 +4329,7 @@ MonoBehaviour:
   title: Number Condition
   rect:
     serializedVersion: 2
-    x: 2820
+    x: 2819
     y: 720
     width: 160
     height: 45
@@ -4648,6 +4672,12 @@ MonoBehaviour:
     blackboard: {fileID: 1107375551665464079}
     key: enemyToPlayerDist
     constantValue: 0
+  myState:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 0
   agent: {fileID: 1601261783880769920}
   stopDistance: 19
   updateInterval: 1
@@ -4745,6 +4775,12 @@ MonoBehaviour:
     mode: 1
     blackboard: {fileID: 1107375551665464079}
     key: enemyToPlayerDist
+    constantValue: 0
+  myState:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 0}
+    key: 
     constantValue: 0
   agent: {fileID: 1601261783880769920}
   stopDistance: 19
@@ -4844,6 +4880,12 @@ MonoBehaviour:
     blackboard: {fileID: 1107375551665464079}
     key: enemyToPlayerDist
     constantValue: 0
+  myState:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 0}
+    key: 
+    constantValue: 0
   agent: {fileID: 1601261783880769920}
   stopDistance: 19
   updateInterval: 1
@@ -4941,6 +4983,12 @@ MonoBehaviour:
     mode: 1
     blackboard: {fileID: 1107375551665464079}
     key: enemyToPlayerDist
+    constantValue: 0
+  myState:
+    useConstant: 0
+    mode: 1
+    blackboard: {fileID: 0}
+    key: 
     constantValue: 0
   agent: {fileID: 1601261783880769920}
   stopDistance: 19
@@ -5484,7 +5532,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4aa14fd0b2ddba4087ae987ccc0c177, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDissolve: 0
   dissolve: {fileID: 2100000, guid: fd481701278c4a84e89a4eb05e94b2d5, type: 2}
   color: {r: 0, g: 0, b: 0, a: 0}
   scales:
@@ -5516,6 +5563,7 @@ GameObject:
   - component: {fileID: 1046935228091852827}
   - component: {fileID: 5250282102522462225}
   - component: {fileID: 1601261783880769920}
+  - component: {fileID: 7027496164101210345}
   - component: {fileID: 1327451376188605603}
   m_Layer: 0
   m_Name: FinalBoss
@@ -5540,6 +5588,7 @@ Transform:
   - {fileID: 4681719079261883694}
   - {fileID: 4130538157166699205}
   - {fileID: 355673856088777235}
+  - {fileID: 6177499705810366876}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5626,6 +5675,102 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!82 &7027496164101210345
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4681719079262048558}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.5
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &1327451376188605603
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5662,6 +5807,7 @@ MonoBehaviour:
   FireBall: {fileID: 6570376534567638675, guid: bc3be6652ef592c4f980b438a2278d35, type: 3}
   WaterBall: {fileID: 2531788073555915697, guid: 979e985b70ea82049a72cff59642bbfe, type: 3}
   WaterBallSpawner: {fileID: 3476918654226696945, guid: 28be06fd10a34494b9e1874c012a0bd1, type: 3}
+  ElecSkillEffect: {fileID: 6177499705824523484}
   mat:
   - {fileID: 2100000, guid: b58c471c32c97fa4993cdd7d03a90853, type: 2}
   - {fileID: 2100000, guid: ecbac07dc0a052c47ba0a085adf9a9c4, type: 2}
@@ -5670,12 +5816,19 @@ MonoBehaviour:
   Anim: {fileID: 0}
   rigid: {fileID: 0}
   col: {fileID: 0}
+  NormalAttackSound: {fileID: 8300000, guid: 9d2e8513568505142aa2da2ecee77bbe, type: 3}
+  DashAttackSound: {fileID: 8300000, guid: 295a2e5d9d3d7294da61689cc9a011fa, type: 3}
+  IceSkillSound: {fileID: 8300000, guid: ca27603e879f93b4993e5a3f7a568937, type: 3}
+  ShieldBreakSound: {fileID: 8300000, guid: 09917eaa713c91e4f8cfc7215c5fb1f5, type: 3}
+  DeathSound: {fileID: 8300000, guid: b3cbfe9c47720574983fc862fd8d787b, type: 3}
   DealtDamage: 0
   isAttacked: 0
   elecAttack: 0
   isHitted: 0
+  IceSkillEffect: {fileID: 4618777220894711968, guid: b7ce22bafbbf25342a6e6ebfa6bd178c, type: 3}
   SkillCooldown: 0
   setShield: 0
+  DropItem: {fileID: 0}
 --- !u!1 &4681719079262048560
 GameObject:
   m_ObjectHideFlags: 0
@@ -6365,6 +6518,78 @@ Transform:
   m_Father: {fileID: 4681719079261883680}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &2007774241819198682
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4681719079261883662}
+    m_Modifications:
+    - target: {fileID: 5649747357126374726, guid: f6844f7fdc7be1741ae17bd219cbaff3, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5649747357126374726, guid: f6844f7fdc7be1741ae17bd219cbaff3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5649747357126374726, guid: f6844f7fdc7be1741ae17bd219cbaff3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5649747357126374726, guid: f6844f7fdc7be1741ae17bd219cbaff3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5649747357126374726, guid: f6844f7fdc7be1741ae17bd219cbaff3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5649747357126374726, guid: f6844f7fdc7be1741ae17bd219cbaff3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5649747357126374726, guid: f6844f7fdc7be1741ae17bd219cbaff3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5649747357126374726, guid: f6844f7fdc7be1741ae17bd219cbaff3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5649747357126374726, guid: f6844f7fdc7be1741ae17bd219cbaff3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5649747357126374726, guid: f6844f7fdc7be1741ae17bd219cbaff3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5649747357126374726, guid: f6844f7fdc7be1741ae17bd219cbaff3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5649747357126863206, guid: f6844f7fdc7be1741ae17bd219cbaff3, type: 3}
+      propertyPath: m_Name
+      value: Elec_Effect
+      objectReference: {fileID: 0}
+    - target: {fileID: 5649747357126863206, guid: f6844f7fdc7be1741ae17bd219cbaff3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 7519920266857520115, guid: f6844f7fdc7be1741ae17bd219cbaff3, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: f6844f7fdc7be1741ae17bd219cbaff3, type: 3}
+--- !u!4 &6177499705810366876 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5649747357126374726, guid: f6844f7fdc7be1741ae17bd219cbaff3, type: 3}
+  m_PrefabInstance: {fileID: 2007774241819198682}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &6177499705824523484 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 5649747357140529158, guid: f6844f7fdc7be1741ae17bd219cbaff3, type: 3}
+  m_PrefabInstance: {fileID: 2007774241819198682}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7644982866706725499
 PrefabInstance:
   m_ObjectHideFlags: 0

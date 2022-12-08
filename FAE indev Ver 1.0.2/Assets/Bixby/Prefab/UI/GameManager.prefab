@@ -84,13 +84,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BGMClips:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 46a4ea4b809fa854ba3a5f0c0c236254, type: 3}
+  - {fileID: 8300000, guid: 2b5802c5b984e8147bec1f2335019eec, type: 3}
+  - {fileID: 8300000, guid: 7ce45458a1c0ccf4f84ff95efe2fd194, type: 3}
+  - {fileID: 8300000, guid: cf8240bea9c729846bad820bcdf14a8c, type: 3}
+  - {fileID: 8300000, guid: 7b12142fc2006b347afda8ee54eb8a08, type: 3}
+  - {fileID: 8300000, guid: f6bf666bac8a67141b78128ac5a26a44, type: 3}
+  - {fileID: 8300000, guid: 257cc7d6814ef8a42a3c8faf91c38218, type: 3}
   PlayerSFXClips:
   - {fileID: 8300000, guid: b1a35458e53877745a0fdec936147d6c, type: 3}
   - {fileID: 8300000, guid: a6302f0a4ea9f704f8b077596e2f507e, type: 3}
@@ -125,3 +125,5 @@ MonoBehaviour:
   - {fileID: 8300000, guid: a579b5c89476b6943ae1985ab7757836, type: 3}
   - {fileID: 8300000, guid: 62862b532b82fa14aabff95a0fbbb60b, type: 3}
   - {fileID: 8300000, guid: 86608cfe03ec0694bad1e1fd4198f3fa, type: 3}
+  - {fileID: 8300000, guid: 3b66fac04c5b9c94d9357cb3c79a014c, type: 3}
+  - {fileID: 8300000, guid: b762e1ca22f5e3642b551697cf86831d, type: 3}

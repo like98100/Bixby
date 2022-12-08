@@ -20,6 +20,8 @@ public class FinalBoss : CombatStatus, IDamgeable
     public GameObject FireBall;
     public GameObject WaterBall;
     public GameObject WaterBallSpawner;
+    
+    public ParticleSystem ElecSkillEffect;
 
     //public GameObject shield;
     public Material[] mat;
@@ -28,16 +30,27 @@ public class FinalBoss : CombatStatus, IDamgeable
     public Animator Anim;
     public Rigidbody rigid;
     public SphereCollider col;
+    private AudioSource myAudio;
+
+    public AudioClip NormalAttackSound;
+    public AudioClip DashAttackSound;
+    public AudioClip IceSkillSound;
+    public AudioClip ShieldBreakSound;
+    public AudioClip DeathSound;
 
     public float DealtDamage;
     public bool isAttacked;
     public bool elecAttack;
     public bool isHitted;
 
+    public GameObject IceSkillEffect;
+
     public float SkillCooldown;
 
     private Shield shield;
     [SerializeField] private bool setShield;
+    
+    public GameObject DropItem;
 
     // Start is called before the first frame update
     void Start()
@@ -57,16 +70,19 @@ public class FinalBoss : CombatStatus, IDamgeable
         Anim = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody>();
         col = GetComponent<SphereCollider>();
+        myAudio = GetComponent<AudioSource>();
 
         shield = this.gameObject.transform.Find("Shield").GetComponent<Shield>();
         shield.SetActive(true);
         setShield = true;
 
         //게이지 생성
-        UI_EnemyHp.EnemyHps.hpObjects.Add(Instantiate(UI_Control.Inst.EnemyHp.getPrefab(true), GameObject.Find("UI").transform.GetChild(1)));
-        UI_EnemyHp.EnemyHps.ShieldObjects.Add(Instantiate(UI_Control.Inst.EnemyHp.getPrefab(false), GameObject.Find("UI").transform.GetChild(1)));
+        UI_EnemyHp.EnemyHps.hpObjects.Add(Instantiate(UI_Control.Inst.EnemyHp.getPrefab(true), GameObject.Find("UI").transform.GetChild(1).GetChild(0)));
+        UI_EnemyHp.EnemyHps.ShieldObjects.Add(Instantiate(UI_Control.Inst.EnemyHp.getPrefab(false), GameObject.Find("UI").transform.GetChild(1).GetChild(0)));
         UI_EnemyHp.EnemyHps.GaugeOff();
         UI_EnemyHp.EnemyHps.EnemyObjects.Add(this.gameObject);
+
+        DropItem.GetComponent<TreasureBox>().boxState = true;
     }
 
     void FixedUpdate()
@@ -110,6 +126,7 @@ public class FinalBoss : CombatStatus, IDamgeable
         //Destroy(gameObject);
         StartCoroutine(this.transform.Find("Cube.007").GetComponent<Dissolve>().Act(this.gameObject));
         //StartCoroutine(this.transform.Find("Mesh_Back_CorruptCape").GetComponent<Dissolve>().Act(this.gameObject));
+        Instantiate(DropItem, transform.position, transform.rotation);
     }
 
     private void findPlayer(float sight)
@@ -132,7 +149,7 @@ public class FinalBoss : CombatStatus, IDamgeable
         {
             Stat.element = ElementType.ICE;
             this.MyElement = Stat.element;
-            
+
             temp = transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().materials;
             temp[1] = mat[0];
             transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().materials = temp;
@@ -142,7 +159,7 @@ public class FinalBoss : CombatStatus, IDamgeable
         {
             Stat.element = ElementType.WATER;
             this.MyElement = Stat.element;
-            
+
             temp = transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().materials;
             temp[1] = mat[1];
             transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().materials = temp;
@@ -185,11 +202,14 @@ public class FinalBoss : CombatStatus, IDamgeable
         if (Stat.hp <= 0.0f)
         {
             MyAgent.isStopped = true;
+            PlayDeathSound();
             Anim.SetTrigger("isDied");
         }
 
         if (Stat.barrier <= 0.0f)
         {
+            if (setShield)
+                PlayShielBreakSound();
             setShield = false;
             shield.SetActive(false);
             col.enabled = false;
@@ -228,6 +248,7 @@ public class FinalBoss : CombatStatus, IDamgeable
         if (Stat.hp <= 0.0f)
         {
             MyAgent.isStopped = true;
+            PlayDeathSound();
             Anim.SetTrigger("isDied");
         }
     }
@@ -263,14 +284,26 @@ public class FinalBoss : CombatStatus, IDamgeable
 
     public void IceSkillAttackAreaCheck()
     {
+        // IceSkillEffect.transform.localScale *= Stat.attackRange*3.0f;
+        // IceSkillEffect.transform.GetChild(0).transform.localScale *= Stat.attackRange*3.0f;
+        Instantiate(IceSkillEffect, transform.position, IceSkillEffect.transform.rotation);
         Collider[] colliders = Physics.OverlapSphere(transform.position, Stat.attackRange*3.0f, 
                                                     Mask, QueryTriggerInteraction.Ignore);
-
+        
+        PlayIceSkillSound();
+        
         if (colliders.Length > 0)
         {    
             setEnemyElement(colliders[0].GetComponent<PlayerContorl>().MyElement);
             colliders[0].GetComponent<PlayerContorl>().TakeElementHit(Stat.damage, Stat.element);
         }
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, Stat.attackRange*3.0f);
+
     }
 
     public void IceSkillAniInit()
@@ -301,5 +334,35 @@ public class FinalBoss : CombatStatus, IDamgeable
     public bool isSetShield()
     {
         return setShield;
+    }
+
+    public void PlayNormalAttackSound()
+    {
+        myAudio.clip = NormalAttackSound;
+        myAudio.Play();
+    }
+
+    public void PlayDashAttackSound()
+    {
+        myAudio.clip = DashAttackSound;
+        myAudio.Play();
+    }
+
+    public void PlayIceSkillSound()
+    {
+        myAudio.clip = IceSkillSound;
+        myAudio.Play();
+    }
+
+    public void PlayShielBreakSound()
+    {
+        myAudio.clip = ShieldBreakSound;
+        myAudio.Play();
+    }
+
+    public void PlayDeathSound()
+    {
+        myAudio.clip = DeathSound;
+        myAudio.Play();
     }
 }

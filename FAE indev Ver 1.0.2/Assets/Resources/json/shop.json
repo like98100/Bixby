@@ -1,0 +1,52 @@
+﻿{
+  "itemList": [
+    {
+      "itemID": 2001,
+      "tag": [ "food", "cooked" ],
+      "itemName": "토마토 주스",
+      "Left": -1.0,
+      "Up": -1.0,
+      "xSize": 1.0,
+      "ySize": 2.0,
+      "isEquip": false,
+      "price": 1500,
+      "isSell": true
+    },
+    {
+      "itemID": 2002,
+      "tag": [ "food", "cooked" ],
+      "itemName": "야채죽",
+      "Left": -1.0,
+      "Up": -1.0,
+      "xSize": 2.0,
+      "ySize": 2.0,
+      "isEquip": false,
+      "price": 500,
+      "isSell": true
+    },
+    {
+      "itemID": 2003,
+      "tag": [ "food", "cooked" ],
+      "itemName": "구운 생선",
+      "Left": -1.0,
+      "Up": -1.0,
+      "xSize": 2.0,
+      "ySize": 2.0,
+      "isEquip": false,
+      "price": 1000,
+      "isSell": true
+    },
+    {
+      "itemID": 2004,
+      "tag": [ "food", "cooked" ],
+      "itemName": "구운 고기",
+      "Left": -1.0,
+      "Up": -1.0,
+      "xSize": 2.0,
+      "ySize": 2.0,
+      "isEquip": false,
+      "price": 1500,
+      "isSell": true
+    }
+  ]
+}

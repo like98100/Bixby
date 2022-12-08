@@ -111,7 +111,7 @@ public class Speech : MonoBehaviour
             switch (QuestObject.manager.GetIndex())
             {
                 case 1:
-                    Tutorial.TutoImageSet(0);
+                    Tutorial.TutoImageSet(3);//¼ö·Æ Ã¤Áý Æ©Åä¸®¾ó
                     break;
                 case 10:
                     Tutorial.ElementGetText(1);

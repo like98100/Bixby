@@ -45,7 +45,7 @@ public class UI_Tutorial : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (ElemeneClearText.gameObject.activeSelf)
+        if (ElemeneClearText.gameObject.activeSelf)//텍스트 나온 후 튜토리얼 이미지가 나오는 경우
         {
             time += Time.deltaTime;
             Color temp = ElemeneClearText.color;
@@ -58,20 +58,20 @@ public class UI_Tutorial : MonoBehaviour
                 time = 0;
                 if (ElemeneClearText.fontSize == 100)
                 {
-                    if (QuestObject.manager.GetIndex() == 5)
-                        TutoImageSet(1);
-                    else if (QuestObject.manager.GetIndex() == 10)
-                        TutoImageSet(2);
+                    if (QuestObject.manager.GetIndex() == 5)//불 원소 해방 후
+                        TutoImageSet(1);//원소 공격 튜토리얼
+                    else if (QuestObject.manager.GetIndex() == 10)//얼음 원소 해방 후
+                        TutoImageSet(2);//동료 전환 튜토리얼
                 }
             }
         }
-        if (QuestObject.manager.GetIndex() == 5 && QuestObject.manager.GetIsClear()&&!didText)
+        if (QuestObject.manager.GetIndex() == 5 && QuestObject.manager.GetIsClear()&&!didText)//불 던전 퀘스트 클리어 후, 텍스트가 나온 적 없다면
         {
-            ElementGetText(0);
+            ElementGetText(0);//불 원소 해방 텍스트
         }
     }
 
-    public void TutoImageSet(int index)//0:전투튜토리얼, 1:상성튜토리얼, 2:아바타변경튜토리얼
+    public void TutoImageSet(int index)//0:전투 튜토리얼, 1:상성 튜토리얼, 2:아바타 변경 튜토리얼, 3:채집사냥 튜토리얼, 4:낚시 튜토리얼, 5:요리 튜토리얼
     {
         if (index == 0 && didTutorial)
             return;
@@ -148,5 +148,8 @@ public class UI_Tutorial : MonoBehaviour
                 ElemeneClearText.fontSize = 100f;
                 break;
         }
+
+        if(index < 4)   // 4개 원소 출력 시
+            SoundManage.instance.PlaySFXSound(10, "System"); // 원소 획득 사운드
     }
 }

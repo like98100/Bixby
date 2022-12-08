@@ -110,14 +110,7 @@ public class NPC : MonoBehaviour
         nameObj.transform.rotation = Quaternion.Euler(camRotate);//이름태그 각도 조정
         notify.transform.localScale = Vector3.one * 0.15f;
         if (NpcName == "shop")
-        {
-            float dist = Vector3.Distance(GameObject.FindGameObjectWithTag("Player").transform.position, this.gameObject.transform.position);
-            if (dist > 15)
-                notify.transform.localScale = Vector3.one * 0.45f;
-            else if (dist>10)
-                notify.transform.localScale = Vector3.one * 0.3f;
             return;
-        }
         if (NpcName != QuestObject.manager.GetNPCName())
         {
             notify.SetActive(false);

@@ -10,11 +10,15 @@ public class UI_Option : MonoBehaviour
         if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "Title")
         {
             cameraControl = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CamControl>();
-            mouseSenseSliderX = this.transform.GetChild(0).GetComponent<Slider>();
-            mouseSenseSliderY = this.transform.GetChild(1).GetComponent<Slider>();
-            mouseSenseTextX = this.transform.GetChild(3).GetComponent<TMPro.TextMeshProUGUI>();
-            mouseSenseTextY = this.transform.GetChild(4).GetComponent<TMPro.TextMeshProUGUI>();
-            Button closeBtn = this.transform.GetChild(2).GetComponent<Button>();
+            mouseSenseSliderX = this.transform.GetChild(0).GetChild(0).GetComponent<Slider>();
+            mouseSenseSliderY = this.transform.GetChild(0).GetChild(1).GetComponent<Slider>();
+            mouseSenseTextX = this.transform.GetChild(0).GetChild(2).GetComponent<TMPro.TextMeshProUGUI>();
+            mouseSenseTextY = this.transform.GetChild(0).GetChild(3).GetComponent<TMPro.TextMeshProUGUI>();
+            BGMSlider = this.transform.GetChild(1).GetChild(0).GetComponent<Slider>();
+            SFXSlider = this.transform.GetChild(1).GetChild(1).GetComponent<Slider>();
+            BGMText = this.transform.GetChild(1).GetChild(2).GetComponent<TMPro.TextMeshProUGUI>();
+            SFXText = this.transform.GetChild(1).GetChild(3).GetComponent<TMPro.TextMeshProUGUI>();
+            Button closeBtn = this.transform.GetChild(this.transform.childCount - 1).GetComponent<Button>();
             closeBtn.onClick.AddListener(() => UI_Control.Inst.windowSet(this.gameObject));
         }
     }
@@ -23,6 +27,10 @@ public class UI_Option : MonoBehaviour
     Slider mouseSenseSliderY;
     TMPro.TextMeshProUGUI mouseSenseTextX;
     TMPro.TextMeshProUGUI mouseSenseTextY;
+    Slider BGMSlider;
+    Slider SFXSlider;
+    TMPro.TextMeshProUGUI BGMText;
+    TMPro.TextMeshProUGUI SFXText;
     float mouseSenseX;
     float mouseSenseY;
     public void Set()
@@ -31,6 +39,8 @@ public class UI_Option : MonoBehaviour
         mouseSenseSliderY.value = 0.2f;
         mouseSenseX = mouseSenseSliderX.value * 99 + 1f;
         mouseSenseY = mouseSenseSliderY.value * 99 + 1f;
+        BGMSlider.value = 0.7f;
+        SFXSlider.value = 1f;
         this.gameObject.SetActive(false);
     }
 
@@ -42,12 +52,16 @@ public class UI_Option : MonoBehaviour
             mouseSenseY = mouseSenseSliderY.value * 99 + 1f;
             mouseSenseTextX.text = Mathf.FloorToInt(mouseSenseX).ToString();
             mouseSenseTextY.text = Mathf.FloorToInt(mouseSenseY).ToString();
+            BGMText.text = Mathf.FloorToInt(BGMSlider.value * 99 + 1).ToString();
+            SFXText.text = Mathf.FloorToInt(SFXSlider.value * 99 + 1).ToString();
         }
     }
     public void senseSet(bool isStop)
     {
         cameraControl.mouseSenseX = isStop ? 0 : mouseSenseX * 0.05f;
         cameraControl.mouseSenseY = isStop ? 0 : mouseSenseY * 0.05f;
+        //SoundManage.instance.SetVolume(true, isStop ? 0 : BGMSlider.value);
+        //SoundManage.instance.SetVolume(false, isStop ? 0 : SFXSlider.value);
     }
 
     public void TitleSet(bool start)

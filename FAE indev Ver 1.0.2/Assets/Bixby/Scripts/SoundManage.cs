@@ -37,20 +37,26 @@ public class SoundManage : MonoBehaviour
     AudioSource systemSfxPlayer;
 
     int curLoopIdx;
+
+    float BGMVolume;
+    float SFXVolume;
     // Start is called before the first frame update
     void Start()
     {
-        PlayBGMSound(SceneManager.GetActiveScene().name, 0.7f); // 배경음악 실행
+        BGMVolume = 0.7f;
+        SFXVolume = 1f;
+        PlayBGMSound(SceneManager.GetActiveScene().name);//, 0.7f); // 배경음악 실행
         curLoopIdx = -1;
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if (Cursor.lockState == CursorLockMode.None && Input.GetMouseButtonDown(0))     // 커서가 나오는 상태에서 좌클릭을 할 때
+            PlaySFXSound(0, "System");  // 클릭 사운드 출력
     }
 
-    public void PlayBGMSound(string fieldName, float volume = 1f)
+    public void PlayBGMSound(string fieldName)//, float volume = 1f)
     {
         bgmPlayer.Pause();
 
@@ -90,22 +96,22 @@ public class SoundManage : MonoBehaviour
         //BGMSources[idx].Play();
 
         bgmPlayer.loop = true;
-        bgmPlayer.volume = volume;
+        bgmPlayer.volume = BGMVolume;
         bgmPlayer.clip = BGMClips[idx];
 
         bgmPlayer.Play();
 
-        Debug.Log(fieldName + " Bgm 출력 중");
+        //Debug.Log(fieldName + " Bgm 출력 중");
     }
 
-    public void PlaySFXSound(int sfxIdx, string flag, float volume = 1f)
+    public void PlaySFXSound(int sfxIdx, string flag)//, float SFXVolume = 1f)
     {
         // flag가 Player일 때와 System일 때 각각 다른 플레이어를 실행할 것
         switch(flag)
         {
             case "Player":
                 //if (charSfxPlayer.isPlaying) break;          // 사운드가 재생중이면 패스(하던건 다 출력하고 실행하기)
-                charSfxPlayer.volume = volume;
+                charSfxPlayer.volume = SFXVolume;
                 charSfxPlayer.loop = false;
                 //charSfxPlayer.PlayOneShot(PlayerSFXClips[sfxIdx]);
 
@@ -115,7 +121,7 @@ public class SoundManage : MonoBehaviour
             case "PlayerLoop":
                 if (sfxIdx == curLoopIdx && charLoopSfxPlayer.isPlaying) break;            // 반복 출력 제거
 
-                charLoopSfxPlayer.volume = volume;
+                charLoopSfxPlayer.volume = SFXVolume;
                 charLoopSfxPlayer.loop = true;
                 charLoopSfxPlayer.clip = PlayerLoopSFXClips[sfxIdx];
                 charLoopSfxPlayer.Play();
@@ -123,9 +129,13 @@ public class SoundManage : MonoBehaviour
                 curLoopIdx = sfxIdx;
                 break;
             case "System":
-                systemSfxPlayer.volume = volume;
+                systemSfxPlayer.volume = SFXVolume;
                 systemSfxPlayer.loop = false;
-                systemSfxPlayer.PlayOneShot(SystemSFXClips[sfxIdx]);
+
+                //systemSfxPlayer.PlayOneShot(SystemSFXClips[sfxIdx]);
+
+                systemSfxPlayer.clip = SystemSFXClips[sfxIdx];
+                systemSfxPlayer.Play();
                 break;
             default:
                 break;
@@ -137,5 +147,26 @@ public class SoundManage : MonoBehaviour
     public AudioSource GetPlayerLoopSFXPlayer()
     {
         return charLoopSfxPlayer;
+    }
+
+    public float GetVolume(bool isBGM)
+    {
+        if (isBGM)
+            return BGMVolume;
+        else
+            return SFXVolume;
+    }
+    public void SetVolume(bool isBGM, float value)
+    {
+        if (isBGM)
+        {
+            BGMVolume = value;
+            bgmPlayer.volume = BGMVolume;
+        }
+        else
+        {
+            SFXVolume = value;
+            charSfxPlayer.volume = charLoopSfxPlayer.volume = systemSfxPlayer.volume = SFXVolume;
+        }
     }
 }

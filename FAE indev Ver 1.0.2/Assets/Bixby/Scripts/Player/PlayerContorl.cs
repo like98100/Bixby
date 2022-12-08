@@ -673,12 +673,6 @@ public class PlayerContorl : PlayerStatusControl
                Time.deltaTime * rotationSpeed);
         }
 
-        else
-        {
-            SoundManage.instance.GetPlayerLoopSFXPlayer().Pause();
-            Debug.Log("사운드 정지");
-        }
-
         if (player.isGrounded)
         {
             if ((Input.GetAxis("Vertical") != 0) || (Input.GetAxis("Horizontal") != 0))

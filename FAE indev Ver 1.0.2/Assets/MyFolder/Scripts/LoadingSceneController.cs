@@ -125,8 +125,8 @@ public class LoadingSceneController : MonoBehaviour
                 QuestObject.manager.MissionSet();           // 신 로딩이 완료되면 미션 텍스트 재설정
             }
 
-            
-            SoundManage.instance.PlayBGMSound(loadSceneName, 0.7f);
+
+            SoundManage.instance.PlayBGMSound(loadSceneName);//, 0.7f);
 
             SceneManager.sceneLoaded -= OnSceneLoaded;
         }

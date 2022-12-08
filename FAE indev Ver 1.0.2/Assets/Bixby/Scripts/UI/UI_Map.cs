@@ -113,6 +113,8 @@ public class UI_Map : MonoBehaviour
             realPlayer.transform.position = warpPoint[i].position;
             realPlayer.GetComponent<CharacterController>().enabled = true;
             UI_Control.Inst.windowSet(this.gameObject);
+
+            SoundManage.instance.PlaySFXSound(16, "System"); // 워프 사운드
         }
     }
     #endregion

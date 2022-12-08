@@ -16,6 +16,7 @@ public class TreasureBox : MonoBehaviour
 
     public GameObject Player; //플레이어 오브젝트
     public GameObject coin; //코인 오브젝트
+    public GameObject Effact;
 
     private GameObject top; //상자 머리부분
 
@@ -29,6 +30,7 @@ public class TreasureBox : MonoBehaviour
 
         top = transform.GetChild(0).gameObject;
         Quaternion currentRotation = top.transform.rotation;
+        Effact.SetActive(false);
     }
 
     // Start is called before the first frame update
@@ -42,7 +44,7 @@ public class TreasureBox : MonoBehaviour
     {
         //상자가 활성화 됬을 때 하는거 전부다.
 
-        //BoxMaterial(); //쉐이더or머테리얼 변경
+        BoxMaterial(); //쉐이더or머테리얼 변경
         BoxOpen(); //상자 열기
 
         if (checkNear && inventoryObject.Inst.FieldFKey.activeSelf)
@@ -69,6 +71,8 @@ public class TreasureBox : MonoBehaviour
             {
                 //상자열기
                 open = true;
+
+                SoundManage.instance.PlaySFXSound(14, "System"); // 상자 열기 사운드
                 //아이템 획득, UI?
 
                 //아이템 생성 contents 에 이 상자를 열었을 때 획득 할 수 있는 아이템 집어넣기 확률계산 이런건 나중에
@@ -108,15 +112,15 @@ public class TreasureBox : MonoBehaviour
     //이펙트 키는걸로 변경
     void BoxMaterial()
     {
-        if (boxState) //활성화
+        if (boxState && !open) //활성화
         {
             //보물상자 쉐이더 변경으로 바꿔야한다.
-            GetComponent<MeshRenderer>().material = mBox[1];
+            Effact.SetActive(true);
         }
-        else if (!boxState) //비활성화
+        else if (!boxState || open) //비활성화
         {
             //보물상자 쉐이더 변경으로 바꿔야한다.
-            GetComponent<MeshRenderer>().material = mBox[0];
+            Effact.SetActive(false);
         }
     }
 
@@ -128,5 +132,8 @@ public class TreasureBox : MonoBehaviour
             top.transform.Rotate(new Vector3(-1, 0, 0));
             yield return null;
         }
+        StartCoroutine(this.GetComponent<Dissolve>().Act(this.gameObject));
+        StartCoroutine(this.transform.GetChild(0).GetComponent<Dissolve>().Act(this.transform.GetChild(0).gameObject));
+        StartCoroutine(this.transform.GetChild(0).GetChild(0).GetComponent<Dissolve>().Act(this.transform.GetChild(0).GetChild(0).gameObject));
     }
 }

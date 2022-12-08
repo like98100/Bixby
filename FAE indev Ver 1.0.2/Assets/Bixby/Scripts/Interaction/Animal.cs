@@ -99,7 +99,7 @@ public class Animal : MonoBehaviour
             checkNear = false;
         }
 
-        if (checkNear && Input.GetKeyDown(KeyCode.F))
+        if (checkNear && Input.GetKeyDown(KeyCode.F))       // 수렵
         {
             Vector2 tempPos;
             tempPos = inventoryObject.Inst.emptyCell(animalData.xSize, animalData.ySize);
@@ -107,6 +107,8 @@ public class Animal : MonoBehaviour
 
             //인벤토리 추가 및 제이슨 저장
             inventoryObject.Inst.jsonSave();
+
+            SoundManage.instance.PlaySFXSound(1, "System");
 
             //동물 제거
             //Destroy(gameObject);

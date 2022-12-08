@@ -362,7 +362,7 @@ public class inventoryObject : MonoBehaviour
             }
         if (itemObj.ItemData.isSell)
         {
-            subDescription = Mathf.FloorToInt(itemObj.ItemData.price * 1.5f).ToString();
+            subDescription = "G " + Mathf.FloorToInt(itemObj.ItemData.price * 1.5f).ToString();
             itemDescription.transform.GetChild(3).GetComponent<TMPro.TextMeshProUGUI>().fontSize = 42f;
         }
         else
@@ -413,6 +413,8 @@ public class inventoryObject : MonoBehaviour
                 }
                 throwItem(itemObj.gameObject, false);
                 itemDescription.SetActive(false);
+
+                SoundManage.instance.PlaySFXSound(17, "System"); // 소비 아이템 사용 사운드
             }
         }
     }

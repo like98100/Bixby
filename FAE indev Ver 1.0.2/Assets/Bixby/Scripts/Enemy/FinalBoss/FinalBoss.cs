@@ -158,6 +158,8 @@ public class FinalBoss : CombatStatus, IDamgeable
             transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().materials = temp;
             UI_Control.Inst.TextOn("전기 타입의 경우, 5번 연속으로 돌진해옵니다.");
         }
+        SoundManage.instance.PlaySFXSound(11, "System"); // 보스 힌트 사운드
+
         shield.GetComponent<Shield>().Initialize();
         SetBarrier();
         SkillCooldown = 0.0f;

@@ -136,7 +136,7 @@ public class FinalBoss : CombatStatus, IDamgeable
             temp = transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().materials;
             temp[1] = mat[0];
             transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().materials = temp;
-            UI_Control.Inst.TextOn("얼음 타입의 경우, 미안합니다 기억이 안납니다");
+            UI_Control.Inst.TextOn("얼음 타입의 경우, 점프하여 범위공격을 합니다.");
         }
         else if ((int)Stat.element == (int)ElementType.ICE)
         {
@@ -146,7 +146,7 @@ public class FinalBoss : CombatStatus, IDamgeable
             temp = transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().materials;
             temp[1] = mat[1];
             transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().materials = temp;
-            UI_Control.Inst.TextOn("물 타입의 경우, 멀어지면 물을 쏟습니다.");
+            UI_Control.Inst.TextOn("물 타입의 경우, 멀어지면 넓은 범위에 디버프를 주는\n물 장판을 생성합니다.");
         }
         else if ((int)Stat.element == (int)ElementType.WATER)
         {
@@ -156,8 +156,10 @@ public class FinalBoss : CombatStatus, IDamgeable
             temp = transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().materials;
             temp[1] = mat[2];
             transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().materials = temp;
-            UI_Control.Inst.TextOn("전기 타입의 경우, 5번 연속으로 돌진해옵니다.");
+            UI_Control.Inst.TextOn("전기 타입의 경우, 플레이어를 향해 5번 연속으로\n돌진공격을 해옵니다.");
         }
+        SoundManage.instance.PlaySFXSound(11, "System"); // 보스 힌트 사운드
+
         shield.GetComponent<Shield>().Initialize();
         SetBarrier();
         SkillCooldown = 0.0f;

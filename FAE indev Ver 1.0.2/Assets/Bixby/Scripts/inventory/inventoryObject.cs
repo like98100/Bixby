@@ -418,6 +418,8 @@ public class inventoryObject : MonoBehaviour
                 }
                 throwItem(itemObj.gameObject, false);
                 itemDescription.SetActive(false);
+
+                SoundManage.instance.PlaySFXSound(17, "System"); // 소비 아이템 사용 사운드
             }
         }
     }

@@ -118,6 +118,10 @@ public class PlayerAnimation : MonoBehaviour
                 moveCheck();
                 break;
         }
+
+        if(!modelContorl.GetIsGrounded() || UI_Control.Inst.OpenedWindow != null ||       // 공중에 뜬 상태거나 ui가 활성화되어 있거나
+            modelContorl.State == PlayerContorl.STATE.DEAD)                                 // 죽은 상태일 때
+            SoundManage.instance.GetPlayerLoopSFXPlayer().Pause();  // 사운드 정지
     }
 
     void initializeAnimParameter()        // 애니메이션 패러미터 초기화 함수
@@ -155,7 +159,6 @@ public class PlayerAnimation : MonoBehaviour
         {
             animator.SetBool("isRun", false);                  // 이동 애니메이션 정지
             SoundManage.instance.GetPlayerLoopSFXPlayer().Pause();  // 사운드 정지
-            Debug.Log("사운드 정지");
         }
 
         if (animator.GetCurrentAnimatorStateInfo(1).IsName("Aim"))   // 현재 조준 상태일 때
@@ -167,7 +170,6 @@ public class PlayerAnimation : MonoBehaviour
     {
         if (!modelContorl.GetIsGrounded() && !animator.GetCurrentAnimatorStateInfo(0).IsName("Landing") && // 공중에 뜬 상태이며 착지 상태가 아니고
             !animator.GetCurrentAnimatorStateInfo(2).IsName("Ultimate"))                                   // 궁극기 애니메이션이 실행되지 않는 상태일 때(발사 선후 애니메이션 삭제를 막기 위해 상태 조건과 나눠서 처리)
-
         {
             animator.SetBool("isCombat", true);
             animator.SetBool("isJump", true);   // Jump 애니메이션 실행

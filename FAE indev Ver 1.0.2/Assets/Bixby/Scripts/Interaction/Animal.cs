@@ -39,9 +39,15 @@ public class Animal : MonoBehaviour
     protected GameObject Player;
     itemJsonData itemJsonData;//json데이터
 
+    public AudioClip deerClip; //사슴 오디오클립
+    public AudioClip hitClip; //사슴 피격 오디오클립
+    AudioSource audioSource;
+
     private void Awake()
     {
         itemJsonData = json.LoadJsonFile<itemJsonData>(Application.dataPath, "Harvest");//json로드
+
+        this.audioSource = this.GetComponent<AudioSource>();
     }
 
     // Start is called before the first frame update
@@ -99,7 +105,7 @@ public class Animal : MonoBehaviour
             checkNear = false;
         }
 
-        if (checkNear && Input.GetKeyDown(KeyCode.F))
+        if (checkNear && Input.GetKeyDown(KeyCode.F))       // 수렵
         {
             Vector2 tempPos;
             tempPos = inventoryObject.Inst.emptyCell(animalData.xSize, animalData.ySize);
@@ -107,6 +113,8 @@ public class Animal : MonoBehaviour
 
             //인벤토리 추가 및 제이슨 저장
             inventoryObject.Inst.jsonSave();
+
+            SoundManage.instance.PlaySFXSound(1, "System");
 
             //동물 제거
             //Destroy(gameObject);
@@ -209,6 +217,11 @@ public class Animal : MonoBehaviour
         {
             hp -= _dmg;
 
+            if (animalName == "Deer")
+            {
+                audioSource.PlayOneShot(hitClip);
+            }
+
             if (hp <= 0)
             {
                 Dead();
@@ -230,6 +243,11 @@ public class Animal : MonoBehaviour
         isDead = true;
 
         anim.SetTrigger("Dead");
+
+        if (animalName == "Deer")
+        {
+            audioSource.PlayOneShot(deerClip);
+        }
 
         //초기화하고 오브젝트 끄기
         //아이템 획득

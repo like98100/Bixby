@@ -79,6 +79,7 @@ public class Puzzle : MonoBehaviour
                 {
                     //보물상자 활성화
                     treasureBox.GetComponent<TreasureBox>().boxState = true;
+                    SoundManage.instance.PlaySFXSound(13, "System"); // 활성화 사운드
                 }
             }
             //패턴 퍼즐일때
@@ -88,6 +89,7 @@ public class Puzzle : MonoBehaviour
                 {
                     //보물상자 활성화
                     treasureBox.GetComponent<TreasureBox>().boxState = true;
+                    SoundManage.instance.PlaySFXSound(13, "System"); // 활성화 사운드
                 }
             }
             else if (type == 4)
@@ -96,6 +98,7 @@ public class Puzzle : MonoBehaviour
                 {
                     //보물상자 활성화
                     treasureBox.GetComponent<TreasureBox>().boxState = true;
+                    SoundManage.instance.PlaySFXSound(13, "System"); // 활성화 사운드
                 }
             }
         }

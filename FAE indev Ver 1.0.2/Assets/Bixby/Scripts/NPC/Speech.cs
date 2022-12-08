@@ -26,7 +26,7 @@ public class Speech : MonoBehaviour
         Button nextSpeech = speechWindow.transform.GetChild(2).GetComponent<Button>();
         nextSpeech.onClick.AddListener(() => speechNext());
         //quest = GameObject.Find("GameManager").GetComponent<QuestObject>();
-        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "FieldScene")
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "Title")
             Tutorial = GameObject.Find("Tutorial").GetComponent<UI_Tutorial>();
         isExist = false;
     }
@@ -122,6 +122,9 @@ public class Speech : MonoBehaviour
                     break;
                 case 18:
                     Tutorial.ElementGetText(3);
+                    break;
+                case 21:
+                    UI_Control.Inst.Speech.Tutorial.ElementGetText(6);
                     break;
                 default:
                     break;

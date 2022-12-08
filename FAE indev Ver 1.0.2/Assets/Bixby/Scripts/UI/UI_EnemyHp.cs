@@ -40,6 +40,13 @@ public class UI_EnemyHp : MonoBehaviour
         foreach (var item in EnemyHps.hpObjects)
         {
             int index = EnemyHps.hpObjects.IndexOf(item);
+
+            if (GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerContorl>().State == PlayerContorl.STATE.DEAD)
+            {
+                item.SetActive(false);
+                continue;
+            }
+
             switch (EnemyHps.EnemyObjects[index].tag)
             {
                 case "Enemy":
@@ -168,7 +175,17 @@ public class UI_EnemyHp : MonoBehaviour
                     item.SetActive(true);
                 else
                     item.SetActive(target.isSetShield());
-                item.transform.position = isHp ? Camera.main.WorldToScreenPoint(target.gameObject.transform.position + Vector3.up * 5f) : Camera.main.WorldToScreenPoint(target.gameObject.transform.position + Vector3.up * 4.5f);
+                switch (target.Stat.type)
+                {
+                    case EnemyType.Melee:
+                        item.transform.position = isHp ? Camera.main.WorldToScreenPoint(target.gameObject.transform.position + Vector3.up * 5f) : Camera.main.WorldToScreenPoint(target.gameObject.transform.position + Vector3.up * 4.5f);
+                        break;
+                    case EnemyType.Ranged:
+                        item.transform.position = isHp ? Camera.main.WorldToScreenPoint(target.gameObject.transform.position + Vector3.up * 3f) : Camera.main.WorldToScreenPoint(target.gameObject.transform.position + Vector3.up * 2.5f);
+                        break;
+                    default:
+                        break;
+                }                
                 item.GetComponent<UnityEngine.UI.Slider>().value = isHp ? target.Stat.hp / target.Stat.maxHp : target.Stat.barrier / target.Stat.maxBarrier;
                 break;
             case "DungeonBoss":

@@ -543,7 +543,8 @@ public class PlayerContorl : PlayerStatusControl
                         && !Dead)
                     {
                         this.Dead = true;
-                        LoadingSceneController.Instance.ReloadScene();
+                        //LoadingSceneController.Instance.ReloadScene();
+                        UI_Control.Inst.Speech.Tutorial.ElementGetText(5);
                     }
                     playerDirection.y -= GravityForce * Time.deltaTime;
                     break;
@@ -671,12 +672,6 @@ public class PlayerContorl : PlayerStatusControl
             this.transform.rotation = Quaternion.Lerp(this.transform.rotation,
                Quaternion.LookRotation(-playerRight),
                Time.deltaTime * rotationSpeed);
-        }
-
-        else
-        {
-            SoundManage.instance.GetPlayerLoopSFXPlayer().Pause();
-            Debug.Log("사운드 정지");
         }
 
         if (player.isGrounded)

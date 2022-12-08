@@ -60,8 +60,8 @@ public class UI_Option : MonoBehaviour
     {
         cameraControl.mouseSenseX = isStop ? 0 : mouseSenseX * 0.05f;
         cameraControl.mouseSenseY = isStop ? 0 : mouseSenseY * 0.05f;
-        SoundManage.instance.SetVolume(true, isStop ? 0 : BGMSlider.value);
-        SoundManage.instance.SetVolume(false, isStop ? 0 : SFXSlider.value);
+        //SoundManage.instance.SetVolume(true, isStop ? 0 : BGMSlider.value);
+        //SoundManage.instance.SetVolume(false, isStop ? 0 : SFXSlider.value);
     }
 
     public void TitleSet(bool start)

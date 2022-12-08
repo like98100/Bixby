@@ -68,6 +68,8 @@ public class Coin : MonoBehaviour
         {
             //인벤토리에 골드 변경
             inventoryObject.Inst.Gold += acheiveGold;
+
+            SoundManage.instance.PlaySFXSound(12, "System"); // 골드 획득 사운드
             //제이슨 저장
             inventoryObject.Inst.jsonSave();
             Destroy(gameObject);

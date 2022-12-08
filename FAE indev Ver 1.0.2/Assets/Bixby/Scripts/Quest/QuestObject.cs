@@ -369,9 +369,11 @@ public class QuestObject : MonoBehaviour
     {
         return currentQuest.questObject[questSubIndex];
     }
+
     public void DungeonQuestInit()
     {
-        questSubIndex = 1;
+        if (currentQuest.objectId.Count != 1)
+            questSubIndex = 1;
         SetObjectIndex(0);
     }
 }

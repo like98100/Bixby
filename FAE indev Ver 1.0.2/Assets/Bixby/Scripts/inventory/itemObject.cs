@@ -102,6 +102,7 @@ public class itemObject : MonoBehaviour
                 //알림창 만들면 else에서 칸 부족하다고 알릴 것
             }
             inventoryObject.Inst.setItemPos(this.gameObject, OriginPos);
+            SoundManage.instance.PlaySFXSound(8, "System"); // 구매 사운드
             return;
         }
         #endregion
@@ -124,6 +125,8 @@ public class itemObject : MonoBehaviour
                 inventoryObject.Inst.Gold += this.ItemData.price;
                 inventoryObject.Inst.throwItem(this.gameObject, false);
                 inventoryObject.Inst.goldSet();
+
+                SoundManage.instance.PlaySFXSound(9, "System"); // 판매 사운드
             }
             else
             {

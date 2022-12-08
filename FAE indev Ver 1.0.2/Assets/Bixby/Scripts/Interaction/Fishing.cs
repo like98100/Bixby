@@ -135,6 +135,7 @@ public class Fishing : MonoBehaviour
                 fishingText.gameObject.SetActive(true);
 
 
+                SoundManage.instance.PlaySFXSound(5, "System"); // 낚시 사운드
 
                 StartCoroutine(Check_Start());
 
@@ -194,6 +195,7 @@ public class Fishing : MonoBehaviour
             fishingText.text = "success";
 
             fishData = new itemData();
+            SoundManage.instance.PlaySFXSound(6, "System"); // 성공 사운드
 
             foreach (var item in itemJsonData.itemList)
             {
@@ -213,6 +215,7 @@ public class Fishing : MonoBehaviour
         else
         {
             fishingText.text = "fail";
+            SoundManage.instance.PlaySFXSound(7, "System"); // 실패 사운드
         }
         endFishing = true; //끝났다고 알려주기
 

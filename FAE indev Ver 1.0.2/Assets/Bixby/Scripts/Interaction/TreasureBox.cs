@@ -71,6 +71,8 @@ public class TreasureBox : MonoBehaviour
             {
                 //상자열기
                 open = true;
+
+                SoundManage.instance.PlaySFXSound(14, "System"); // 상자 열기 사운드
                 //아이템 획득, UI?
 
                 //아이템 생성 contents 에 이 상자를 열었을 때 획득 할 수 있는 아이템 집어넣기 확률계산 이런건 나중에

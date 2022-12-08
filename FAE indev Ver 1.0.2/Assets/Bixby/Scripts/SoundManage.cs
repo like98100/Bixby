@@ -52,7 +52,8 @@ public class SoundManage : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (Cursor.lockState == CursorLockMode.None && Input.GetMouseButtonDown(0))     // 커서가 나오는 상태에서 좌클릭을 할 때
+            PlaySFXSound(0, "System");  // 클릭 사운드 출력
     }
 
     public void PlayBGMSound(string fieldName)//, float volume = 1f)
@@ -100,7 +101,7 @@ public class SoundManage : MonoBehaviour
 
         bgmPlayer.Play();
 
-        Debug.Log(fieldName + " Bgm 출력 중");
+        //Debug.Log(fieldName + " Bgm 출력 중");
     }
 
     public void PlaySFXSound(int sfxIdx, string flag)//, float SFXVolume = 1f)
@@ -130,13 +131,17 @@ public class SoundManage : MonoBehaviour
             case "System":
                 systemSfxPlayer.volume = SFXVolume;
                 systemSfxPlayer.loop = false;
-                systemSfxPlayer.PlayOneShot(SystemSFXClips[sfxIdx]);
+
+                //systemSfxPlayer.PlayOneShot(SystemSFXClips[sfxIdx]);
+
+                systemSfxPlayer.clip = SystemSFXClips[sfxIdx];
+                systemSfxPlayer.Play();
                 break;
             default:
                 break;
         }
 
-        Debug.Log(flag + "의 " + sfxIdx + " 사운드 출력");
+        //Debug.Log(flag + "의 " + sfxIdx + " 사운드 출력");
     }
 
     public AudioSource GetPlayerLoopSFXPlayer()

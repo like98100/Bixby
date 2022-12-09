@@ -36,6 +36,7 @@ public class UI_Control : MonoBehaviour
     private float genCoolDown = 0.5f;
     GameObject bossText = null;
     float bossTimer;
+    bool aroundItem;
     void Start()
     {
         windows = new List<GameObject>();
@@ -60,13 +61,14 @@ public class UI_Control : MonoBehaviour
             SoundManage.instance.PlaySFXSound(11, "System"); // 보스 힌트 사운드
         }
         bossTimer = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "BossDungeon" ? 0 : 0.1f;
+        aroundItem = false;
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
             OptionWindow();
-        if (Input.anyKeyDown)
+        if (Input.anyKeyDown && !bossText.GetComponent<TMPro.TextMeshProUGUI>().text.Contains("가방"))
         {
             string temp = Input.inputString;
 
@@ -125,6 +127,11 @@ public class UI_Control : MonoBehaviour
                     if (window.transform.parent.name == "COOK")
                         window.transform.GetChild(window.transform.childCount - 2).GetComponent<CookingGage>().CookInitialize();
                     break;
+                case "Inventory":
+                    aroundItem = inventoryObject.Inst.FieldFKey.activeSelf;
+                    if (aroundItem)
+                        inventoryObject.Inst.FieldFKey.SetActive(false);
+                    break;
             }
             Cursor.lockState = CursorLockMode.None;
             aimPoint.SetActive(false);
@@ -143,6 +150,11 @@ public class UI_Control : MonoBehaviour
                     break;
                 case "Inventory":
                     inventory.transform.GetChild(2).gameObject.SetActive(false);
+                    if (aroundItem)
+                    {
+                        inventoryObject.Inst.FieldFKey.SetActive(true);
+                        aroundItem = false;
+                    }
                     break;
                 case "Canvas":
                     foreach (Transform item in window.transform)
@@ -207,6 +219,10 @@ public class UI_Control : MonoBehaviour
 
     public void TextOn(string value)
     {
+        if (value.Contains("가방"))
+            bossText.transform.localPosition = Vector3.down * 100f;
+        else
+            bossText.transform.localPosition = Vector3.down * 270f;
         bossText.SetActive(true);
         bossText.GetComponent<TMPro.TextMeshProUGUI>().text = value;
         bossTimer = 0.1f;

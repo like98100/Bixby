@@ -88,17 +88,18 @@ public class Harvest : MonoBehaviour
             Vector2 tempPos;
             //빈 공간 찾기
             tempPos = inventoryObject.Inst.emptyCell(harvestData.xSize, harvestData.ySize);
-            inventoryObject.Inst.itemGet(harvestData.xSize, harvestData.ySize, tempPos.x, tempPos.y, harvestData);
+            if (inventoryObject.Inst.itemGet(harvestData.xSize, harvestData.ySize, tempPos.x, tempPos.y, harvestData))
+            {
+                //인벤토리 추가 및 제이슨 저장
+                inventoryObject.Inst.jsonSave();
+                inventoryObject.Inst.FieldFKey.SetActive(false);
 
-            //인벤토리 추가 및 제이슨 저장
-            inventoryObject.Inst.jsonSave();
-            inventoryObject.Inst.FieldFKey.SetActive(false);
+                SoundManage.instance.PlaySFXSound(1, "System");
 
-            SoundManage.instance.PlaySFXSound(1,"System");
-
-            isPlayerClose = false;
-            this.gameObject.SetActive(false);
-            testchack = false;
+                isPlayerClose = false;
+                this.gameObject.SetActive(false);
+                testchack = false;
+            }
         }
     }
     

@@ -168,14 +168,12 @@ public class inventoryObject : MonoBehaviour
         float newXSize = newData.xSize;
         float newYSize = newData.ySize;
         Vector2 tempPos = emptyCell(newXSize, newYSize);
-        if (tempPos != Vector2.zero - Vector2.one)
+        if (itemGet(newXSize, newYSize, tempPos.x, tempPos.y, newData))
         {
-            itemGet(newXSize, newYSize, tempPos.x, tempPos.y, newData);
             Destroy(newItem);
             jsonSave();
             FieldFKey.SetActive(false);
         }
-        //알림창 만들면 else에서 아이템 획득 불가 알릴 것
     }
 
     public List<Vector2> existCells(List<itemData> itemList)//아이템 리스트 내 아이템 존재 칸 확인
@@ -227,8 +225,15 @@ public class inventoryObject : MonoBehaviour
         return temp;
     }
 
-    public void itemGet(float itemSizeX, float itemSizeY, float itemX, float itemY, itemData itemData)//아이템 획득
+    public bool itemGet(float itemSizeX, float itemSizeY, float itemX, float itemY, itemData itemData)//아이템 획득
     {
+        bool get = true;
+
+        if (new Vector2(itemX, itemY) == Vector2.zero - Vector2.one)
+        { //아이템 획득 실패 시
+            UI_Control.Inst.TextOn("가방이 다 찼습니다");//Speech.Tutorial.ElementGetText(7);
+            return false;
+        }
         GameObject temp = Instantiate(itemPrefab, inventoryCanvas.transform);
         itemObject tempItem = temp.GetComponent<itemObject>();
         itemData newData = new itemData();
@@ -250,6 +255,7 @@ public class inventoryObject : MonoBehaviour
 
         //    //quest.SetObjectIndex(quest.GetObjectIndex() + 1);
         //    QuestObject.manager.SetObjectIndex(QuestObject.manager.GetObjectIndex() + 1);
+        return get;
     }
 
     public Vector2 emptyCell(float newXSize, float newYSize)//인벤토리에서 해당 크기의 아이템이 들어올 수 있는 위치
@@ -315,6 +321,10 @@ public class inventoryObject : MonoBehaviour
         itemDescription.SetActive(true);
         itemDescription.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = itemObj.ItemData.itemName;
         itemDescription.transform.GetChild(2).GetComponent<Image>().sprite = itemObj.gameObject.transform.GetChild(1).GetComponent<Image>().sprite;
+        if (itemObj.ItemData.itemID == 2000)
+            itemDescription.transform.GetChild(2).GetComponent<Image>().color = Color.black;
+        else
+            itemDescription.transform.GetChild(2).GetComponent<Image>().color = Color.white;
         if (itemObj.ItemData.itemID == 2001)
             itemDescription.transform.GetChild(2).GetComponent<RectTransform>().sizeDelta = new Vector2(50f, 100f);
         else

@@ -95,9 +95,11 @@ public class itemObject : MonoBehaviour
                 Vector2 tempPos = inventoryObject.Inst.emptyCell(ItemData.xSize, ItemData.ySize);
                 if (tempPos != Vector2.zero - Vector2.one)
                 {
-                    inventoryObject.Inst.itemGet(ItemData.xSize, ItemData.ySize, tempPos.x, tempPos.y, ItemData);
-                    inventoryObject.Inst.Gold -= Mathf.FloorToInt(ItemData.price * 1.5f);
-                    inventoryObject.Inst.goldSet();
+                    if (inventoryObject.Inst.itemGet(ItemData.xSize, ItemData.ySize, tempPos.x, tempPos.y, ItemData))
+                    {
+                        inventoryObject.Inst.Gold -= Mathf.FloorToInt(ItemData.price * 1.5f);
+                        inventoryObject.Inst.goldSet();
+                    }
                 }
                 //알림창 만들면 else에서 칸 부족하다고 알릴 것
             }

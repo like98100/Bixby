@@ -99,7 +99,10 @@ public class CookingGage : MonoBehaviour
 
             Vector2 tempPos;
             tempPos = inventoryObject.Inst.emptyCell(cookData.xSize, cookData.ySize);
-            inventoryObject.Inst.itemGet(cookData.xSize, cookData.ySize, tempPos.x, tempPos.y, cookData);
+            if (!inventoryObject.Inst.itemGet(cookData.xSize, cookData.ySize, tempPos.x, tempPos.y, cookData))
+            {
+                inventoryObject.Inst.MakeFieldItem(cookData, GameObject.FindGameObjectWithTag("Player").transform.position);
+            }
         }
 
         //스페이스바 누르면 멈춤, 캐릭터 움직이는거 막아야함
@@ -131,7 +134,10 @@ public class CookingGage : MonoBehaviour
 
             Vector2 tempPos;
             tempPos = inventoryObject.Inst.emptyCell(cookData.xSize, cookData.ySize);
-            inventoryObject.Inst.itemGet(cookData.xSize, cookData.ySize, tempPos.x, tempPos.y, cookData);
+            if (!inventoryObject.Inst.itemGet(cookData.xSize, cookData.ySize, tempPos.x, tempPos.y, cookData))
+            {
+                inventoryObject.Inst.MakeFieldItem(cookData, GameObject.FindGameObjectWithTag("Player").transform.position);
+            }
 
             //대기시간 잠시 주고 슬라이더 삭제
             gageSlider.gameObject.SetActive(false);

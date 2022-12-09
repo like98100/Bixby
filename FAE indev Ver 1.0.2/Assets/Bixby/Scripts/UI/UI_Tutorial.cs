@@ -170,6 +170,13 @@ public class UI_Tutorial : MonoBehaviour
                 ElemeneClearText.fontMaterial = fontMaterials[1];
                 SoundManage.instance.PlaySFXSound(18, "System"); // 성공 사운드
                 break;
+            case 7:
+                ElemeneClearText.text = "가방이 다 찼습니다";
+                ElemeneClearText.color = new Color(1f, 1f, 0.5f);
+                ElemeneClearText.fontSize = 60f;
+                ElemeneClearText.fontMaterial = fontMaterials[1];
+                //SoundManage.instance.PlaySFXSound(18, "System"); // 성공 사운드
+                break;
             default:
                 ElemeneClearText.text = "정해지지 않은 텍스트입니다";
                 ElemeneClearText.color = Color.black;

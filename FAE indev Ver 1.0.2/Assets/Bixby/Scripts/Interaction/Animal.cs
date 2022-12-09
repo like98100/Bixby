@@ -109,22 +109,22 @@ public class Animal : MonoBehaviour
         {
             Vector2 tempPos;
             tempPos = inventoryObject.Inst.emptyCell(animalData.xSize, animalData.ySize);
-            inventoryObject.Inst.itemGet(animalData.xSize, animalData.ySize, tempPos.x, tempPos.y, animalData);
+            if (inventoryObject.Inst.itemGet(animalData.xSize, animalData.ySize, tempPos.x, tempPos.y, animalData))
+            {//획득 성공 시
+                //인벤토리 추가 및 제이슨 저장
+                inventoryObject.Inst.jsonSave();
 
-            //인벤토리 추가 및 제이슨 저장
-            inventoryObject.Inst.jsonSave();
+                SoundManage.instance.PlaySFXSound(1, "System");
 
-            SoundManage.instance.PlaySFXSound(1, "System");
+                //동물 제거
+                //Destroy(gameObject);
+                this.gameObject.SetActive(false);
+                testchack = false;
 
-            //동물 제거
-            //Destroy(gameObject);
-            this.gameObject.SetActive(false);
-            testchack = false;
-
-            //f키 제거
-            inventoryObject.Inst.FieldFKey.SetActive(false);
-
-            checkNear = false;
+                //f키 제거
+                inventoryObject.Inst.FieldFKey.SetActive(false);
+                checkNear = false;
+            }
         }
     }
 

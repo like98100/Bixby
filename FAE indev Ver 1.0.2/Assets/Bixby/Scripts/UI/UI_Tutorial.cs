@@ -81,7 +81,7 @@ public class UI_Tutorial : MonoBehaviour
         }
     }
 
-    public void TutoImageSet(int index)//0:전투 튜토리얼, 1:상성 튜토리얼, 2:아바타 변경 튜토리얼, 3:채집사냥 튜토리얼, 4:낚시 튜토리얼, 5:요리 튜토리얼
+    public void TutoImageSet(int index)//0:전투, 1:상성, 2:아바타 변경, 3:채집사냥, 4:낚시, 5:요리, 6:조작, 7:맵 및 워프포인트
     {
         if (index == 0 && didTutorial)
             return;
@@ -111,6 +111,8 @@ public class UI_Tutorial : MonoBehaviour
             tutorialImages[openedIndex].SetActive(false);
             if (canvas.activeSelf)
                 UI_Control.Inst.windowSet(canvas);
+            if (openedIndex == 4)
+                TutoImageSet(7);
         }
         else
         {

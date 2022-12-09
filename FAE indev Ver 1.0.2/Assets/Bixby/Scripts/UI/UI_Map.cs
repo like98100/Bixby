@@ -26,6 +26,7 @@ public class UI_Map : MonoBehaviour
     List<Transform> warpPoint;
     GameObject goalPos;
     public List<Sprite> GoalPosSprites;//고리, 물음표, 느낌표
+    List<RectTransform> images;
     void Start()
     {
         if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "FieldScene")
@@ -38,6 +39,23 @@ public class UI_Map : MonoBehaviour
         foreach (Transform item in GameObject.Find("WarpPoints").transform)
         {
             warpPoint.Add(item);
+        }
+        images = new List<RectTransform>();
+        for (int i = 0; i < this.transform.GetChild(0).childCount; i++)
+        {
+            if (i == 1)
+                images.Add(this.transform.GetChild(0).GetChild(i).gameObject.GetComponent<RectTransform>());
+            else
+            {
+                foreach (Transform item in this.transform.GetChild(0).GetChild(i))
+                {
+                    images.Add(item.gameObject.GetComponent<RectTransform>());
+                }
+            }
+        }
+        for (int i = 1; i < this.transform.childCount; i++)
+        {
+            images.Add(this.transform.GetChild(i).gameObject.GetComponent<RectTransform>());
         }
     }
     public void MapSetUp()
@@ -56,19 +74,19 @@ public class UI_Map : MonoBehaviour
             {
                 goalPos.GetComponent<UnityEngine.UI.Image>().sprite = GoalPosSprites[1];
                 goalPos.GetComponent<UnityEngine.UI.Image>().color = Color.white;
-                goalPos.transform.localScale = Vector3.one * 0.6f;
+                goalPos.GetComponent<RectTransform>().sizeDelta = Vector2.one * 60f;
             }
             else if (QuestObject.manager.GetIndex() % 2 == 0)
             {
                 goalPos.GetComponent<UnityEngine.UI.Image>().sprite = GoalPosSprites[2];
                 goalPos.GetComponent<UnityEngine.UI.Image>().color = Color.white;
-                goalPos.transform.localScale = Vector3.one * 0.6f;
+                goalPos.GetComponent<RectTransform>().sizeDelta = Vector2.one * 60f;
             }
             else
             {
                 goalPos.GetComponent<UnityEngine.UI.Image>().sprite = GoalPosSprites[0];
                 goalPos.GetComponent<UnityEngine.UI.Image>().color = Color.red;
-                goalPos.transform.localScale = Vector3.one;
+                goalPos.GetComponent<RectTransform>().sizeDelta = Vector2.one * 60f;
             }
         }
 
@@ -104,6 +122,10 @@ public class UI_Map : MonoBehaviour
                 this.gameObject.transform.localScale -= Vector3.one;
                 mapLimitSet(this.transform.localPosition);
             }
+        }
+        foreach (var item in images)
+        {
+            item.localScale = Vector2.one * (this.gameObject.transform.localScale.x - (this.gameObject.transform.localScale.x * 1.125f - 1.125f));
         }
     }
     public void warp(int i)

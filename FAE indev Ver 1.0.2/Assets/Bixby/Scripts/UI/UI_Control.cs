@@ -8,6 +8,8 @@ public class UI_Control : MonoBehaviour
     private void Awake()
     {
         Inst = this;
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Title")
+            return;
         optionObj = GameObject.Find("Option");
         option = optionObj.GetComponent<UI_Option>();
         inventory = GameObject.Find("Inventory");
@@ -32,11 +34,13 @@ public class UI_Control : MonoBehaviour
     public UI_EnemyHp EnemyHp;
     bool isField;
     private float genCoolDown = 0.5f;
-    GameObject bossText;
+    GameObject bossText = null;
     float bossTimer;
     void Start()
     {
         windows = new List<GameObject>();
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Title")
+            return;
         windows.Add(inventory);
         windows.Add(Map);
         windows.Add(Shop.getWindow());
@@ -86,15 +90,10 @@ public class UI_Control : MonoBehaviour
                     break;
             }
         }
-        if (bossText.activeSelf&&bossTimer>=0.1f)
-        {
-            bossTimer += Time.deltaTime;
-            if (bossTimer > 5)
-            {
-                bossText.SetActive(false);
-                bossTimer = 0;
-            }
-        }
+        if (bossText != null)
+            bossTimerFunc();
+
+
     }
     public void OptionWindow()
     {
@@ -108,6 +107,8 @@ public class UI_Control : MonoBehaviour
         if (!(OpenedWindow == null || OpenedWindow == window))
             return;
         window.SetActive(!window.activeSelf);
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Title")
+            return;
         option.senseSet(window.activeSelf);
         if (window.activeSelf)
         {
@@ -209,5 +210,18 @@ public class UI_Control : MonoBehaviour
         bossText.SetActive(true);
         bossText.GetComponent<TMPro.TextMeshProUGUI>().text = value;
         bossTimer = 0.1f;
+    }
+
+    void bossTimerFunc()
+    {
+        if (bossText.activeSelf && bossTimer >= 0.1f)
+        {
+            bossTimer += Time.deltaTime;
+            if (bossTimer > 5)
+            {
+                bossText.SetActive(false);
+                bossTimer = 0;
+            }
+        }
     }
 }

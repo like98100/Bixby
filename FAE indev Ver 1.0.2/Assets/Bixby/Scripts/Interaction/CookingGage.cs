@@ -40,13 +40,16 @@ public class CookingGage : MonoBehaviour
     {
         itemJsonData = json.LoadJsonFile<itemJsonData>(Application.dataPath, "cook");//json로드
     }
-    float dtime;
 
-
+    bool isInitialized = false;
+    float dTime;
     // Start is called before the first frame update
     void Start()
     {
-        dtime = Time.deltaTime;
+        if (!isInitialized)
+        {
+            dTime = Time.deltaTime;
+        }
         tempItem = Instantiate(inventoryObject.Inst.getObj("itemPrefab"), Vector3.one * -999f, Quaternion.identity).GetComponent<itemObject>();
         food = num.gameObject.transform.parent.gameObject;
         material_1 = food.transform.GetChild(2).gameObject;
@@ -67,12 +70,14 @@ public class CookingGage : MonoBehaviour
         if (start == true)
         {
             //게이지 슬라이더 증가
-            gageSlider.value += gageSpeed * dtime;
+            gageSlider.value += gageSpeed * 0.01f;
         }
 
         if (gageSlider.value == 1)
         {
             success_fail.text = "Fail";
+            SoundManage.instance.PlaySFXSound(7, "System"); // 실패 사운드
+
             gageSlider.gameObject.SetActive(false);
             minSlider.gameObject.SetActive(false);
             maxSlider.gameObject.SetActive(false);
@@ -86,7 +91,7 @@ public class CookingGage : MonoBehaviour
             //실패요리
             foreach (var item in itemJsonData.itemList)
             {
-                if (item.itemID == 2003)
+                if (item.itemID == 2000)
                 {
                     cookData = item;
                 }
@@ -100,6 +105,7 @@ public class CookingGage : MonoBehaviour
         //스페이스바 누르면 멈춤, 캐릭터 움직이는거 막아야함
         if (Input.GetKeyDown(KeyCode.Space))
         {
+
             if (gageSlider.value >= minSlider.value && gageSlider.value <= maxSlider.value)
             {
                 success_fail.text = "Success";

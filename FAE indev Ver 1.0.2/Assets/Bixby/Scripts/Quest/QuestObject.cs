@@ -244,7 +244,7 @@ public class QuestObject : MonoBehaviour
                         case 3002:
                         case 3003:
                         case 3004:
-                            UI_Control.Inst.Speech.setUp("알파", "(이 앞엔 강한 뭔가 있을 것 같다는 내용)");
+                            UI_Control.Inst.Speech.setUp("알파", "(이 앞에서 강한 원소의 힘이 느껴진다. 앞으로 가 보자.)");
                             break;
                         default:
                             break;
@@ -326,7 +326,7 @@ public class QuestObject : MonoBehaviour
                 }
                 break;
             case QuestKind.hunt:
-                missionText = "적을" + questPurpose + "마리 사냥하기" + questProgress;
+                missionText = "사슴을" + questPurpose + "마리 수렵하시오" + questProgress;
                 break;
             case QuestKind.cook:
                 missionText = "데이터에 없는 아이템을";
@@ -343,7 +343,7 @@ public class QuestObject : MonoBehaviour
             case QuestKind.interactive:
                 break;
             case QuestKind.spot://특정 위치 이동 부분 추가
-                missionText = "어디어디로 가시오.";//위치 지정 필요
+                missionText = "표시된 위치로 이동하시오.";//위치 지정 필요
                 break;
             default:
                 break;
@@ -375,5 +375,13 @@ public class QuestObject : MonoBehaviour
         if (currentQuest.objectId.Count != 1)
             questSubIndex = 1;
         SetObjectIndex(0);
+    }
+
+    public void DungeonRunaway()
+    {
+        if (!isClear)
+            questSubIndex = 0;
+        SetObjectIndex(0);
+        LoadingSceneController.Instance.LoadScene("FieldScene");
     }
 }

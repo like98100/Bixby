@@ -78,7 +78,7 @@ public class DungeonBoss : CombatStatus, IDamgeable
         UI_EnemyHp.EnemyHps.EnemyObjects.Add(this.gameObject);
         UI_EnemyHp.EnemyHps.GaugeOff();
 
-        DropItem.GetComponent<TreasureBox>().boxState = true;
+        DropItem.transform.GetChild(0).GetComponent<TreasureBox>().boxState = true;
     }
 
     void FixedUpdate()
@@ -143,6 +143,7 @@ public class DungeonBoss : CombatStatus, IDamgeable
         if (Stat.hp <= 0.0f)
         {
             MyAgent.isStopped = true;
+            col.enabled = false;
             PlayDeathSound();
             Anim.SetTrigger("isDied");
         }
@@ -189,6 +190,7 @@ public class DungeonBoss : CombatStatus, IDamgeable
         if (Stat.hp <= 0.0f)
         {
             MyAgent.isStopped = true;
+            col.enabled = false;
             PlayDeathSound();
             Anim.SetTrigger("isDied");
         }

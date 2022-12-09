@@ -82,7 +82,7 @@ public class FinalBoss : CombatStatus, IDamgeable
         UI_EnemyHp.EnemyHps.GaugeOff();
         UI_EnemyHp.EnemyHps.EnemyObjects.Add(this.gameObject);
 
-        DropItem.GetComponent<TreasureBox>().boxState = true;
+        DropItem.transform.GetChild(0).GetComponent<TreasureBox>().boxState = true;
     }
 
     void FixedUpdate()
@@ -202,6 +202,7 @@ public class FinalBoss : CombatStatus, IDamgeable
         if (Stat.hp <= 0.0f)
         {
             MyAgent.isStopped = true;
+            col.enabled = false;
             PlayDeathSound();
             Anim.SetTrigger("isDied");
         }
@@ -248,6 +249,7 @@ public class FinalBoss : CombatStatus, IDamgeable
         if (Stat.hp <= 0.0f)
         {
             MyAgent.isStopped = true;
+            col.enabled = false;
             PlayDeathSound();
             Anim.SetTrigger("isDied");
         }

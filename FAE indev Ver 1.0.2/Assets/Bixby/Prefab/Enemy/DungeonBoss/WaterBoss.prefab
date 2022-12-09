@@ -484,7 +484,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   target: {fileID: 0}
-  Skill_1_Obj: {fileID: 25369382013007618, guid: e1f4fce62c9a9144ead8f1f0f69d8876, type: 3}
+  Skill_1_Obj: {fileID: 25369382013007618, guid: a143f7cee661ad54aa47f92672f18a32, type: 3}
   MyAgent: {fileID: 0}
   Anim: {fileID: 0}
   NormalAttackSound: {fileID: 8300000, guid: ec083050561279c4bb5cca93a08f0206, type: 3}
@@ -496,7 +496,7 @@ MonoBehaviour:
   isAttacked: 0
   SkillCooldown: 0
   setShield: 0
-  DropItem: {fileID: 0}
+  DropItem: {fileID: 7119032763497506224, guid: 55c28f46bdef76f44b2722f412c55783, type: 3}
 --- !u!1 &6188819068447925958
 GameObject:
   m_ObjectHideFlags: 0

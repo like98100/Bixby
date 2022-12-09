@@ -77,7 +77,9 @@ public class NPC : MonoBehaviour
         markSet();
 
         // F Active
-        if (playerClose && Input.GetKeyDown(KeyCode.F) && !speech.Tutorial.ElemeneClearText.gameObject.activeSelf)
+        if (playerClose && Input.GetKeyDown(KeyCode.F)
+            && !speech.Tutorial.ElemeneClearText.gameObject.activeSelf
+            && UI_Control.Inst.OpenedWindow == null)
         {
             npcInteract();
         }
@@ -110,7 +112,7 @@ public class NPC : MonoBehaviour
         notify.transform.localScale = Vector3.one * 0.15f;
         if (NpcName == "shop")
             return;
-        if (NpcName != QuestObject.manager.GetNPCName())
+        if (NpcName != QuestObject.manager.GetNPCName() || QuestObject.manager.GetIndex() >= 22)
         {
             notify.SetActive(false);
         }

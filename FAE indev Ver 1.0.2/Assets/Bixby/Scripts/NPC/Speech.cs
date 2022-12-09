@@ -26,8 +26,7 @@ public class Speech : MonoBehaviour
         Button nextSpeech = speechWindow.transform.GetChild(2).GetComponent<Button>();
         nextSpeech.onClick.AddListener(() => speechNext());
         //quest = GameObject.Find("GameManager").GetComponent<QuestObject>();
-        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "Title")
-            Tutorial = GameObject.Find("Tutorial").GetComponent<UI_Tutorial>();
+        Tutorial = GameObject.Find("Tutorial").GetComponent<UI_Tutorial>();
         isExist = false;
     }
     public void setUp(string name, string content)//말 걸었을 때      // name 일치 및 isClear == true일 때 text 변경
@@ -41,7 +40,18 @@ public class Speech : MonoBehaviour
                 speechJsonData = json.LoadJsonFile<speechJsonData>(Application.dataPath, content);//로드해옴
             else
             {
-                speechJsonData = json.LoadJsonFile<speechJsonData>(Application.dataPath, name + "Temp");//비 퀘스트 대화 스크립트 로드
+                string temp = "";
+                for (int i = 0; i < content.Length; i++)
+                {
+                    if (i == content.Length - 1)
+                        temp += "x";
+                    else
+                        temp += content[i];
+                }
+                if (json.FileExist(Application.dataPath, temp))
+                    speechJsonData = json.LoadJsonFile<speechJsonData>(Application.dataPath, temp);//로드해옴
+                else
+                    speechJsonData = json.LoadJsonFile<speechJsonData>(Application.dataPath, name + "Temp");//비 퀘스트 대화 스크립트 로드
             }
             foreach (var item in speechJsonData.speechDatas)//로드한 json데이터의 speechDatas의 내용을
             {
@@ -124,6 +134,7 @@ public class Speech : MonoBehaviour
                     Tutorial.ElementGetText(3);
                     break;
                 case 21:
+                    QuestObject.manager.SetNextQuest();
                     UI_Control.Inst.Speech.Tutorial.ElementGetText(6);
                     break;
                 default:

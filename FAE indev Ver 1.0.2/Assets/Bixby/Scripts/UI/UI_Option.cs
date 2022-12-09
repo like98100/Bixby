@@ -75,6 +75,10 @@ public class UI_Option : MonoBehaviour
     }
     public void toTitle()
     {
+        for (int i = 0; i < WarpObject.instance.isActive.Length; i++)
+        {
+            WarpObject.instance.isActive[i] = false;
+        }
         UI_Control.Inst.windowSet(this.gameObject);
         Cursor.lockState = CursorLockMode.None;
         SoundManage.instance.SetVolume(true, 0.2f);

@@ -68,6 +68,7 @@ public class ElementControl : ElementRule, IElementReaction
             {
                 Fusion();
                 IsFusion = true;
+                SoundManage.instance.PlaySFXSound(20, "System");
                 UI_Control.Inst.damageSet("융해", this.gameObject);
             }
         }
@@ -78,6 +79,7 @@ public class ElementControl : ElementRule, IElementReaction
             {
                 Freezing();
                 IsFreezing = true;
+                SoundManage.instance.PlaySFXSound(21, "System");
                 UI_Control.Inst.damageSet("빙결", this.gameObject);
             }
         }
@@ -88,6 +90,7 @@ public class ElementControl : ElementRule, IElementReaction
             {
                 Transmission();
                 //IsTransmission = true;
+                SoundManage.instance.PlaySFXSound(22, "System");
                 UI_Control.Inst.damageSet("전도", this.gameObject);
             }
         }
@@ -98,17 +101,8 @@ public class ElementControl : ElementRule, IElementReaction
             {
                 Explosion();
                 //IsExplosion = true;
+                SoundManage.instance.PlaySFXSound(23, "System");
                 UI_Control.Inst.damageSet("폭발", this.gameObject);
-            }
-        }
-        if ((firstElement == ElementType.ELECTRICITY && secondElement == ElementType.WATER)
-            || (secondElement == ElementType.ELECTRICITY && firstElement == ElementType.WATER)) //감전
-        {
-            if (!IsElectronicShock)
-            {
-                ElectricShock();
-                IsElectronicShock = true;
-                UI_Control.Inst.damageSet("감전", this.gameObject);
             }
         }
         if ((firstElement == ElementType.WATER && secondElement == ElementType.FIRE)
@@ -118,7 +112,19 @@ public class ElementControl : ElementRule, IElementReaction
             {
                 Evaporation();
                 IsEvaporation = true;
+                SoundManage.instance.PlaySFXSound(24, "System");
                 UI_Control.Inst.damageSet("증발", this.gameObject);
+            }
+        }
+        if ((firstElement == ElementType.ELECTRICITY && secondElement == ElementType.WATER)
+            || (secondElement == ElementType.ELECTRICITY && firstElement == ElementType.WATER)) //감전
+        {
+            if (!IsElectronicShock)
+            {
+                ElectricShock();
+                IsElectronicShock = true;
+                SoundManage.instance.PlaySFXSound(25, "System");
+                UI_Control.Inst.damageSet("감전", this.gameObject);
             }
         }
     }

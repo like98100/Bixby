@@ -45,9 +45,9 @@ public class EnemyStatus
                                     // 종류, id, 체력, 쉴드, 대미지, 사정거리, 공격속도, 이동속도, 시야, 속성
         // 일반 몬스터
         if (enemyType == EnemyType.Melee)
-            stat = new EnemyStatus(enemyType, 3000, 100.0f, 30.0f, 10.0f, 3.0f, 2.0f, 10.0f, 15.0f, enemyElement);
+            stat = new EnemyStatus(enemyType, 3000, 150.0f, 30.0f, 10.0f, 3.0f, 2.0f, 10.0f, 15.0f, enemyElement);
         else if (enemyType == EnemyType.Ranged)
-            stat = new EnemyStatus(enemyType, 3000, 150.0f, 30.0f, 15.0f, 15.0f, 5.0f, 10.0f, 25.0f, enemyElement);
+            stat = new EnemyStatus(enemyType, 3000, 100.0f, 30.0f, 15.0f, 15.0f, 5.0f, 10.0f, 20.0f, enemyElement);
         // 중간보스
         else if (enemyType == EnemyType.FireBoss) // 쓸지 안 쓸지 모르겠지만 일단은...
             stat = new EnemyStatus(enemyType, 3001,  500.0f, 40.0f, 30.0f, 5.5f, 2.0f, 15.0f, 50.0f, enemyElement);

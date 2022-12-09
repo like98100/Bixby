@@ -5828,7 +5828,7 @@ MonoBehaviour:
   IceSkillEffect: {fileID: 4618777220894711968, guid: b7ce22bafbbf25342a6e6ebfa6bd178c, type: 3}
   SkillCooldown: 0
   setShield: 0
-  DropItem: {fileID: 0}
+  DropItem: {fileID: 7119032763497506224, guid: 55c28f46bdef76f44b2722f412c55783, type: 3}
 --- !u!1 &4681719079262048560
 GameObject:
   m_ObjectHideFlags: 0

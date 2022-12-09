@@ -123,7 +123,7 @@ public class Fishing : MonoBehaviour
     {
         if (Vector3.Distance(Player.transform.position, transform.position) <= 3.0f && !start && !inputF)
         {
-            if (Input.GetKeyDown(KeyCode.F))
+            if (Input.GetKeyDown(KeyCode.F) && UI_Control.Inst.OpenedWindow == null)//창이 떠있지 않을때만 가능
             {
                 isPlayerFishing = true; //플레이어가 낚시중인가? Yes.
                 endFishing = false;

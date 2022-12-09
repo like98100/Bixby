@@ -75,7 +75,9 @@ public class UI_Tutorial : MonoBehaviour
                 }
             }
         }
-        if (QuestObject.manager.GetIndex() == 5 && QuestObject.manager.GetIsClear()&&!didText)//불 던전 퀘스트 클리어 후, 텍스트가 나온 적 없다면
+        if (QuestObject.manager.GetIndex() == 5 && QuestObject.manager.GetIsClear()//불 던전 퀘스트 클리어 후
+            && !didText //텍스트가 나온 적 없고
+            && UnityEngine.SceneManagement.SceneManager.GetActiveScene().name=="FieldScene")//필드 씬이라면
         {
             ElementGetText(0);//불 원소 해방 텍스트
         }

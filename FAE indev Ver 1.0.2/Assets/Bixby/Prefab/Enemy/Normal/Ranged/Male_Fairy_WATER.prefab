@@ -1186,8 +1186,7 @@ MonoBehaviour:
   dissolve: {fileID: 2100000, guid: fd481701278c4a84e89a4eb05e94b2d5, type: 2}
   color: {r: 0, g: 0, b: 0, a: 0}
   scales:
-  - 5000
-  - 30
+  - 300
 --- !u!114 &5869842814788706719
 MonoBehaviour:
   m_ObjectHideFlags: 0
